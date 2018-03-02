@@ -26,9 +26,9 @@
 ![screendump gui](screendump.png)
 
 **Todo**
-Refactor code, clean code, improve improve improve..
+- Refactor code, clean code, improve improve improve..
 
-Stop using: System.Text.Encoding.UTF8.GetString
+- Stop using: System.Text.Encoding.UTF8.GetString
 In chat packethandlers, use readbyte or readbytes and loop through each byte using the specified algorithm for that handler..
 
 ---------------------------------------------------------------------
