@@ -22,15 +22,16 @@
 - Party/Group notifications are incorrect sometime. If player disconnects too fast without properly disposing the session on the server (not sure what wc cmd orig client sends) upon rejoin group SMSG_PARTY_COMMAND_RESULT will be buggy.
 
 **Graphhical user interface**
+- Screendump;
 ![screendump gui](screendump.png)
 
-*Graphhical user interface*
-Todo:
+**Todo**
 Refactor code, clean code, improve improve improve..
 
 Stop using: System.Text.Encoding.UTF8.GetString
 In chat packethandlers, use readbyte or readbytes and loop through each byte using the specified algorithm for that handler..
 
+---------------------------------------------------------------------
 Change log;
 17-2-2018
 Added:
