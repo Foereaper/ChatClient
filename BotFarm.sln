@@ -1,0 +1,123 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{7A45F050-E215-4388-B0BE-F11001537A25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{83188726-B64C-4D4C-9DB4-A82C76A2A6F2}"
+	ProjectSection(SolutionItems) = preProject
+		README = README
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrinityCore UnitTests", "TrinityCore UnitTests\TrinityCore UnitTests.csproj", "{20DB95E0-F311-4E8A-B956-04E995F3184A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7A45F050-E215-4388-B0BE-F11001537A25} = {7A45F050-E215-4388-B0BE-F11001537A25}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotFarm", "BotFarm\BotFarm.csproj", "{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotFarm UnitTests", "BotFarm UnitTests\BotFarm UnitTests.csproj", "{D013693E-11A8-41E3-825F-38D9F47C2B14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Debug|x64.ActiveCfg = Debug|x64
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Debug|x64.Build.0 = Debug|x64
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x64.ActiveCfg = Release|x64
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x64.Build.0 = Release|x64
+		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x86.ActiveCfg = Release|Any CPU
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Debug|x64.ActiveCfg = Debug|x64
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Debug|x64.Build.0 = Debug|x64
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Release|x64.ActiveCfg = Release|x64
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Release|x64.Build.0 = Release|x64
+		{20DB95E0-F311-4E8A-B956-04E995F3184A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x64.ActiveCfg = Debug|x64
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x64.Build.0 = Debug|x64
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x64.ActiveCfg = Release|x64
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x64.Build.0 = Release|x64
+		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x86.ActiveCfg = Release|Any CPU
+		{D013693E-11A8-41E3-825F-38D9F47C2B14}.Debug|x64.ActiveCfg = Debug|x64
+		{D013693E-11A8-41E3-825F-38D9F47C2B14}.Debug|x64.Build.0 = Debug|x64
+		{D013693E-11A8-41E3-825F-38D9F47C2B14}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D013693E-11A8-41E3-825F-38D9F47C2B14}.Release|x64.ActiveCfg = Release|Any CPU
+		{D013693E-11A8-41E3-825F-38D9F47C2B14}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B9E5FCC-1D93-476D-AE17-3D56201B06E6}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = CLIClient\CLI.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $7
+		$2.FileWidth = 120
+		$2.RemoveTrailingWhitespace = True
+		$2.EolMarker = Unix
+		$2.inheritsSet = VisualStudio
+		$2.inheritsScope = text/plain
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.AnonymousMethodBraceStyle = NextLine
+		$3.PropertyBraceStyle = NextLine
+		$3.PropertyGetBraceStyle = NextLine
+		$3.PropertySetBraceStyle = NextLine
+		$3.EventBraceStyle = NextLine
+		$3.EventAddBraceStyle = NextLine
+		$3.EventRemoveBraceStyle = NextLine
+		$3.StatementBraceStyle = NextLine
+		$3.PlaceElseOnNewLine = True
+		$3.PlaceCatchOnNewLine = True
+		$3.PlaceFinallyOnNewLine = True
+		$3.PlaceWhileOnNewLine = True
+		$3.BeforeMethodDeclarationParentheses = False
+		$3.BeforeMethodCallParentheses = False
+		$3.BeforeConstructorDeclarationParentheses = False
+		$3.BeforeIndexerDeclarationBracket = False
+		$3.BeforeDelegateDeclarationParentheses = False
+		$3.AfterDelegateDeclarationParameterComma = True
+		$3.NewParentheses = False
+		$3.SpacesBeforeBrackets = False
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$4.FileWidth = 120
+		$4.TabWidth = 4
+		$4.inheritsSet = Mono
+		$4.inheritsScope = text/plain
+		$4.scope = text/plain
+		$5.inheritsSet = null
+		$5.scope = application/config+xml
+		$0.XmlFormattingPolicy = $8
+		$6.inheritsSet = null
+		$6.scope = application/config+xml
+		$7.inheritsSet = null
+		$7.scope = application/xml
+		$8.inheritsSet = Mono
+		$8.inheritsScope = application/xml
+		$8.scope = application/xml
+		$0.StandardHeader = $9
+		$9.Text = 
+		$9.IncludeInNewFiles = True
+		$0.VersionControlPolicy = $10
+		$10.inheritsSet = Mono
+		$0.ChangeLogPolicy = $11
+		$11.UpdateMode = None
+		$11.MessageStyle = $12
+		$12.LineAlign = 0
+		$11.inheritsSet = Mono
+	EndGlobalSection
+EndGlobal

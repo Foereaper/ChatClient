@@ -1,0 +1,76 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BotFarm.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Port" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3724</Value>
+    </Setting>
+    <Setting Name="Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="Hostname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="RealmID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RandomBots" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MaxBotsCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="MinBotsCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="MMAPsFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="VMAPsFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="MAPsFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+    <Setting Name="Behaviors" Type="BotFarm.BotBehaviorSettings[]" Scope="User">
+      <Value Profile="(Default)">                    &lt;ArrayOfBotBehaviorSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+                        &lt;BotBehaviorSettings&gt;
+                          &lt;Name&gt;Default&lt;/Name&gt;
+                          &lt;Probability&gt;100&lt;/Probability&gt;
+                          &lt;AutoAcceptGroupInvites&gt;true&lt;/AutoAcceptGroupInvites&gt;
+                          &lt;AutoAcceptResurrectRequests&gt;true&lt;/AutoAcceptResurrectRequests&gt;
+                          &lt;AutoResurrect&gt;true&lt;/AutoResurrect&gt;
+                          &lt;Begger&gt;false&lt;/Begger&gt;
+                          &lt;FollowGroupLeader&gt;true&lt;/FollowGroupLeader&gt;
+                          &lt;Explorer&gt;false&lt;/Explorer&gt;
+                        &lt;/BotBehaviorSettings&gt;
+                        &lt;BotBehaviorSettings&gt;
+                          &lt;Name&gt;Begger&lt;/Name&gt;
+                          &lt;Probability&gt;0&lt;/Probability&gt;
+                          &lt;AutoAcceptGroupInvites&gt;false&lt;/AutoAcceptGroupInvites&gt;
+                          &lt;AutoAcceptResurrectRequests&gt;false&lt;/AutoAcceptResurrectRequests&gt;
+                          &lt;AutoResurrect&gt;true&lt;/AutoResurrect&gt;
+                          &lt;Begger&gt;true&lt;/Begger&gt;
+                          &lt;FollowGroupLeader&gt;false&lt;/FollowGroupLeader&gt;
+                          &lt;Explorer&gt;false&lt;/Explorer&gt;
+                        &lt;/BotBehaviorSettings&gt;
+                        &lt;BotBehaviorSettings&gt;
+                          &lt;Name&gt;Explorer&lt;/Name&gt;
+                          &lt;Probability&gt;0&lt;/Probability&gt;
+                          &lt;AutoAcceptGroupInvites&gt;false&lt;/AutoAcceptGroupInvites&gt;
+                          &lt;AutoAcceptResurrectRequests&gt;false&lt;/AutoAcceptResurrectRequests&gt;
+                          &lt;AutoResurrect&gt;true&lt;/AutoResurrect&gt;
+                          &lt;Begger&gt;false&lt;/Begger&gt;
+                          &lt;FollowGroupLeader&gt;false&lt;/FollowGroupLeader&gt;
+                          &lt;Explorer&gt;true&lt;/Explorer&gt;
+                        &lt;/BotBehaviorSettings&gt;
+                    &lt;/ArrayOfBotBehaviorSettings&gt;</Value>
+    </Setting>
+    <Setting Name="DBCsFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,937 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Forms;
+using Client;
+using Client.World;
+using Client.UI;
+
+namespace BotFarm
+{
+
+    public partial class FrmChat : Form
+    {
+        public bool LeaderNotMe = false;
+        private int _lockColumnIndex = 0;
+
+        public FrmChat()
+        {
+            InitializeComponent();
+            this.listGroup.ColumnWidthChanging += new ColumnWidthChangingEventHandler(listGroup_ColumnWidthChanging);
+            cBStatusFlag.Text = "Available";
+        }
+
+        private void msgPull_Tick(object sender, EventArgs e)
+        {
+            //DisplayWhoList()
+            string WhoListUpdate = AutomatedGame.WhoListUpdate;
+            if (WhoListUpdate != "")
+            {
+                DisplayWhoList();
+                AutomatedGame.WhoListUpdate = "";
+                return;
+            }
+            string GroupListUpdate = AutomatedGame.UpdateGroupGUIDList;
+            if (GroupListUpdate != "")
+            {
+                DisplayGroupList();
+                AutomatedGame.UpdateGroupGUIDList = "";
+                return;
+            }
+            //FriendListUpdate
+            string FriendListUpdate = AutomatedGame.FriendListUpdate;
+            if (FriendListUpdate != "")
+            {
+                DisplayFriendList();
+                AutomatedGame.FriendListUpdate = "";
+                return;
+            }
+            //DefaultChannelListUpdate
+            string UpdateDefaultChannelList = AutomatedGame.DefaultChannelListUpdate;
+            if (UpdateDefaultChannelList != "")
+            {
+                DisplayDefaultChannels();
+                AutomatedGame.DefaultChannelListUpdate = "";
+                return;
+            }
+            //CustomChannelListUpdate
+            string UpdateCustomChannelList = AutomatedGame.CustomChannelListUpdate;
+            if (UpdateCustomChannelList != "")
+            {
+                DisplayCustomChannels();
+                AutomatedGame.CustomChannelListUpdate = "";
+                return;
+            }
+
+            if (AutomatedGame.NewMessageData != null)
+            {
+                //"[Invited6"
+                string GroupInvite = AutomatedGame.NewMessageData.Substring(0, 9);
+                if (GroupInvite == "[Invited6")
+                {
+                    Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleGroupInvitation));
+                    HandleInvite.Start();
+                    HandleInvite.Join();
+                    return;
+                }
+                //"[Invited5"
+                string ChannelInvite = AutomatedGame.NewMessageData.Substring(0, 9);
+                if (ChannelInvite == "[Invited5")
+                {
+                    Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleChannelInvitation));
+                    HandleInvite.Start();
+                    HandleInvite.Join();
+                    return;
+                }
+                string WhisperSendC = AutomatedGame.NewMessageData.Substring(0, 2); //To
+                if (WhisperSendC == "To")
+                {
+                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    //ChatWindow.ScrollToCaret();
+                    AutomatedGame.NewMessageData = null;
+                    return;
+                }
+                string WhisperC = AutomatedGame.NewMessageData.Substring(0, 9); //[Whisper] 
+                if (WhisperC == "[Whisper]")
+                {
+                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    //ChatWindow.ScrollToCaret();
+                    AutomatedGame.NewMessageData = null;
+                    return;
+                }
+                string GuildC = AutomatedGame.NewMessageData.Substring(0, 7); //[Guild] 
+                if (GuildC == "[Guild]")
+                {
+                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Green);
+                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    //ChatWindow.ScrollToCaret();
+                    AutomatedGame.NewMessageData = null;
+                    return;
+                }
+                string SystemC = AutomatedGame.NewMessageData.Substring(0, 8); //[System] 
+                if (SystemC == "[System]")
+                {
+                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.DarkBlue, true);
+                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    //ChatWindow.ScrollToCaret();
+                    AutomatedGame.NewMessageData = null;
+                    return;
+                }
+                if(AutomatedGame.NewMessageData.Length > 18)
+                {
+                    string GuildAchievementC = AutomatedGame.NewMessageData.Substring(0, 18); //[GuildAchievement]
+                    if (GuildAchievementC == "[GuildAchievement]")
+                    {
+                        AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Green, true);
+                        //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                        //ChatWindow.ScrollToCaret();
+                        AutomatedGame.NewMessageData = null;
+                        return;
+                    }
+                }
+                AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Black, true);
+                //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                //ChatWindow.ScrollToCaret();
+                AutomatedGame.NewMessageData = null;
+                return;
+            }
+        }
+
+        private void AppendText(RichTextBox box, string text, Color color, bool bold = false)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+            //if (bold)
+            //{
+            //   box.Font = Font = new Font(box.Font, FontStyle.Bold);
+            //}
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+            box.ScrollToCaret();
+        }
+
+        private void FrmChat_Load(object sender, EventArgs e)
+        {
+            lblChar.Text = "Logged in as: " + AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
+                //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
+
+            textMessage.Focus();
+            textMessage.Select();
+            this.textMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
+
+            BotFactory.Instance.factoryGame.JoinChannel(1);
+            BotFactory.Instance.factoryGame.JoinChannel(2);
+            BotFactory.Instance.factoryGame.JoinChannel(3);
+            BotFactory.Instance.factoryGame.JoinChannel(4);
+        }
+
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AutomatedGame.DisconClient = true;
+            System.Threading.Thread.Sleep(1000);
+            Application.Exit();
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            MsgSend();
+        }
+
+        private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                MsgSend();
+            }
+        }
+
+        private void MsgSend()
+        {
+            /// this terrible code, for testing must obviously be changed/removed on release version.
+            try
+            {
+                string tmp = textMessage.Text;
+                if (tmp.Length > 3)
+                {
+                    if ((tmp.Substring(0, 3) == "/w "))
+                    {
+                        var tmp1 = tmp.Replace("/w ", "");
+                        string[] msg = tmp1.Split(' ');
+                        var user = msg[0].ToString();
+                        var message = tmp1.Substring(user.Length + 1).ToString();
+                        //var message = msg[1].ToString();
+                        //AppendText(ChatWindow, "Whisper to" + user + ": " + message + "\r\n", Color.Pink);
+                        //ChatWindow.AppendText("Whisper to" + user +": " + message + "\r\n");
+                        //ChatWindow.ScrollToCaret();
+                        BotFactory.Instance.factoryGame.DoWhisperChat(message, user);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if ((tmp.Substring(0, 3) == "/g "))
+                    {
+                        //var tmp2 = tmp.Replace("/g ", "");
+                        var tmp2 = tmp;
+                        tmp2 = tmp2.Substring(3);
+                        var message = tmp2.ToString();
+                        BotFactory.Instance.factoryGame.DoGuildChat(message);
+                        var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
+                        //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
+                        //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
+                        //ChatWindow.ScrollToCaret();
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if ((tmp.Substring(0, 3) == "/p "))
+                    {
+                        //var tmp2 = tmp.Replace("/g ", "");
+                        var tmp2 = tmp;
+                        tmp2 = tmp2.Substring(3);
+                        var message = tmp2.ToString();
+                        BotFactory.Instance.factoryGame.DoPartyChat(message);
+                        //var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
+                        //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
+                        //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
+                        //ChatWindow.ScrollToCaret();
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if ((tmp.Substring(0, 3) == "/in"))
+                    {
+                        var tmp2 = tmp;
+                        tmp2 = tmp2.Substring(8);
+                        var player = tmp2.ToString();
+                        BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                }
+                if (tmp.Length > 2)
+                {
+                    if (tmp.Substring(0, 2) == "/j")
+                    {
+                        BotFactory.Instance.factoryGame.DoSayChat(textMessage.Text);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                }
+                if (tmp.Length > 1)
+                {
+                    if (tmp.Substring(0, 2) == "/1")
+                    {
+                        tmp = tmp.TrimStart('/');
+                        tmp = tmp.TrimStart('1');
+                        tmp = tmp.TrimStart(' ');
+                        BotFactory.Instance.factoryGame.SayChannel(tmp, 1);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if (tmp.Substring(0, 2) == "/2")
+                    {
+                        tmp = tmp.TrimStart('/');
+                        tmp = tmp.TrimStart('2');
+                        tmp = tmp.TrimStart(' ');
+                        BotFactory.Instance.factoryGame.SayChannel(tmp, 2);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if (tmp.Substring(0, 2) == "/3")
+                    {
+                        tmp = tmp.TrimStart('/');
+                        tmp = tmp.TrimStart('3');
+                        tmp = tmp.TrimStart(' ');
+                        BotFactory.Instance.factoryGame.SayChannel(tmp, 3);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if (tmp.Substring(0, 2) == "/4")
+                    {
+                        tmp = tmp.TrimStart('/');
+                        tmp = tmp.TrimStart('4');
+                        tmp = tmp.TrimStart(' ');
+                        BotFactory.Instance.factoryGame.SayChannel(tmp, 4);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                    if (tmp.Substring(0, 1) != "/")
+                    {
+                        //AppendText(ChatWindow, "Say: " + textMessage.Text + "\r\n", Color.DarkGray);
+                        BotFactory.Instance.factoryGame.DoSayChat(textMessage.Text);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
+                }
+                //textMessage.Text = string.Empty;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            AutomatedGame.DisconClient = true;
+            this.Hide();
+            System.Threading.Thread.Sleep(1000);
+            Application.Exit();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AutomatedGame.DisconClient = true;
+            System.Threading.Thread.Sleep(1000);
+            Application.Exit();
+        }
+
+        private void saveConversationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet.");
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Credits to; BotFarm (jackpoz), WCell, Mangos, and PseuWoW. And StackerDEV for gui and small fixes.");
+        }
+
+        private void btnPlayerRefresh_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.RequestWhoList();
+        }
+
+        private void ChatWindow_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void btnGeneral_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.JoinChannel(1);
+            channelNum.Value = 1;
+        }
+
+        private void btnTrade_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.JoinChannel(2);
+            channelNum.Value = 2;
+        }
+
+        private void btnDefense_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.JoinChannel(3);
+            channelNum.Value = 3;
+        }
+
+        private void btnLfg_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.JoinChannel(4);
+            channelNum.Value = 4;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.LeaveChannel((int)channelNum.Value);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //BotFactory.Instance.factoryGame.SayChannel("Channel test 123 123", (int)channelNum.Value);
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Commands :\n\nIMPORTANT MESSAGE <> means your INPUT.\n\nFor whisper: /w <username> <message>\nFor Guild: /g <message>\nFor Say: <message>\nFor channels: /1 <message> (/1 means Global, 2 Trade, 3 LocalDefense, 4 LFG)\n", "Thank you for RTFM.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSettings settings = new FrmSettings();
+            settings.Show();
+        }
+
+        private void joinAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.JoinChannel(1);
+            BotFactory.Instance.factoryGame.JoinChannel(2);
+            BotFactory.Instance.factoryGame.JoinChannel(3);
+            BotFactory.Instance.factoryGame.JoinChannel(4);
+        }
+
+        private void createNewChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewChannel frmChannel = new NewChannel();
+            frmChannel.Show();
+        }
+
+        public static void HandleChannelInvitation()
+        {
+            string ChannelIvtname = AutomatedGame.NewMessageData;
+            ChannelIvtname = ChannelIvtname.Remove(0, 9);
+            AutomatedGame.NewMessageData = null;
+
+            DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname.ToString() +"'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            if (Accept == DialogResult.Yes)
+            {
+                BotFactory.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
+            }
+            else
+            {
+                BotFactory.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+            }
+            return;
+        }
+
+        public static void HandleGroupInvitation()
+        {
+            string InvitationSender = AutomatedGame.NewMessageData;
+            InvitationSender = InvitationSender.Remove(0, 9);
+            AutomatedGame.NewMessageData = null;
+
+            DialogResult Accept = MessageBox.Show(InvitationSender.ToString() + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            if (Accept == DialogResult.Yes)
+            {
+                BotFactory.Instance.factoryGame.AcceptGroupInvitation();
+            } else
+            {
+                BotFactory.Instance.factoryGame.GroupDecline();
+            }
+            return;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.InvitePlayerToParty("Monsterd");      
+        }
+
+        public void DisplayGroupList()
+        {
+
+            ColumnHeader columnPlayer, columnLeader;
+            columnPlayer = new ColumnHeader();
+            columnLeader = new ColumnHeader();
+
+            columnPlayer.Text = "Player";
+            columnPlayer.TextAlign = HorizontalAlignment.Left;
+            columnPlayer.Width = 153;
+            columnLeader.TextAlign = HorizontalAlignment.Left;
+            columnLeader.Text = "Leader";
+            columnLeader.Width = 250;
+
+            listGroup.Columns.Clear();
+
+            listGroup.Columns.Add(columnPlayer);
+            listGroup.Columns.Add(columnLeader);
+            listGroup.View = View.Details;
+
+            listGroup.Items.Clear();
+            btnGroupDisband.Enabled = false;
+
+            List<ulong> memberguids = BotFactory.Instance.factoryGame.GroupMembersGuids;
+            ulong leaderguid = BotFactory.Instance.factoryGame.GroupLeaderGuid;
+
+            if (memberguids.Count != 0)
+            {
+                btnGroupDisband.Enabled = true;
+                foreach (ulong guid in memberguids)
+                {
+                    var player = "";
+                    bool resolve = (BotFactory.Instance.factoryGame.Game.World.PlayerNameLookup.TryGetValue(guid, out player));
+                    ListViewItem item = new ListViewItem(player);
+                    if (guid == leaderguid)
+                    {
+                        item.SubItems.Add("Yes");
+                        LeaderNotMe = true;
+                    }
+                    listGroup.Items.Add(item);
+                }
+                if (LeaderNotMe == false)
+                {
+                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
+                    item.SubItems.Add("Yes");
+                    listGroup.Items.Add(item);
+                } else {
+                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
+                    item.SubItems.Add("");
+                    listGroup.Items.Add(item);
+                }
+            }
+            if(memberguids.Count == 0)
+            {
+                lblPartyGroupSize.Text = "";
+            } else
+            {
+                lblPartyGroupSize.Text = listGroup.Items.Count.ToString();
+            }
+            
+        }
+
+        private void btnGroupDisband_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.GroupDisband();
+        }
+
+        void listGroup_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            if (e.ColumnIndex == _lockColumnIndex)
+            {
+                //Keep the width not changed.
+                e.NewWidth = this.listGroup.Columns[e.ColumnIndex].Width;
+                //Cancel the event.
+                e.Cancel = true;
+            }
+        }
+
+        //private void btnRefresh_Click(object sender, EventArgs e)
+        //{
+        //    BotFactory.Instance.factoryGame.RequestWhoList();
+        //}
+
+        public void DisplayWhoList()
+        {
+            ColumnHeader columnPlayer, columnGuild, columnLvl, columnClass, columnRace;
+            columnPlayer = new ColumnHeader();
+            columnGuild = new ColumnHeader();
+            columnLvl = new ColumnHeader();
+            columnClass = new ColumnHeader();
+            columnRace = new ColumnHeader();
+
+            columnPlayer.Text = "Player";
+            columnPlayer.TextAlign = HorizontalAlignment.Left;
+            columnPlayer.Width = 70;
+            columnGuild.Text = "Guild";
+            columnGuild.TextAlign = HorizontalAlignment.Left;
+            columnGuild.Width = 75;
+            columnLvl.Text = "LvL";
+            columnLvl.TextAlign = HorizontalAlignment.Left;
+            columnLvl.Width = 30;
+            columnClass.Text = "Class";
+            columnClass.TextAlign = HorizontalAlignment.Left;
+            columnClass.Width = 50;
+            columnRace.Text = "Race";
+            columnRace.TextAlign = HorizontalAlignment.Left;
+            columnRace.Width = 50;
+
+            listWho.Columns.Clear();
+            
+            listWho.Columns.Add(columnPlayer);
+            listWho.Columns.Add(columnGuild);
+            listWho.Columns.Add(columnLvl);
+            listWho.Columns.Add(columnClass);
+            listWho.Columns.Add(columnRace);
+
+            //listWho.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            //listWho.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            listWho.View = View.Details;
+            listWho.Items.Clear();
+            refreshWhoList.Visible = false;
+
+            List<string> players = AutomatedGame.player;
+
+            int index = 0;
+            foreach (string player in players)
+            {
+                ListViewItem item = new ListViewItem(player);
+                item.SubItems.Add(AutomatedGame.guild[index]);
+                item.SubItems.Add(AutomatedGame.level[index].ToString());
+                item.SubItems.Add(AutomatedGame.pclass[index]);
+                item.SubItems.Add(AutomatedGame.prace[index]);
+                listWho.Items.Add(item);
+                index++;
+            }
+
+            lblplayercount.Text = AutomatedGame.playersonline.ToString();
+
+            refreshWhoList.Visible = true;
+        }
+
+        public void DisplayFriendList()
+        {
+            //listFriends
+            ColumnHeader columnPlayer, columnGuild, columnLvl, columnOnline;
+            columnPlayer = new ColumnHeader();
+            columnGuild = new ColumnHeader();
+            columnLvl = new ColumnHeader();
+            columnOnline = new ColumnHeader();
+
+            columnPlayer.Text = "Player";
+            columnPlayer.TextAlign = HorizontalAlignment.Left;
+            columnPlayer.Width = 77;
+            columnGuild.Text = "Guild";
+            columnGuild.TextAlign = HorizontalAlignment.Left;
+            columnGuild.Width = 75;
+            columnLvl.Text = "LvL";
+            columnLvl.TextAlign = HorizontalAlignment.Left;
+            columnLvl.Width = 35;
+            columnOnline.Text = "Online";
+            columnOnline.TextAlign = HorizontalAlignment.Left;
+            columnOnline.Width = 55;
+
+            listFriends.Columns.Clear();
+
+            listFriends.Columns.Add(columnPlayer);
+            listFriends.Columns.Add(columnGuild);
+            listFriends.Columns.Add(columnLvl);
+            listFriends.Columns.Add(columnOnline);
+
+            listFriends.View = View.Details;
+            listFriends.Items.Clear();
+
+            List<string> friends = AutomatedGame.resolvedFriendList;
+
+            foreach (string friend in friends)
+            {
+                int listindex = AutomatedGame.player.IndexOf(friend);
+                ListViewItem item = new ListViewItem(friend);
+                if(listindex != -1)
+                {
+                    item.SubItems.Add(AutomatedGame.guild[listindex]);
+                    item.SubItems.Add(AutomatedGame.level[listindex].ToString());
+                    item.SubItems.Add("Yes");
+                } else
+                {
+                    item.SubItems.Add("");
+                    item.SubItems.Add("");
+                    item.SubItems.Add("No");
+                }
+
+                listFriends.Items.Add(item);
+            }
+
+            lblfriendcount.Text = AutomatedGame.resolvedFriendList.Count.ToString();
+
+        }
+
+        public void DisplayDefaultChannels()
+        {
+            ColumnHeader columnChannel, columnJoined;
+            columnChannel = new ColumnHeader();
+            columnJoined = new ColumnHeader();
+
+            columnChannel.Text = "Channel";
+            columnChannel.TextAlign = HorizontalAlignment.Left;
+            columnChannel.Width = 217;
+            columnJoined.Text = "Joined";
+            columnJoined.TextAlign = HorizontalAlignment.Left;
+            columnJoined.Width = 55;
+
+            listWorld.Columns.Clear();
+
+            listWorld.Columns.Add(columnChannel);
+            listWorld.Columns.Add(columnJoined);
+
+            listWorld.View = View.Details;
+            listWorld.Items.Clear();
+
+            List<string> defaultchannels = AutomatedGame.joinedChannels;
+
+            foreach (string channel in defaultchannels)
+            {
+                ListViewItem item = new ListViewItem(channel);
+                item.SubItems.Add("Yes");
+                listWorld.Items.Add(item);
+            }
+        }
+
+        public void DisplayCustomChannels()
+        {
+            ColumnHeader columnChannel, columnJoined;
+            columnChannel = new ColumnHeader();
+            columnJoined = new ColumnHeader();
+
+            columnChannel.Text = "Custom channel";
+            columnChannel.TextAlign = HorizontalAlignment.Left;
+            columnChannel.Width = 217;
+            columnJoined.Text = "Joined";
+            columnJoined.TextAlign = HorizontalAlignment.Left;
+            columnJoined.Width = 55;
+
+            listCustom.Columns.Clear();
+
+            listCustom.Columns.Add(columnChannel);
+            listCustom.Columns.Add(columnJoined);
+
+            listCustom.View = View.Details;
+            listCustom.Items.Clear();
+
+            List<string> customchannels = AutomatedGame.customChannels;
+
+            foreach (string channel in customchannels)
+            {
+                ListViewItem item = new ListViewItem(channel);
+                item.SubItems.Add("Yes");
+                listCustom.Items.Add(item);
+            }
+        }
+
+        private void listWho_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point loc = listWho.PointToScreen(e.Location);
+                contextMenuWhoList.Show(loc);
+            }
+        }
+
+        private void refreshWhoList_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.RequestWhoList();
+        }
+
+        private void addFriendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if(player != "")
+            {
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.AddFriend(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void whisperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if (player != "")
+            {
+                textMessage.Text = "/w " + player + " ";
+                textMessage.Select();
+                textMessage.SelectionStart = textMessage.Text.Length;
+            }
+        }
+
+        private void inviteToPartyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if (player != "")
+            {
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void cBStatusFlag_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            int index = cBStatusFlag.SelectedIndex;
+            if (index != -1)
+            {
+                BotFactory.Instance.factoryGame.ChangeStatus(index);
+            }
+        }
+
+        private void ignoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if (player != "")
+            {
+                if(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.IgnorePlayer(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot ignore yourself.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } 
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 2) { BotFactory.Instance.factoryGame.RequestWhoList(); }
+            if (tabControl1.SelectedIndex == 3) { BotFactory.Instance.factoryGame.RequestFriendList(); }
+        }
+
+        private void listGroup_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point loc = listGroup.PointToScreen(e.Location);
+                contextMenuGroupList.Show(loc);
+            }
+        }
+
+        private void whisperToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var player = listGroup.SelectedItems[0].Text;
+            if (player != "")
+            {
+                textMessage.Text = "/w " + player + " ";
+                textMessage.Select();
+                textMessage.SelectionStart = textMessage.Text.Length;
+            }
+        }
+
+        private void addFriendToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var player = listGroup.SelectedItems[0].Text;
+            if (player != "")
+            {
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.AddFriend(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void ignoreToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var player = listGroup.SelectedItems[0].Text;
+            if (player != "")
+            {
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.IgnorePlayer(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot ignore yourself.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void removeFriendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int index = listFriends.SelectedItems[0].Index;
+            string guid = AutomatedGame.friendGUIList[index];
+            BotFactory.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid));
+        }
+
+        private void listFriends_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point loc = listFriends.PointToScreen(e.Location);
+                contextMenuFriendList.Show(loc);
+            }
+        }
+
+        private void whisperToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var player = listFriends.SelectedItems[0].Text;
+            if (player != "")
+            {
+                textMessage.Text = "/w " + player + " ";
+                textMessage.Select();
+                textMessage.SelectionStart = textMessage.Text.Length;
+            }
+        }
+
+        private void inviteToPartyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var player = listFriends.SelectedItems[0].Text;
+            if (player != "")
+            {
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                {
+                    BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                }
+                else
+                {
+                    MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void leaveChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            // leave channel 1
+            BotFactory.Instance.factoryGame.LeaveChannel(1);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            // leave channel 2
+            BotFactory.Instance.factoryGame.LeaveChannel(2);
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            // leave channel 3
+            BotFactory.Instance.factoryGame.LeaveChannel(3);
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            // leave channel 4
+            BotFactory.Instance.factoryGame.LeaveChannel(4);
+        }
+
+        private void leaveAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BotFactory.Instance.factoryGame.LeaveChannel(1);
+            BotFactory.Instance.factoryGame.LeaveChannel(2);
+            BotFactory.Instance.factoryGame.LeaveChannel(3);
+            BotFactory.Instance.factoryGame.LeaveChannel(4);
+        }
+    }
+}
