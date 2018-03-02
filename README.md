@@ -6,7 +6,7 @@
 - System messages (local and remote)
 - Full who list /w full listview
 - Group / party listview full + player join/leave notifications
-- Friend list /w Add & Remove fiend listview (Player, Guild, LvL, online/offline & system notification on friend online/offline state change)
+- Friend list /w Add & Remove friend listview (Player, Guild, LvL, online/offline & system notification on friend online/offline state change)
 - Character status
 - Whisper
 - Party/Group chat invitation and listview of players / disband group
