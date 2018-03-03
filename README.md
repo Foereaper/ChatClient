@@ -1,4 +1,4 @@
-# WoWGasm chat client concept & debug poc
+# WoWGasm chat client & debug poc
 
 **Working features**
 - Login(show wrong creds/usr, give msgbox when logon server is not reachable), logout, realm selection, character selection
@@ -14,6 +14,7 @@
 
 **Not working**
 - Delete friend. Get player GUID & send 4 byte uint64 GUID reversed + 0x06 nullbytes with wc CMSG_DEL_FRIEND (need func in trinityCore, to retrieve guid by playername to simplify my life..)
+- Player Ignore (don't remember why, see code. Maybe better to store a local ignore list or simply by session)
 - FrmSettings.cs not implemented yet. Idea for AFK status changer was to let a interrupt check the users mouse pointer XYZ pos if this did not change since the last time, exec changeAFKstatus.
 - Leave channel 3 and 4. See the packet handler why..
 

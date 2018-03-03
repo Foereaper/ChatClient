@@ -61,7 +61,7 @@
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(112, 20);
             this.username.TabIndex = 1;
-            this.username.Text = "kegel";
+            this.username.Text = "";
             // 
             // password
             // 
@@ -70,7 +70,7 @@
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(112, 20);
             this.password.TabIndex = 2;
-            this.password.Text = "Lol123%";
+            this.password.Text = "";
             // 
             // lblAcc
             // 
