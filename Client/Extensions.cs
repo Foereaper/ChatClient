@@ -63,52 +63,22 @@ namespace Client
             return BigInteger.ModPow(value, pow, mod);
         }
 
+
         public static string ReadCString(this BinaryReader reader)
         {
             StringBuilder builder = new StringBuilder();
 
-            if (reader.ToString() == "SMSG_MESSAGECHAT")
+            while (true)
             {
-                reader.BaseStream.Position = 0;
-                int length = (int)reader.BaseStream.Length;
-                byte[] dump = reader.ReadBytes(length);
-                /*
-                 msg start at byte 11
-                 if byte 11 = 0 the message will start at byte 29 till the end of the aray -2 last bytes
-                */
-                //string debug = System.Text.Encoding.UTF8.GetString(reader.ReadBytes(dump.Length));
+                byte letter = reader.ReadByte();
+                if (letter == 0)
+                    break;
 
-                //if(dump[0] == 0x4 || dump[0] == 255) { return builder.ToString(); }
-
-                if (dump[11] != 0)
-                {
-                    for (int i = 11; i < (length - 2); i++)
-                    {
-                        builder.Append((char)dump[i]);
-                    }
-                }
-                else
-                {
-                    for (int i = 29; i < (length - 2); i++)
-                    {
-                        builder.Append((char)dump[i]);
-                    }
-                }
+                builder.Append((char)letter);
             }
-            else
-            {
-                while (true)
-                {
-                    byte letter = reader.ReadByte();
 
-                    if (letter == 0)
-                        break;
-
-                    builder.Append((char)letter);
-                }
-            }
             return builder.ToString();
-        }
+}
 
         public static byte[] SubArray(this byte[] array, int start, int count)
         {
