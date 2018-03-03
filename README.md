@@ -8,7 +8,7 @@
 - Group / party listview full + player join/leave notifications
 - Friend list /w Add & Remove friend listview (Player, Guild, LvL, online/offline & system notification on friend online/offline state change)
 - Character status
-- Whisper
+- Chat channels like Whisper, Guild, Party, General, ..
 - Party/Group chat invitation and listview of players / disband group
 - Join custom channel, create custom channel /w pw, leave channels
 
