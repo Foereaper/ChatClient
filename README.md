@@ -1,4 +1,4 @@
-# WoWGasm chat client concept & debug poc
+# WoWGasm chat client & debug poc
 
 **Working features**
 - Login(show wrong creds/usr, give msgbox when logon server is not reachable), logout, realm selection, character selection
