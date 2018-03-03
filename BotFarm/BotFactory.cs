@@ -90,7 +90,7 @@ namespace BotFarm
         const string botsInfosPath = "botsinfos.xml";
         const string logPath = "botfactory.log";
         const string defaultBehaviorName = "Default";
-        TextWriter logger;
+        //TextWriter logger;
         Random randomGenerator = new Random();
         Dictionary<string, BotBehaviorSettings> botBehaviors = new Dictionary<string, BotBehaviorSettings>();
 

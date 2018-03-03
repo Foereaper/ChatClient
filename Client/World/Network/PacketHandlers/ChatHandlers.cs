@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Client.Chat;
 using Client.Chat.Definitions;
-using System.Text;
-using System.Text.RegularExpressions;
 using Client.World.Definitions;
 
 
@@ -95,7 +92,7 @@ namespace Client.World.Network
         {
             // 1 == party invite
             byte[] dump = packet.ReadToEnd();
-            var tes = "";
+            //var tes = "";
             //new OutPacket(WorldCommand.CMSG_GROUP_ACCEPT, 4);
         }
 

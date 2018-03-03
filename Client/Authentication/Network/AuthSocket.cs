@@ -23,8 +23,8 @@ namespace Client.Authentication.Network
 
         private string Hostname;
         private int Port;
-        int failedAuthentications;
-        const int MAX_FAILED_AUTENTICATIONS = 10;
+        //int failedAuthentications;
+        //const int MAX_FAILED_AUTENTICATIONS = 10;
 
         Dictionary<AuthCommand, CommandHandler> Handlers;
 
@@ -343,7 +343,7 @@ namespace Client.Authentication.Network
             else
             {
                 Game.UI.LogLine("Authentication succeeded!");
-                failedAuthentications = 0;
+                //failedAuthentications = 0;
                 Game.UI.LogLine("Requesting realm list", LogLevel.Detail);
                 Send(new byte[] { (byte)AuthCommand.REALM_LIST, 0x0, 0x0, 0x0, 0x0 });
             }

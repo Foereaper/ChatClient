@@ -11,7 +11,7 @@ namespace BotFarm.AI
 {
     class FollowGroupLeaderAI : IStrategicAI
     {
-        int scheduledAction;
+        //int scheduledAction;
         AutomatedGame game;
 
         public bool Activate(AutomatedGame game)
@@ -48,12 +48,12 @@ namespace BotFarm.AI
 
         public void Deactivate()
         {
-            game.CancelAction(scheduledAction);
+            //game.CancelAction(scheduledAction);
         }
 
         public void Pause()
         {
-            game.CancelAction(scheduledAction);
+            //game.CancelAction(scheduledAction);
         }
 
         public void Resume()
