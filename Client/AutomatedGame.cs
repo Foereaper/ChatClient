@@ -13,7 +13,6 @@ using System.Threading;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
 using Client.World.Entities;
-using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace Client
@@ -235,8 +234,6 @@ namespace Client
             {
             }
         }
-        UpdateObjectHandler updateObjectHandler;
-
 
         public Dictionary<ulong, WorldObject> Objects
         {
@@ -272,7 +269,6 @@ namespace Client
             this.RealmID = realmId;
             this.Character = character;
             scheduledActions = new ScheduledActions();
-            updateObjectHandler = new UpdateObjectHandler(this);
             Triggers = new IteratedList<Trigger>();
             World = new GameWorld();
             Player = new Player();
@@ -1613,185 +1609,6 @@ namespace Client
             loggedOutEvent.SetResult(true);
         }
 
-        [PacketHandler(WorldCommand.SMSG_UPDATE_OBJECT)]
-        protected void HandleUpdateObject(InPacket packet)
-        {
-            updateObjectHandler.HandleUpdatePacket(packet);
-        }
-
-        [PacketHandler(WorldCommand.SMSG_COMPRESSED_UPDATE_OBJECT)]
-        protected void HandleCompressedUpdateObject(InPacket packet)
-        {
-            updateObjectHandler.HandleUpdatePacket(packet.Inflate());
-        }
-
-        [PacketHandler(WorldCommand.SMSG_MONSTER_MOVE)]
-        protected void HandleMonsterMove(InPacket packet)
-        {
-            updateObjectHandler.HandleMonsterMovementPacket(packet);
-        }
-
-        class UpdateObjectHandler
-        {
-            AutomatedGame game;
-
-            uint blockCount;
-            ObjectUpdateType updateType;
-            ulong guid;
-            TypeID objectType;
-            List<Vector3> splinePoints;
-
-            Dictionary<int, uint> updateFields;
-
-            List<ulong> outOfRangeGuids;
-
-            public UpdateObjectHandler(AutomatedGame game)
-            {
-                this.game = game;
-                splinePoints = new List<Vector3>();
-                updateFields = new Dictionary<int, uint>();
-                outOfRangeGuids = new List<ulong>();
-            }
-
-            public void HandleUpdatePacket(InPacket packet)
-            {
-                blockCount = packet.ReadUInt32();
-                for (int blockIndex = 0; blockIndex < blockCount; blockIndex++)
-                {
-                    ResetData();
-
-                    updateType = (ObjectUpdateType)packet.ReadByte();
-
-                    switch (updateType)
-                    {
-                        case ObjectUpdateType.UPDATETYPE_VALUES:
-                            guid = packet.ReadPackedGuid();
-                            ReadValuesUpdateData(packet);
-                            break;
-                        case ObjectUpdateType.UPDATETYPE_MOVEMENT:
-                            guid = packet.ReadPackedGuid();
-                            break;
-                        case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT:
-                        case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT2:
-                            guid = packet.ReadPackedGuid();
-                            objectType = (TypeID)packet.ReadByte();
-                            ReadValuesUpdateData(packet);
-                            break;
-                        case ObjectUpdateType.UPDATETYPE_OUT_OF_RANGE_OBJECTS:
-                            var guidCount = packet.ReadUInt32();
-                            for (var guidIndex = 0; guidIndex < guidCount; guidIndex++)
-                                outOfRangeGuids.Add(packet.ReadPackedGuid());
-                            break;
-                        case ObjectUpdateType.UPDATETYPE_NEAR_OBJECTS:
-                            break;
-                    }
-
-                    HandleUpdateData();
-                }
-            }
-
-            public void HandleMovementPacket(InPacket packet)
-            {
-                ResetData();
-                updateType = ObjectUpdateType.UPDATETYPE_MOVEMENT;
-                guid = packet.ReadPackedGuid();
-                HandleUpdateData();
-            }
-
-            public void HandleMonsterMovementPacket(InPacket packet)
-            {
-                ResetData();
-                updateType = ObjectUpdateType.UPDATETYPE_MOVEMENT;
-                guid = packet.ReadPackedGuid();
-                byte unk = packet.ReadByte();
-                WorldObject worldObject = game.Objects[guid];
-                worldObject.Set(packet.ReadVector3());
-            }
-
-            void ResetData()
-            {
-                updateType = ObjectUpdateType.UPDATETYPE_VALUES;
-                guid = 0;
-                splinePoints.Clear();
-                updateFields.Clear();
-                outOfRangeGuids.Clear();
-            }
-
-            private void ReadValuesUpdateData(InPacket packet)
-            {
-                byte blockCount = packet.ReadByte();
-                int[] updateMask = new int[blockCount];
-                for (var i = 0; i < blockCount; i++)
-                    updateMask[i] = packet.ReadInt32();
-                var mask = new BitArray(updateMask);
-
-                for (var i = 0; i < mask.Count; ++i)
-                {
-                    if (!mask[i])
-                        continue;
-
-                    updateFields[i] = packet.ReadUInt32();
-                }
-            }
-
-            private void HandleUpdateData()
-            {
-                if (guid == game.Player.GUID)
-                {
-                    foreach (var pair in updateFields)
-                        game.Player[pair.Key] = pair.Value;
-                }
-                else
-                {
-                    switch (updateType)
-                    {
-                        case ObjectUpdateType.UPDATETYPE_VALUES:
-                            {
-                                WorldObject worldObject = game.Objects[guid];
-                                foreach (var pair in updateFields)
-                                    worldObject[pair.Key] = pair.Value;
-                                break;
-                            }
-                        case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT:
-                        case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT2:
-                            {
-                                WorldObject worldObject = new WorldObject();
-                                worldObject.GUID = guid;
-                                worldObject.MapID = game.Player.MapID;
-                                foreach (var pair in updateFields)
-                                    worldObject[pair.Key] = pair.Value;
-
-#if DEBUG
-                                if (game.Objects.ContainsKey(guid))
-                                    game.Log($"{updateType} called with guid 0x{guid:X} already added", LogLevel.Debug);
-#endif
-                                game.Objects[guid] = worldObject;
-
-                                if (worldObject.IsType(HighGuid.Player))
-                                {
-                                    OutPacket nameQuery = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
-                                    nameQuery.Write(guid);
-                                    game.SendPacket(nameQuery);
-                                }
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                }
-
-                foreach (var outOfRangeGuid in outOfRangeGuids)
-                {
-                    WorldObject worldObject;
-                    if (game.Objects.TryGetValue(outOfRangeGuid, out worldObject))
-                    {
-                        worldObject.ResetPosition();
-                        game.Objects.Remove(outOfRangeGuid);
-                    }
-                }
-            }
-        }
-
         [PacketHandler(WorldCommand.SMSG_DESTROY_OBJECT)]
         protected void HandleDestroyObject(InPacket packet)
         {
@@ -2161,69 +1978,5 @@ namespace Client
             HandleTriggerInput(TriggerActionType.UpdateField, e);
         }
         #endregion
-    }
-
-    class MovementInfo
-    {
-        public MovementFlags Flags;
-        public MovementFlags2 Flags2;
-        public uint Time;
-        public Vector3 Position;
-        public float O;
-
-        public ulong TransportGuid;
-        public Vector3 TransportPosition;
-        public float TransportO;
-        public ulong TransportTime;
-        public byte TransportSeat;
-        public ulong TransportTime2;
-
-        public float Pitch;
-
-        public ulong FallTime;
-
-        public float JumpZSpeed;
-        public float JumpSinAngle;
-        public float JumpCosAngle;
-        public float JumpXYSpeed;
-
-        public float SplineElevation;
-
-        public MovementInfo(InPacket packet)
-        {
-            Flags = (MovementFlags)packet.ReadUInt32();
-            Flags2 = (MovementFlags2)packet.ReadUInt16();
-            Time = packet.ReadUInt32();
-            Position = packet.ReadVector3();
-            O = packet.ReadSingle();
-
-            if (Flags.HasFlag(MovementFlags.MOVEMENTFLAG_ONTRANSPORT))
-            {
-                TransportGuid = packet.ReadPackedGuid();
-                TransportPosition = packet.ReadVector3();
-                TransportO = packet.ReadSingle();
-                TransportTime = packet.ReadUInt32();
-                TransportSeat = packet.ReadByte();
-                if (Flags2.HasFlag(MovementFlags2.MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
-                    TransportTime2 = packet.ReadUInt32();
-            }
-
-            if (Flags.HasFlag(MovementFlags.MOVEMENTFLAG_SWIMMING) || Flags.HasFlag(MovementFlags.MOVEMENTFLAG_FLYING)
-                || Flags2.HasFlag(MovementFlags2.MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
-                Pitch = packet.ReadSingle();
-
-            FallTime = packet.ReadUInt32();
-
-            if (Flags.HasFlag(MovementFlags.MOVEMENTFLAG_FALLING))
-            {
-                JumpZSpeed = packet.ReadSingle();
-                JumpSinAngle = packet.ReadSingle();
-                JumpCosAngle = packet.ReadSingle();
-                JumpXYSpeed = packet.ReadSingle();
-            }
-
-            if (Flags.HasFlag(MovementFlags.MOVEMENTFLAG_SPLINE_ELEVATION))
-                SplineElevation = packet.ReadSingle();
-        }
     }
 }

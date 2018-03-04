@@ -1,11 +1,8 @@
 ﻿using System.Numerics;
-using System.Threading;
 using Client.Authentication;
-using Client.Authentication.Network;
 using Client.UI;
 using Client.World.Network;
 using Client.Chat;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Client

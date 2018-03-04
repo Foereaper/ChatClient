@@ -232,8 +232,6 @@ namespace Client
     {
         None,
         Opcode,
-        UpdateField,
-        DestinationReached,
-        TradeCompleted
+        UpdateField
     }
 }
