@@ -2,8 +2,6 @@
 using Client;
 using Client.UI;
 using Client.Chat;
-using Client.AI;
-using BotFarm.AI;
 using Client.Authentication.Network;
 using Client.Chat.Definitions;
 using Client.World;

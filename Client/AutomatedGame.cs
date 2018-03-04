@@ -18,7 +18,6 @@ using Client.World.Entities;
 using System.Collections;
 using DetourCLI;
 using MapCLI;
-using Client.AI;
 using System.Text.RegularExpressions;
 using System.IO;
 
@@ -243,9 +242,6 @@ namespace Client
         }
         UpdateObjectHandler updateObjectHandler;
 
-        Stack<IStrategicAI> StrategicAIs;
-        Stack<ITacticalAI> TacticalAIs;
-        Stack<IOperationalAI> OperationalAIs;
 
         public Dictionary<ulong, WorldObject> Objects
         {
@@ -289,12 +285,6 @@ namespace Client
             Objects = new Dictionary<ulong, WorldObject>();
             CompletedAchievements = new HashSet<uint>();
             AchievementCriterias = new Dictionary<uint, ulong>();
-            StrategicAIs = new Stack<IStrategicAI>();
-            TacticalAIs = new Stack<ITacticalAI>();
-            OperationalAIs = new Stack<IOperationalAI>();
-            PushStrategicAI(new EmptyStrategicAI());
-            PushTacticalAI(new EmptyTacticalAI());
-            PushOperationalAI(new EmptyOperationalAI());
 
             this.Hostname = hostname;
             this.Port = port;
@@ -724,85 +714,6 @@ namespace Client
                 return "";
         }
 
-        public bool PushStrategicAI(IStrategicAI ai) => PushAI(ai, StrategicAIs);
-        public bool PushTacticalAI(ITacticalAI ai) => PushAI(ai, TacticalAIs);
-        public bool PushOperationalAI(IOperationalAI ai) => PushAI(ai, OperationalAIs);
-        bool PushAI<T>(T ai, Stack<T> AIs) where T : IGameAI
-        {
-            if (AIs.Count == 0)
-            {
-                AIs.Push(ai);
-                if (ai.Activate(this))
-                    return true;
-                else
-                {
-                    AIs.Pop();
-                    return false;
-                }
-            }
-
-            var currentAI = AIs.Peek();
-            if (currentAI.AllowPause())
-            {
-                if (ai.GetType() == currentAI.GetType())
-                    return false;
-                else
-                {
-                    currentAI.Pause();
-                    AIs.Push(ai);
-                    if (ai.Activate(this))
-                        return true;
-                    else
-                    {
-                        AIs.Pop();
-                        currentAI.Resume();
-                        return false;
-                    }
-                }
-            }
-            else
-                return false;
-        }
-
-        public bool PopStrategicAI(IStrategicAI ai) => PopAI(ai, StrategicAIs);
-        public bool PopTacticalAI(ITacticalAI ai) => PopAI(ai, TacticalAIs);
-        public bool PopOperationalAI(IOperationalAI ai) => PopAI(ai, OperationalAIs);
-        public bool PopAI<T>(T ai, Stack<T> AIs) where T : class, IGameAI
-        {
-            if (AIs.Count <= 1)
-                return false;
-
-            var currentAI = AIs.Peek();
-            if (currentAI != ai)
-                return false;
-
-            currentAI.Deactivate();
-            AIs.Pop();
-
-            AIs.Peek().Resume();
-            return true;
-        }
-
-        public void ClearAIs()
-        {
-            while (StrategicAIs.Count > 1)
-            {
-                var currentAI = StrategicAIs.Pop();
-                currentAI.Deactivate();
-            }
-
-            while (TacticalAIs.Count > 1)
-            {
-                var currentAI = TacticalAIs.Pop();
-                currentAI.Deactivate();
-            }
-
-            while (OperationalAIs.Count > 1)
-            {
-                var currentAI = OperationalAIs.Pop();
-                currentAI.Deactivate();
-            }
-        }
         #endregion
 
         #region Commands
@@ -1674,125 +1585,6 @@ namespace Client
             SendPacket(packet);
         }
 
-        public void Follow(WorldObject target)
-        {
-            if (target == null)
-                return;
-
-            Path path = null;
-            bool moving = false;
-            Position pathEndPosition = target.GetPosition();
-            DateTime previousMovingTime = DateTime.MinValue;
-
-            ScheduleAction(() =>
-            {
-                if (!target.IsValid)
-                    return;
-
-                if (target.MapID != Player.MapID)
-                {
-                    Log("Trying to follow a target on another map", Client.UI.LogLevel.Warning);
-                    CancelActionsByFlag(ActionFlag.Movement, false);
-                    return;
-                }
-
-                var distance = target - Player.GetPosition();
-                // check if we even need to move
-                if (distance.Length < FollowMovementEpsilon)
-                {
-                    if (path != null)
-                    {
-                        var stopMoving = new MovementPacket(WorldCommand.MSG_MOVE_STOP)
-                        {
-                            GUID = Player.GUID,
-                            X = Player.X,
-                            Y = Player.Y,
-                            Z = Player.Z,
-                            O = Player.O
-                        };
-                        SendPacket(stopMoving);
-                        Player.SetPosition(stopMoving.GetPosition());
-                        moving = false;
-                        path = null;
-                        HandleTriggerInput(TriggerActionType.DestinationReached, true);
-                    }
-
-                    return;
-                }
-
-                float targetMovement = (target - pathEndPosition).Length;
-                if (targetMovement > FollowTargetRecalculatePathEpsilon)
-                    path = null;
-                else if (distance.Length >= FollowMovementEpsilon && distance.Length <= FollowTargetRecalculatePathEpsilon)
-                    path = null;
-
-                if (path == null)
-                {
-                    using (var detour = new DetourCLI.Detour())
-                    {
-                        List<MapCLI.Point> resultPath;
-                        var findPathResult = detour.FindPath(Player.X, Player.Y, Player.Z,
-                                                target.X, target.Y, target.Z,
-                                                Player.MapID, out resultPath);
-                        if (findPathResult != PathType.Complete)
-                        {
-                            HandleTriggerInput(TriggerActionType.DestinationReached, false);
-                            CancelActionsByFlag(ActionFlag.Movement);
-                            return;
-                        }
-
-                        path = new Path(resultPath, Player.Speed, Player.MapID);
-                        pathEndPosition = target.GetPosition();
-                    }
-                }
-
-                if (!moving)
-                {
-                    moving = true;
-                    var facing = new MovementPacket(WorldCommand.MSG_MOVE_SET_FACING)
-                    {
-                        GUID = Player.GUID,
-                        flags = MovementFlags.MOVEMENTFLAG_FORWARD,
-                        X = Player.X,
-                        Y = Player.Y,
-                        Z = Player.Z,
-                        O = path.CurrentOrientation
-                    };
-
-                    SendPacket(facing);
-                    Player.SetPosition(facing.GetPosition());
-
-                    var startMoving = new MovementPacket(WorldCommand.MSG_MOVE_START_FORWARD)
-                    {
-                        GUID = Player.GUID,
-                        flags = MovementFlags.MOVEMENTFLAG_FORWARD,
-                        X = Player.X,
-                        Y = Player.Y,
-                        Z = Player.Z,
-                        O = path.CurrentOrientation
-                    };
-                    SendPacket(startMoving);
-
-                    previousMovingTime = DateTime.Now;
-                    return;
-                }
-
-                Point progressPosition = path.MoveAlongPath((float)(DateTime.Now - previousMovingTime).TotalSeconds);
-                Player.SetPosition(progressPosition.X, progressPosition.Y, progressPosition.Z);
-                previousMovingTime = DateTime.Now;
-
-                var heartbeat = new MovementPacket(WorldCommand.MSG_MOVE_HEARTBEAT)
-                {
-                    GUID = Player.GUID,
-                    flags = MovementFlags.MOVEMENTFLAG_FORWARD,
-                    X = Player.X,
-                    Y = Player.Y,
-                    Z = Player.Z,
-                    O = path.CurrentOrientation
-                };
-                SendPacket(heartbeat);
-            }, new TimeSpan(0, 0, 0, 0, 100), flags: ActionFlag.Movement);
-        }
         #endregion
 
         #region Packet Handlers

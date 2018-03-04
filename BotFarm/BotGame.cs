@@ -16,7 +16,6 @@ using Client.World.Entities;
 using DetourCLI;
 using MapCLI;
 using DBCStoresCLI;
-using BotFarm.AI;
 
 namespace BotFarm
 {
@@ -241,72 +240,6 @@ namespace BotFarm
             //    if (LoggedIn)
             //        SendPacket(new OutPacket(WorldCommand.CMSG_KEEP_ALIVE));
             //}, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
-
-            #region Begger
-            if (Behavior.Begger)
-            {
-                PushStrategicAI(new BeggerAI());
-            }
-            #endregion
-
-            #region FollowGroupLeader
-            if (Behavior.FollowGroupLeader)
-            {
-                PushStrategicAI(new FollowGroupLeaderAI());
-            }
-            #endregion
-
-            #region Explorer
-            if (Behavior.Explorer)
-            {
-                AchievementExploreLocation targetLocation = null;
-                List<AchievementExploreLocation> missingLocations = null;
-                Position currentPosition = new Position();
-
-                ScheduleAction(() =>
-                {
-                    if (!Player.IsAlive)
-                        return;
-
-                    if (targetLocation != null)
-                    {
-                        if (!HasExploreCriteria(targetLocation.CriteriaID) && (currentPosition - Player).Length > MovementEpsilon)
-                        {
-                            currentPosition = Player.GetPosition();
-                            return;
-                        }
-
-                        targetLocation = null;
-                    }
-
-                    currentPosition = Player.GetPosition();
-
-                    if (missingLocations == null)
-                        missingLocations = DBCStores.GetAchievementExploreLocations(Player.X, Player.Y, Player.Z, Player.MapID);
-
-                    missingLocations = missingLocations.Where(loc => !HasExploreCriteria(loc.CriteriaID)).ToList();
-                    if (missingLocations.Count == 0)
-                    {
-                        CancelActionsByFlag(ActionFlag.Movement);
-                        return;
-                    }
-
-                    float closestDistance = float.MaxValue;
-                    var playerPosition = new Point(Player.X, Player.Y, Player.Z);
-                    foreach (var missingLoc in missingLocations)
-                    {
-                        float distance = (missingLoc.Location - playerPosition).Length;
-                        if (distance < closestDistance)
-                        {
-                            closestDistance = distance;
-                            targetLocation = missingLoc;
-                        }
-                    }
-
-                    MoveTo(new Position(targetLocation.Location.X, targetLocation.Location.Y, targetLocation.Location.Z, 0f, Player.MapID));
-                }, DateTime.Now.AddSeconds(30), new TimeSpan(0, 0, 5));
-            }
-            #endregion
         }
 
         public override void NoCharactersFound()
