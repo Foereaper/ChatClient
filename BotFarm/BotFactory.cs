@@ -1,22 +1,12 @@
-﻿using BotFarm.Properties;
-using Client;
+﻿using Client;
 using Client.UI;
-using Client.Chat;
-using Client.Authentication.Network;
-using Client.Chat.Definitions;
-using Client.World;
-using Client.World.Definitions;
 using Client.World.Entities;
-using Client.World.Network;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace BotFarm
 {
@@ -66,9 +56,6 @@ namespace BotFarm
 
         public static void DisconnectBot()
         {
-            //factoryGame.Exit.Dispose();
-
-            //factoryGame.Dispose();
         }
 
         //public static void DoWhisperChat()
@@ -87,10 +74,7 @@ namespace BotFarm
         List<BotInfo> botInfos;
         const string botsInfosPath = "botsinfos.xml";
         const string logPath = "botfactory.log";
-        const string defaultBehaviorName = "Default";
         //TextWriter logger;
-        Random randomGenerator = new Random();
-        Dictionary<string, BotBehaviorSettings> botBehaviors = new Dictionary<string, BotBehaviorSettings>();
 
         public BotFactory()
         {
@@ -115,50 +99,6 @@ namespace BotFarm
                 }
             }
 
-            foreach (BotBehaviorSettings behavior in Settings.Default.Behaviors)
-                botBehaviors[behavior.Name] = behavior;
-
-            if (botBehaviors.Count == 0)
-            {
-                Log("Behaviors not found in the configuration file, exiting");
-                Environment.Exit(0);
-            }
-
-            if (!botBehaviors.ContainsKey(defaultBehaviorName))
-            {
-                Log("'" + defaultBehaviorName + "' behavior not found in the configuration file, exiting");
-                Environment.Exit(0);
-            }
-
-            if (botBehaviors.Sum(behavior => behavior.Value.Probability) != 100)
-            {
-                Log("Behaviors total Probability != 100 (" + botBehaviors.Sum(behavior => behavior.Value.Probability) + "), exiting");
-                Environment.Exit(0);
-            }
-
-            foreach (BotInfo botInfo in botInfos)
-            {
-                if (string.IsNullOrEmpty(botInfo.BehaviorName))
-                {
-                    Log(botInfo.Username + " has missing behavior, setting to default one");
-                    botInfo.BehaviorName = defaultBehaviorName;
-                    continue;
-                }
-
-                if (!botBehaviors.ContainsKey(botInfo.BehaviorName))
-                {
-                    Log(botInfo.Username + " has inexistent behavior '" + botInfo.BehaviorName + "', setting to default one");
-                    botInfo.BehaviorName = defaultBehaviorName;
-                    continue;
-                }
-            }
-
-            //DetourCLI.Detour.Initialize(Settings.Default.MMAPsFolderPath);
-            //VMapCLI.VMap.Initialize(Settings.Default.VMAPsFolderPath);
-            //MapCLI.Map.Initialize(Settings.Default.MAPsFolderPath);
-            //DBCStoresCLI.DBCStores.Initialize(Settings.Default.DBCsFolderPath);
-            //DBCStoresCLI.DBCStores.LoadDBCs();
-
             */
             //Logonserver;
             //Username;
@@ -171,57 +111,6 @@ namespace BotFarm
                                             0,
                                             0);
             factoryGame.Start();
-        }
-
-
-        public BotGame CreateBot()
-        {
-            Log("Creating new bot");
-
-            string username = "BOT" + randomGenerator.Next();
-            string password = randomGenerator.Next().ToString();
-            lock(factoryGame)
-                factoryGame.DoSayChat(".account create " + username + " " + password);
-
-            uint behaviorRandomIndex = (uint)randomGenerator.Next(100);
-            uint behaviorCurrentIndex = 0;
-            BotBehaviorSettings botBehavior = botBehaviors.Values.First();
-            foreach (var behavior in botBehaviors.Values)
-            {
-                if (behaviorRandomIndex < behaviorCurrentIndex + behavior.Probability)
-                {
-                    botBehavior = behavior;
-                    break;
-                }
-
-                behaviorCurrentIndex += behavior.Probability;
-            }
-
-            BotGame game = new BotGame(Settings.Default.Hostname,
-                                                Settings.Default.Port,
-                                                username,
-                                                password,
-                                                Settings.Default.RealmID,
-                                                0,
-                                                botBehavior);
-            game.SettingUp = true;
-            game.Start();
-            botInfos.Add(new BotInfo(username, password, botBehavior.Name));
-
-            return game;
-        }
-
-        public BotGame LoadBot(BotInfo info)
-        {
-            BotGame game = new BotGame(Settings.Default.Hostname,
-                                                   Settings.Default.Port,
-                                                   info.Username,
-                                                   info.Password,
-                                                   Settings.Default.RealmID,
-                                                   0,
-                                                   botBehaviors[info.BehaviorName]);
-            game.Start();
-            return game;
         }
 
         public bool IsBot(WorldObject obj)
@@ -364,7 +253,6 @@ namespace BotFarm
         void DisplayStatistics(BotGame bot)
         {
             Console.WriteLine("Bot username: " + bot.Username);
-            Console.WriteLine("\tBehavior: " + bot.Behavior.Name);
             Console.WriteLine("\tRunning: " + bot.Running);
             Console.WriteLine("\tConnected: " + bot.Connected);
             Console.WriteLine("\tLogged In: " + bot.LoggedIn);
@@ -396,19 +284,8 @@ namespace BotFarm
 
             factoryGame.Dispose().Wait();
 
-            //SaveBotInfos();
-
             //logger.Dispose();
             //logger = null;
-        }
-
-        private void SaveBotInfos()
-        {
-            using (StreamWriter sw = new StreamWriter(botsInfosPath))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<BotInfo>));
-                serializer.Serialize(sw, botInfos);
-            }
         }
 
         [Conditional("DEBUG")]

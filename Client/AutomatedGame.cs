@@ -7,19 +7,14 @@ using Client.UI;
 using Client.Authentication;
 using Client.World;
 using Client.Chat;
-using Client;
 using Client.World.Network;
 using Client.Authentication.Network;
 using System.Threading;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
-using System.Diagnostics;
 using Client.World.Entities;
 using System.Collections;
-using DetourCLI;
-using MapCLI;
 using System.Text.RegularExpressions;
-using System.IO;
 
 namespace Client
 {
@@ -340,10 +335,6 @@ namespace Client
             if (World.SelectedCharacter == null)
                 return;
 
-            //StrategicAIs.Peek().Update();
-            //TacticalAIs.Peek().Update();
-            //OperationalAIs.Peek().Update();
-
             if (disconnectclient == true)
             {
                 Disconnect();
@@ -622,39 +613,6 @@ namespace Client
         public void EnableActionsByFlag(ActionFlag flag)
         {
             disabledActions &= ~flag;
-        }
-
-        public void CreateCharacter(Race race, Class classWow)
-        {
-            Log("Creating new character");
-            OutPacket createCharacterPacket = new OutPacket(WorldCommand.CMSG_CHAR_CREATE);
-            StringBuilder charName = new StringBuilder("Bot");
-            foreach (char c in Username.Substring(3).Take(9))
-	        {
-                charName.Append((char)(97 + int.Parse(c.ToString())));
-	        }
-
-            // Ensure Name rules are applied
-            char previousChar = '\0';
-            for (int i = 0; i < charName.Length; i++ )
-            {
-                if (charName[i] == previousChar)
-                    charName[i]++;
-                previousChar = charName[i];
-            }
-
-            createCharacterPacket.Write(charName.ToString().ToCString());
-            createCharacterPacket.Write((byte)race);
-            createCharacterPacket.Write((byte)classWow);
-            createCharacterPacket.Write((byte)Gender.Male);
-            byte skin = 6; createCharacterPacket.Write(skin);
-            byte face = 5; createCharacterPacket.Write(face);
-            byte hairStyle = 0; createCharacterPacket.Write(hairStyle);
-            byte hairColor = 1; createCharacterPacket.Write(hairColor);
-            byte facialHair = 5; createCharacterPacket.Write(facialHair);
-            byte outfitId = 0; createCharacterPacket.Write(outfitId);
-
-            SendPacket(createCharacterPacket);
         }
 
         public async Task Dispose()
@@ -1567,24 +1525,6 @@ namespace Client
             SendPacket(packet);
         }
 
-        public void SetFacing(float orientation)
-        {
-            if (!Player.GetPosition().IsValid)
-                return;
-            var packet = new OutPacket(WorldCommand.MSG_MOVE_SET_FACING);
-            packet.WritePacketGuid(Player.GUID);
-            packet.Write((UInt32)0); //flags
-            packet.Write((UInt16)0); //flags2
-            packet.Write((UInt32)0); //time
-            Player.O = orientation;
-            packet.Write(Player.X);
-            packet.Write(Player.Y);
-            packet.Write(Player.Z);
-            packet.Write(Player.O);
-            packet.Write((UInt32)0); //fall time
-            SendPacket(packet);
-        }
-
         #endregion
 
         #region Packet Handlers
@@ -1691,35 +1631,6 @@ namespace Client
             updateObjectHandler.HandleMonsterMovementPacket(packet);
         }
 
-        [PacketHandler(WorldCommand.MSG_MOVE_START_FORWARD)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_BACKWARD)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_STRAFE_LEFT)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_STRAFE_RIGHT)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP_STRAFE)]
-        [PacketHandler(WorldCommand.MSG_MOVE_JUMP)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_TURN_LEFT)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_TURN_RIGHT)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP_TURN)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_PITCH_UP)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_PITCH_DOWN)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP_PITCH)]
-        [PacketHandler(WorldCommand.MSG_MOVE_SET_RUN_MODE)]
-        [PacketHandler(WorldCommand.MSG_MOVE_SET_WALK_MODE)]
-        [PacketHandler(WorldCommand.MSG_MOVE_FALL_LAND)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_SWIM)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP_SWIM)]
-        [PacketHandler(WorldCommand.MSG_MOVE_SET_FACING)]
-        [PacketHandler(WorldCommand.MSG_MOVE_SET_PITCH)]
-        [PacketHandler(WorldCommand.MSG_MOVE_HEARTBEAT)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_ASCEND)]
-        [PacketHandler(WorldCommand.MSG_MOVE_STOP_ASCEND)]
-        [PacketHandler(WorldCommand.MSG_MOVE_START_DESCEND)]
-        protected void HandleMove(InPacket packet)
-        {
-            updateObjectHandler.HandleMovementPacket(packet);
-        }
-
         class UpdateObjectHandler
         {
             AutomatedGame game;
@@ -1728,34 +1639,7 @@ namespace Client
             ObjectUpdateType updateType;
             ulong guid;
             TypeID objectType;
-            ObjectUpdateFlags flags;
-            MovementInfo movementInfo;
-            Dictionary<UnitMoveType, float> movementSpeeds;
-            SplineFlags splineFlags;
-            float splineFacingAngle;
-            ulong splineFacingTargetGuid;
-            Vector3 splineFacingPointX;
-            int splineTimePassed;
-            int splineDuration;
-            uint splineId;
-            float splineVerticalAcceleration;
-            int splineEffectStartTime;
             List<Vector3> splinePoints;
-            SplineEvaluationMode splineEvaluationMode;
-            Vector3 splineEndPoint;
-
-            ulong transportGuid;
-            Vector3 position;
-            Vector3 transportOffset;
-            float o;
-            float corpseOrientation;
-
-            uint lowGuid;
-            ulong targetGuid;
-            uint transportTimer;
-            uint vehicledID;
-            float vehicleOrientation;
-            long goRotation;
 
             Dictionary<int, uint> updateFields;
 
@@ -1764,7 +1648,6 @@ namespace Client
             public UpdateObjectHandler(AutomatedGame game)
             {
                 this.game = game;
-                movementSpeeds = new Dictionary<UnitMoveType, float>();
                 splinePoints = new List<Vector3>();
                 updateFields = new Dictionary<int, uint>();
                 outOfRangeGuids = new List<ulong>();
@@ -1787,13 +1670,11 @@ namespace Client
                             break;
                         case ObjectUpdateType.UPDATETYPE_MOVEMENT:
                             guid = packet.ReadPackedGuid();
-                            ReadMovementUpdateData(packet);
                             break;
                         case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT:
                         case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT2:
                             guid = packet.ReadPackedGuid();
                             objectType = (TypeID)packet.ReadByte();
-                            ReadMovementUpdateData(packet);
                             ReadValuesUpdateData(packet);
                             break;
                         case ObjectUpdateType.UPDATETYPE_OUT_OF_RANGE_OBJECTS:
@@ -1814,7 +1695,6 @@ namespace Client
                 ResetData();
                 updateType = ObjectUpdateType.UPDATETYPE_MOVEMENT;
                 guid = packet.ReadPackedGuid();
-                ReadMovementInfo(packet);
                 HandleUpdateData();
             }
 
@@ -1832,95 +1712,9 @@ namespace Client
             {
                 updateType = ObjectUpdateType.UPDATETYPE_VALUES;
                 guid = 0;
-                lowGuid = 0;
-                movementSpeeds.Clear();
                 splinePoints.Clear();
                 updateFields.Clear();
                 outOfRangeGuids.Clear();
-                movementInfo = null;
-            }
-
-            void ReadMovementUpdateData(InPacket packet)
-            {
-                flags = (ObjectUpdateFlags)packet.ReadUInt16();
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_LIVING))
-                {
-                    ReadMovementInfo(packet);
-
-                    movementSpeeds = new Dictionary<UnitMoveType,float>();
-                    movementSpeeds[UnitMoveType.MOVE_WALK] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_RUN] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_RUN_BACK] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_SWIM] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_SWIM_BACK] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_FLIGHT] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_FLIGHT_BACK] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_TURN_RATE] = packet.ReadSingle();
-                    movementSpeeds[UnitMoveType.MOVE_PITCH_RATE] = packet.ReadSingle();
-
-                    if (movementInfo.Flags.HasFlag(MovementFlags.MOVEMENTFLAG_SPLINE_ENABLED))
-                    {
-                        splineFlags = (SplineFlags)packet.ReadUInt32();
-                        if (splineFlags.HasFlag(SplineFlags.Final_Angle))
-                            splineFacingAngle = packet.ReadSingle();
-                        else if (splineFlags.HasFlag(SplineFlags.Final_Target))
-                            splineFacingTargetGuid = packet.ReadUInt64();
-                        else if (splineFlags.HasFlag(SplineFlags.Final_Point))
-                            splineFacingPointX = packet.ReadVector3();
-
-                        splineTimePassed = packet.ReadInt32();
-                        splineDuration = packet.ReadInt32();
-                        splineId = packet.ReadUInt32();
-                        packet.ReadSingle();
-                        packet.ReadSingle();
-                        splineVerticalAcceleration = packet.ReadSingle();
-                        splineEffectStartTime = packet.ReadInt32();
-                        uint splineCount = packet.ReadUInt32();
-                        for (uint index = 0; index < splineCount; index++)
-                            splinePoints.Add(packet.ReadVector3());
-                        splineEvaluationMode = (SplineEvaluationMode)packet.ReadByte();
-                        splineEndPoint = packet.ReadVector3();
-                    }
-                }
-                else if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_POSITION))
-                {
-                    transportGuid = packet.ReadPackedGuid();
-                    position = packet.ReadVector3();
-                    transportOffset = packet.ReadVector3();
-                    o = packet.ReadSingle();
-                    corpseOrientation = packet.ReadSingle();
-                }
-                else if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_STATIONARY_POSITION))
-                {
-                    position = packet.ReadVector3();
-                    o = packet.ReadSingle();
-                }
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_UNKNOWN))
-                    packet.ReadUInt32();
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_LOWGUID))
-                    lowGuid = packet.ReadUInt32();
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_HAS_TARGET))
-                    targetGuid = packet.ReadPackedGuid();
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_TRANSPORT))
-                    transportTimer = packet.ReadUInt32();
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_VEHICLE))
-                {
-                    vehicledID = packet.ReadUInt32();
-                    vehicleOrientation = packet.ReadSingle();
-                }
-
-                if (flags.HasFlag(ObjectUpdateFlags.UPDATEFLAG_ROTATION))
-                    goRotation = packet.ReadInt64();
-            }
-
-            void ReadMovementInfo(InPacket packet)
-            {
-                movementInfo = new MovementInfo(packet);
             }
 
             private void ReadValuesUpdateData(InPacket packet)
@@ -1958,26 +1752,11 @@ namespace Client
                                     worldObject[pair.Key] = pair.Value;
                                 break;
                             }
-                        case ObjectUpdateType.UPDATETYPE_MOVEMENT:
-                            {
-                                if (movementInfo != null)
-                                {
-                                    WorldObject worldObject = game.Objects[guid];
-                                    worldObject.Set(movementInfo.Position);
-                                    worldObject.O = movementInfo.O;
-                                }
-                                break;
-                            }
                         case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT:
                         case ObjectUpdateType.UPDATETYPE_CREATE_OBJECT2:
                             {
                                 WorldObject worldObject = new WorldObject();
                                 worldObject.GUID = guid;
-                                if (movementInfo != null)
-                                {
-                                    worldObject.Set(movementInfo.Position);
-                                    worldObject.O = movementInfo.O;
-                                }
                                 worldObject.MapID = game.Player.MapID;
                                 foreach (var pair in updateFields)
                                     worldObject[pair.Key] = pair.Value;

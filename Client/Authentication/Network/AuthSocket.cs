@@ -7,7 +7,6 @@ using System.Numerics;
 using System.Text;
 using Client.Crypto;
 using Client.UI;
-using System.Threading;
 
 namespace Client.Authentication.Network
 {

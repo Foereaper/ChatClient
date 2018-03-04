@@ -1,11 +1,4 @@
-﻿using BotFarm.Properties;
-using Client;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace BotFarm
@@ -28,8 +21,6 @@ namespace BotFarm
 
             using (BotFactory factory = new BotFactory())
             {
-                Random random = new Random();
-                factory.SetupFactory(random.Next(Settings.Default.MinBotsCount, Settings.Default.MaxBotsCount));
                 GC.KeepAlive(factory);
             }
         }
