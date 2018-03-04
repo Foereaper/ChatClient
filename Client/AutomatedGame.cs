@@ -1395,8 +1395,10 @@ namespace Client
                         }
                         else
                         {
-                            Level = Regex.Replace(Level, @"[^\d]", "");
-                            level.Add(Convert.ToInt32(Level.ToString()));
+                            if (Level != "") // Levels > 99 cause this to happen ToDo: read info properly not as strings to fix this.
+                                level.Add(Convert.ToInt32(Level.ToString()));
+                            else
+                                level.Add(0);
                         }
                         Class = (Class)(int)System.Convert.ToDecimal(AllInfos[i + 5].ToString());
                         Race = (Race)(int)System.Convert.ToDecimal(AllInfos[i + 8].ToString());
