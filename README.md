@@ -2,6 +2,7 @@
 
 **Working features**
 - Login(show wrong creds/usr, give msgbox when logon server is not reachable), logout, realm selection, character selection
+- Server motd, guild roster
 - Chat channels (custom, glabal, trade, ..)
 - System messages (local and remote)
 - Full who list /w full listview
