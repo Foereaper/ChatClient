@@ -1,5 +1,4 @@
-﻿
-namespace Client.UI
+﻿namespace Client.UI
 {
     public enum LogLevel
     {

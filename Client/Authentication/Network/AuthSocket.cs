@@ -301,14 +301,6 @@ namespace Client.Authentication.Network
                 case AuthResult.NO_MATCH:
                 case AuthResult.UNKNOWN2:
                     Game.UI.AuthError("Wrong password or invalid account");
-                    //Game.UI.LogLine("Wrong password or invalid account or authentication error", LogLevel.Error);
-                    //failedAuthentications++;
-                    //if (failedAuthentications >= MAX_FAILED_AUTENTICATIONS)
-                    //{
-                    //    Game.InvalidCredentials();
-                    //    return;
-                    //}
-                    //Thread.Sleep(1000);
                     break;
                 case AuthResult.WRONG_BUILD_NUMBER:
                     Game.UI.LogLine("Wrong build number", LogLevel.Error);

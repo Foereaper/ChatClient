@@ -71,7 +71,6 @@ namespace BotFarm
 
         List<BotGame> bots = new List<BotGame>();
         public AutomatedGame factoryGame;
-        List<BotInfo> botInfos;
         const string botsInfosPath = "botsinfos.xml";
         const string logPath = "botfactory.log";
         //TextWriter logger;
@@ -304,17 +303,6 @@ namespace BotFarm
                 //Console.WriteLine(message);
                 //logger.WriteLine(message);
             }
-        }
-
-        public void RemoveBot(BotGame bot)
-        {
-            lock (bots)
-            {
-                botInfos.Remove(botInfos.Single(info => info.Username == bot.Username && info.Password == bot.Password));
-                bots.Remove(bot);
-            }
-
-            bot.Dispose().Wait();
         }
     }
 }

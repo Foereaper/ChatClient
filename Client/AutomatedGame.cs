@@ -19,12 +19,6 @@ namespace Client
 {
     public class AutomatedGame : IGameUI, IGame
     {
-        #region Constants
-        protected const float MovementEpsilon = 0.5f;
-        protected const float FollowMovementEpsilon = 5f;
-        protected const float FollowTargetRecalculatePathEpsilon = 5f;
-        #endregion
-
         //public string Logging
         //{
          //   get
@@ -1497,18 +1491,6 @@ namespace Client
             }  
         }
 
-        public void Tele(string teleport)
-        {
-            DoSayChat(".tele " + teleport);
-        }
-
-        public void CastSpell(int spellid, bool chatLog = true)
-        {
-            DoSayChat(".cast " + spellid);
-            if (chatLog)
-                DoSayChat("Casted spellid " + spellid);
-        }
-
         #endregion
 
         #region Actions
@@ -1554,28 +1536,6 @@ namespace Client
             var newMap = packet.ReadUInt32();
         }
 
-        [PacketHandler(WorldCommand.MSG_MOVE_TELEPORT_ACK)]
-        protected void HandleMoveTeleportAck(InPacket packet)
-        {
-            var packGuid = packet.ReadPackedGuid();
-            packet.ReadUInt32();
-            var movementFlags = packet.ReadUInt32();
-            var extraMovementFlags = packet.ReadUInt16();
-            var time = packet.ReadUInt32();
-            Player.X = packet.ReadSingle();
-            Player.Y = packet.ReadSingle();
-            Player.Z = packet.ReadSingle();
-            Player.O = packet.ReadSingle();
-
-            CancelActionsByFlag(ActionFlag.Movement, false);
-
-            OutPacket result = new OutPacket(WorldCommand.MSG_MOVE_TELEPORT_ACK);
-            result.WritePacketGuid(Player.GUID);
-            result.Write((UInt32)0);
-            result.Write(time);
-            SendPacket(result);
-        }
-
         [PacketHandler(WorldCommand.SMSG_CHAR_CREATE)]
         protected void HandleCharCreate(InPacket packet)
         {
@@ -1607,18 +1567,6 @@ namespace Client
             LoggedIn = false;
             Running = false;
             loggedOutEvent.SetResult(true);
-        }
-
-        [PacketHandler(WorldCommand.SMSG_DESTROY_OBJECT)]
-        protected void HandleDestroyObject(InPacket packet)
-        {
-            ulong guid = packet.ReadUInt64();
-            WorldObject worldObject;
-            if (Objects.TryGetValue(guid, out worldObject))
-            {
-                worldObject.ResetPosition();
-                Objects.Remove(guid);
-            }
         }
 
         [PacketHandler(WorldCommand.SMSG_ALL_ACHIEVEMENT_DATA)]

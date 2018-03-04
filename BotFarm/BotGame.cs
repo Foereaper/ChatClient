@@ -135,12 +135,6 @@ namespace BotFarm
             //}, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
         }
 
-        public override void InvalidCredentials()
-        {
-            BotFactory.Instance.RemoveBot(this);
-
-        }
-
         #region Logging
         public override void Log(string message, LogLevel level = LogLevel.Info)
         {
