@@ -86,10 +86,10 @@
     <Compile Include="BotFactory.cs" />
     <Compile Include="BotGame.cs" />
     <Compile Include="BotInfo.cs" />
-    <Compile Include="CharacterSelection.cs">
+    <Compile Include="Forms\CharacterSelection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CharacterSelection.Designer.cs">
+    <Compile Include="Forms\CharacterSelection.Designer.cs">
       <DependentUpon>CharacterSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Chat\ChatChannel.cs" />
@@ -101,39 +101,39 @@
     <Compile Include="Crypto\HashHelper.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FrmChat.cs">
+    <Compile Include="Forms\FrmChat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmChat.Designer.cs">
+    <Compile Include="Forms\FrmChat.Designer.cs">
       <DependentUpon>FrmChat.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmLogin.cs">
+    <Compile Include="Forms\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmLogin.Designer.cs">
+    <Compile Include="Forms\FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmSettings.cs">
+    <Compile Include="Forms\FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSettings.Designer.cs">
+    <Compile Include="Forms\FrmSettings.Designer.cs">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameSocket.cs" />
     <Compile Include="IteratedList.cs" />
-    <Compile Include="NewChannel.cs">
+    <Compile Include="Forms\NewChannel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewChannel.Designer.cs">
+    <Compile Include="Forms\NewChannel.Designer.cs">
       <DependentUpon>NewChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties.cs" />
-    <Compile Include="RealmSelection.cs">
+    <Compile Include="Forms\RealmSelection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RealmSelection.Designer.cs">
+    <Compile Include="Forms\RealmSelection.Designer.cs">
       <DependentUpon>RealmSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Schedule.cs" />
@@ -188,22 +188,22 @@
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CharacterSelection.resx">
+    <EmbeddedResource Include="Forms\CharacterSelection.resx">
       <DependentUpon>CharacterSelection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmChat.resx">
+    <EmbeddedResource Include="Forms\FrmChat.resx">
       <DependentUpon>FrmChat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmLogin.resx">
+    <EmbeddedResource Include="Forms\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmSettings.resx">
+    <EmbeddedResource Include="Forms\FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewChannel.resx">
+    <EmbeddedResource Include="Forms\NewChannel.resx">
       <DependentUpon>NewChannel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RealmSelection.resx">
+    <EmbeddedResource Include="Forms\RealmSelection.resx">
       <DependentUpon>RealmSelection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

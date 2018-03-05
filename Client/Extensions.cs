@@ -5,11 +5,6 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Linq;
-using Client.Authentication.Network;
-using Client.World;
-using Client.Authentication;
-using Client.UI;
-using Client.World.Network;
 
 namespace Client
 {
