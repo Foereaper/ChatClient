@@ -50,20 +50,10 @@ namespace BotFarm
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ChatWindow = new System.Windows.Forms.RichTextBox();
             this.btnSend = new System.Windows.Forms.Button();
-            this.btnPlayerRefresh = new System.Windows.Forms.Button();
             this.lblChar = new System.Windows.Forms.Label();
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.chattimer = new System.Windows.Forms.Timer(this.components);
             this.textMessage = new System.Windows.Forms.TextBox();
-            this.btnGeneral = new System.Windows.Forms.Button();
-            this.btnDefense = new System.Windows.Forms.Button();
-            this.btnTrade = new System.Windows.Forms.Button();
-            this.btnLfg = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.channelNum = new System.Windows.Forms.NumericUpDown();
-            this.gBchans = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.gBwho = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGroup = new System.Windows.Forms.TabPage();
             this.lblPartyGroupSize = new System.Windows.Forms.Label();
@@ -101,9 +91,6 @@ namespace BotFarm
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.channelNum)).BeginInit();
-            this.gBchans.SuspendLayout();
-            this.gBwho.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGroup.SuspendLayout();
             this.tabChannel.SuspendLayout();
@@ -125,7 +112,7 @@ namespace BotFarm
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(884, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1087, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu";
             // 
@@ -253,30 +240,20 @@ namespace BotFarm
             this.ChatWindow.Name = "ChatWindow";
             this.ChatWindow.ReadOnly = true;
             this.ChatWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.ChatWindow.Size = new System.Drawing.Size(518, 243);
+            this.ChatWindow.Size = new System.Drawing.Size(518, 488);
             this.ChatWindow.TabIndex = 1;
             this.ChatWindow.Text = "";
             this.ChatWindow.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.ChatWindow_LinkClicked);
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(445, 269);
+            this.btnSend.Location = new System.Drawing.Point(443, 518);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 3;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
-            // btnPlayerRefresh
-            // 
-            this.btnPlayerRefresh.Location = new System.Drawing.Point(6, 18);
-            this.btnPlayerRefresh.Name = "btnPlayerRefresh";
-            this.btnPlayerRefresh.Size = new System.Drawing.Size(122, 23);
-            this.btnPlayerRefresh.TabIndex = 5;
-            this.btnPlayerRefresh.Text = "Print who list";
-            this.btnPlayerRefresh.UseVisualStyleBackColor = true;
-            this.btnPlayerRefresh.Click += new System.EventHandler(this.btnPlayerRefresh_Click);
             // 
             // lblChar
             // 
@@ -308,122 +285,10 @@ namespace BotFarm
             // textMessage
             // 
             this.textMessage.BackColor = System.Drawing.Color.DarkGray;
-            this.textMessage.Location = new System.Drawing.Point(99, 270);
+            this.textMessage.Location = new System.Drawing.Point(94, 521);
             this.textMessage.Name = "textMessage";
             this.textMessage.Size = new System.Drawing.Size(346, 20);
             this.textMessage.TabIndex = 9;
-            // 
-            // btnGeneral
-            // 
-            this.btnGeneral.Location = new System.Drawing.Point(6, 19);
-            this.btnGeneral.Name = "btnGeneral";
-            this.btnGeneral.Size = new System.Drawing.Size(122, 23);
-            this.btnGeneral.TabIndex = 10;
-            this.btnGeneral.Text = "Join General";
-            this.btnGeneral.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGeneral.UseVisualStyleBackColor = true;
-            this.btnGeneral.Click += new System.EventHandler(this.btnGeneral_Click);
-            // 
-            // btnDefense
-            // 
-            this.btnDefense.Location = new System.Drawing.Point(6, 62);
-            this.btnDefense.Name = "btnDefense";
-            this.btnDefense.Size = new System.Drawing.Size(122, 23);
-            this.btnDefense.TabIndex = 11;
-            this.btnDefense.Text = "Join LocalDefense";
-            this.btnDefense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDefense.UseVisualStyleBackColor = true;
-            this.btnDefense.Click += new System.EventHandler(this.btnDefense_Click);
-            // 
-            // btnTrade
-            // 
-            this.btnTrade.Location = new System.Drawing.Point(6, 41);
-            this.btnTrade.Name = "btnTrade";
-            this.btnTrade.Size = new System.Drawing.Size(122, 23);
-            this.btnTrade.TabIndex = 12;
-            this.btnTrade.Text = "Join Trade";
-            this.btnTrade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTrade.UseVisualStyleBackColor = true;
-            this.btnTrade.Click += new System.EventHandler(this.btnTrade_Click);
-            // 
-            // btnLfg
-            // 
-            this.btnLfg.Location = new System.Drawing.Point(6, 83);
-            this.btnLfg.Name = "btnLfg";
-            this.btnLfg.Size = new System.Drawing.Size(122, 23);
-            this.btnLfg.TabIndex = 13;
-            this.btnLfg.Text = "Join LookingForGroup";
-            this.btnLfg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLfg.UseVisualStyleBackColor = true;
-            this.btnLfg.Click += new System.EventHandler(this.btnLfg_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(6, 126);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 20);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Leave channel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // channelNum
-            // 
-            this.channelNum.Location = new System.Drawing.Point(90, 126);
-            this.channelNum.Maximum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.channelNum.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.channelNum.Name = "channelNum";
-            this.channelNum.Size = new System.Drawing.Size(38, 20);
-            this.channelNum.TabIndex = 15;
-            this.channelNum.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // gBchans
-            // 
-            this.gBchans.Controls.Add(this.button2);
-            this.gBchans.Controls.Add(this.btnLfg);
-            this.gBchans.Controls.Add(this.btnGeneral);
-            this.gBchans.Controls.Add(this.btnDefense);
-            this.gBchans.Controls.Add(this.channelNum);
-            this.gBchans.Controls.Add(this.btnTrade);
-            this.gBchans.Controls.Add(this.button1);
-            this.gBchans.Location = new System.Drawing.Point(443, 340);
-            this.gBchans.Name = "gBchans";
-            this.gBchans.Size = new System.Drawing.Size(134, 177);
-            this.gBchans.TabIndex = 18;
-            this.gBchans.TabStop = false;
-            this.gBchans.Text = "Channels :";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 152);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(104, 22);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Invite Monsterd";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
-            // 
-            // gBwho
-            // 
-            this.gBwho.Controls.Add(this.btnPlayerRefresh);
-            this.gBwho.Location = new System.Drawing.Point(277, 340);
-            this.gBwho.Name = "gBwho";
-            this.gBwho.Size = new System.Drawing.Size(134, 51);
-            this.gBwho.TabIndex = 19;
-            this.gBwho.TabStop = false;
-            this.gBwho.Text = "Who Information :";
             // 
             // tabControl1
             // 
@@ -432,10 +297,10 @@ namespace BotFarm
             this.tabControl1.Controls.Add(this.tabWho);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.Guild);
-            this.tabControl1.Location = new System.Drawing.Point(520, 55);
+            this.tabControl1.Location = new System.Drawing.Point(520, 58);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(352, 237);
+            this.tabControl1.Size = new System.Drawing.Size(514, 483);
             this.tabControl1.TabIndex = 20;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -448,7 +313,7 @@ namespace BotFarm
             this.tabGroup.Location = new System.Drawing.Point(4, 22);
             this.tabGroup.Name = "tabGroup";
             this.tabGroup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGroup.Size = new System.Drawing.Size(344, 211);
+            this.tabGroup.Size = new System.Drawing.Size(506, 457);
             this.tabGroup.TabIndex = 0;
             this.tabGroup.Text = "Group";
             this.tabGroup.UseVisualStyleBackColor = true;
@@ -464,7 +329,7 @@ namespace BotFarm
             // lblPartyPlayers
             // 
             this.lblPartyPlayers.AutoSize = true;
-            this.lblPartyPlayers.Location = new System.Drawing.Point(6, 123);
+            this.lblPartyPlayers.Location = new System.Drawing.Point(3, 396);
             this.lblPartyPlayers.Name = "lblPartyPlayers";
             this.lblPartyPlayers.Size = new System.Drawing.Size(110, 13);
             this.lblPartyPlayers.TabIndex = 2;
@@ -473,7 +338,7 @@ namespace BotFarm
             // btnGroupDisband
             // 
             this.btnGroupDisband.Enabled = false;
-            this.btnGroupDisband.Location = new System.Drawing.Point(216, 182);
+            this.btnGroupDisband.Location = new System.Drawing.Point(157, 428);
             this.btnGroupDisband.Name = "btnGroupDisband";
             this.btnGroupDisband.Size = new System.Drawing.Size(78, 23);
             this.btnGroupDisband.TabIndex = 1;
@@ -491,7 +356,7 @@ namespace BotFarm
             this.listGroup.MultiSelect = false;
             this.listGroup.Name = "listGroup";
             this.listGroup.Scrollable = false;
-            this.listGroup.Size = new System.Drawing.Size(348, 112);
+            this.listGroup.Size = new System.Drawing.Size(510, 393);
             this.listGroup.TabIndex = 0;
             this.listGroup.UseCompatibleStateImageBehavior = false;
             this.listGroup.View = System.Windows.Forms.View.Details;
@@ -505,7 +370,7 @@ namespace BotFarm
             this.tabChannel.Location = new System.Drawing.Point(4, 22);
             this.tabChannel.Name = "tabChannel";
             this.tabChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChannel.Size = new System.Drawing.Size(344, 211);
+            this.tabChannel.Size = new System.Drawing.Size(506, 457);
             this.tabChannel.TabIndex = 1;
             this.tabChannel.Text = "Channel";
             this.tabChannel.UseVisualStyleBackColor = true;
@@ -549,7 +414,7 @@ namespace BotFarm
             this.tabWho.Controls.Add(this.listWho);
             this.tabWho.Location = new System.Drawing.Point(4, 22);
             this.tabWho.Name = "tabWho";
-            this.tabWho.Size = new System.Drawing.Size(344, 211);
+            this.tabWho.Size = new System.Drawing.Size(506, 457);
             this.tabWho.TabIndex = 2;
             this.tabWho.Text = "Who";
             this.tabWho.UseVisualStyleBackColor = true;
@@ -557,7 +422,7 @@ namespace BotFarm
             // refreshWhoList
             // 
             this.refreshWhoList.Image = ((System.Drawing.Image)(resources.GetObject("refreshWhoList.Image")));
-            this.refreshWhoList.Location = new System.Drawing.Point(269, 4);
+            this.refreshWhoList.Location = new System.Drawing.Point(476, 4);
             this.refreshWhoList.Name = "refreshWhoList";
             this.refreshWhoList.Size = new System.Drawing.Size(27, 23);
             this.refreshWhoList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -587,7 +452,7 @@ namespace BotFarm
             this.listWho.GridLines = true;
             this.listWho.Location = new System.Drawing.Point(0, 30);
             this.listWho.Name = "listWho";
-            this.listWho.Size = new System.Drawing.Size(341, 181);
+            this.listWho.Size = new System.Drawing.Size(506, 434);
             this.listWho.TabIndex = 1;
             this.listWho.UseCompatibleStateImageBehavior = false;
             this.listWho.View = System.Windows.Forms.View.Details;
@@ -601,7 +466,7 @@ namespace BotFarm
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(344, 211);
+            this.tabPage1.Size = new System.Drawing.Size(506, 457);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Friends";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -628,7 +493,7 @@ namespace BotFarm
             this.listFriends.GridLines = true;
             this.listFriends.Location = new System.Drawing.Point(0, 30);
             this.listFriends.Name = "listFriends";
-            this.listFriends.Size = new System.Drawing.Size(344, 184);
+            this.listFriends.Size = new System.Drawing.Size(510, 434);
             this.listFriends.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listFriends.TabIndex = 0;
             this.listFriends.UseCompatibleStateImageBehavior = false;
@@ -640,7 +505,7 @@ namespace BotFarm
             this.Guild.Location = new System.Drawing.Point(4, 22);
             this.Guild.Name = "Guild";
             this.Guild.Padding = new System.Windows.Forms.Padding(3);
-            this.Guild.Size = new System.Drawing.Size(344, 211);
+            this.Guild.Size = new System.Drawing.Size(506, 457);
             this.Guild.TabIndex = 4;
             this.Guild.Text = "Guild";
             this.Guild.UseVisualStyleBackColor = true;
@@ -691,7 +556,7 @@ namespace BotFarm
             "Available",
             "Away",
             "Busy"});
-            this.cBStatusFlag.Location = new System.Drawing.Point(755, 33);
+            this.cBStatusFlag.Location = new System.Drawing.Point(1018, 36);
             this.cBStatusFlag.Name = "cBStatusFlag";
             this.cBStatusFlag.Size = new System.Drawing.Size(69, 21);
             this.cBStatusFlag.TabIndex = 21;
@@ -700,7 +565,7 @@ namespace BotFarm
             // lblStatusflag
             // 
             this.lblStatusflag.AutoSize = true;
-            this.lblStatusflag.Location = new System.Drawing.Point(716, 36);
+            this.lblStatusflag.Location = new System.Drawing.Point(975, 39);
             this.lblStatusflag.Name = "lblStatusflag";
             this.lblStatusflag.Size = new System.Drawing.Size(37, 13);
             this.lblStatusflag.TabIndex = 22;
@@ -775,7 +640,7 @@ namespace BotFarm
             "Officer",
             "Party",
             "Raid"});
-            this.comboBox1.Location = new System.Drawing.Point(5, 269);
+            this.comboBox1.Location = new System.Drawing.Point(0, 520);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(88, 21);
             this.comboBox1.TabIndex = 23;
@@ -785,13 +650,11 @@ namespace BotFarm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 345);
+            this.ClientSize = new System.Drawing.Size(1087, 544);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblStatusflag);
             this.Controls.Add(this.cBStatusFlag);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.gBwho);
-            this.Controls.Add(this.gBchans);
             this.Controls.Add(this.textMessage);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.lblChar);
@@ -809,9 +672,6 @@ namespace BotFarm
             this.Load += new System.EventHandler(this.FrmChat_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.channelNum)).EndInit();
-            this.gBchans.ResumeLayout(false);
-            this.gBwho.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabGroup.ResumeLayout(false);
             this.tabGroup.PerformLayout();
@@ -840,24 +700,14 @@ namespace BotFarm
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.RichTextBox ChatWindow;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Button btnPlayerRefresh;
         private System.Windows.Forms.Label lblChar;
         private System.Windows.Forms.Button btnDisconnect;
         private System.Windows.Forms.Timer chattimer;
         private System.Windows.Forms.TextBox textMessage;
-        private System.Windows.Forms.Button btnGeneral;
-        private System.Windows.Forms.Button btnDefense;
-        private System.Windows.Forms.Button btnTrade;
-        private System.Windows.Forms.Button btnLfg;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown channelNum;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.GroupBox gBchans;
-        private System.Windows.Forms.GroupBox gBwho;
         private System.Windows.Forms.ToolStripMenuItem channelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinAllChannelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createNewChannelToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabGroup;
         private System.Windows.Forms.TabPage tabChannel;
