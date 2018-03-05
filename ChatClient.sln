@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README = README
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotFarm", "BotFarm\BotFarm.csproj", "{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -26,12 +24,6 @@ Global
 		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x64.ActiveCfg = Release|x64
 		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x64.Build.0 = Release|x64
 		{7A45F050-E215-4388-B0BE-F11001537A25}.Release|x86.ActiveCfg = Release|Any CPU
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x64.ActiveCfg = Debug|x64
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x64.Build.0 = Debug|x64
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x64.ActiveCfg = Release|x64
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x64.Build.0 = Release|x64
-		{5830EEBA-EAE6-4CF8-8348-8CF807ABBE47}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

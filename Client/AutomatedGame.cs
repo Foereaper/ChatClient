@@ -13,7 +13,6 @@ using System.Threading;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
 using Client.World.Entities;
-using System.Text.RegularExpressions;
 
 namespace Client
 {

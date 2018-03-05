@@ -1,4 +1,6 @@
-﻿namespace BotFarm
+﻿using System.Drawing;
+
+namespace BotFarm
 {
     partial class FrmChat
     {
@@ -551,7 +553,7 @@
             // 
             // refreshWhoList
             // 
-            this.refreshWhoList.Image = global::BotFarm.Properties.Resources.refresh2;
+            this.refreshWhoList.Image = Bitmap.FromFile("C:\\Users\\foereaper\\Desktop\\ChatClient\\ChatClient\\Client\\Resources\\refresh1.png");
             this.refreshWhoList.Location = new System.Drawing.Point(269, 4);
             this.refreshWhoList.Name = "refreshWhoList";
             this.refreshWhoList.Size = new System.Drawing.Size(27, 23);

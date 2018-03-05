@@ -1,4 +1,6 @@
-﻿namespace BotFarm
+﻿using System.Drawing;
+
+namespace BotFarm
 {
     partial class FrmLogin
     {
@@ -158,7 +160,7 @@
             // 
             // Logo
             // 
-            this.Logo.Image = global::BotFarm.Properties.Resources.logo_new;
+            this.Logo.Image = Bitmap.FromFile("C:\\Users\\foereaper\\Desktop\\ChatClient\\ChatClient\\Client\\Resources\\logo_new.png");
             this.Logo.Location = new System.Drawing.Point(20, 12);
             this.Logo.Name = "Logo";
             this.Logo.Size = new System.Drawing.Size(260, 93);
