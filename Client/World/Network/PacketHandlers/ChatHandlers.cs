@@ -336,6 +336,7 @@ namespace Client.World.Network
                 else if ((memberFlags & 4) != 0)
                     status = "DND";
             }
+            System.Threading.Thread.Sleep(500);
             ChatMessage message = new ChatMessage();
             ChatChannel channel = new ChatChannel();
             channel.Type = 0;
@@ -344,6 +345,15 @@ namespace Client.World.Network
             message.ChatTag = 0;
             message.Sender = channel;
             Game.UI.PresentChatMessage(message);
+            System.Threading.Thread.Sleep(500);
+            ChatMessage message2 = new ChatMessage();
+            ChatChannel channel2 = new ChatChannel();
+            channel2.Type = 0;
+            message2.Message = guildInfo;
+            message2.Language = 0;
+            message2.ChatTag = 0;
+            message2.Sender = channel;
+            Game.UI.PresentChatMessage(message2);
         }
 
         /*

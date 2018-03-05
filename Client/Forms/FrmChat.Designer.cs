@@ -99,6 +99,7 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.Guild = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.channelNum)).BeginInit();
             this.gBchans.SuspendLayout();
@@ -430,6 +431,7 @@ namespace BotFarm
             this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabWho);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.Guild);
             this.tabControl1.Location = new System.Drawing.Point(520, 55);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -769,6 +771,16 @@ namespace BotFarm
             this.comboBox1.TabIndex = 23;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // Guild
+            // 
+            this.Guild.Location = new System.Drawing.Point(4, 22);
+            this.Guild.Name = "Guild";
+            this.Guild.Padding = new System.Windows.Forms.Padding(3);
+            this.Guild.Size = new System.Drawing.Size(300, 211);
+            this.Guild.TabIndex = 4;
+            this.Guild.Text = "Guild";
+            this.Guild.UseVisualStyleBackColor = true;
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -887,5 +899,6 @@ namespace BotFarm
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TabPage Guild;
     }
 }
