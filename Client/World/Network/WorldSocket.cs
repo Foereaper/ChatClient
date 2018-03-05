@@ -451,10 +451,8 @@ namespace Client.World.Network
                 if (connection != null)
                     connection.Close();
                 connection = new TcpClient(ServerInfo.Address, ServerInfo.Port);
-
-                Game.UI.LogDebug("done!");
             }
-            catch (SocketException ex)
+            catch (SocketException /*ex*/)
             {
                 return false;
             }

@@ -336,6 +336,14 @@ namespace Client.World.Network
                 else if ((memberFlags & 4) != 0)
                     status = "DND";
             }
+            ChatMessage message = new ChatMessage();
+            ChatChannel channel = new ChatChannel();
+            channel.Type = 0;
+            message.Message = guildMOTD;
+            message.Language = 0;
+            message.ChatTag = 0;
+            message.Sender = channel;
+            Game.UI.PresentChatMessage(message);
         }
 
         /*

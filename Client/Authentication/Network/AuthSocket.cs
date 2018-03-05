@@ -416,7 +416,7 @@ namespace Client.Authentication.Network
 
                 SendLogonChallenge();
             }
-            catch (SocketException ex)
+            catch (SocketException /*ex*/)
             {
                 return false;
             }
