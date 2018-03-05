@@ -19,14 +19,8 @@ namespace BotFarm
             DoLogin();
         }
 
-        private void logtimer_Tick(object sender, EventArgs e)
-        {
-            dbgLog.Text = AutomatedGame.dbgLogging();
-        }
-
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            logtimer.Enabled = true;
             BtnLogin.Enabled = true;
             this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
         }
@@ -110,7 +104,7 @@ namespace BotFarm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(dbgLog.Text);
+            //Clipboard.SetText(dbgLog.Text);
         }
     }
 }

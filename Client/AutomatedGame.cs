@@ -26,7 +26,7 @@ namespace Client
          //   }
         //}
 
-        public static string dbgLogging() // yes
+        /*public static string dbgLogging() // yes
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Client
             {
                 return string.Empty;
             }
-        }
+        }*/
 
         public static bool IsLoggedIn() // yes
         {
@@ -146,7 +146,7 @@ namespace Client
 
         //public static List<string> OnlineFriends = new List<string>();
 
-        public static string DbgLogging;
+        //public static string DbgLogging;
         #region Properties
         public bool Running { get; set; }
         GameSocket socket;
@@ -1581,12 +1581,6 @@ namespace Client
 
         public override void LogLine(string message, LogLevel level = LogLevel.Info)
         {
-#if !DEBUG_LOG
-            if (level > LogLevel.Debug)
-#endif          
-                //Console.WriteLine(Username + " - " + message);
-                //Console.WriteLine(message);
-                DbgLogging = DbgLogging + message + "\r\n";
         }
 
         public override void LogDebug(string message)
