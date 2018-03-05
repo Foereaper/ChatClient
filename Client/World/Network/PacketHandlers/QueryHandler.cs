@@ -29,6 +29,7 @@ namespace Client.World.Network
                         //! Print with proper name and remove from queue
                         m = messageQueue.Dequeue();
                         m.Sender.Sender = name;
+                        m.Message = m.Message.Replace("$REPLACEME53582", name);
                         Game.UI.PresentChatMessage(m);
                     }
                 }

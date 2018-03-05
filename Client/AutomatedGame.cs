@@ -322,7 +322,7 @@ namespace Client
                     {
                         scheduledAction.Action();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         LogException(ex);
                     }
@@ -428,8 +428,8 @@ namespace Client
                     presentrealmList.Add(server.Name);
                 }
 
-                    // select a realm - default to the first realm if there is only one
-                   index = realmList.Count == 1 ? 0 : -1;
+                // select a realm - default to the first realm if there is only one
+                index = realmList.Count == 1 ? 0 : -1;
                 selectedServer = realmList[realmidGUI];
             }
 
@@ -739,7 +739,7 @@ namespace Client
                     data = Available;
                     break;
             }
-            if(status == 0)
+            if (status == 0)
             {
                 OutPacket packet1 = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
                 packet1.Write(Away);
@@ -1168,7 +1168,7 @@ namespace Client
                 System.Threading.Thread.Sleep(4000);
                 RequestWhoList();
                 RequestFriendList();
-                UpdateFriendList("1");   
+                UpdateFriendList("1");
             }
             #endregion
 
@@ -1300,7 +1300,7 @@ namespace Client
             packet.BaseStream.Position = 0;
             for (int i = 0; i < len; i++)
             {
-                if (dump[i] != 0 && dump[i+1] != 0) //(packet.PeekChar() != 0
+                if (dump[i] != 0 && dump[i + 1] != 0) //(packet.PeekChar() != 0
                 {
                     receiverGuid = packet.ReadUInt64();
                     i += 7;
@@ -1313,7 +1313,7 @@ namespace Client
                 {
                     var playername = "";
                     bool resolve = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
-                    if(receiverGuid.ToString().Length <= 4 && receiverGuid.ToString().Length == 4)
+                    if (receiverGuid.ToString().Length <= 4 && receiverGuid.ToString().Length == 4)
                     {
                         if (!friendGUIList.Contains(receiverGuid.ToString())) // added
                         {
@@ -1333,12 +1333,12 @@ namespace Client
                         response.Write(receiverGuid);
                         Game.SendPacket(response);
                     }
-                }  
+                }
             }
-            if(resolvedFriendList.Count > 1)
+            if (resolvedFriendList.Count > 1)
             {
                 UpdateFriendList("1");
-            }  
+            }
         }
 
         #endregion
@@ -1402,7 +1402,7 @@ namespace Client
             bool logoutOk = packet.ReadUInt32() == 0;
             bool instant = packet.ReadByte() != 0;
 
-            if(instant || !logoutOk)
+            if (instant || !logoutOk)
             {
                 Connected = false;
                 LoggedIn = false;
@@ -1425,7 +1425,7 @@ namespace Client
             CompletedAchievements.Clear();
             AchievementCriterias.Clear();
 
-            for (;;)
+            for (; ; )
             {
                 uint achievementId = packet.ReadUInt32();
                 if (achievementId == 0xFFFFFFFF)
@@ -1436,7 +1436,7 @@ namespace Client
                 CompletedAchievements.Add(achievementId);
             }
 
-            for (;;)
+            for (; ; )
             {
                 uint criteriaId = packet.ReadUInt32();
                 if (criteriaId == 0xFFFFFFFF)
@@ -1555,15 +1555,15 @@ namespace Client
         public override void PresentChatMessage(ChatMessage message)
         {
             StringBuilder sb = new StringBuilder();
-            if(message.Sender.Type.ToString() != "Channel" && message.Sender.Type.ToString() != "ChannelInvitation" && message.Sender.Type.ToString() != "partyGroupInvitation")
+            if (message.Sender.Type.ToString() != "Channel" && message.Sender.Type.ToString() != "ChannelInvitation" && message.Sender.Type.ToString() != "partyGroupInvitation")
             {
                 //sb.Append(message.Sender.Type == ChatMessageType.WhisperInform ? "To " : "");
-            //}
-            //else
-            //{
+                //}
+                //else
+                //{
                 sb.Append(message.Sender.Type == ChatMessageType.WhisperInform ? "To " : "[" + message.Sender.Type.ToString() + "] ");
             }
-            
+
             //! Color codes taken from default chat_cache in WTF folder
             //! TODO: RTF form?
             switch (message.Sender.Type)

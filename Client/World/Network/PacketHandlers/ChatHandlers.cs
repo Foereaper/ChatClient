@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using Client.Chat;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
-
 
 namespace Client.World.Network
 {
@@ -565,9 +565,13 @@ namespace Client.World.Network
 
             if (chatType == ChatMessageType.Achievement || chatType == ChatMessageType.GuildAchievement)
             {
-                var achievementId = packet.ReadUInt32();
-            }
+                int achievementId = (int)packet.ReadUInt32();
+                
+                string achName = GetAchName(achievementId);
+                message = message.Replace("$a", achName);
+                message = message.Replace("%s", "$REPLACEME53582");
 
+            }
             ChatChannel channel = new ChatChannel();
             channel.Type = chatType;
 
@@ -587,6 +591,7 @@ namespace Client.World.Network
                 || Game.World.PlayerNameLookup.TryGetValue(senderGuid, out senderName))
                 {
                     chatMessage.Sender.Sender = senderName;
+                    chatMessage.Message = chatMessage.Message.Replace("$REPLACEME53582", senderName);
                     Game.UI.PresentChatMessage(chatMessage);
                     return;
                 }
@@ -711,6 +716,29 @@ namespace Client.World.Network
             message.ChatTag = 0;
             message.Sender = channelgc;
             Game.UI.PresentChatMessage(message);
+        }
+        public string GetAchName(int achid)
+        {
+            string achName = "Error404AchNotFound";
+            using (XmlReader reader = XmlReader.Create("achievements.xml"))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        if (reader.Name == "article")
+                        {
+                            if (Convert.ToInt32(reader["name"]) == achid)
+                            {
+                                reader.Read();
+                                achName = reader.Value.Trim();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return achName;
         }
     }
 }
