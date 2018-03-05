@@ -4,7 +4,7 @@ using System;
 
 namespace BotFarm
 {
-    class BotGame : AutomatedGame
+    class ClientInit : AutomatedGame
     {
         public bool SettingUp
         {
@@ -12,7 +12,7 @@ namespace BotFarm
             set;
         }
 
-        public BotGame(string hostname, int port, string username, string password, int realmId, int character)
+        public ClientInit(string hostname, int port, string username, string password, int realmId, int character)
             : base(hostname, port, username, password, realmId, character) {}
 
         /*public static UInt64 GroupLeaderGuid { get; private set; }
@@ -138,29 +138,29 @@ namespace BotFarm
         #region Logging
         public override void Log(string message, LogLevel level = LogLevel.Info)
         {
-            BotFactory.Instance.Log(Username + " - " + message, level);
+            SessionInit.Instance.Log(Username + " - " + message, level);
         }
 
         public override void AuthError(string message)
         {
             //BotFactory.Instance.Log(Username + " - " + message, level);
-            BotFactory.Instance.Log(message);
+            SessionInit.Instance.Log(message);
         }
 
         public override void LogLine(string message, LogLevel level = LogLevel.Info)
         {
             //BotFactory.Instance.Log(Username + " - " + message, level);
-            BotFactory.Instance.Log(message, level);
+            SessionInit.Instance.Log(message, level);
         }
 
         public override void LogException(string message)
         {
-            BotFactory.Instance.Log(Username + " - " + message, LogLevel.Error);
+            SessionInit.Instance.Log(Username + " - " + message, LogLevel.Error);
         }
 
         public override void LogException(Exception ex)
         {
-            BotFactory.Instance.Log(string.Format(Username + " - {0} {1}", ex.Message, ex.StackTrace), LogLevel.Error);
+            SessionInit.Instance.Log(string.Format(Username + " - {0} {1}", ex.Message, ex.StackTrace), LogLevel.Error);
         }
         #endregion
     }

@@ -161,10 +161,10 @@ namespace BotFarm
             textMessage.Select();
             this.textMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
 
-            BotFactory.Instance.factoryGame.JoinChannel(1);
-            BotFactory.Instance.factoryGame.JoinChannel(2);
-            BotFactory.Instance.factoryGame.JoinChannel(3);
-            BotFactory.Instance.factoryGame.JoinChannel(4);
+            SessionInit.Instance.factoryGame.JoinChannel(1);
+            SessionInit.Instance.factoryGame.JoinChannel(2);
+            SessionInit.Instance.factoryGame.JoinChannel(3);
+            SessionInit.Instance.factoryGame.JoinChannel(4);
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -206,7 +206,7 @@ namespace BotFarm
                         //AppendText(ChatWindow, "Whisper to" + user + ": " + message + "\r\n", Color.Pink);
                         //ChatWindow.AppendText("Whisper to" + user +": " + message + "\r\n");
                         //ChatWindow.ScrollToCaret();
-                        BotFactory.Instance.factoryGame.DoWhisperChat(message, user);
+                        SessionInit.Instance.factoryGame.DoWhisperChat(message, user);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -216,7 +216,7 @@ namespace BotFarm
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(3);
                         var message = tmp2.ToString();
-                        BotFactory.Instance.factoryGame.DoGuildChat(message);
+                        SessionInit.Instance.factoryGame.DoGuildChat(message);
                         var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
                         //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
                         //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
@@ -230,7 +230,7 @@ namespace BotFarm
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(3);
                         var message = tmp2.ToString();
-                        BotFactory.Instance.factoryGame.DoPartyChat(message);
+                        SessionInit.Instance.factoryGame.DoPartyChat(message);
                         //var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
                         //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
                         //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
@@ -243,7 +243,7 @@ namespace BotFarm
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(8);
                         var player = tmp2.ToString();
-                        BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                        SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -252,7 +252,7 @@ namespace BotFarm
                 {
                     if (tmp.Substring(0, 2) == "/j")
                     {
-                        BotFactory.Instance.factoryGame.DoSayChat(textMessage.Text);
+                        SessionInit.Instance.factoryGame.DoSayChat(textMessage.Text);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -264,7 +264,7 @@ namespace BotFarm
                         tmp = tmp.TrimStart('/');
                         tmp = tmp.TrimStart('1');
                         tmp = tmp.TrimStart(' ');
-                        BotFactory.Instance.factoryGame.SayChannel(tmp, 1);
+                        SessionInit.Instance.factoryGame.SayChannel(tmp, 1);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -273,7 +273,7 @@ namespace BotFarm
                         tmp = tmp.TrimStart('/');
                         tmp = tmp.TrimStart('2');
                         tmp = tmp.TrimStart(' ');
-                        BotFactory.Instance.factoryGame.SayChannel(tmp, 2);
+                        SessionInit.Instance.factoryGame.SayChannel(tmp, 2);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -282,7 +282,7 @@ namespace BotFarm
                         tmp = tmp.TrimStart('/');
                         tmp = tmp.TrimStart('3');
                         tmp = tmp.TrimStart(' ');
-                        BotFactory.Instance.factoryGame.SayChannel(tmp, 3);
+                        SessionInit.Instance.factoryGame.SayChannel(tmp, 3);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -291,14 +291,14 @@ namespace BotFarm
                         tmp = tmp.TrimStart('/');
                         tmp = tmp.TrimStart('4');
                         tmp = tmp.TrimStart(' ');
-                        BotFactory.Instance.factoryGame.SayChannel(tmp, 4);
+                        SessionInit.Instance.factoryGame.SayChannel(tmp, 4);
                         textMessage.Text = string.Empty;
                         return;
                     }
                     if (tmp.Substring(0, 1) != "/")
                     {
                         //AppendText(ChatWindow, "Say: " + textMessage.Text + "\r\n", Color.DarkGray);
-                        BotFactory.Instance.factoryGame.DoSayChat(textMessage.Text);
+                        SessionInit.Instance.factoryGame.DoSayChat(textMessage.Text);
                         textMessage.Text = string.Empty;
                         return;
                     }
@@ -341,7 +341,7 @@ namespace BotFarm
 
         private void btnPlayerRefresh_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.RequestWhoList();
+            SessionInit.Instance.factoryGame.RequestWhoList();
         }
 
         private void ChatWindow_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -351,31 +351,31 @@ namespace BotFarm
 
         private void btnGeneral_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.JoinChannel(1);
+            SessionInit.Instance.factoryGame.JoinChannel(1);
             channelNum.Value = 1;
         }
 
         private void btnTrade_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.JoinChannel(2);
+            SessionInit.Instance.factoryGame.JoinChannel(2);
             channelNum.Value = 2;
         }
 
         private void btnDefense_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.JoinChannel(3);
+            SessionInit.Instance.factoryGame.JoinChannel(3);
             channelNum.Value = 3;
         }
 
         private void btnLfg_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.JoinChannel(4);
+            SessionInit.Instance.factoryGame.JoinChannel(4);
             channelNum.Value = 4;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.LeaveChannel((int)channelNum.Value);
+            SessionInit.Instance.factoryGame.LeaveChannel((int)channelNum.Value);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -396,10 +396,10 @@ namespace BotFarm
 
         private void joinAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.JoinChannel(1);
-            BotFactory.Instance.factoryGame.JoinChannel(2);
-            BotFactory.Instance.factoryGame.JoinChannel(3);
-            BotFactory.Instance.factoryGame.JoinChannel(4);
+            SessionInit.Instance.factoryGame.JoinChannel(1);
+            SessionInit.Instance.factoryGame.JoinChannel(2);
+            SessionInit.Instance.factoryGame.JoinChannel(3);
+            SessionInit.Instance.factoryGame.JoinChannel(4);
         }
 
         private void createNewChannelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -417,11 +417,11 @@ namespace BotFarm
             DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname.ToString() +"'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (Accept == DialogResult.Yes)
             {
-                BotFactory.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
+                SessionInit.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
             }
             else
             {
-                BotFactory.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+                SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
             }
             return;
         }
@@ -435,17 +435,17 @@ namespace BotFarm
             DialogResult Accept = MessageBox.Show(InvitationSender.ToString() + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (Accept == DialogResult.Yes)
             {
-                BotFactory.Instance.factoryGame.AcceptGroupInvitation();
+                SessionInit.Instance.factoryGame.AcceptGroupInvitation();
             } else
             {
-                BotFactory.Instance.factoryGame.GroupDecline();
+                SessionInit.Instance.factoryGame.GroupDecline();
             }
             return;
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.InvitePlayerToParty("Monsterd");      
+            SessionInit.Instance.factoryGame.InvitePlayerToParty("Monsterd");      
         }
 
         public void DisplayGroupList()
@@ -471,8 +471,8 @@ namespace BotFarm
             listGroup.Items.Clear();
             btnGroupDisband.Enabled = false;
 
-            List<ulong> memberguids = BotFactory.Instance.factoryGame.GroupMembersGuids;
-            ulong leaderguid = BotFactory.Instance.factoryGame.GroupLeaderGuid;
+            List<ulong> memberguids = SessionInit.Instance.factoryGame.GroupMembersGuids;
+            ulong leaderguid = SessionInit.Instance.factoryGame.GroupLeaderGuid;
 
             if (memberguids.Count != 0)
             {
@@ -480,7 +480,7 @@ namespace BotFarm
                 foreach (ulong guid in memberguids)
                 {
                     var player = "";
-                    bool resolve = (BotFactory.Instance.factoryGame.Game.World.PlayerNameLookup.TryGetValue(guid, out player));
+                    bool resolve = (SessionInit.Instance.factoryGame.Game.World.PlayerNameLookup.TryGetValue(guid, out player));
                     ListViewItem item = new ListViewItem(player);
                     if (guid == leaderguid)
                     {
@@ -512,7 +512,7 @@ namespace BotFarm
 
         private void btnGroupDisband_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.GroupDisband();
+            SessionInit.Instance.factoryGame.GroupDisband();
         }
 
         void listGroup_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
@@ -720,7 +720,7 @@ namespace BotFarm
 
         private void refreshWhoList_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.RequestWhoList();
+            SessionInit.Instance.factoryGame.RequestWhoList();
         }
 
         private void addFriendToolStripMenuItem_Click(object sender, EventArgs e)
@@ -730,7 +730,7 @@ namespace BotFarm
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.AddFriend(player);
+                    SessionInit.Instance.factoryGame.AddFriend(player);
                 }
                 else
                 {
@@ -757,7 +757,7 @@ namespace BotFarm
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                    SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                 }
                 else
                 {
@@ -771,7 +771,7 @@ namespace BotFarm
             int index = cBStatusFlag.SelectedIndex;
             if (index != -1)
             {
-                BotFactory.Instance.factoryGame.ChangeStatus(index);
+                SessionInit.Instance.factoryGame.ChangeStatus(index);
             }
         }
 
@@ -782,7 +782,7 @@ namespace BotFarm
             {
                 if(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.IgnorePlayer(player);
+                    SessionInit.Instance.factoryGame.IgnorePlayer(player);
                 }
                 else
                 {
@@ -793,8 +793,8 @@ namespace BotFarm
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 2) { BotFactory.Instance.factoryGame.RequestWhoList(); }
-            if (tabControl1.SelectedIndex == 3) { BotFactory.Instance.factoryGame.RequestFriendList(); }
+            if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestWhoList(); }
+            if (tabControl1.SelectedIndex == 3) { SessionInit.Instance.factoryGame.RequestFriendList(); }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)
@@ -824,7 +824,7 @@ namespace BotFarm
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.AddFriend(player);
+                    SessionInit.Instance.factoryGame.AddFriend(player);
                 }
                 else
                 {
@@ -840,7 +840,7 @@ namespace BotFarm
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.IgnorePlayer(player);
+                    SessionInit.Instance.factoryGame.IgnorePlayer(player);
                 }
                 else
                 {
@@ -853,7 +853,7 @@ namespace BotFarm
         {
             int index = listFriends.SelectedItems[0].Index;
             string guid = AutomatedGame.friendGUIList[index];
-            BotFactory.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid));
+            SessionInit.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid));
         }
 
         private void listFriends_MouseClick(object sender, MouseEventArgs e)
@@ -883,7 +883,7 @@ namespace BotFarm
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
-                    BotFactory.Instance.factoryGame.InvitePlayerToParty(player);
+                    SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                 }
                 else
                 {
@@ -900,33 +900,38 @@ namespace BotFarm
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             // leave channel 1
-            BotFactory.Instance.factoryGame.LeaveChannel(1);
+            SessionInit.Instance.factoryGame.LeaveChannel(1);
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             // leave channel 2
-            BotFactory.Instance.factoryGame.LeaveChannel(2);
+            SessionInit.Instance.factoryGame.LeaveChannel(2);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             // leave channel 3
-            BotFactory.Instance.factoryGame.LeaveChannel(3);
+            SessionInit.Instance.factoryGame.LeaveChannel(3);
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
             // leave channel 4
-            BotFactory.Instance.factoryGame.LeaveChannel(4);
+            SessionInit.Instance.factoryGame.LeaveChannel(4);
         }
 
         private void leaveAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BotFactory.Instance.factoryGame.LeaveChannel(1);
-            BotFactory.Instance.factoryGame.LeaveChannel(2);
-            BotFactory.Instance.factoryGame.LeaveChannel(3);
-            BotFactory.Instance.factoryGame.LeaveChannel(4);
+            SessionInit.Instance.factoryGame.LeaveChannel(1);
+            SessionInit.Instance.factoryGame.LeaveChannel(2);
+            SessionInit.Instance.factoryGame.LeaveChannel(3);
+            SessionInit.Instance.factoryGame.LeaveChannel(4);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

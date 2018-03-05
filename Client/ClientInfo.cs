@@ -1,12 +1,12 @@
 ﻿namespace BotFarm
 {
-    public class BotInfo
+    public class ClientInfo
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public BotInfo() { }
+        public ClientInfo() { }
 
-        public BotInfo(string username, string password)
+        public ClientInfo(string username, string password)
         {
             this.Username = username;
             this.Password = password;

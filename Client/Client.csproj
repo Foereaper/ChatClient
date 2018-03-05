@@ -59,20 +59,26 @@
     <ApplicationIcon>wowgasm_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatchQueue.cs" />
+    <Compile Include="Util\BatchQueue.cs" />
     <Compile Include="Authentication\AuthCommand.cs" />
     <Compile Include="Authentication\AuthResult.cs" />
     <Compile Include="Authentication\CommandHandler.cs" />
@@ -85,10 +91,9 @@
     <Compile Include="Authentication\ServerAuthChallenge.cs" />
     <Compile Include="Authentication\ServerAuthProof.cs" />
     <Compile Include="AutomatedGame.cs" />
-    <Compile Include="BotBehaviorSettings.cs" />
-    <Compile Include="BotFactory.cs" />
-    <Compile Include="BotGame.cs" />
-    <Compile Include="BotInfo.cs" />
+    <Compile Include="SessionInit.cs" />
+    <Compile Include="ClientGame.cs" />
+    <Compile Include="ClientInfo.cs" />
     <Compile Include="Forms\CharacterSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,7 +129,7 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameSocket.cs" />
-    <Compile Include="IteratedList.cs" />
+    <Compile Include="Util\IteratedList.cs" />
     <Compile Include="Forms\NewChannel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,11 +148,11 @@
     <Compile Include="Forms\RealmSelection.Designer.cs">
       <DependentUpon>RealmSelection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Schedule.cs" />
+    <Compile Include="Util\Schedule.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="UI\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="World\World.cs" />
     <Compile Include="World\CharacterEnumeration.cs" />
     <Compile Include="World\Definitions\Enums.cs" />
     <Compile Include="World\Definitions\TextEmote.cs" />
