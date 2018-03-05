@@ -160,7 +160,7 @@ namespace BotFarm
             // 
             // Logo
             // 
-            this.Logo.Image = Bitmap.FromFile("C:\\Users\\foereaper\\Desktop\\ChatClient\\ChatClient\\Client\\Resources\\logo_new.png");
+            this.Logo.Image = global::Client.Properties.Resources.logo_new;
             this.Logo.Location = new System.Drawing.Point(20, 12);
             this.Logo.Name = "Logo";
             this.Logo.Size = new System.Drawing.Size(260, 93);
