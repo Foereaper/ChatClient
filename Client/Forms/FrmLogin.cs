@@ -94,10 +94,10 @@ namespace BotFarm
             TimeSpan timeout = TimeSpan.FromSeconds(10);
             if (KnockServerPort(logonserver.Text, 3724, timeout) == true)
             {
-                BotFactory.setLogonserver = logonserver.Text;
-                BotFactory.setUsername = username.Text;
-                BotFactory.setPassword = password.Text;
-                BotFactory start = new BotFactory();
+                SessionInit.setLogonserver = logonserver.Text;
+                SessionInit.setUsername = username.Text;
+                SessionInit.setPassword = password.Text;
+                SessionInit start = new SessionInit();
                 GC.KeepAlive(start);
             }
             else
