@@ -294,6 +294,8 @@ namespace Client.Authentication.Network
 
             switch (proof.error)
             {
+                case AuthResult.SUCCESS:
+                    break;
                 case AuthResult.NO_MATCH:
                     Game.UI.AuthError("Unknown Username/Password combination.");
                     //Game.UI.LogLine("Unknown account name", LogLevel.Error);
