@@ -1,5 +1,4 @@
-﻿
-namespace Client.World.Definitions
+﻿namespace Client.World.Definitions
 {
     public enum Race : byte
     {

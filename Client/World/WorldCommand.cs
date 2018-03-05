@@ -1,5 +1,4 @@
-﻿
-namespace Client.World
+﻿namespace Client.World
 {
     public enum WorldCommand : uint
     {

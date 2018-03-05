@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Client.Chat.Definitions
+﻿namespace Client.Chat.Definitions
 {
     public enum Language : uint
     {
