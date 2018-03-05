@@ -196,6 +196,9 @@
     <None Include="Resources\refresh1.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\achievements.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
