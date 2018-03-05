@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Client.Chat;
-using Client.Chat.Definitions;
 
 namespace Client.World.Network
 {

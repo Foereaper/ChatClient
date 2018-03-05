@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 
 namespace Client.Crypto
 {
     using CryptoNS = System.Security.Cryptography;
-    using HashAlgo = System.Security.Cryptography.HashAlgorithm;
 
     enum HashAlgorithm
     {

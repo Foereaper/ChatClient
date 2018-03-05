@@ -1,5 +1,3 @@
-using System;
-
 namespace Client.World.Definitions
 {
     public static class Extensions

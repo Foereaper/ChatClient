@@ -107,7 +107,6 @@
     <Compile Include="Chat\Definitions\Language.cs" />
     <Compile Include="Crypto\ARC4.cs" />
     <Compile Include="Crypto\HashHelper.cs" />
-    <Compile Include="Definitions.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Forms\FrmChat.cs">
       <SubType>Form</SubType>
@@ -149,9 +148,9 @@
       <DependentUpon>RealmSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Util\Schedule.cs" />
+    <Compile Include="Util\Trigger.cs" />
     <Compile Include="UI\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\Trigger.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="World\CharacterEnumeration.cs" />
     <Compile Include="World\Definitions\Enums.cs" />
