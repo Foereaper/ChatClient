@@ -928,5 +928,10 @@ namespace BotFarm
             BotFactory.Instance.factoryGame.LeaveChannel(3);
             BotFactory.Instance.factoryGame.LeaveChannel(4);
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

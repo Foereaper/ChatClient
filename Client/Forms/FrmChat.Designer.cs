@@ -98,6 +98,7 @@ namespace BotFarm
             this.whisperToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.channelNum)).BeginInit();
             this.gBchans.SuspendLayout();
@@ -306,9 +307,9 @@ namespace BotFarm
             // textMessage
             // 
             this.textMessage.BackColor = System.Drawing.Color.DarkGray;
-            this.textMessage.Location = new System.Drawing.Point(2, 270);
+            this.textMessage.Location = new System.Drawing.Point(99, 270);
             this.textMessage.Name = "textMessage";
-            this.textMessage.Size = new System.Drawing.Size(443, 20);
+            this.textMessage.Size = new System.Drawing.Size(346, 20);
             this.textMessage.TabIndex = 9;
             // 
             // btnGeneral
@@ -753,11 +754,27 @@ namespace BotFarm
             this.removeFriendToolStripMenuItem.Text = "Remove friend";
             this.removeFriendToolStripMenuItem.Click += new System.EventHandler(this.removeFriendToolStripMenuItem_Click);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Global",
+            "Guild",
+            "Officer",
+            "Party",
+            "Raid"});
+            this.comboBox1.Location = new System.Drawing.Point(5, 269);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(88, 21);
+            this.comboBox1.TabIndex = 23;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 292);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblStatusflag);
             this.Controls.Add(this.cBStatusFlag);
             this.Controls.Add(this.tabControl1);
@@ -869,5 +886,6 @@ namespace BotFarm
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
