@@ -199,6 +199,9 @@
     <Content Include="achievements.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="areatable.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
