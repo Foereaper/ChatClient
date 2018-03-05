@@ -294,14 +294,15 @@ namespace Client.Authentication.Network
 
             switch (proof.error)
             {
-                case AuthResult.UPDATE_CLIENT:
-                    break;
                 case AuthResult.NO_MATCH:
-                case AuthResult.UNKNOWN2:
+                    Game.UI.AuthError("Unknown Username/Password combination.");
+                    //Game.UI.LogLine("Unknown account name", LogLevel.Error);
                     break;
-                case AuthResult.WRONG_BUILD_NUMBER:
+                case AuthResult.ACCOUNT_BANNED:
+                    Game.UI.AuthError("Your account is banned.");
                     break;
                 default:
+                    Game.UI.AuthError("Login failed.");
                     break;
             }
 
