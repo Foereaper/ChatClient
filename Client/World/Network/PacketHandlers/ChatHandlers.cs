@@ -736,7 +736,7 @@ namespace Client.World.Network
                                 if (Convert.ToInt32(reader["name"]) == achid)
                                 {
                                     reader.Read();
-                                    achName = reader.Value.Trim();
+                                    achName = "[" + reader.Value.Trim() + "]";
                                     break;
                                 }
                             }
