@@ -18,25 +18,6 @@ namespace Client
 {
     public class AutomatedGame : IGameUI, IGame
     {
-        //public string Logging
-        //{
-         //   get
-         //   {
-                //return DbgLogging;
-         //   }
-        //}
-
-        /*public static string dbgLogging() // yes
-        {
-            try
-            {
-                return DbgLogging.ToString();
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }*/
 
         public static bool IsLoggedIn() // yes
         {
@@ -146,7 +127,6 @@ namespace Client
 
         //public static List<string> OnlineFriends = new List<string>();
 
-        //public static string DbgLogging;
         #region Properties
         public bool Running { get; set; }
         GameSocket socket;
@@ -441,17 +421,7 @@ namespace Client
                 selectedServer = realmList[0];
             else
             {
-                LogLine("\n\tRealmID\tname");
-
                 int index = 0;
-                foreach (WorldServerInfo server in realmList)
-                    LogLine
-                    (
-                        string.Format("{0}\t{1}",
-                        index.ToString(),
-                        server.Name,
-                        index++)
-                    );
 
                 foreach (WorldServerInfo server in realmList)
                 {
@@ -460,12 +430,6 @@ namespace Client
 
                     // select a realm - default to the first realm if there is only one
                    index = realmList.Count == 1 ? 0 : -1;
-                while (index > realmList.Count || index < 0)
-                {
-                    LogLine("Choose a realm:  ");
-                    if (!int.TryParse(Console.ReadLine(), out index))
-                        LogLine("Connecting to realm " + realmList[RealmID].Name);
-                }
                 selectedServer = realmList[realmidGUI];
             }
 
@@ -481,20 +445,8 @@ namespace Client
         public override void PresentCharacterList(Character[] characterList)
         {
 
-            LogLine("\n\tName\tLevel Class Race");
-
             int index = 0;
             //List<string> charname = new List<string>();
-            foreach (Character character in characterList)
-                LogLine
-                (
-                    string.Format("{4}\t{0}\t{1} {2} {3}",
-                    character.Name,
-                    character.Level,
-                    character.Race,
-                    character.Class,
-                    index++)
-                );
 
             foreach (Character characterz in characterList)
             {
@@ -526,9 +478,6 @@ namespace Client
 
                 World.SelectedCharacter = characterList[characterID];
                 // TODO: enter world
-
-                LogLine(string.Format("Entering pseudo-world with character {0}", Game.World.SelectedCharacter.Name));
-
                 OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
                 packet.Write(World.SelectedCharacter.GUID);
                 SendPacket(packet);
@@ -688,12 +637,12 @@ namespace Client
             SendPacket(response);
         }
 
-        /*public void RequestGuildList()
+        public void RequestGuildList()
         {
             OutPacket response = new OutPacket(WorldCommand.CMSG_GUILD_ROSTER);
             response.Write("");
             Game.SendPacket(response);
-        }*/
+        }
 
         /*
         CMSG_JOIN_CHANNEL = 151,
@@ -1585,17 +1534,14 @@ namespace Client
 
         public override void LogDebug(string message)
         {
-            LogLine(message, LogLevel.Debug);
         }
 
         public override void LogException(string message)
         {
-            Console.WriteLine(Username + " - " + message);
         }
 
         public override void LogException(Exception ex)
         {
-            Console.WriteLine(string.Format(Username + " - {0} {1}", ex.Message, ex.StackTrace));
         }
 
         public IGameUI UI

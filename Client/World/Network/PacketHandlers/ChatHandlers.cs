@@ -291,49 +291,51 @@ namespace Client.World.Network
         /// Glues together > CMSG_GUILD_MOTD = 145, SMSG_GUILD_EVENT = 146
         /// <summary>
         [PacketHandler(WorldCommand.SMSG_GUILD_ROSTER)]
-        protected void HandleGuildMotd(InPacket packet)
+        protected void HandleGuildRoster(InPacket packet)
         {
-            System.Threading.Thread.Sleep(200);
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
-
-            byte[] dump = packet.ReadToEnd();
-            StringBuilder builder = new StringBuilder();
-            string debug = System.Text.Encoding.UTF8.GetString(packet.ReadToEnd());
-
-            #region testing crap
-            // Guild MOTD 
-            //for (int i = 4; dump[i] != 0x07; i++)
-            //{
-            //    if (dump[i] == 0x0) { builder.Append((char)0x20); i++; }
-            //    if (dump[i] != 0x07) { builder.Append((char)dump[i]); }
-            //}
-            //string debug2 = System.Text.Encoding.UTF8.GetString(dump);
-            #endregion
-
-            for (int i = 4; dump[i] != 0xFF; i++)
+            UInt32 totalMembers = packet.ReadUInt32();
+            string guildMOTD = packet.ReadCString();
+            string guildInfo = packet.ReadCString();
+            UInt32 numberOfRanks = packet.ReadUInt32();
+            for (int i = 0; i < numberOfRanks; i++)
             {
-                if (dump[i] == 0x0 && dump[i + 1] == 0x7) //end signature of motd
+                UInt32 rankRights = packet.ReadUInt32();
+                UInt32 goldWithdrawlLimit = packet.ReadUInt32();
+                for (int j = 0; j < 6; j++)
                 {
-                    break;
-                }
-                if (dump[i] == 0x0)
-                {
-                    builder.Append((char)0x20); // glue messages together..
-                    i++;
-                }
-                if (dump[i] != 0xFF)
-                {
-                    builder.Append((char)dump[i]);
+                    UInt32 guildBankRights = packet.ReadUInt32();
+                    UInt32 guildBankSlots = packet.ReadUInt32();
                 }
             }
+            for(int c = 0; c < totalMembers; c++)
+            {
+                UInt64 playerGuid = packet.ReadUInt64();
+                int memberFlags = (int)packet.ReadByte();
+                string playerName = packet.ReadCString();
+                UInt32 playerRank = packet.ReadUInt32();
+                byte playerLevel = packet.ReadByte();
+                byte playerClass = packet.ReadByte();
+                byte whyTheFuckHasntAnyEmulationProjectDocumentedWhatThisUInt8IsForFucksSake = packet.ReadByte();
+                UInt32 playerZone = packet.ReadUInt32();
+                float timeSinceLastLogIn = 0;
+                if (memberFlags == 0)
+                    timeSinceLastLogIn = packet.ReadSingle();
+                string publicNote = packet.ReadCString();
+                string officeNote = packet.ReadCString();
+                if (memberFlags == 0)
+                    continue;
 
-            message.Message = builder.ToString();
-            message.Language = 0;
-            message.ChatTag = 0;
-            message.Sender = channel;
-            Game.UI.PresentChatMessage(message);
+                string status = "Online";
+
+                if ((memberFlags & 8) != 0)
+                    status = "Chat Client";
+
+                else if ((memberFlags & 2) != 0)
+                    status = "AFK";
+
+                else if ((memberFlags & 4) != 0)
+                    status = "DND";
+            }
         }
 
         /*

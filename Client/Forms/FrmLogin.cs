@@ -110,7 +110,6 @@ namespace BotFarm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Clipboard.SetText(dbgLog.Text);
         }
     }
 }

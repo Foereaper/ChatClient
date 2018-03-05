@@ -70,7 +70,6 @@ namespace Client.World.Network
             }
             else
             {
-                Game.UI.LogLine(string.Format("Authentication succeeded, but received response {0}", detail));
                 Game.UI.Exit();
             }
         }
@@ -82,7 +81,6 @@ namespace Client.World.Network
 
             if (count == 0)
             {
-                Game.UI.LogLine("No characters found!");
                 Game.NoCharactersFound();
             }
             else

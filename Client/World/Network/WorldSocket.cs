@@ -236,7 +236,6 @@ namespace Client.World.Network
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
-                    Game.UI.LogLine("Server has closed the connection");
                     Game.Reconnect();
                     return;
                 }
@@ -273,11 +272,8 @@ namespace Client.World.Network
             {
                 Game.UI.LogException(ex);
             }
-            catch(SocketException ex)
+            catch(SocketException /*ex*/)
             {
-                Game.UI.LogException(ex);
-                Game.UI.LogLine("Last InPacket: " + LastInOpcodeName, LogLevel.Warning);
-                Game.UI.LogLine("Last OutPacket: " + LastOutOpcodeName, LogLevel.Warning);
                 Game.Reconnect();
             }
         }
@@ -293,7 +289,6 @@ namespace Client.World.Network
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
-                    Game.UI.LogLine("Server has closed the connection");
                     Game.Reconnect();
                     return;
                 }
@@ -361,7 +356,6 @@ namespace Client.World.Network
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
-                    Game.UI.LogLine("Server has closed the connection");
                     Game.Reconnect();
                     return;
                 }
@@ -454,8 +448,6 @@ namespace Client.World.Network
         {
             try
             {
-                Game.UI.LogDebug(string.Format("Connecting to realm {0}... ", ServerInfo.Name));
-
                 if (connection != null)
                     connection.Close();
                 connection = new TcpClient(ServerInfo.Address, ServerInfo.Port);
@@ -464,7 +456,6 @@ namespace Client.World.Network
             }
             catch (SocketException ex)
             {
-                Game.UI.LogLine(string.Format("World connect failed. ({0})", (SocketError)ex.ErrorCode), LogLevel.Error);
                 return false;
             }
 

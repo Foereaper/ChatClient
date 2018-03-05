@@ -278,10 +278,8 @@ namespace Client.Authentication.Network
                     //Game.UI.LogLine("Unknown account name", LogLevel.Error);
                     break;
                 case AuthResult.ACCOUNT_IN_USE:
-                    Game.UI.LogLine("Account already logged in", LogLevel.Error);
                     break;
                 case AuthResult.WRONG_BUILD_NUMBER:
-                    Game.UI.LogLine("Wrong build number", LogLevel.Error);
                     break;
             }
 
@@ -296,18 +294,13 @@ namespace Client.Authentication.Network
             switch (proof.error)
             {
                 case AuthResult.UPDATE_CLIENT:
-                    Game.UI.LogLine("Client update requested");
                     break;
                 case AuthResult.NO_MATCH:
                 case AuthResult.UNKNOWN2:
-                    Game.UI.AuthError("Wrong password or invalid account");
                     break;
                 case AuthResult.WRONG_BUILD_NUMBER:
-                    Game.UI.LogLine("Wrong build number", LogLevel.Error);
                     break;
                 default:
-                    if (proof.error != AuthResult.SUCCESS)
-                        Game.UI.LogLine(string.Format("Unkown error {0}", proof.error), LogLevel.Error);
                     break;
             }
 
@@ -317,8 +310,6 @@ namespace Client.Authentication.Network
                 return;
             }
 
-            Game.UI.LogDebug("Received logon proof");
-
             bool equal = true;
             equal = m2 != null && m2.Length == 20;
             for (int i = 0; i < m2.Length && equal; ++i)
@@ -327,15 +318,11 @@ namespace Client.Authentication.Network
 
             if (!equal)
             {
-                Game.UI.LogDebug("Server auth failed!");
                 SendLogonChallenge();
                 return;
             }
             else
             {
-                Game.UI.LogLine("Authentication succeeded!");
-                //failedAuthentications = 0;
-                Game.UI.LogLine("Requesting realm list", LogLevel.Detail);
                 Send(new byte[] { (byte)AuthCommand.REALM_LIST, 0x0, 0x0, 0x0, 0x0 });
             }
 
@@ -350,8 +337,6 @@ namespace Client.Authentication.Network
 
             uint size = reader.ReadUInt16();
             WorldServerList realmList = new WorldServerList(reader);
-            Game.UI.LogDebug("Received realm list");
-
             Game.UI.PresentRealmList(realmList);
         }
 
@@ -376,9 +361,8 @@ namespace Client.Authentication.Network
                     null                // state object
                 );
             }
-            catch(Exception ex)
+            catch(Exception /*ex*/)
             {
-                Game.UI.LogException(ex);
             }
         }
 
@@ -390,7 +374,6 @@ namespace Client.Authentication.Network
 
                 if (size == 0)
                 {
-                    Game.UI.LogLine("Server has disconnected.", LogLevel.Info);
                     Game.Exit();
                 }
 
@@ -401,8 +384,6 @@ namespace Client.Authentication.Network
                 CommandHandler handler;
                 if (Handlers.TryGetValue(command, out handler))
                     handler();
-                else
-                    Game.UI.LogLine(string.Format("Unkown or unhandled command '{0}'", command), LogLevel.Warning);
             }
             // these exceptions can happen as race condition on shutdown
             catch (ObjectDisposedException ex)
@@ -428,8 +409,6 @@ namespace Client.Authentication.Network
         {
             try
             {
-                Game.UI.Log("Connecting to realmlist... ");
-
                 connection = new TcpClient(this.Hostname, this.Port);
                 stream = connection.GetStream();
 
@@ -439,7 +418,6 @@ namespace Client.Authentication.Network
             }
             catch (SocketException ex)
             {
-                Game.UI.LogLine(string.Format("Auth socket failed. ({0})", (SocketError)ex.ErrorCode), LogLevel.Error);
                 return false;
             }
 

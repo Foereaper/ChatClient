@@ -20,13 +20,6 @@ namespace Client.World.Network
         {
             this.Header = new ClientHeader(command, this);
 
-            string hh = this.Header.Command.ToString() + " size: " + this.Header.Size.ToString();
-
-            //if (!hh.Contains("SMSG_MONSTER_MOVE"))
-            //{
-            //    AutomatedGame.DbgLogging = AutomatedGame.DbgLogging + hh + "\n";
-            //}
-
             Buffer = new MemoryStream();
             base.OutStream = Buffer;
 

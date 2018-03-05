@@ -160,7 +160,6 @@ namespace BotFarm
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.autherror);
-            //this.Controls.Add(this.dbgLog);
             this.Controls.Add(this.lblLogonserver);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.lblPass);
