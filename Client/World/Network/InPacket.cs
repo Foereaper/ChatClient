@@ -23,13 +23,6 @@ namespace Client.World.Network
             
             string hh = header.ToString();
 
-            if (!hh.Contains("SMSG_MONSTER_MOVE"))
-            {
-                AutomatedGame.DbgLogging = AutomatedGame.DbgLogging + hh + "\r\n";
-            } 
-
-            
-
         }
 
         public ulong ReadPackedGuid()

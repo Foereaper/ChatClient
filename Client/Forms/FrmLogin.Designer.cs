@@ -39,8 +39,6 @@ namespace BotFarm
             this.lblPass = new System.Windows.Forms.Label();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.lblLogonserver = new System.Windows.Forms.Label();
-            this.dbgLog = new System.Windows.Forms.TextBox();
-            this.logtimer = new System.Windows.Forms.Timer(this.components);
             this.autherror = new System.Windows.Forms.Label();
             this.authcheck = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
@@ -111,20 +109,6 @@ namespace BotFarm
             this.lblLogonserver.TabIndex = 7;
             this.lblLogonserver.Text = "Logon server :";
             // 
-            // dbgLog
-            // 
-            this.dbgLog.Location = new System.Drawing.Point(342, 46);
-            this.dbgLog.Multiline = true;
-            this.dbgLog.Name = "dbgLog";
-            this.dbgLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dbgLog.Size = new System.Drawing.Size(365, 216);
-            this.dbgLog.TabIndex = 8;
-            // 
-            // logtimer
-            // 
-            this.logtimer.Enabled = true;
-            this.logtimer.Tick += new System.EventHandler(this.logtimer_Tick);
-            // 
             // autherror
             // 
             this.autherror.AutoSize = true;
@@ -176,7 +160,7 @@ namespace BotFarm
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.autherror);
-            this.Controls.Add(this.dbgLog);
+            //this.Controls.Add(this.dbgLog);
             this.Controls.Add(this.lblLogonserver);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.lblPass);
@@ -209,8 +193,6 @@ namespace BotFarm
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.Button BtnLogin;
         private System.Windows.Forms.Label lblLogonserver;
-        private System.Windows.Forms.TextBox dbgLog;
-        private System.Windows.Forms.Timer logtimer;
         private System.Windows.Forms.Label autherror;
         private System.Windows.Forms.Timer authcheck;
         private System.Windows.Forms.Button button1;
