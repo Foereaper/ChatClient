@@ -83,6 +83,12 @@ namespace BotFarm
 
         private void DoLogin()
         {
+            if (username.Text == "" || password.Text == "")
+            {
+                MessageBox.Show("Please enter a username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             BtnLogin.Enabled = false;
             password.Enabled = false;
             TimeSpan timeout = TimeSpan.FromSeconds(10);
