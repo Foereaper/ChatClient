@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using Client.Authentication;
-using Client.UI;
 using System.IO;
 
 namespace Client.World.Network

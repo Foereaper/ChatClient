@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Client.UI;
 using Client.Authentication;
 using Client.World;
@@ -1484,6 +1485,7 @@ namespace Client
             AuthenticationError = true;
             AuthErrorText = message;
 #endif
+            MessageBox.Show(message, "Auth Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public override void NewMessage(string message)

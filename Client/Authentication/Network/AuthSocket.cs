@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
 using Client.Crypto;
-using Client.UI;
 
 namespace Client.Authentication.Network
 {
@@ -274,12 +273,14 @@ namespace Client.Authentication.Network
                     break;
                 }
                 case AuthResult.NO_MATCH:
-                    Game.UI.AuthError("Unknown account name");
+                    Game.UI.AuthError("Unknown Username/Password combination.");
                     //Game.UI.LogLine("Unknown account name", LogLevel.Error);
                     break;
-                case AuthResult.ACCOUNT_IN_USE:
+                case AuthResult.ACCOUNT_BANNED:
+                    Game.UI.AuthError("Your account is banned.");
                     break;
-                case AuthResult.WRONG_BUILD_NUMBER:
+                default:
+                    Game.UI.AuthError("Login failed.");
                     break;
             }
 
