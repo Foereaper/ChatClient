@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.IO;
 using Client.Chat;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
@@ -719,6 +720,8 @@ namespace Client.World.Network
         }
         public string GetAchName(int achid)
         {
+            if (!File.Exists("achievements.xml"))
+                return "Why did you delete achievements.xml?";
             string achName = "Error404AchNotFound";
             using (XmlReader reader = XmlReader.Create("achievements.xml"))
             {
