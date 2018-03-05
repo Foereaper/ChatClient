@@ -78,7 +78,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatchQueue.cs" />
+    <Compile Include="Util\BatchQueue.cs" />
     <Compile Include="Authentication\AuthCommand.cs" />
     <Compile Include="Authentication\AuthResult.cs" />
     <Compile Include="Authentication\CommandHandler.cs" />
@@ -129,7 +129,7 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameSocket.cs" />
-    <Compile Include="IteratedList.cs" />
+    <Compile Include="Util\IteratedList.cs" />
     <Compile Include="Forms\NewChannel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,7 +148,7 @@
     <Compile Include="Forms\RealmSelection.Designer.cs">
       <DependentUpon>RealmSelection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Schedule.cs" />
+    <Compile Include="Util\Schedule.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="UI\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

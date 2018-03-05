@@ -1,6 +1,5 @@
 ﻿using Client;
 using Client.UI;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BotFarm
