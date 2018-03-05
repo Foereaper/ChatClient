@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
 using Client.Chat;
 using Client.Chat.Definitions;
 using Client.World.Definitions;
@@ -58,7 +56,6 @@ namespace Client.World.Network
             ChatMessage message = new ChatMessage();
             ChatChannel channel = new ChatChannel();
             channel.Type = ChatMessageType.partyGroupInvitation;
-
             // index[0] 1 == invited to party group
 
             StringBuilder builder = new StringBuilder();
@@ -568,7 +565,7 @@ namespace Client.World.Network
             {
                 int achievementId = (int)packet.ReadUInt32();
                 
-                string achName = GetAchName(achievementId);
+                string achName = Client.Extensions.GetAchName(achievementId);
                 message = message.Replace("$a", achName);
                 message = message.Replace("%s", "$REPLACEME53582");
 
@@ -718,38 +715,6 @@ namespace Client.World.Network
             message.Sender = channelgc;
             Game.UI.PresentChatMessage(message);
         }
-        public string GetAchName(int achid)
-        {
-            if (!File.Exists("achievements.xml"))
-                return "Why did you delete achievements.xml?";
-            string achName = "Error404AchNotFound";
-            using (XmlReader reader = XmlReader.Create("achievements.xml"))
-            {
-                try
-                {
-                    while (reader.Read())
-                    {
-                        if (reader.IsStartElement())
-                        {
-                            if (reader.Name == "article")
-                            {
-                                if (Convert.ToInt32(reader["name"]) == achid)
-                                {
-                                    reader.Read();
-                                    achName = "[" + reader.Value.Trim() + "]";
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                catch(System.Xml.XmlException err)
-                {
 
-                    return "Error reading XML FILE " + err.Message;
-                }
-            }
-            return achName;
-        }
     }
 }

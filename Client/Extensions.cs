@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Linq;
-
+using System.Xml;
 namespace Client
 {
     public static class Extensions
@@ -120,6 +120,74 @@ namespace Client
             }
 
             return result;
+        }
+
+        public static string GetAchName(int achid)
+        {
+            if (!File.Exists("achievements.xml"))
+                return "Why did you delete achievements.xml?";
+            string achName = "Error404AchNotFound";
+            using (XmlReader reader = XmlReader.Create("achievements.xml"))
+            {
+                try
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            if (reader.Name == "article")
+                            {
+                                if (Convert.ToInt32(reader["name"]) == achid)
+                                {
+                                    reader.Read();
+                                    achName = "[" + reader.Value.Trim() + "]";
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (System.Xml.XmlException err)
+                {
+
+                    return "Error reading XML FILE " + err.Message;
+                }
+            }
+            return achName;
+        }
+
+        public static string GetZoneName(int achid)
+        {
+            if (!File.Exists("areatable.xml"))
+                return "areatable.xml not found";
+            string zoneName = "Nobody Knows";
+            using (XmlReader reader = XmlReader.Create("areatable.xml"))
+            {
+                try
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            if (reader.Name == "article")
+                            {
+                                if (Convert.ToInt32(reader["name"]) == achid)
+                                {
+                                    reader.Read();
+                                    zoneName = reader.Value.Trim();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (System.Xml.XmlException err)
+                {
+
+                    return "Error reading XML FILE " + err.Message;
+                }
+            }
+            return zoneName;
         }
     }
 }

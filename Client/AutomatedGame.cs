@@ -90,6 +90,7 @@ namespace Client
         public static List<int> level = new List<int>();
         public static List<string> pclass = new List<string>();
         public static List<string> prace = new List<string>();
+        public static List<string> pzone = new List<string>();
         public static int playersonline;
 
         public Race Race { get; private set; }
@@ -1098,6 +1099,7 @@ namespace Client
             level.Clear();
             pclass.Clear();
             prace.Clear();
+            pzone.Clear();
             playersonline = (int)packet.ReadUInt32();
             UInt32 sentResults = packet.ReadUInt32();
             for (int i = 0; i < sentResults; i++)
@@ -1116,6 +1118,7 @@ namespace Client
                 pclass.Add(className.ToString());
                 Race raceName = (Race)playerRace;
                 prace.Add(raceName.ToString());
+                pzone.Add(Client.Extensions.GetZoneName((int)playerZone));
             }
             UpdateWhoList("1");
         }

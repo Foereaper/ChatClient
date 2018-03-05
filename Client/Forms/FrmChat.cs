@@ -533,13 +533,13 @@ namespace BotFarm
 
         public void DisplayWhoList()
         {
-            ColumnHeader columnPlayer, columnGuild, columnLvl, columnClass, columnRace;
+            ColumnHeader columnPlayer, columnGuild, columnLvl, columnClass, columnRace, columnZone;
             columnPlayer = new ColumnHeader();
             columnGuild = new ColumnHeader();
             columnLvl = new ColumnHeader();
             columnClass = new ColumnHeader();
             columnRace = new ColumnHeader();
-
+            columnZone = new ColumnHeader();
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
             columnPlayer.Width = 70;
@@ -555,6 +555,10 @@ namespace BotFarm
             columnRace.Text = "Race";
             columnRace.TextAlign = HorizontalAlignment.Left;
             columnRace.Width = 50;
+            columnClass.Width = 50;
+            columnZone.Text = "Zone";
+            columnZone.TextAlign = HorizontalAlignment.Left;
+            columnZone.Width = 50;
 
             listWho.Columns.Clear();
             
@@ -563,7 +567,7 @@ namespace BotFarm
             listWho.Columns.Add(columnLvl);
             listWho.Columns.Add(columnClass);
             listWho.Columns.Add(columnRace);
-
+            listWho.Columns.Add(columnZone);
             //listWho.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             //listWho.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
@@ -581,6 +585,7 @@ namespace BotFarm
                 item.SubItems.Add(AutomatedGame.level[index].ToString());
                 item.SubItems.Add(AutomatedGame.pclass[index]);
                 item.SubItems.Add(AutomatedGame.prace[index]);
+                item.SubItems.Add(AutomatedGame.pzone[index]);
                 listWho.Items.Add(item);
                 index++;
             }
