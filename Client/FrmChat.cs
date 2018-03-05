@@ -334,7 +334,9 @@ namespace BotFarm
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Credits to; BotFarm (jackpoz), WCell, Mangos, and PseuWoW. And StackerDEV for gui and small fixes.");
+            MessageBox.Show("Credits to jackpoz's work on their project BotFarm." + Environment.NewLine +
+                 "Developer Credits: StackerDEV, Foereaper and Terrorblade." + Environment.NewLine +
+            "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects.");
         }
 
         private void btnPlayerRefresh_Click(object sender, EventArgs e)
