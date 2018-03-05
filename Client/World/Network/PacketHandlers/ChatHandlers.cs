@@ -725,20 +725,28 @@ namespace Client.World.Network
             string achName = "Error404AchNotFound";
             using (XmlReader reader = XmlReader.Create("achievements.xml"))
             {
-                while (reader.Read())
+                try
                 {
-                    if (reader.IsStartElement())
+                    while (reader.Read())
                     {
-                        if (reader.Name == "article")
+                        if (reader.IsStartElement())
                         {
-                            if (Convert.ToInt32(reader["name"]) == achid)
+                            if (reader.Name == "article")
                             {
-                                reader.Read();
-                                achName = reader.Value.Trim();
-                                break;
+                                if (Convert.ToInt32(reader["name"]) == achid)
+                                {
+                                    reader.Read();
+                                    achName = reader.Value.Trim();
+                                    break;
+                                }
                             }
                         }
                     }
+                }
+                catch(System.Xml.XmlException err)
+                {
+
+                    return "Error reading XML FILE " + err.Message;
                 }
             }
             return achName;
