@@ -192,7 +192,6 @@
     <None Include="Resources\refresh1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image1.bmp" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
