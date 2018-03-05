@@ -1137,134 +1137,36 @@ namespace Client
             SendPacket(response);
         }
 
-        /// <summary>
-        /// CMSG_WHO = 98 full who player list data
-        /// Warning, this code burns your eyes !!! REFACTORING NEEDED !!
-        /// At first I wrote code that handles data, check if in guild or not and read bytes and jump jump jump..
-        /// but this code had a flaw/bug so I did this, really bad but it work ...
-        /// 
-        /// # extra debug information; #
-        /// Layout who list ;
-        /// 
-        /// byte[0] = people found / online
-        /// byte[1,2,3] skip == 0x0
-        /// byte[4] = people found / online
-        /// byte[5,6,7] skip == 0x0
-        /// byte[8] = start first username ascii byte
-        /// 
-        /// keep in mind lvl is in hex and you need cast it back to dec.
-        /// 
-        /// Not in GUILD
-        /// Username 00 00 lvl 00 00 00 Class 00 00 00 Race <Delimiter here>
-        ///
-        /// In GUILD
-        /// Username 00 Guild 00 lvl 00 00 00 Class 00 00 00 Race <Delimiter here>
-        ///
-        /// Data delimiter 8x bytes 0x00 or 0x??, examples below:
-        /// 00 00 00 00 01 00 00 00  after first user
-        /// 00 00 00 00 D2 00 00 00  after second user
-        /// 00 00 00 00 9B 0D 00 00  after third user
-        /// 00 00 00 01 9B 0D 00 00  and so on..
-        /// 00 00 00 00 D2 00 00 00
-        /// 00 00 00 01 2B 11 00 00
-        /// 00 00 00 00 EF 05 00 00
-        /// </summary>
         [PacketHandler(WorldCommand.SMSG_WHO)]
         protected void HandleWhoList(InPacket packet)
         {
             ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
+            ChatChannel channel = new ChatChannel { Type = 0 };
             StringBuilder newbuild = new StringBuilder();
-        
-            byte[] dump = packet.ReadToEnd();
-            for (int i = 0; i < dump.Length; i++)
-            {
-                if((int)dump[i] >= 32 && (int)dump[i] <= 122)
-                {
-                    if((int)dump[i] == 32)
-                    {
-                        newbuild.Append("_");
-                    } else
-                    {
-                        newbuild.Append((char)dump[i]);
-                    }
-                }
-                if((char)dump[i] == 0)
-                {
-                    newbuild.Append("  ");
-                }
-                if ((byte)dump[i] >= 1 && (byte)dump[i] <= 64)
-                {
-                    if((byte)dump[i] != 32)
-                    {
-                        newbuild.Append((int)dump[i]);
-                    }
-                }
-            }
-        
-            //StringBuilder builder = new StringBuilder();
 
             player.Clear();
             guild.Clear();
             level.Clear();
             pclass.Clear();
             prace.Clear();
-
-            string[] AllInfos = newbuild.ToString().Split(new[] { "  " }, StringSplitOptions.None); // '\x0020'
-
-            playersonline = (int)dump[0];
-            for (int i = 0; i < AllInfos.Length; i++)
+            playersonline = (int)packet.ReadUInt32();
+            UInt32 sentResults = packet.ReadUInt32();
+            for (int i = 0; i < sentResults; i++)
             {
-                string current = AllInfos[i];
-                if(Regex.Matches(current, @"[a-zA-Z]").Count > 2)
-                {
-                    player.Add(AllInfos[i].ToString());
-                    if (AllInfos[i+1].ToString() != "")
-                    {
-                        guild.Add(AllInfos[i + 1].ToString().Replace("_", " "));
-                        string Level = AllInfos[i + 2].ToString();
-                        if(Regex.Matches(Level, @"[a-zA-Z]").Count > 0)
-                        {
-                            int lvl = (int)System.Convert.ToChar(AllInfos[i + 2].ToString());
-                            level.Add(lvl);
-                        }
-                        else
-                        {
-                            Level = Regex.Replace(Level, @"[^\d]", "");
-                            if (Level != "") // Levels > 99 cause this to happen ToDo: read info properly not as strings to fix this.
-                                level.Add(Convert.ToInt32(Level.ToString()));
-                            else
-                                level.Add(0);
-                        }
-                        Class = (Class)(int)System.Convert.ToDecimal(AllInfos[i + 5].ToString());
-                        Race = (Race)(int)System.Convert.ToDecimal(AllInfos[i + 8].ToString());
-                        pclass.Add(Class.ToString());
-                        prace.Add(Race.ToString());
-                        i += 3;
-                    }
-                    else
-                    {
-                        guild.Add("");
-                        string Level = AllInfos[i + 2].ToString();
-                        if (Regex.Matches(Level, @"[a-zA-Z]").Count > 0)
-                        {
-                            int lvl = (int)System.Convert.ToChar(AllInfos[i + 2].ToString());
-                            level.Add(lvl);
-                        }
-                        else
-                        {
-                            if (Level != "") // Levels > 99 cause this to happen ToDo: read info properly not as strings to fix this.
-                                level.Add(Convert.ToInt32(Level.ToString()));
-                            else
-                                level.Add(0);
-                        }
-                        Class = (Class)(int)System.Convert.ToDecimal(AllInfos[i + 5].ToString());
-                        Race = (Race)(int)System.Convert.ToDecimal(AllInfos[i + 8].ToString());
-                        pclass.Add(Class.ToString());
-                        prace.Add(Race.ToString());
-                    }
-                }
+                string playerName = packet.ReadCString();
+                string playerGuild = packet.ReadCString();
+                UInt32 playerLevel = packet.ReadUInt32();
+                UInt32 playerClass = packet.ReadUInt32();
+                UInt32 playerRace = packet.ReadUInt32();
+                byte playerGender = packet.ReadByte();
+                UInt32 playerZone = packet.ReadUInt32();
+                player.Add(playerName);
+                guild.Add(playerGuild);
+                level.Add((int)playerLevel);
+                Class className = (Class)playerClass;
+                pclass.Add(className.ToString());
+                Race raceName = (Race)playerRace;
+                prace.Add(raceName.ToString());
             }
             UpdateWhoList("1");
         }
