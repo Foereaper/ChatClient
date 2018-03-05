@@ -132,7 +132,6 @@
       <DependentUpon>NewChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -193,6 +192,7 @@
     <None Include="Resources\refresh1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Image1.bmp" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
