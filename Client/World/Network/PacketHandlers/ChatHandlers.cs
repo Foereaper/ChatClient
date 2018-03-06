@@ -351,25 +351,27 @@ namespace Client.World.Network
                 Game.World.guildNote.Add(publicNote);
                 Game.World.guildOfficerNote.Add(officeNote);
             }
-            System.Threading.Thread.Sleep(500);
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
-            message.Message = guildMOTD;
-            message.Language = 0;
-            message.ChatTag = 0;
-            message.Sender = channel;
-            Game.UI.PresentChatMessage(message);
-            System.Threading.Thread.Sleep(500);
-            ChatMessage message2 = new ChatMessage();
-            ChatChannel channel2 = new ChatChannel();
-            channel2.Type = 0;
-            message2.Message = guildInfo;
-            message2.Language = 0;
-            message2.ChatTag = 0;
-            message2.Sender = channel;
-            Game.UI.PresentChatMessage(message2);
             Game.UI.UpdateRoster("1");
+            if (!Game.World.sawGuildMessageBefore)
+            {
+                ChatMessage message = new ChatMessage();
+                ChatChannel channel = new ChatChannel();
+                channel.Type = 0;
+                message.Message = guildMOTD;
+                message.Language = 0;
+                message.ChatTag = 0;
+                message.Sender = channel;
+                Game.UI.PresentChatMessage(message);
+                ChatMessage message2 = new ChatMessage();
+                ChatChannel channel2 = new ChatChannel();
+                channel2.Type = 0;
+                message2.Message = guildInfo;
+                message2.Language = 0;
+                message2.ChatTag = 0;
+                message2.Sender = channel;
+                Game.UI.PresentChatMessage(message2);
+                Game.World.sawGuildMessageBefore = true;
+            }
         }
 
         /*

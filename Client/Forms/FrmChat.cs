@@ -68,80 +68,75 @@ namespace BotFarm
                 AutomatedGame.RosterUpdate = "";
                 return;
             }
-            if (AutomatedGame.NewMessageData != null)
+            SessionInit.Instance.factoryGame.Game.World.mesQue = true;
+            List<string> newMessages = SessionInit.Instance.factoryGame.Game.World.newMessageQue;
+            foreach (string messageData in newMessages)
             {
                 //"[Invited6"
-                string GroupInvite = AutomatedGame.NewMessageData.Substring(0, 9);
+                string GroupInvite = messageData.Substring(0, 9);
                 if (GroupInvite == "[Invited6")
                 {
                     Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleGroupInvitation));
                     HandleInvite.Start();
                     HandleInvite.Join();
-                    return;
+                    continue;
                 }
                 //"[Invited5"
-                string ChannelInvite = AutomatedGame.NewMessageData.Substring(0, 9);
+                string ChannelInvite = messageData.Substring(0, 9);
                 if (ChannelInvite == "[Invited5")
                 {
                     Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleChannelInvitation));
                     HandleInvite.Start();
                     HandleInvite.Join();
-                    return;
+                    continue;
                 }
-                string WhisperSendC = AutomatedGame.NewMessageData.Substring(0, 2); //To
+                string WhisperSendC = messageData.Substring(0, 2); //To
                 if (WhisperSendC == "To")
                 {
-                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.MediumVioletRed);
-                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
-                    AutomatedGame.NewMessageData = null;
-                    return;
+                    continue;
                 }
-                string WhisperC = AutomatedGame.NewMessageData.Substring(0, 9); //[Whisper] 
+                string WhisperC = messageData.Substring(0, 9); //[Whisper] 
                 if (WhisperC == "[Whisper]")
                 {
-                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.MediumVioletRed);
-                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
-                    AutomatedGame.NewMessageData = null;
-                    return;
+                    continue;
                 }
-                string GuildC = AutomatedGame.NewMessageData.Substring(0, 7); //[Guild] 
+                string GuildC = messageData.Substring(0, 7); //[Guild] 
                 if (GuildC == "[Guild]")
                 {
-                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Green);
-                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Green);
+                    //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
-                    AutomatedGame.NewMessageData = null;
-                    return;
+                     continue;
                 }
-                string SystemC = AutomatedGame.NewMessageData.Substring(0, 8); //[System] 
+                string SystemC = messageData.Substring(0, 8); //[System] 
                 if (SystemC == "[System]")
                 {
-                    AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.DarkBlue, true);
-                    //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.DarkBlue, true);
+                    //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
-                    AutomatedGame.NewMessageData = null;
-                    return;
+                    continue;
                 }
-                if(AutomatedGame.NewMessageData.Length > 18)
+                if(messageData.Length > 18)
                 {
-                    string GuildAchievementC = AutomatedGame.NewMessageData.Substring(0, 18); //[GuildAchievement]
+                    string GuildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
                     if (GuildAchievementC == "[GuildAchievement]")
                     {
-                        AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Green, true);
-                        //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
+                        AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Green, true);
+                        //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                         //ChatWindow.ScrollToCaret();
-                        AutomatedGame.NewMessageData = null;
-                        return;
+                        continue;
                     }
                 }
-                AppendText(ChatWindow, AutomatedGame.NewMessageData.ToString() + "\r\n", Color.Black, true);
-                //ChatWindow.AppendText(AutomatedGame.NewMessageData.ToString() + "\r\n");
-                //ChatWindow.ScrollToCaret();
-                AutomatedGame.NewMessageData = null;
-                return;
+                AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Black, true);
             }
+            newMessages.Clear();
+            SessionInit.Instance.factoryGame.Game.World.mesQue = false;
         }
 
         private void AppendText(RichTextBox box, string text, Color color, bool bold = false)

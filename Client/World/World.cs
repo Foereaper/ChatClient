@@ -21,6 +21,7 @@ namespace Client
         //! Persons who last whispered the client
         public Queue<string> LastWhisperers = new Queue<string>();
 
+        public bool sawGuildMessageBefore = false;
         public List<string> guildPlayer = new List<string>();
         public List<string> guildStatus = new List<string>();
         public List<int> guildLevel = new List<int>();
@@ -28,5 +29,7 @@ namespace Client
         public List<string> guildZone = new List<string>();
         public List<string> guildNote = new List<string>();
         public List<string> guildOfficerNote = new List<string>();
+        public bool mesQue = false;
+        public List<string> newMessageQue = new List<string>();
     }
 }

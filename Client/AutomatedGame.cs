@@ -1496,9 +1496,12 @@ namespace Client
 
         public override void NewMessage(string message)
         {
-#if !DEBUG_LOG
-            NewMessageData = message;
-#endif      
+            while(Game.World.mesQue)
+            {
+                Thread.Sleep(10);
+            }
+
+            Game.World.newMessageQue.Add(message);
         }
 
         public override void UpdateGroupList(string message)
