@@ -291,6 +291,15 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_GUILD_ROSTER)]
         protected void HandleGuildRoster(InPacket packet)
         {
+
+            Game.World.guildPlayer.Clear();
+            Game.World.guildStatus.Clear();
+            Game.World.guildClass.Clear();
+            Game.World.guildLevel.Clear();
+            Game.World.guildZone.Clear();
+            Game.World.guildNote.Clear();
+            Game.World.guildOfficerNote.Clear();
+
             UInt32 totalMembers = packet.ReadUInt32();
             string guildMOTD = packet.ReadCString();
             string guildInfo = packet.ReadCString();
@@ -312,7 +321,7 @@ namespace Client.World.Network
                 string playerName = packet.ReadCString();
                 UInt32 playerRank = packet.ReadUInt32();
                 byte playerLevel = packet.ReadByte();
-                byte playerClass = packet.ReadByte();
+                Class playerClass = (Class)packet.ReadByte();
                 byte whyTheFuckHasntAnyEmulationProjectDocumentedWhatThisUInt8IsForFucksSake = packet.ReadByte();
                 UInt32 playerZone = packet.ReadUInt32();
                 float timeSinceLastLogIn = 0;
@@ -333,6 +342,14 @@ namespace Client.World.Network
 
                 else if ((memberFlags & 4) != 0)
                     status = "DND";
+
+                Game.World.guildPlayer.Add(playerName);
+                Game.World.guildStatus.Add(status);
+                Game.World.guildLevel.Add(playerLevel);
+                Game.World.guildClass.Add(playerClass.ToString());
+                Game.World.guildZone.Add(Client.Extensions.GetZoneName((int)playerZone));
+                Game.World.guildNote.Add(publicNote);
+                Game.World.guildOfficerNote.Add(officeNote);
             }
             System.Threading.Thread.Sleep(500);
             ChatMessage message = new ChatMessage();
@@ -352,6 +369,7 @@ namespace Client.World.Network
             message2.ChatTag = 0;
             message2.Sender = channel;
             Game.UI.PresentChatMessage(message2);
+            Game.UI.UpdateRoster("1");
         }
 
         /*

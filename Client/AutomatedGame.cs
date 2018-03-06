@@ -99,6 +99,7 @@ namespace Client
         public static string NewMessageData;
         public static string UpdateGroupGUIDList;
         public static string WhoListUpdate;
+        public static string RosterUpdate;
         public static string FriendListUpdate;
         public static string DefaultChannelListUpdate;
         public static string CustomChannelListUpdate;
@@ -237,6 +238,8 @@ namespace Client
         public UInt64 GroupLeaderGuid { get; private set; }
         public List<UInt64> GroupMembersGuids = new List<UInt64>();
         public List<UInt64> GroupMembersGuids2 = new List<UInt64>();
+
+
         #endregion
 
         public AutomatedGame(string hostname, int port, string username, string password, int realmId, int character)
@@ -1531,6 +1534,11 @@ namespace Client
 #if !DEBUG_LOG
             WhoListUpdate = message;
 #endif      
+        }
+
+        public override void UpdateRoster(string message)
+        {
+            RosterUpdate = message;
         }
 
         public override void LogLine(string message, LogLevel level = LogLevel.Info)

@@ -61,7 +61,13 @@ namespace BotFarm
                 AutomatedGame.CustomChannelListUpdate = "";
                 return;
             }
-
+            string RosterUpdate = AutomatedGame.RosterUpdate;
+            if (RosterUpdate != "")
+            {
+                DisplayRoster();
+                AutomatedGame.RosterUpdate = "";
+                return;
+            }
             if (AutomatedGame.NewMessageData != null)
             {
                 //"[Invited6"
@@ -681,6 +687,69 @@ namespace BotFarm
                 ListViewItem item = new ListViewItem(channel);
                 item.SubItems.Add("Yes");
                 listCustom.Items.Add(item);
+            }
+        }
+
+        public void DisplayRoster()
+        {
+            ColumnHeader columnPlayer, columnStatus, columnLevel, columnClass, columnZone, columnNote, columnOfficerNote;
+            columnPlayer = new ColumnHeader();
+            columnStatus = new ColumnHeader();
+            columnLevel = new ColumnHeader();
+            columnClass = new ColumnHeader();
+            columnZone = new ColumnHeader();
+            columnNote = new ColumnHeader();
+            columnOfficerNote = new ColumnHeader();
+            columnPlayer.Text = "Player";
+            columnPlayer.TextAlign = HorizontalAlignment.Left;
+            columnPlayer.Width = 80;
+            columnStatus.Text = "Status";
+            columnStatus.TextAlign = HorizontalAlignment.Left;
+            columnStatus.Width = 50;
+            columnLevel.Text = "Level";
+            columnLevel.TextAlign = HorizontalAlignment.Left;
+            columnLevel.Width = 30;
+            columnClass.Text = "Class";
+            columnClass.TextAlign = HorizontalAlignment.Left;
+            columnClass.Width = 75;
+            columnZone.Text = "Zone";
+            columnZone.TextAlign = HorizontalAlignment.Left;
+            columnZone.Width = 80;
+            columnNote.Text = "Note";
+            columnNote.TextAlign = HorizontalAlignment.Left;
+            columnNote.Width = 80;
+            columnOfficerNote.Text = "O-Note";
+            columnOfficerNote.TextAlign = HorizontalAlignment.Left;
+            columnOfficerNote.Width = 80;
+
+
+            listRoster.Columns.Clear();
+
+            listRoster.Columns.Add(columnPlayer);
+            listRoster.Columns.Add(columnStatus);
+            listRoster.Columns.Add(columnLevel);
+            listRoster.Columns.Add(columnClass);
+            listRoster.Columns.Add(columnZone);
+            listRoster.Columns.Add(columnNote);
+            listRoster.Columns.Add(columnOfficerNote);
+
+            listRoster.View = View.Details;
+            listRoster.Items.Clear();
+
+            List<string> players = SessionInit.Instance.factoryGame.Game.World.guildPlayer;
+
+            int index = 0;
+            foreach (string player in players)
+            {
+                ListViewItem item = new ListViewItem(player);
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildStatus[index]);
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildLevel[index].ToString());
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildClass[index]);
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildZone[index]);
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildNote[index]);
+                item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildOfficerNote[index]);
+                listRoster.Items.Add(item);
+                index++;
             }
         }
 

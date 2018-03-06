@@ -69,6 +69,7 @@ namespace BotFarm
             this.lblplayercount = new System.Windows.Forms.Label();
             this.lblplayersonline = new System.Windows.Forms.Label();
             this.listWho = new System.Windows.Forms.ListView();
+            this.listRoster = new System.Windows.Forms.ListView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lblfriendcount = new System.Windows.Forms.Label();
             this.lblfriends = new System.Windows.Forms.Label();
@@ -509,6 +510,15 @@ namespace BotFarm
             this.Guild.TabIndex = 4;
             this.Guild.Text = "Guild";
             this.Guild.UseVisualStyleBackColor = true;
+            this.Guild.Controls.Add(this.listRoster);
+            this.listRoster.FullRowSelect = true;
+            this.listRoster.GridLines = true;
+            this.listRoster.Location = new System.Drawing.Point(0, 30);
+            this.listRoster.Name = "Guild Roster";
+            this.listRoster.Size = new System.Drawing.Size(506, 434);
+            this.listRoster.TabIndex = 4;
+            this.listRoster.UseCompatibleStateImageBehavior = false;
+            this.listRoster.View = System.Windows.Forms.View.Details;
             // 
             // contextMenuWhoList
             // 
@@ -717,6 +727,7 @@ namespace BotFarm
         private System.Windows.Forms.Label lblPartyPlayers;
         private System.Windows.Forms.Button btnGroupDisband;
         private System.Windows.Forms.ListView listWho;
+        private System.Windows.Forms.ListView listRoster;
         private System.Windows.Forms.Label lblplayercount;
         private System.Windows.Forms.Label lblplayersonline;
         private System.Windows.Forms.ContextMenuStrip contextMenuWhoList;

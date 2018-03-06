@@ -33,6 +33,7 @@ namespace Client.UI
         public abstract void NewMessage(string message);
         public abstract void UpdateGroupList(string message);
         public abstract void UpdateWhoList(string message);
+        public abstract void UpdateRoster(string message);
         public abstract void UpdateFriendList(string message);
         public abstract void UpdateDefaultChannelList(string message);
         public abstract void UpdateCustomChannelList(string message);

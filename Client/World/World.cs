@@ -20,5 +20,13 @@ namespace Client
 
         //! Persons who last whispered the client
         public Queue<string> LastWhisperers = new Queue<string>();
+
+        public List<string> guildPlayer = new List<string>();
+        public List<string> guildStatus = new List<string>();
+        public List<int> guildLevel = new List<int>();
+        public List<string> guildClass = new List<string>();
+        public List<string> guildZone = new List<string>();
+        public List<string> guildNote = new List<string>();
+        public List<string> guildOfficerNote = new List<string>();
     }
 }
