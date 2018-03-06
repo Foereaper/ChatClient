@@ -598,7 +598,7 @@ namespace BotFarm
             listFriends.View = View.Details;
             listFriends.Items.Clear();
 
-            List<string> friends = AutomatedGame.resolvedFriendList;
+            List<string> friends = AutomatedGame.resolvedFriendList; // friendGUIList
 
             foreach (string friend in friends)
             {
@@ -842,6 +842,7 @@ namespace BotFarm
         {
             if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestWhoList(); }
             if (tabControl1.SelectedIndex == 3) { SessionInit.Instance.factoryGame.RequestFriendList(); }
+            if (tabControl1.SelectedIndex == 4) { SessionInit.Instance.factoryGame.RequestGuildList(); }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)

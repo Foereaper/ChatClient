@@ -1316,29 +1316,32 @@ namespace Client
                 {
                     packet.ReadByte();
                 }
-                if (receiverGuid.IsPlayer())
+                if (receiverGuid.IsPlayer()) // isplayer doesn't properly work.. 
                 {
                     var playername = "";
-                    bool resolve = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
-                    if (receiverGuid.ToString().Length <= 4 && receiverGuid.ToString().Length == 4)
+                    Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);  
+                    if (receiverGuid.ToString().Length <= 4 && receiverGuid.ToString().Length == 4) // for listview context menu
                     {
-                        if (!friendGUIList.Contains(receiverGuid.ToString())) // added
+                        if (!friendGUIList.Contains(receiverGuid.ToString()))
                         {
                             friendGUIList.Add(receiverGuid.ToString());
                         }
                     }
                     if (playername != null)
                     {
-                        if (!resolvedFriendList.Contains(playername)) // added
+                        if (!resolvedFriendList.Contains(playername))
                         {
                             resolvedFriendList.Add(playername);
                         }
                     }
                     else
                     {
-                        OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
-                        response.Write(receiverGuid);
-                        Game.SendPacket(response);
+                        if (receiverGuid != 0 && (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 4) // don't waste bandwidth on non player guids.
+                        {
+                            OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
+                            response.Write(receiverGuid);
+                            Game.SendPacket(response);
+                        }
                     }
                 }
             }
