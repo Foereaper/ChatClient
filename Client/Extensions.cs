@@ -124,10 +124,10 @@ namespace Client
 
         public static string GetAchName(int achid)
         {
-            if (!File.Exists("achievements.xml"))
+            if (!File.Exists("data\\achievements.xml"))
                 return "Why did you delete achievements.xml?";
             string achName = "Error404AchNotFound";
-            using (XmlReader reader = XmlReader.Create("achievements.xml"))
+            using (XmlReader reader = XmlReader.Create("data\\achievements.xml"))
             {
                 try
                 {
@@ -158,10 +158,10 @@ namespace Client
 
         public static string GetZoneName(int achid)
         {
-            if (!File.Exists("areatable.xml"))
-                return "areatable.xml not found";
+            if (!File.Exists("data\\areatable.xml"))
+                return "data\\areatable.xml not found";
             string zoneName = "Nobody Knows";
-            using (XmlReader reader = XmlReader.Create("areatable.xml"))
+            using (XmlReader reader = XmlReader.Create("data\\areatable.xml"))
             {
                 try
                 {
