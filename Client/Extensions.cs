@@ -156,7 +156,7 @@ namespace Client
             return achName;
         }
 
-        public static string GetZoneName(int achid)
+        public static string GetZoneName(int zoneid)
         {
             if (!File.Exists("data\\areatable.xml"))
                 return "data\\areatable.xml not found";
@@ -171,7 +171,7 @@ namespace Client
                         {
                             if (reader.Name == "article")
                             {
-                                if (Convert.ToInt32(reader["name"]) == achid)
+                                if (Convert.ToInt32(reader["name"]) == zoneid)
                                 {
                                     reader.Read();
                                     zoneName = reader.Value.Trim();
