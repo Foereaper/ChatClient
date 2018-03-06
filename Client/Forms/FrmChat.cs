@@ -703,7 +703,7 @@ namespace BotFarm
             columnStatus.Width = 50;
             columnLevel.Text = "Level";
             columnLevel.TextAlign = HorizontalAlignment.Left;
-            columnLevel.Width = 30;
+            columnLevel.Width = 50;
             columnClass.Text = "Class";
             columnClass.TextAlign = HorizontalAlignment.Left;
             columnClass.Width = 75;
@@ -760,6 +760,14 @@ namespace BotFarm
         private void refreshWhoList_Click(object sender, EventArgs e)
         {
             SessionInit.Instance.factoryGame.RequestWhoList();
+        }
+
+        private void listRoster_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                SessionInit.Instance.factoryGame.RequestGuildList();
+            }
         }
 
         private void addFriendToolStripMenuItem_Click(object sender, EventArgs e)
