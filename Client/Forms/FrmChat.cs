@@ -349,35 +349,6 @@ namespace BotFarm
             System.Diagnostics.Process.Start(e.LinkText);
         }
 
-        private void btnGeneral_Click(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.JoinChannel(1);
-            channelNum.Value = 1;
-        }
-
-        private void btnTrade_Click(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.JoinChannel(2);
-            channelNum.Value = 2;
-        }
-
-        private void btnDefense_Click(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.JoinChannel(3);
-            channelNum.Value = 3;
-        }
-
-        private void btnLfg_Click(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.JoinChannel(4);
-            channelNum.Value = 4;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.LeaveChannel((int)channelNum.Value);
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             //BotFactory.Instance.factoryGame.SayChannel("Channel test 123 123", (int)channelNum.Value);
@@ -542,23 +513,22 @@ namespace BotFarm
             columnZone = new ColumnHeader();
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
-            columnPlayer.Width = 70;
+            columnPlayer.Width = 100;
             columnGuild.Text = "Guild";
             columnGuild.TextAlign = HorizontalAlignment.Left;
-            columnGuild.Width = 75;
+            columnGuild.Width = 100;
             columnLvl.Text = "LvL";
             columnLvl.TextAlign = HorizontalAlignment.Left;
             columnLvl.Width = 30;
             columnClass.Text = "Class";
             columnClass.TextAlign = HorizontalAlignment.Left;
-            columnClass.Width = 50;
+            columnClass.Width = 80;
             columnRace.Text = "Race";
             columnRace.TextAlign = HorizontalAlignment.Left;
-            columnRace.Width = 50;
-            columnClass.Width = 50;
+            columnRace.Width = 75;
             columnZone.Text = "Zone";
             columnZone.TextAlign = HorizontalAlignment.Left;
-            columnZone.Width = 50;
+            columnZone.Width = 100;
 
             listWho.Columns.Clear();
             
