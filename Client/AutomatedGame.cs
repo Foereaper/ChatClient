@@ -487,7 +487,7 @@ namespace Client
                 packet.Write(World.SelectedCharacter.GUID);
                 SendPacket(packet);
                 LoggedIn = true;
-                Player.GUID = World.SelectedCharacter.GUID;
+                Player.GUID = World.SelectedCharacter.GUID;  
             }
             else
             {
@@ -1090,6 +1090,20 @@ namespace Client
             SendPacket(response);
         }
 
+        public void HelloDad()
+        {
+            var response = new OutPacket(WorldCommand.CMSG_HELLO_DADDY);
+
+            response.Write((byte)1);
+            SendPacket(response);
+        }
+
+        [PacketHandler(WorldCommand.SMSG_HELLO_SON)]
+        protected void HandleHelloSon(InPacket packet)
+        {
+            World.securityLevel = packet.ReadUInt32();
+        }
+
         [PacketHandler(WorldCommand.SMSG_WHO)]
         protected void HandleWhoList(InPacket packet)
         {
@@ -1374,6 +1388,7 @@ namespace Client
             Player.Y = packet.ReadSingle();
             Player.Z = packet.ReadSingle();
             Player.O = packet.ReadSingle();
+            HelloDad();
         }
 
         [PacketHandler(WorldCommand.SMSG_NEW_WORLD)]
