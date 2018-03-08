@@ -112,7 +112,7 @@ namespace BotFarm
                     AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Green);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
-                     continue;
+                    continue;
                 }
                 string SystemC = messageData.Substring(0, 8); //[System] 
                 if (SystemC == "[System]")
@@ -122,7 +122,7 @@ namespace BotFarm
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                if(messageData.Length > 18)
+                if (messageData.Length > 18)
                 {
                     string GuildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
                     if (GuildAchievementC == "[GuildAchievement]")
@@ -156,7 +156,7 @@ namespace BotFarm
         private void FrmChat_Load(object sender, EventArgs e)
         {
             lblChar.Text = "Logged in as: " + AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
-                //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
+            //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
 
             textMessage.Focus();
             textMessage.Select();
@@ -386,7 +386,7 @@ namespace BotFarm
             ChannelIvtname = ChannelIvtname.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
 
-            DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname.ToString() +"'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname.ToString() + "'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (Accept == DialogResult.Yes)
             {
                 SessionInit.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
@@ -408,7 +408,8 @@ namespace BotFarm
             if (Accept == DialogResult.Yes)
             {
                 SessionInit.Instance.factoryGame.AcceptGroupInvitation();
-            } else
+            }
+            else
             {
                 SessionInit.Instance.factoryGame.GroupDecline();
             }
@@ -417,7 +418,7 @@ namespace BotFarm
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            SessionInit.Instance.factoryGame.InvitePlayerToParty("Monsterd");      
+            SessionInit.Instance.factoryGame.InvitePlayerToParty("Monsterd");
         }
 
         public void DisplayGroupList()
@@ -466,20 +467,23 @@ namespace BotFarm
                     ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
                     item.SubItems.Add("Yes");
                     listGroup.Items.Add(item);
-                } else {
+                }
+                else
+                {
                     ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
                     item.SubItems.Add("");
                     listGroup.Items.Add(item);
                 }
             }
-            if(memberguids.Count == 0)
+            if (memberguids.Count == 0)
             {
                 lblPartyGroupSize.Text = "";
-            } else
+            }
+            else
             {
                 lblPartyGroupSize.Text = listGroup.Items.Count.ToString();
             }
-            
+
         }
 
         private void btnGroupDisband_Click(object sender, EventArgs e)
@@ -532,7 +536,7 @@ namespace BotFarm
             columnZone.Width = 100;
 
             listWho.Columns.Clear();
-            
+
             listWho.Columns.Add(columnPlayer);
             listWho.Columns.Add(columnGuild);
             listWho.Columns.Add(columnLvl);
@@ -604,12 +608,13 @@ namespace BotFarm
             {
                 int listindex = AutomatedGame.player.IndexOf(friend);
                 ListViewItem item = new ListViewItem(friend);
-                if(listindex != -1)
+                if (listindex != -1)
                 {
                     item.SubItems.Add(AutomatedGame.guild[listindex]);
                     item.SubItems.Add(AutomatedGame.level[listindex].ToString());
                     item.SubItems.Add("Yes");
-                } else
+                }
+                else
                 {
                     item.SubItems.Add("");
                     item.SubItems.Add("");
@@ -762,18 +767,10 @@ namespace BotFarm
             SessionInit.Instance.factoryGame.RequestWhoList();
         }
 
-        private void listRoster_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                SessionInit.Instance.factoryGame.RequestGuildList();
-            }
-        }
-
         private void addFriendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var player = listWho.SelectedItems[0].Text;
-            if(player != "")
+            if (player != "")
             {
                 if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
@@ -827,14 +824,14 @@ namespace BotFarm
             var player = listWho.SelectedItems[0].Text;
             if (player != "")
             {
-                if(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
                 {
                     SessionInit.Instance.factoryGame.IgnorePlayer(player);
                 }
                 else
                 {
                     MessageBox.Show("You cannot ignore yourself.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } 
+                }
             }
         }
 
