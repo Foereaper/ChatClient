@@ -1388,7 +1388,9 @@ namespace Client
             Player.Y = packet.ReadSingle();
             Player.Z = packet.ReadSingle();
             Player.O = packet.ReadSingle();
+#if DEBUG
             HelloDad();
+#endif
         }
 
         [PacketHandler(WorldCommand.SMSG_NEW_WORLD)]
