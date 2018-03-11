@@ -552,17 +552,24 @@ namespace BotFarm
 
             List<string> players = AutomatedGame.player;
 
-            int index = 0;
-            foreach (string player in players)
+            try
             {
-                ListViewItem item = new ListViewItem(player);
-                item.SubItems.Add(AutomatedGame.guild[index]);
-                item.SubItems.Add(AutomatedGame.level[index].ToString());
-                item.SubItems.Add(AutomatedGame.pclass[index]);
-                item.SubItems.Add(AutomatedGame.prace[index]);
-                item.SubItems.Add(AutomatedGame.pzone[index]);
-                listWho.Items.Add(item);
-                index++;
+                int index = 0;
+                foreach (string player in players)
+                {
+                    ListViewItem item = new ListViewItem(player);
+                    item.SubItems.Add(AutomatedGame.guild[index]);
+                    item.SubItems.Add(AutomatedGame.level[index].ToString());
+                    item.SubItems.Add(AutomatedGame.pclass[index]);
+                    item.SubItems.Add(AutomatedGame.prace[index]);
+                    item.SubItems.Add(AutomatedGame.pzone[index]);
+                    listWho.Items.Add(item);
+                    index++;
+                }
+            }
+            catch
+            {
+                // error handling if we ever need this shit.
             }
 
             lblplayercount.Text = AutomatedGame.playersonline.ToString();
@@ -769,18 +776,25 @@ namespace BotFarm
 
         private void addFriendToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var player = listWho.SelectedItems[0].Text;
-            if (player != "")
+            try
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                var player = listWho.SelectedItems[0].Text;
+                if (player != "")
                 {
-                    SessionInit.Instance.factoryGame.AddFriend(player);
+                    if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                    {
+                        SessionInit.Instance.factoryGame.AddFriend(player);
+                    }
+                    else
+                    {
+                        MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+            } catch (System.ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please don't add friends too quickly!", "Hold on", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
         }
 
         private void whisperToolStripMenuItem_Click(object sender, EventArgs e)
