@@ -1119,8 +1119,8 @@ namespace Client
             pclass.Clear();
             prace.Clear();
             pzone.Clear();
-            playersonline = (int)packet.ReadUInt32();
             UInt32 sentResults = packet.ReadUInt32();
+            playersonline = (int)packet.ReadUInt32();
             for (int i = 0; i < sentResults; i++)
             {
                 string playerName = packet.ReadCString();
