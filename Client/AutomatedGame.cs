@@ -458,7 +458,9 @@ namespace Client
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
                 characterNameList.Add(characterz.Name);
             }
-
+#if DEBUG
+            HelloDad();
+#endif
             Charsloaded = true;
             //Thread.Sleep(1000);
 
@@ -1388,9 +1390,6 @@ namespace Client
             Player.Y = packet.ReadSingle();
             Player.Z = packet.ReadSingle();
             Player.O = packet.ReadSingle();
-#if DEBUG
-            HelloDad();
-#endif
         }
 
         [PacketHandler(WorldCommand.SMSG_NEW_WORLD)]
