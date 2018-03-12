@@ -1188,7 +1188,6 @@ namespace Client
             else
             {
                 if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; System.Threading.Thread.Sleep(4000); }
-                
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
