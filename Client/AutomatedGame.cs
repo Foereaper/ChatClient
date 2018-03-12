@@ -459,7 +459,7 @@ namespace Client
                 characterNameList.Add(characterz.Name);
             }
 #if DEBUG
-            HelloDad();
+            //HelloDad();
 #endif
             Charsloaded = true;
             //Thread.Sleep(1000);
@@ -855,27 +855,28 @@ namespace Client
             Game.SendPacket(packet);
         }
 
-        //TODO properly handle this 
-        public void RemoveFriend(int guid)
+        //TODO improve code
+        public void RemoveFriend(int guid, string player)
         {
-            //CMSG_DEL_FRIEND 0x006A (106)
-            // TODO get player GUID & send 4 byte uint64 GUID reversed + 6 nullbytes with wc CMSG_DEL_FRIEND
-            // NOT working..
-
+            LastRemovedFriend = player;
             byte[] data = null;
-            string hexguid = guid.ToString("X");
-            if (hexguid.Length == 4)
+            string reverseGUID = "";
+
+            if (guid.ToString("X").Length < 4)
             {
-                //string guidplayer = Convert.ToString(guid);
-                string second = hexguid.Substring(2, 2);
-                string first = hexguid.Substring(0, 2);
-
-                byte[] bArray = new byte[hexguid.Length + 3];
-                bArray[0] = byte.Parse(second, System.Globalization.NumberStyles.AllowHexSpecifier);
-                bArray[1] = byte.Parse(first, System.Globalization.NumberStyles.AllowHexSpecifier);
-
-                data = bArray;
+                reverseGUID = guid.ToString("X").Substring(1, 2) + "0" + guid.ToString("X").Substring(0, 1);
             }
+            else
+            {
+                reverseGUID = guid.ToString("X").Substring(2, 2) + guid.ToString("X").Substring(0, 2);
+            }
+                
+            byte[] bytes = new byte[reverseGUID.Length / 2 + 6];
+            for (int i = 0; i < reverseGUID.Length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(reverseGUID.Substring(i, 2), 16);
+            }
+            data = bytes;
 
             OutPacket packet = new OutPacket(WorldCommand.CMSG_DEL_FRIEND);
             packet.Write(data);
@@ -1179,16 +1180,15 @@ namespace Client
 
             if (!player.Contains(playername)) // added
             {
-                if ((char)dump[0] == 0x02) { statusmsg = playername + " has come online."; }
-                System.Threading.Thread.Sleep(4000);
+                if ((char)dump[0] == 0x02) { statusmsg = playername + " has come online."; System.Threading.Thread.Sleep(4000); }
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
             }
             else
             {
-                if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; }
-                System.Threading.Thread.Sleep(4000);
+                if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; System.Threading.Thread.Sleep(4000); }
+                
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
@@ -1196,7 +1196,7 @@ namespace Client
             #endregion
 
             if ((char)dump[0] == 0x04) { statusmsg = "Player '" + LastAddedFriend + "' not found."; }
-            if ((char)dump[0] == 0x05) { statusmsg = LastAddedFriend + " removed from friend list."; }
+            if ((char)dump[0] == 0x05) { statusmsg = LastRemovedFriend + " removed from friend list."; }
             if ((char)dump[0] == 0x06) { statusmsg = LastAddedFriend + " added to friends."; }
             if ((char)dump[0] == 0x08) { statusmsg = LastAddedFriend + " is already your friend."; }
             if ((char)dump[0] == 0x0E) { statusmsg = LastAddedFriend + " is no longer being ignored."; }

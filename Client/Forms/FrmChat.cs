@@ -911,8 +911,9 @@ namespace BotFarm
         private void removeFriendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int index = listFriends.SelectedItems[0].Index;
+            var player = listFriends.SelectedItems[0].Text;
             string guid = AutomatedGame.friendGUIList[index];
-            SessionInit.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid));
+            SessionInit.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid), player);
         }
 
         private void listFriends_MouseClick(object sender, MouseEventArgs e)
