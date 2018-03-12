@@ -954,7 +954,6 @@ namespace Client
         //CMSG_GROUP_DISBAND = 123 party
         public void GroupDisband()
         {
-            //byte[] data = "";
             OutPacket packet = new OutPacket(WorldCommand.CMSG_GROUP_DISBAND);
             packet.Write("");
             Game.SendPacket(packet);
@@ -963,7 +962,6 @@ namespace Client
         //CMSG_GROUP_DECLINE = 115 decline party group invite
         public void GroupDecline()
         {
-            //byte[] data = "";
             OutPacket packet = new OutPacket(WorldCommand.CMSG_GROUP_DECLINE);
             packet.Write("");
             Game.SendPacket(packet);
@@ -1326,7 +1324,7 @@ namespace Client
                 {
                     var playername = "";
                     Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);
-                    if ((int)receiverGuid > 2 && receiverGuid.ToString().Length < 5) // for listview context menu
+                    if ((int)receiverGuid > 1 && receiverGuid.ToString().Length < 9) // for listview context menu
                     {
                         if (!friendGUIList.Contains(receiverGuid.ToString()))
                         {
@@ -1342,7 +1340,7 @@ namespace Client
                     }
                     else
                     {
-                        if (receiverGuid != 0 && (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 4 || (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 3) // don't waste bandwidth on non player guids.
+                        if (receiverGuid != 0 && receiverGuid.ToString().Length < 9) // don't waste bandwidth on non player guids.
                         {
                             OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
                             response.Write(receiverGuid);
