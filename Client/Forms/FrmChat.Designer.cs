@@ -69,12 +69,12 @@ namespace BotFarm
             this.lblplayercount = new System.Windows.Forms.Label();
             this.lblplayersonline = new System.Windows.Forms.Label();
             this.listWho = new System.Windows.Forms.ListView();
-            this.listRoster = new System.Windows.Forms.ListView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lblfriendcount = new System.Windows.Forms.Label();
             this.lblfriends = new System.Windows.Forms.Label();
             this.listFriends = new System.Windows.Forms.ListView();
             this.Guild = new System.Windows.Forms.TabPage();
+            this.listRoster = new System.Windows.Forms.ListView();
             this.contextMenuWhoList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +98,7 @@ namespace BotFarm
             this.tabWho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
             this.tabPage1.SuspendLayout();
+            this.Guild.SuspendLayout();
             this.contextMenuWhoList.SuspendLayout();
             this.contextMenuGroupList.SuspendLayout();
             this.contextMenuFriendList.SuspendLayout();
@@ -495,7 +496,6 @@ namespace BotFarm
             this.listFriends.Location = new System.Drawing.Point(0, 30);
             this.listFriends.Name = "listFriends";
             this.listFriends.Size = new System.Drawing.Size(510, 434);
-            this.listFriends.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listFriends.TabIndex = 0;
             this.listFriends.UseCompatibleStateImageBehavior = false;
             this.listFriends.View = System.Windows.Forms.View.Details;
@@ -503,6 +503,7 @@ namespace BotFarm
             // 
             // Guild
             // 
+            this.Guild.Controls.Add(this.listRoster);
             this.Guild.Location = new System.Drawing.Point(4, 22);
             this.Guild.Name = "Guild";
             this.Guild.Padding = new System.Windows.Forms.Padding(3);
@@ -510,11 +511,13 @@ namespace BotFarm
             this.Guild.TabIndex = 4;
             this.Guild.Text = "Guild";
             this.Guild.UseVisualStyleBackColor = true;
-            this.Guild.Controls.Add(this.listRoster);
+            // 
+            // listRoster
+            // 
             this.listRoster.FullRowSelect = true;
             this.listRoster.GridLines = true;
             this.listRoster.Location = new System.Drawing.Point(0, 30);
-            this.listRoster.Name = "Guild Roster";
+            this.listRoster.Name = "listRoster";
             this.listRoster.Size = new System.Drawing.Size(506, 434);
             this.listRoster.TabIndex = 4;
             this.listRoster.UseCompatibleStateImageBehavior = false;
@@ -692,6 +695,7 @@ namespace BotFarm
             ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.Guild.ResumeLayout(false);
             this.contextMenuWhoList.ResumeLayout(false);
             this.contextMenuGroupList.ResumeLayout(false);
             this.contextMenuFriendList.ResumeLayout(false);
