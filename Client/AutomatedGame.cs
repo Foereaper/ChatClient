@@ -855,32 +855,24 @@ namespace Client
             Game.SendPacket(packet);
         }
 
-        //TODO improve code -> will fail on GUID 3 or 23.. Needs improvement.
         public void RemoveFriend(int guid, string player) 
         {
             LastRemovedFriend = player;
-            byte[] data = null;
-            string reverseGUID = "";
-            if (guid.ToString("X").Length < 4) 
+            string hexguid = guid.ToString("X");
+            int guidnumber = Convert.ToInt32(hexguid, 16);
+            byte[] bytes = BitConverter.GetBytes(guidnumber);
+            string LittleEndian = "";
+            foreach (byte b in bytes)
+                LittleEndian += b.ToString("X2");
+            byte[] packetdata = new byte[8];
+            for (int i = 0; i < LittleEndian.Length; i += 2)
             {
-                reverseGUID = guid.ToString("X").Substring(1, 2) + "0" + guid.ToString("X").Substring(0, 1);
+                packetdata[i / 2] = Convert.ToByte(LittleEndian.Substring(i, 2), 16);
             }
-            else
-            {
-                reverseGUID = guid.ToString("X").Substring(2, 2) + guid.ToString("X").Substring(0, 2);
-            }
-                
-            byte[] bytes = new byte[reverseGUID.Length / 2 + 6];
-            for (int i = 0; i < reverseGUID.Length; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(reverseGUID.Substring(i, 2), 16);
-            }
-            data = bytes;
 
             OutPacket packet = new OutPacket(WorldCommand.CMSG_DEL_FRIEND);
-            packet.Write(data);
+            packet.Write(packetdata);
             Game.SendPacket(packet);
-            //UpdateFriendList("1");
         }
 
         // SMSG_CHANNEL_LIST = 155,
