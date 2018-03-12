@@ -855,14 +855,13 @@ namespace Client
             Game.SendPacket(packet);
         }
 
-        //TODO improve code
-        public void RemoveFriend(int guid, string player)
+        //TODO improve code -> will fail on GUID 3 or 23.. Needs improvement.
+        public void RemoveFriend(int guid, string player) 
         {
             LastRemovedFriend = player;
             byte[] data = null;
             string reverseGUID = "";
-
-            if (guid.ToString("X").Length < 4)
+            if (guid.ToString("X").Length < 4) 
             {
                 reverseGUID = guid.ToString("X").Substring(1, 2) + "0" + guid.ToString("X").Substring(0, 1);
             }
@@ -881,6 +880,7 @@ namespace Client
             OutPacket packet = new OutPacket(WorldCommand.CMSG_DEL_FRIEND);
             packet.Write(data);
             Game.SendPacket(packet);
+            //UpdateFriendList("1");
         }
 
         // SMSG_CHANNEL_LIST = 155,
@@ -1314,15 +1314,14 @@ namespace Client
             UInt64 receiverGuid = 0;
             resolvedFriendList.Clear();
             friendGUIList.Clear();
-
-            RequestWhoList(); // added
+            RequestWhoList();
 
             byte[] dump = packet.ReadToEnd();
             int len = ((int)packet.BaseStream.Length);
             packet.BaseStream.Position = 0;
             for (int i = 0; i < len; i++)
             {
-                if (dump[i] != 0 && dump[i + 1] != 0) //(packet.PeekChar() != 0
+                if (dump[i] != 0 && dump[i + 1] != 0)
                 {
                     receiverGuid = packet.ReadUInt64();
                     i += 7;
@@ -1331,11 +1330,11 @@ namespace Client
                 {
                     packet.ReadByte();
                 }
-                if (receiverGuid.IsPlayer()) // isplayer doesn't properly work.. 
+                if (receiverGuid.IsPlayer()) // isplayer doesn't properly work? 
                 {
                     var playername = "";
-                    Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);  
-                    if (receiverGuid.ToString().Length <= 4 && receiverGuid.ToString().Length == 4) // for listview context menu
+                    Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);
+                    if ((int)receiverGuid > 2 && receiverGuid.ToString().Length < 5) // for listview context menu
                     {
                         if (!friendGUIList.Contains(receiverGuid.ToString()))
                         {
@@ -1351,7 +1350,7 @@ namespace Client
                     }
                     else
                     {
-                        if (receiverGuid != 0 && (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 4) // don't waste bandwidth on non player guids.
+                        if (receiverGuid != 0 && (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 4 || (int)Math.Floor(Math.Log10(receiverGuid)) + 1 == 3) // don't waste bandwidth on non player guids.
                         {
                             OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
                             response.Write(receiverGuid);
@@ -1360,10 +1359,7 @@ namespace Client
                     }
                 }
             }
-            if (resolvedFriendList.Count > 1)
-            {
-                UpdateFriendList("1");
-            }
+            UpdateFriendList("1");
         }
 
         #endregion

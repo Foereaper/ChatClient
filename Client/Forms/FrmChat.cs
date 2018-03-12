@@ -910,10 +910,18 @@ namespace BotFarm
 
         private void removeFriendToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int index = listFriends.SelectedItems[0].Index;
-            var player = listFriends.SelectedItems[0].Text;
-            string guid = AutomatedGame.friendGUIList[index];
-            SessionInit.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid), player);
+            try
+            {
+                int index = listFriends.SelectedItems[0].Index;
+                var player = listFriends.SelectedItems[0].Text;
+                string guid = AutomatedGame.friendGUIList[index];
+                SessionInit.Instance.factoryGame.RemoveFriend(Convert.ToInt32(guid), player);
+            }
+            catch
+            {
+                MessageBox.Show("You are deleting friends too fast.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DisplayFriendList();
+            }
         }
 
         private void listFriends_MouseClick(object sender, MouseEventArgs e)
