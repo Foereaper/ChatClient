@@ -816,9 +816,7 @@ namespace Client
         public void RemoveFriend(int guid, string player) 
         {
             LastRemovedFriend = player;
-            string hexguid = guid.ToString("X");
-            int guidnumber = Convert.ToInt32(hexguid, 16);
-            byte[] bytes = BitConverter.GetBytes(guidnumber);
+            byte[] bytes = BitConverter.GetBytes(guid);
             string LittleEndian = "";
             foreach (byte b in bytes)
                 LittleEndian += b.ToString("X2");
