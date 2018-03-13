@@ -141,6 +141,7 @@ namespace Client
                                 {
                                     reader.Read();
                                     achName = "[" + reader.Value.Trim() + "]";
+                                    achName = achName.Replace("&amp;", "&").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&apos;", "'");
                                     break;
                                 }
                             }
@@ -175,6 +176,7 @@ namespace Client
                                 {
                                     reader.Read();
                                     zoneName = reader.Value.Trim();
+                                    zoneName = zoneName.Replace("&amp;", "&").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&apos;", "'");
                                     break;
                                 }
                             }
