@@ -78,6 +78,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat\Definitions\ChannelNoticeType.cs" />
     <Compile Include="Util\BatchQueue.cs" />
     <Compile Include="Authentication\AuthCommand.cs" />
     <Compile Include="Authentication\AuthResult.cs" />

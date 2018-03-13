@@ -659,68 +659,25 @@ namespace Client
         SMSG_CHANNEL_LIST = 155,
         */
 
-        public void LeaveChannel(int channel)
+        public void LeaveChannel(int channel, string channelName)
         {
-            byte[] data = null;
-            var GeneralBytes = new byte[] { 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x47, 0x65, 0x6E, 0x65, 0x72, 0x61, 0x6C, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var TradeBytes = new byte[] { 0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x54, 0x72, 0x61, 0x64, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var LocalDefenseBytes = new byte[] { 0x16, 0x00, 0x00, 0x00, 0x01, 0x00, 0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x44, 0x65, 0x66, 0x65, 0x6E, 0x73, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var LookingForGroupBytes = new byte[] { 0x1A, 0x00, 0x00, 0x00, 0x01, 0x00, 0x4C, 0x6F, 0x6F, 0x6B, 0x69, 0x6E, 0x67, 0x46, 0x6F, 0x72, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x00, 0x00 };
-
-            switch (channel)
-            {
-                case 1:
-                    data = GeneralBytes;
-                    break;
-                case 2:
-                    data = TradeBytes;
-                    break;
-                case 3:
-                    data = LocalDefenseBytes;
-                    break;
-                case 4:
-                    data = LookingForGroupBytes;
-                    break;
-                default:
-                    data = GeneralBytes;
-                    break;
-            }
-
             OutPacket packet = new OutPacket(WorldCommand.CMSG_LEAVE_CHANNEL);
-            packet.Write(data);
+            packet.Write(Convert.ToUInt32(channel));
+            packet.Write(channelName);
             Game.SendPacket(packet);
         }
 
-        public void JoinChannel(int channel)
+        public void JoinChannel(int channel, string channelName, string channelPassword)
         {
-            byte[] data = null;
-            var GeneralBytes = new byte[] { 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x47, 0x65, 0x6E, 0x65, 0x72, 0x61, 0x6C, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var TradeBytes = new byte[] { 0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x54, 0x72, 0x61, 0x64, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var LocalDefenseBytes = new byte[] { 0x16, 0x00, 0x00, 0x00, 0x01, 0x00, 0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x44, 0x65, 0x66, 0x65, 0x6E, 0x73, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00, 0x00 };
-            var LookingForGroupBytes = new byte[] { 0x1A, 0x00, 0x00, 0x00, 0x01, 0x00, 0x4C, 0x6F, 0x6F, 0x6B, 0x69, 0x6E, 0x67, 0x46, 0x6F, 0x72, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x00, 0x00 };
+                OutPacket packet = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
+                packet.Write(Convert.ToUInt32(channel));
+                packet.Write((byte)0);
+                packet.Write((byte)0);
+                packet.Write(channelName);
+                packet.Write(channelPassword);
+                Game.SendPacket(packet);
 
-            switch (channel)
-            {
-                case 1:
-                    data = GeneralBytes;
-                    break;
-                case 2:
-                    data = TradeBytes;
-                    break;
-                case 3:
-                    data = LocalDefenseBytes;
-                    break;
-                case 4:
-                    data = LookingForGroupBytes;
-                    break;
-                default:
-                    data = GeneralBytes;
-                    break;
-            }
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
-            packet.Write(data);
-            Game.SendPacket(packet);
         }
 
         public void ChangeStatus(int status)
@@ -887,78 +844,196 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_CHANNEL_NOTIFY)]
         protected void HandleChannelList(InPacket packet)
         {
-            var notifymsg = "";
-            ChatMessage message = new ChatMessage();
+                ChannelNoticeType noticeType = (ChannelNoticeType)packet.ReadByte();
+                string channelName = packet.ReadCString();
+                if (channelName == "")
+                    channelName = "BlankChannelName";
+                ChannelNotifyMessage(noticeType, channelName);
+        }
+        public void ChannelNotifyMessage(ChannelNoticeType notice, string channelName)
+        {
+            string message = "";
+            ChatMessage chatmsg = new ChatMessage();
             ChatChannel channel = new ChatChannel();
             channel.Type = ChatMessageType.Channel;
-
-            // index[0] 2 == joined
-            // index[0] 3 == leaved
-            // index[0] 5 == you are not in this group anymore
-            // read channel name from index[1] till index[i] == 0x00
-
-            StringBuilder builder = new StringBuilder();
-            byte[] dump = packet.ReadToEnd();
-
-            //packet.BaseStream.Position = 0;
-            int slen = ((int)packet.BaseStream.Length);
-            for (int i = 1; i < slen; i++)
+            switch (notice)
             {
-                if ((char)dump[i] != 0x00)
+                case ChannelNoticeType.PlayerJoined:
                 {
-                    builder.Append((char)dump[i]);
-                }
-                else
+                        string playerName = "Player"; // To Do: figure out how wow client gets player name when its not sent in the notify packet.
+                        message = playerName + " has joined the channel";
+                }break;
+                case ChannelNoticeType.PlayerLeft:
                 {
-                    i = slen;
-                }
+                        string playerName = "Player"; // To Do: figure out how wow client gets player name when its not sent in the notify packet.
+                        message = playerName + " has left the channel";
+                }break;
+                case ChannelNoticeType.YouJoined:
+                {
+                        message = "You joined the channel";
+                        if (customChannels.Contains(channelName))
+                            UpdateCustomChannelList("1");
+                        else if (!joinedChannels.Contains(channelName))
+                        {
+                            joinedChannels.Add(channelName);
+                            UpdateDefaultChannelList("1");
+                        }
+                }break;
+                case ChannelNoticeType.YouLeft:
+                {
+                        message = "You left the channel";
+                        if (customChannels.Contains(channelName))
+                        {
+                            customChannels.Remove(channelName);
+                            UpdateCustomChannelList("1");
+                        }
+                        else if (joinedChannels.Contains(channelName))
+                        {
+                            joinedChannels.Remove(channelName);
+                            UpdateDefaultChannelList("1");
+                        }
+                }break;
+                case ChannelNoticeType.WrongPassword:
+                {
+                        message = "You entered the wrong password";
+                }break;
+                case ChannelNoticeType.NotMember:
+                {
+                        message = "You are not a member of the channel";
+                }break;
+                case ChannelNoticeType.NotModerator:
+                {
+                        message = "You are not a moderator.";
+                }break;
+                case ChannelNoticeType.PasswordChanged:
+                {
+                        message = "The password was channged.";
+                }break;
+                case ChannelNoticeType.OwnerChanged:
+                {
+                        message = "Owner changed";
+                }break;
+                case ChannelNoticeType.PlayerNotFound:
+                {
+                        message = "Player not found";
+                }break;
+                case ChannelNoticeType.NotOwner:
+                {
+                        message = "You are not the owner";
+                }break;
+                case ChannelNoticeType.OwnerIs:
+                {
+                        message = "The owner is not found due to no support for this yet";
+                }break;
+                case ChannelNoticeType.ChangeNotice:
+                {
+                        message = "If the has been sent ask the server runner what the fuck are they doing";
+                }break;
+                case ChannelNoticeType.AnnounceOn:
+                {
+                        message = "Channel announcements have been turned on";
+                }break;
+                case ChannelNoticeType.AnnounceOff:
+                {
+                        message = "Channel announcements have been turned off";
+                }break;
+                case ChannelNoticeType.ModOn:
+                {
+                        message = "Channel moderation has been turned on.";
+                }break;
+                case ChannelNoticeType.ModOff:
+                {
+                        message = "Channel moderation has been turned off";
+                }break;
+                case ChannelNoticeType.Muted:
+                {
+                        message = "You can't talk in a channel you are muted in";
+                }break;
+                case ChannelNoticeType.PlayerKicked:
+                {
+                        message = "Someone kicked someone";
+                }break;
+                case ChannelNoticeType.Banned:
+                {
+                        message = "You are banned from that channel";
+                }break;
+                case ChannelNoticeType.PlayerBanned:
+                {
+                        message = "Someone banned someone";
+                }break;
+                case ChannelNoticeType.PlayerUnbanned:
+                {
+                        message = "Someone unbanned someone";
+                }break;
+                case ChannelNoticeType.NotBanned:
+                {
+                        message = "That person is not banned";
+                }break;
+                case ChannelNoticeType.AlreadyMember:
+                {
+                        message = "You are already a member of the channel";
+                }break;
+                case ChannelNoticeType.Invite:
+                {
+                        message = "You were invited to the channel";
+                        channel.Type = ChatMessageType.ChannelInvitation;
+                }break;
+                case ChannelNoticeType.InviteWrongFaction:
+                {
+                        message = "That person is the wrong faction";
+                }break;
+                case ChannelNoticeType.WrongFaction:
+                {
+                        message = "You are the wrong faction for that";
+                }break;
+                case ChannelNoticeType.InvalidName:
+                {
+                        message = "The chanel name is invalid";
+                }break;
+                case ChannelNoticeType.NotModerated:
+                {
+                        message = "The channel is not moderated";
+                }break;
+                case ChannelNoticeType.YouINvited:
+                {
+                        message = "You invited someone to the channel";
+                }break;
+                case ChannelNoticeType.PlayerHasBeenBanned:
+                {
+                        message = "The player has been banned";
+                }break;
+                case ChannelNoticeType.Throttled:
+                {
+                        message = "Your messaged was throttled please try again";
+                }break;
+                case ChannelNoticeType.NotArea:
+                {
+                        message = "You are not in the correct area for that channel";
+                }break;
+                case ChannelNoticeType.NotLFG:
+                {
+                        message = "You must be queued in looking for group before joining this channel";
+                }break;
+                case ChannelNoticeType.VoiceChatOn:
+                {
+                        message = "Voice chat turned on";
+                }break;
+                case ChannelNoticeType.VoiceChatOff:
+				{
+                        message = "Voice chat turned off";
+                }break;
+                default:
+                    message = "Got unknown channel status " + (int)notice + " pls fix men";
+                    break;
             }
-
-            if ((char)dump[0] == 0x00) { notifymsg = "A user joined the channel."; }
-            if ((char)dump[0] == 0x01) { notifymsg = "A user left the channel."; }
-            if ((char)dump[0] == 0x02)
-            {
-                notifymsg = "Channel joined.";
-                if (customChannels.Contains(builder.ToString()))
-                {
-                    UpdateCustomChannelList("1");
-                } else
-                {
-                    if (!joinedChannels.Contains(builder.ToString()))
-                    {
-                        joinedChannels.Add(builder.ToString());
-                        UpdateDefaultChannelList("1");
-                    }
-                }
-            }
-            if ((char)dump[0] == 0x03)
-            {
-                notifymsg = "Channel left.";
-                if (joinedChannels.Contains(builder.ToString()))
-                {
-                    joinedChannels.Remove(builder.ToString());
-                    UpdateDefaultChannelList("1");
-                }
-            }
-            if ((char)dump[0] == 0x05) { notifymsg = "You already left this channel.."; }
-            if ((char)dump[0] == 0x08) { notifymsg = "You are ower of the channel now."; } /*8*/
-            if ((char)dump[0] == 0x0C) { notifymsg = "Moderation privileges given to you."; } /*12*/
-            if ((char)dump[0] == 0x18) { notifymsg = ""; } /*24 Invited to join channel */
-
-            if ((char)dump[0] == 0x18)
-            {
-                channel.Type = ChatMessageType.ChannelInvitation;
-            }
-
-            channel.ChannelName = builder.ToString();
-            message.Message = notifymsg; // + builder.ToString();
-            message.Language = 0;
-            message.ChatTag = 0;
-            message.Sender = channel;
-            System.Threading.Thread.Sleep(100); // don't process too fast for automatic join
-            Game.UI.PresentChatMessage(message);
+            message += ".";
+            channel.ChannelName = channelName;
+            chatmsg.Message = message; // + builder.ToString();
+            chatmsg.Language = 0;
+            chatmsg.ChatTag = 0;
+            chatmsg.Sender = channel;
+            Game.UI.PresentChatMessage(chatmsg);
         }
-
         //CMSG_GROUP_DISBAND = 123 party
         public void GroupDisband()
         {
@@ -989,30 +1064,6 @@ namespace Client
             data = packetdata;
 
             OutPacket packet = new OutPacket(WorldCommand.CMSG_DECLINE_CHANNEL_INVITE);
-            packet.Write(data);
-            Game.SendPacket(packet);
-        }
-
-        public void NewChannel(string channelname, string password = "")
-        {
-            byte[] data = null;
-            var startByte = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
-            var emptyByte = new byte[] { 0x00 };
-
-            byte[] channame = Encoding.ASCII.GetBytes(channelname);
-            if (password != "")
-            {
-                byte[] chanpwd = Encoding.ASCII.GetBytes(password);
-                byte[] chanwithpass = startByte.Concat(channame).Concat(emptyByte).Concat(chanpwd).Concat(emptyByte).ToArray();
-                data = chanwithpass;
-            }
-            else
-            {
-                byte[] channelopen = startByte.Concat(channame).Concat(emptyByte).Concat(emptyByte).ToArray();
-                data = channelopen;
-            }
-
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
             packet.Write(data);
             Game.SendPacket(packet);
         }
@@ -1061,10 +1112,10 @@ namespace Client
             Game.SendPacket(response);
         }
 
-        public void RequestChannelList() //CMSG_CHANNEL_LIST = 154
+        public void RequestChannelList(string channelName) //CMSG_CHANNEL_LIST = 154
         {
             OutPacket response = new OutPacket(WorldCommand.CMSG_CHANNEL_LIST);
-            response.Write("");
+            response.Write(channelName);
             Game.SendPacket(response);
         }
 
