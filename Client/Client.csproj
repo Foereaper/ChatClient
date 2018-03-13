@@ -181,6 +181,7 @@
     <Compile Include="World\WorldCommand.cs" />
     <Compile Include="UI\IGameUI.cs" />
     <Compile Include="World\Definitions\Extensions.cs" />
+    <Compile Include="WoWGasmSpecific\CustomOpcodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

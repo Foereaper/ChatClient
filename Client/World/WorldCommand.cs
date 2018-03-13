@@ -2274,6 +2274,7 @@
         SMSG_CLIENT_SOCIAL_REPLY = 1344,
         CMSG_CLIENT_QUERY_CHAT_ACCESS = 1345,
         SMSG_CLIENT_CHAT_ACCESS = 1346,
+        SMSG_CLIENT_TICKET_LIST = 1347,
         Maximum,
         Unknown,
     }
