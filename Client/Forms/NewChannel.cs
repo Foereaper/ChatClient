@@ -50,7 +50,7 @@ namespace BotFarm
 
         private void MakeChannel(string channel, string password)
         {
-            SessionInit.Instance.factoryGame.NewChannel(channel, password);
+            SessionInit.Instance.factoryGame.JoinChannel(0, channel, password);
         }
     }
 }

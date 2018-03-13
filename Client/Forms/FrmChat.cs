@@ -162,10 +162,10 @@ namespace BotFarm
             textMessage.Select();
             this.textMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
 
-            SessionInit.Instance.factoryGame.JoinChannel(1);
-            SessionInit.Instance.factoryGame.JoinChannel(2);
-            SessionInit.Instance.factoryGame.JoinChannel(3);
-            SessionInit.Instance.factoryGame.JoinChannel(4);
+            SessionInit.Instance.factoryGame.JoinChannel(1, "General", "");
+            SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
+            SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
+            SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -368,10 +368,10 @@ namespace BotFarm
 
         private void joinAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SessionInit.Instance.factoryGame.JoinChannel(1);
-            SessionInit.Instance.factoryGame.JoinChannel(2);
-            SessionInit.Instance.factoryGame.JoinChannel(3);
-            SessionInit.Instance.factoryGame.JoinChannel(4);
+            SessionInit.Instance.factoryGame.JoinChannel(1, "General", "");
+            SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
+            SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
+            SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
         }
 
         private void createNewChannelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -968,33 +968,33 @@ namespace BotFarm
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             // leave channel 1
-            SessionInit.Instance.factoryGame.LeaveChannel(1);
+            SessionInit.Instance.factoryGame.LeaveChannel(1, "");
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             // leave channel 2
-            SessionInit.Instance.factoryGame.LeaveChannel(2);
+            SessionInit.Instance.factoryGame.LeaveChannel(2, "");
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             // leave channel 3
-            SessionInit.Instance.factoryGame.LeaveChannel(3);
+            SessionInit.Instance.factoryGame.LeaveChannel(22, "");
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
             // leave channel 4
-            SessionInit.Instance.factoryGame.LeaveChannel(4);
+            SessionInit.Instance.factoryGame.LeaveChannel(26, "");
         }
 
         private void leaveAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SessionInit.Instance.factoryGame.LeaveChannel(1);
-            SessionInit.Instance.factoryGame.LeaveChannel(2);
-            SessionInit.Instance.factoryGame.LeaveChannel(3);
-            SessionInit.Instance.factoryGame.LeaveChannel(4);
+            SessionInit.Instance.factoryGame.LeaveChannel(1, "");
+            SessionInit.Instance.factoryGame.LeaveChannel(2, "");
+            SessionInit.Instance.factoryGame.LeaveChannel(22, "");
+            SessionInit.Instance.factoryGame.LeaveChannel(26, "");
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
