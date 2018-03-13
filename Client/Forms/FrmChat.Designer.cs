@@ -238,11 +238,11 @@ namespace BotFarm
             // 
             this.ChatWindow.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ChatWindow.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ChatWindow.Location = new System.Drawing.Point(0, 27);
+            this.ChatWindow.Location = new System.Drawing.Point(12, 27);
             this.ChatWindow.Name = "ChatWindow";
             this.ChatWindow.ReadOnly = true;
             this.ChatWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.ChatWindow.Size = new System.Drawing.Size(518, 488);
+            this.ChatWindow.Size = new System.Drawing.Size(502, 488);
             this.ChatWindow.TabIndex = 1;
             this.ChatWindow.Text = "";
             this.ChatWindow.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.ChatWindow_LinkClicked);
