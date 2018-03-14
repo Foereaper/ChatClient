@@ -9,6 +9,7 @@ namespace Client.Chat.Definitions
         Afk = 0x1,
         Dnd = 0x2,
         Gm = 0x4,
-        Dev = 0x8
+        Com = 0x8,
+        Dev = 0x10
     }
 }
