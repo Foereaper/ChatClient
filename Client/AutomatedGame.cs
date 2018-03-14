@@ -674,8 +674,8 @@ namespace Client
                 packet.Write(Convert.ToUInt32(channel));
                 packet.Write((byte)0);
                 packet.Write((byte)0);
-                packet.Write(channelName);
-                packet.Write(channelPassword);
+                packet.Write(channelName.ToCString());
+                packet.Write(channelPassword.ToCString());
                 Game.SendPacket(packet);
 
 
