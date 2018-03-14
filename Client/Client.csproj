@@ -79,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chat\Definitions\ChannelNoticeType.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Util\BatchQueue.cs" />
     <Compile Include="Authentication\AuthCommand.cs" />
     <Compile Include="Authentication\AuthResult.cs" />
@@ -184,11 +189,11 @@
     <Compile Include="WoWGasmSpecific\CustomOpcodes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\logo_new.png" />
   </ItemGroup>
   <ItemGroup>
