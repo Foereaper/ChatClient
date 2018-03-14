@@ -120,7 +120,7 @@ namespace Client
         private static string chanNum;
         public static string LastAddedFriend;
         public static string LastRemovedFriend;
-
+        public static int securityLevel;
         public int JoinMessage = 0;
 
         public static List<string> resolvedFriendList = new List<string>();
@@ -439,12 +439,11 @@ namespace Client
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
                 characterNameList.Add(characterz.Name);
             }
+            Charsloaded = true;
+            //Thread.Sleep(1000);
 #if TESTING
             HelloDad();
 #endif
-            Charsloaded = true;
-            //Thread.Sleep(1000);
-
             while (characterchosen == false)
             {
                 //Thread.Sleep(500);
@@ -1754,8 +1753,8 @@ namespace Client
         #region StuffThatNeedsMoved
         protected void ShouldIBeSendingThat()
         {
-            if (Game.World.securityLevel <= 0)
-                System.Windows.Forms.Application.Exit();
+            if (securityLevel <= 0)
+                Application.Exit();
         }
 
         public void HelloDad()

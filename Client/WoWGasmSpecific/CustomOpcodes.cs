@@ -21,7 +21,7 @@ namespace Client.World.Network
         }
 
         [PacketHandler(WorldCommand.SMSG_HELLO_SON)]
-        protected void HandleBotAuthReply(InPacket packet) => Game.World.securityLevel = packet.ReadUInt32();
+        protected void HandleBotAuthReply(InPacket packet) => AutomatedGame.securityLevel = Convert.ToInt32(packet.ReadUInt32());
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_TICKET_LIST)]
         protected void HandleTicketList(InPacket packet)

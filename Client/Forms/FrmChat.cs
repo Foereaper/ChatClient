@@ -137,6 +137,14 @@ namespace BotFarm
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
+            if (AutomatedGame.securityLevel == 0 && tabControl1.Contains(tabTicket))
+                tabControl1.TabPages.Remove(tabTicket);
+            else
+            {
+                if (!tabControl1.Contains(tabTicket))
+                   tabControl1.TabPages.Insert(5, tabTicket);
+
+            }
         }
 
         private void AppendText(RichTextBox box, string text, Color color, bool bold = false)
@@ -851,9 +859,9 @@ namespace BotFarm
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestWhoList(); }
+            if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestWhoList(); }
+            if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestGuildList(); }
             if (tabControl1.SelectedIndex == 3) { SessionInit.Instance.factoryGame.RequestFriendList(); }
-            if (tabControl1.SelectedIndex == 4) { SessionInit.Instance.factoryGame.RequestGuildList(); }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)

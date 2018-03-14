@@ -69,11 +69,11 @@ namespace BotFarm
             this.lblplayercount = new System.Windows.Forms.Label();
             this.lblplayersonline = new System.Windows.Forms.Label();
             this.listWho = new System.Windows.Forms.ListView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabFriend = new System.Windows.Forms.TabPage();
             this.lblfriendcount = new System.Windows.Forms.Label();
             this.lblfriends = new System.Windows.Forms.Label();
             this.listFriends = new System.Windows.Forms.ListView();
-            this.Guild = new System.Windows.Forms.TabPage();
+            this.tabGuild = new System.Windows.Forms.TabPage();
             this.listRoster = new System.Windows.Forms.ListView();
             this.contextMenuWhoList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,14 +91,15 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tabTicket = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGroup.SuspendLayout();
             this.tabChannel.SuspendLayout();
             this.tabWho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
-            this.tabPage1.SuspendLayout();
-            this.Guild.SuspendLayout();
+            this.tabFriend.SuspendLayout();
+            this.tabGuild.SuspendLayout();
             this.contextMenuWhoList.SuspendLayout();
             this.contextMenuGroupList.SuspendLayout();
             this.contextMenuFriendList.SuspendLayout();
@@ -294,11 +295,12 @@ namespace BotFarm
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabGroup);
-            this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabWho);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.Guild);
+            this.tabControl1.Controls.Add(this.tabGuild);
+            this.tabControl1.Controls.Add(this.tabChannel);
+            this.tabControl1.Controls.Add(this.tabGroup);
+            this.tabControl1.Controls.Add(this.tabFriend);
+            this.tabControl1.Controls.Add(this.tabTicket);
             this.tabControl1.Location = new System.Drawing.Point(520, 58);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -460,18 +462,18 @@ namespace BotFarm
             this.listWho.View = System.Windows.Forms.View.Details;
             this.listWho.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listWho_MouseClick);
             // 
-            // tabPage1
+            // tabFriend
             // 
-            this.tabPage1.Controls.Add(this.lblfriendcount);
-            this.tabPage1.Controls.Add(this.lblfriends);
-            this.tabPage1.Controls.Add(this.listFriends);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(506, 457);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Friends";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabFriend.Controls.Add(this.lblfriendcount);
+            this.tabFriend.Controls.Add(this.lblfriends);
+            this.tabFriend.Controls.Add(this.listFriends);
+            this.tabFriend.Location = new System.Drawing.Point(4, 22);
+            this.tabFriend.Name = "tabFriend";
+            this.tabFriend.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFriend.Size = new System.Drawing.Size(506, 457);
+            this.tabFriend.TabIndex = 3;
+            this.tabFriend.Text = "Friends";
+            this.tabFriend.UseVisualStyleBackColor = true;
             // 
             // lblfriendcount
             // 
@@ -501,16 +503,16 @@ namespace BotFarm
             this.listFriends.View = System.Windows.Forms.View.Details;
             this.listFriends.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listFriends_MouseClick);
             // 
-            // Guild
+            // tabGuild
             // 
-            this.Guild.Controls.Add(this.listRoster);
-            this.Guild.Location = new System.Drawing.Point(4, 22);
-            this.Guild.Name = "Guild";
-            this.Guild.Padding = new System.Windows.Forms.Padding(3);
-            this.Guild.Size = new System.Drawing.Size(506, 457);
-            this.Guild.TabIndex = 4;
-            this.Guild.Text = "Guild";
-            this.Guild.UseVisualStyleBackColor = true;
+            this.tabGuild.Controls.Add(this.listRoster);
+            this.tabGuild.Location = new System.Drawing.Point(4, 22);
+            this.tabGuild.Name = "tabGuild";
+            this.tabGuild.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGuild.Size = new System.Drawing.Size(506, 457);
+            this.tabGuild.TabIndex = 4;
+            this.tabGuild.Text = "Guild";
+            this.tabGuild.UseVisualStyleBackColor = true;
             // 
             // listRoster
             // 
@@ -659,6 +661,16 @@ namespace BotFarm
             this.comboBox1.TabIndex = 23;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // tabTicket
+            // 
+           this.tabTicket.Location = new System.Drawing.Point(4, 22);
+           this.tabTicket.Name = "tabTicket";
+           this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
+           this.tabTicket.Size = new System.Drawing.Size(506, 457);
+           this.tabTicket.TabIndex = 5;
+           this.tabTicket.Text = "Tickets";
+           this.tabTicket.UseVisualStyleBackColor = true;
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -693,9 +705,9 @@ namespace BotFarm
             this.tabWho.ResumeLayout(false);
             this.tabWho.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.Guild.ResumeLayout(false);
+            this.tabFriend.ResumeLayout(false);
+            this.tabFriend.PerformLayout();
+            this.tabGuild.ResumeLayout(false);
             this.contextMenuWhoList.ResumeLayout(false);
             this.contextMenuGroupList.ResumeLayout(false);
             this.contextMenuFriendList.ResumeLayout(false);
@@ -740,7 +752,7 @@ namespace BotFarm
         private System.Windows.Forms.ToolStripMenuItem addFriendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ignoreToolStripMenuItem;
         private System.Windows.Forms.PictureBox refreshWhoList;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabFriend;
         private System.Windows.Forms.ComboBox cBStatusFlag;
         private System.Windows.Forms.Label lblStatusflag;
         private System.Windows.Forms.ListView listCustom;
@@ -764,6 +776,7 @@ namespace BotFarm
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TabPage Guild;
+        private System.Windows.Forms.TabPage tabGuild;
+        private System.Windows.Forms.TabPage tabTicket;
     }
 }
