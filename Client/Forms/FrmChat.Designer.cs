@@ -75,6 +75,7 @@ namespace BotFarm
             this.listFriends = new System.Windows.Forms.ListView();
             this.tabGuild = new System.Windows.Forms.TabPage();
             this.listRoster = new System.Windows.Forms.ListView();
+            this.listTicket = new System.Windows.Forms.ListView();
             this.contextMenuWhoList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -525,6 +526,17 @@ namespace BotFarm
             this.listRoster.UseCompatibleStateImageBehavior = false;
             this.listRoster.View = System.Windows.Forms.View.Details;
             // 
+            // listTicket
+            // 
+            this.listTicket.FullRowSelect = true;
+            this.listTicket.GridLines = true;
+            this.listTicket.Location = new System.Drawing.Point(0, 30);
+            this.listTicket.Name = "listTicket";
+            this.listTicket.Size = new System.Drawing.Size(506, 434);
+            this.listTicket.TabIndex = 5;
+            this.listTicket.UseCompatibleStateImageBehavior = false;
+            this.listTicket.View = System.Windows.Forms.View.Details;
+            // 
             // contextMenuWhoList
             // 
             this.contextMenuWhoList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -663,6 +675,7 @@ namespace BotFarm
             // 
             // tabTicket
             // 
+           this.tabTicket.Controls.Add(this.listTicket);
            this.tabTicket.Location = new System.Drawing.Point(4, 22);
            this.tabTicket.Name = "tabTicket";
            this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
@@ -744,6 +757,7 @@ namespace BotFarm
         private System.Windows.Forms.Button btnGroupDisband;
         private System.Windows.Forms.ListView listWho;
         private System.Windows.Forms.ListView listRoster;
+        private System.Windows.Forms.ListView listTicket;
         private System.Windows.Forms.Label lblplayercount;
         private System.Windows.Forms.Label lblplayersonline;
         private System.Windows.Forms.ContextMenuStrip contextMenuWhoList;

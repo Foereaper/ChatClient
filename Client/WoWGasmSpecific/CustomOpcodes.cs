@@ -26,17 +26,19 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CLIENT_TICKET_LIST)]
         protected void HandleTicketList(InPacket packet)
         {
+            Game.World.ticketList.Clear();
             uint ticketCount = packet.ReadUInt32();
-            for(int i = 0; i < ticketCount; i++)
+            for (int i = 0; i < ticketCount; i++)
             {
-                string playerName = packet.ReadCString();
-                string createTime = packet.ReadCString();
-                string lastModified = packet.ReadCString();
-                string assignedPlayer = packet.ReadCString();
-                string ticketComment = packet.ReadCString();
-                bool areTheyOnline = packet.ReadBoolean();
-                //ToDo: Gui
+                TicketInfo ticket;
+                ticket.playerName = packet.ReadCString();
+                ticket.createTime = packet.ReadCString();
+                ticket.assignedPlayer = packet.ReadCString();
+                ticket.ticketComment = packet.ReadCString();
+                ticket.areTheyOnline = packet.ReadBoolean();
+                Game.World.ticketList.Add(ticket);
             }
+            AutomatedGame.TicketUpdate = "1";
         }
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_TICKET_DATA)]

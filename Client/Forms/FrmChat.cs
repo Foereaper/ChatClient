@@ -68,6 +68,13 @@ namespace BotFarm
                 AutomatedGame.RosterUpdate = "";
                 return;
             }
+            string TicketUpdate = AutomatedGame.TicketUpdate;
+            if (TicketUpdate != "")
+            {
+                DisplayTicketList();
+                AutomatedGame.TicketUpdate = "";
+                return;
+            }
             SessionInit.Instance.factoryGame.Game.World.mesQue = true;
             List<string> newMessages = SessionInit.Instance.factoryGame.Game.World.newMessageQue;
             foreach (string messageData in newMessages)
@@ -768,6 +775,56 @@ namespace BotFarm
             }
         }
 
+        public void DisplayTicketList()
+        {
+            ColumnHeader columnPlayer, columnCreate, columnAssignedGuy, columnComment, columnOnline;
+            columnPlayer = new ColumnHeader();
+            columnCreate = new ColumnHeader();
+            columnAssignedGuy = new ColumnHeader();
+            columnComment = new ColumnHeader();
+            columnOnline = new ColumnHeader();
+            columnPlayer.Text = "Player";
+            columnPlayer.TextAlign = HorizontalAlignment.Left;
+            columnPlayer.Width = 80;
+            columnCreate.Text = "Create";
+            columnCreate.TextAlign = HorizontalAlignment.Left;
+            columnCreate.Width = 50;
+            columnAssignedGuy.Text = "Assigned";
+            columnAssignedGuy.TextAlign = HorizontalAlignment.Left;
+            columnAssignedGuy.Width = 50;
+            columnComment.Text = "Comment";
+            columnComment.TextAlign = HorizontalAlignment.Left;
+            columnComment.Width = 100;
+            columnOnline.Text = "Online";
+            columnOnline.TextAlign = HorizontalAlignment.Left;
+            columnOnline.Width = 50;
+
+
+
+            listTicket.Columns.Clear();
+
+            listTicket.Columns.Add(columnPlayer);
+            listTicket.Columns.Add(columnCreate);
+            listTicket.Columns.Add(columnAssignedGuy);
+            listTicket.Columns.Add(columnComment);
+            listTicket.Columns.Add(columnOnline);
+
+            listTicket.View = View.Details;
+            listTicket.Items.Clear();
+
+            List<TicketInfo> tickets = SessionInit.Instance.factoryGame.Game.World.ticketList;
+
+            foreach (TicketInfo ticket in tickets)
+            {
+                ListViewItem item = new ListViewItem(ticket.playerName);
+                item.SubItems.Add(ticket.createTime);
+                item.SubItems.Add(ticket.assignedPlayer);
+                item.SubItems.Add(ticket.ticketComment);
+                item.SubItems.Add(ticket.areTheyOnline.ToString());
+                listTicket.Items.Add(item);
+            }
+        }
+
         private void listWho_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -862,6 +919,10 @@ namespace BotFarm
             if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestWhoList(); }
             if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestGuildList(); }
             if (tabControl1.SelectedIndex == 3) { SessionInit.Instance.factoryGame.RequestFriendList(); }
+            if (tabControl1.SelectedIndex == 5)
+            {
+                SessionInit.Instance.factoryGame.RequestTicketList(false);
+            }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)

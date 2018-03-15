@@ -31,5 +31,6 @@ namespace Client
         public List<string> guildOfficerNote = new List<string>();
         public bool mesQue = false;
         public List<string> newMessageQue = new List<string>();
+        public List<TicketInfo> ticketList = new List<TicketInfo>();
     }
 }

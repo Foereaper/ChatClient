@@ -16,6 +16,25 @@ using Client.Chat.Definitions;
 using Client.World.Definitions;
 using Client.World.Entities;
 
+public struct TicketInfo
+{
+    public TicketInfo(string name, string create, string assigned, string comment, bool online)
+    {
+        playerName = name;
+        createTime = create;
+        assignedPlayer = assigned;
+        ticketComment = comment;
+        areTheyOnline = online;
+    }
+
+    public string playerName;
+    public string createTime;
+    public string assignedPlayer;
+    public string ticketComment;
+    public bool areTheyOnline;
+};
+
+
 namespace Client
 {
     public class AutomatedGame : IGameUI, IGame
@@ -101,6 +120,7 @@ namespace Client
         public static string UpdateGroupGUIDList;
         public static string WhoListUpdate;
         public static string RosterUpdate;
+        public static string TicketUpdate;
         public static string FriendListUpdate;
         public static string DefaultChannelListUpdate;
         public static string CustomChannelListUpdate;
@@ -1511,6 +1531,11 @@ namespace Client
             RosterUpdate = message;
         }
 
+        public override void UpdateTicketList(string message)
+        {
+            TicketUpdate = message;
+        }
+
         public override void LogLine(string message, LogLevel level = LogLevel.Info)
         {
         }
@@ -1748,14 +1773,26 @@ namespace Client
             HandleTriggerInput(TriggerActionType.UpdateField, e);
         }
         #endregion
-
-#if TESTING
-        #region StuffThatNeedsMoved
         protected void ShouldIBeSendingThat()
         {
+#if TESTING
             if (securityLevel <= 0)
                 Application.Exit();
+#endif
         }
+
+        public void RequestTicketList(bool onlineOnly)
+        {
+#if TESTING
+            ShouldIBeSendingThat();
+            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_LIST);
+            response.Write(onlineOnly);
+            Game.SendPacket(response);
+#endif
+        }
+#if TESTING
+        #region StuffThatNeedsMoved
+
 
         public void HelloDad()
         {
@@ -1764,13 +1801,7 @@ namespace Client
             Game.SendPacket(response);
         }
 
-        public void RequestTicketList(bool onlineOnly)
-        {
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_LIST);
-            response.Write(onlineOnly);
-            Game.SendPacket(response);
-        }
+
 
         public void RequestTicketDetails(string playerName)
         {

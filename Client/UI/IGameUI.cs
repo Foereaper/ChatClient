@@ -37,6 +37,7 @@ namespace Client.UI
         public abstract void UpdateFriendList(string message);
         public abstract void UpdateDefaultChannelList(string message);
         public abstract void UpdateCustomChannelList(string message);
+        public abstract void UpdateTicketList(string message);
         [Conditional("DEBUG")]
         public abstract void LogDebug(string message);
         public abstract void LogException(string message);
