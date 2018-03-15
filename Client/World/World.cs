@@ -32,5 +32,6 @@ namespace Client
         public bool mesQue = false;
         public List<string> newMessageQue = new List<string>();
         public List<TicketInfo> ticketList = new List<TicketInfo>();
+        public CurrentTicket currentViewedTicket;
     }
 }

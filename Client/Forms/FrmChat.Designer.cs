@@ -536,6 +536,7 @@ namespace BotFarm
             this.listTicket.TabIndex = 5;
             this.listTicket.UseCompatibleStateImageBehavior = false;
             this.listTicket.View = System.Windows.Forms.View.Details;
+            this.listTicket.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listTicket_MouseClick);
             // 
             // contextMenuWhoList
             // 

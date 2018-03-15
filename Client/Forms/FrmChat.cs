@@ -834,6 +834,23 @@ namespace BotFarm
             }
         }
 
+        private void listTicket_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                try
+                {
+                    var player = listTicket.SelectedItems[0].Text;
+                    SessionInit.Instance.factoryGame.RequestTicketDetails(player);
+                }
+                catch
+                {
+                    //Ah fuck we broke it.
+                    SessionInit.Instance.factoryGame.RequestWhoList();
+                }
+            }
+        }
+
         private void refreshWhoList_Click(object sender, EventArgs e)
         {
             SessionInit.Instance.factoryGame.RequestWhoList();

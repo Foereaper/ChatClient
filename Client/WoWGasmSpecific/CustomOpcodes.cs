@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows;
 using Client.Chat;
 using Client.Chat.Definitions;
+using Client.Forms;
 
 namespace Client.World.Network
 {
@@ -44,15 +46,16 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CLIENT_TICKET_DATA)]
         protected void HandleTicketView(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            string createTime = packet.ReadCString();
-            string lastModified = packet.ReadCString();
-            string assignedPlayer = packet.ReadCString();
-            string ticketMessage = packet.ReadCString();
-            string ticketComment = packet.ReadCString();
-            string ticketGMResponse = packet.ReadCString();
-            string ticketChatLog = packet.ReadCString();
-            //ToDo: Gui
+            CurrentTicket ticket;
+            ticket.playerName = packet.ReadCString();
+            ticket.assignedPlayer = packet.ReadCString();
+            ticket.ticketMessage = packet.ReadCString();
+            ticket.ticketComment = packet.ReadCString();
+            ticket.ticketResponse = packet.ReadCString();
+            ticket.ticketChatLog = packet.ReadCString();
+            Game.World.currentViewedTicket = ticket;
+            FrmTicket frm = new FrmTicket();
+            frm.Show();
         }
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_HAS_ITEM)]

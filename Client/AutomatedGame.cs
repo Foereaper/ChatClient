@@ -1,4 +1,4 @@
-﻿//#define TESTING
+﻿#define TESTING
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +34,15 @@ public struct TicketInfo
     public bool areTheyOnline;
 };
 
+public struct CurrentTicket
+{
+    public string playerName;
+    public string assignedPlayer;
+    public string ticketMessage;
+    public string ticketComment;
+    public string ticketResponse;
+    public string ticketChatLog;
+};
 
 namespace Client
 {
@@ -1790,164 +1799,198 @@ namespace Client
             Game.SendPacket(response);
 #endif
         }
-#if TESTING
         #region StuffThatNeedsMoved
 
 
         public void HelloDad()
         {
+#if TESTING
             var response = new OutPacket(WorldCommand.CMSG_HELLO_DADDY);
             response.Write((byte)1);
             Game.SendPacket(response);
+#endif
         }
 
 
 
         public void RequestTicketDetails(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_VIEW);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TicketAssign(string playerName, string assignName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_ASSIGN);
             response.Write(playerName.ToCString());
             response.Write(assignName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void DeleteTicket(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_DELETE);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TicketComment(string playerName, string comment)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_COMMENT);
             response.Write(playerName.ToCString());
             response.Write(comment.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TicketResponse(string playerName, string ticketresponse)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_RESPONSE);
             response.Write(playerName.ToCString());
             response.Write(ticketresponse.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TicketResponse(string playerName, byte status)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_ESCALATE);
             response.Write(playerName.ToCString());
             response.Write(status);
             Game.SendPacket(response);
+#endif
         }
 
         public void CompleteTicket(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_COMPLETE);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void MailPlayer(string playerName, string subject, string body)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_MAIL_PLAYER);
             response.Write(playerName.ToCString());
             response.Write(subject.ToCString());
             response.Write(body.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void RequestQuestStatus(string playerName, uint questId)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_GET_QUEST_STATUS);
             response.Write(playerName.ToCString());
             response.Write(questId);
             Game.SendPacket(response);
+#endif
         }
 
         public void RequestAchievementStatus(string playerName, uint achId)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.SMSG_CLIENT_ACH_STATUS);
             response.Write(playerName.ToCString());
             response.Write(achId);
             Game.SendPacket(response);
+#endif
         }
 
         public void CompleteQuest(string playerName, uint questId)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_COMPLETE_QUEST);
             response.Write(playerName.ToCString());
             response.Write(questId);
             Game.SendPacket(response);
+#endif
         }
 
         public void CompleteAchievement(string playerName, uint achId)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_COMPLETE_ACH);
             response.Write(playerName.ToCString());
             response.Write(achId);
             Game.SendPacket(response);
+#endif
         }
 
         public void AddItem(string playerName, uint itemId, uint count)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_ADD_ITEM);
             response.Write(playerName.ToCString());
             response.Write(itemId);
             response.Write(count);
             Game.SendPacket(response);
+#endif
         }
 
         public void RemoveItem(string playerName, uint itemId, uint count)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_REMOVE_ITEM);
             response.Write(playerName.ToCString());
             response.Write(itemId);
             response.Write(count);
             Game.SendPacket(response);
+#endif
         }
 
         public void HasItem(string playerName, uint itemId)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_HAS_ITEM);
             response.Write(playerName.ToCString());
             response.Write(itemId);
             Game.SendPacket(response);
+#endif
         }
 
         public void QueryPlayerOnlineStatus(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_PLR_IS_ONLINE);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void BanPlayer(byte banType, string playerAccountOrIp, string duration, string reason, string announceReason)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_BAN);
             response.Write(banType);
@@ -1956,26 +1999,32 @@ namespace Client
             response.Write(reason.ToCString());
             response.Write(announceReason.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TbButton(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_TB_BUTTON);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void RevivePlayer(string playerName)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_REVIVE);
             response.Write(playerName.ToCString());
             Game.SendPacket(response);
+#endif
         }
 
         public void TeleportPlayer(string playerName, uint mapId, float x, float y, float z, float o)
         {
+#if TESTING
             ShouldIBeSendingThat();
             var response = new OutPacket(WorldCommand.CMSG_CLIENT_BAN);
             response.Write(playerName.ToCString());
@@ -1985,8 +2034,8 @@ namespace Client
             response.Write(z);
             response.Write(o);
             Game.SendPacket(response);
+#endif
         }
 #endregion
-#endif
     }
 }
