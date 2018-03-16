@@ -3,6 +3,7 @@ using System.Windows;
 using Client.Chat;
 using Client.Chat.Definitions;
 using Client.Forms;
+using static Client.Forms.FrmTicket;
 
 namespace Client.World.Network
 {
@@ -54,8 +55,7 @@ namespace Client.World.Network
             ticket.ticketResponse = packet.ReadCString();
             ticket.ticketChatLog = packet.ReadCString();
             Game.World.currentViewedTicket = ticket;
-            FrmTicket frm = new FrmTicket();
-            frm.Show();
+            TicketFrm.DataUpdate();
         }
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_HAS_ITEM)]

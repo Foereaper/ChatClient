@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
+using Client.Forms;
 
 namespace BotFarm
 {
@@ -845,6 +846,8 @@ namespace BotFarm
                 {
                     var player = listTicket.SelectedItems[0].Text;
                     SessionInit.Instance.factoryGame.RequestTicketDetails(player);
+                    FrmTicket frm = new FrmTicket();
+                    frm.Show();
                 }
                 catch
                 {
@@ -938,7 +941,7 @@ namespace BotFarm
         {
             if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestWhoList(); }
             if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestGuildList(); }
-            if (tabControl1.SelectedIndex == 3) { SessionInit.Instance.factoryGame.RequestFriendList(); }
+            if (tabControl1.SelectedIndex == 4) { SessionInit.Instance.factoryGame.RequestFriendList(); }
             if (tabControl1.SelectedIndex == 5)
             {
                 SessionInit.Instance.factoryGame.RequestTicketList(false);

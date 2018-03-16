@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTicket));
             this.ticketMessage = new System.Windows.Forms.RichTextBox();
             this.assignName = new System.Windows.Forms.TextBox();
@@ -71,6 +72,7 @@
             this.completeTicketButton = new System.Windows.Forms.Button();
             this.deleteTicketButton = new System.Windows.Forms.Button();
             this.chatLog = new System.Windows.Forms.RichTextBox();
+            this.TimerCheckPull = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // ticketMessage
@@ -438,6 +440,12 @@
             this.chatLog.TabIndex = 41;
             this.chatLog.Text = "";
             // 
+            // TimerCheckPull
+            // 
+            this.TimerCheckPull.Enabled = true;
+            this.TimerCheckPull.Interval = 10;
+            this.TimerCheckPull.Tick += new System.EventHandler(this.TimerCheckPull_Tick);
+            // 
             // FrmTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -539,5 +547,6 @@
         private System.Windows.Forms.Button completeTicketButton;
         private System.Windows.Forms.Button deleteTicketButton;
         private System.Windows.Forms.RichTextBox chatLog;
+        private System.Windows.Forms.Timer TimerCheckPull;
     }
 }
