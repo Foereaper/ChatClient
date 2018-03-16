@@ -144,12 +144,15 @@ namespace BotFarm
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
-            if (AutomatedGame.securityLevel == 0 && tabControl1.Contains(tabTicket))
-                tabControl1.TabPages.Remove(tabTicket);
+            if (AutomatedGame.securityLevel == 0)
+            {
+                if (tabControl1.Contains(tabTicket))
+                    tabControl1.TabPages.Remove(tabTicket);
+            }
             else
             {
                 if (!tabControl1.Contains(tabTicket))
-                   tabControl1.TabPages.Insert(5, tabTicket);
+                    tabControl1.TabPages.Insert(5, tabTicket);
 
             }
         }
