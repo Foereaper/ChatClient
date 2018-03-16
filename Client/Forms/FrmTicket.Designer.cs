@@ -443,7 +443,7 @@
             // TimerCheckPull
             // 
             this.TimerCheckPull.Enabled = true;
-            this.TimerCheckPull.Interval = 10;
+            this.TimerCheckPull.Interval = 200;
             this.TimerCheckPull.Tick += new System.EventHandler(this.TimerCheckPull_Tick);
             // 
             // FrmTicket
