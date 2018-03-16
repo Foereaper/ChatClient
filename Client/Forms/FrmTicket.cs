@@ -6,26 +6,135 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Client.Forms
 {
+    
     public partial class FrmTicket : Form
     {
+        public static FrmTicket frm = new FrmTicket();
+
         public FrmTicket()
         {
             InitializeComponent();
         }
 
-        private void FrmTicket_Load(object sender, EventArgs e)
+        public static string ticketMessageData;
+        public string ticketMessageProp
+        {
+            set
+            {
+                 ticketMessageData = value;
+            }
+            get
+            {
+                return ticketMessageData;
+            }
+        }
+
+        public static string ticketCommentData;
+        public string ticketCommentProp
+        {
+            set
+            {
+                ticketCommentData = value;
+            }
+            get
+            {
+                return ticketCommentData;
+            }
+        }
+
+        public static string assignNameData;
+        public string assignNameProp
+        {
+            set
+            {
+                assignNameData = value;
+            }
+            get
+            {
+                return assignNameData;
+            }
+        }
+
+        public static string ticketResponseData;
+        public string ticketResponseProp
+        {
+            set
+            {
+                ticketResponseData = value;
+            }
+            get
+            {
+                return ticketResponseData;
+            }
+        }
+
+        public static string chatLogData;
+        public string chatLogProp
+        {
+            set
+            {
+                chatLogData = value;
+            }
+            get
+            {
+                return chatLogData;
+            }
+        }
+
+        public static bool PullProps;
+        public bool PullProp
+        {
+            set
+            {
+                PullProps = value;
+            }
+            get
+            {
+                return PullProps;
+            }
+        }
+
+        public static class TicketFrm
+        {
+            public static void DataUpdate()
+            {
+                GenerateTicketData();
+            }
+        }
+
+        private static void GenerateTicketData()
         {
             CurrentTicket ticket = SessionInit.Instance.factoryGame.Game.World.currentViewedTicket;
-            ticketMessage.Text = ticket.ticketMessage;
-            ticketComment.Text = ticket.ticketComment;
-            assignName.Text = ticket.assignedPlayer;
-            ticketResponse.Text = ticket.ticketResponse;
-            chatLog.Text = ticket.ticketChatLog;
+            frm.ticketMessageProp = ticket.ticketMessage;
+            frm.ticketCommentProp = ticket.ticketComment;
+            frm.assignNameProp = ticket.assignedPlayer;
+            frm.ticketResponseProp = ticket.ticketResponse;
+            frm.chatLogProp = ticket.ticketChatLog;
+            frm.PullProp = true;
+        }
+
+        private void TimerCheckPull_Tick(object sender, EventArgs e)
+        {
+            if (PullProp != false)
+            {
+                PullProp = false;
+                ticketMessage.Text = ticketMessageData;
+                ticketComment.Text = ticketCommentData;
+                assignName.Text = assignNameData;
+                ticketResponse.Text = ticketResponseData;
+                chatLog.Text = chatLogData;
+            }
+        }
+
+        private void FrmTicket_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void completeTicketButton_Click(object sender, EventArgs e)
