@@ -79,6 +79,7 @@
             // 
             this.ticketMessage.Location = new System.Drawing.Point(12, 34);
             this.ticketMessage.Name = "ticketMessage";
+            this.ticketMessage.ReadOnly = true;
             this.ticketMessage.Size = new System.Drawing.Size(268, 117);
             this.ticketMessage.TabIndex = 0;
             this.ticketMessage.Text = "";
@@ -436,6 +437,7 @@
             this.chatLog.Enabled = false;
             this.chatLog.Location = new System.Drawing.Point(548, 204);
             this.chatLog.Name = "chatLog";
+            this.chatLog.ReadOnly = true;
             this.chatLog.Size = new System.Drawing.Size(240, 205);
             this.chatLog.TabIndex = 41;
             this.chatLog.Text = "";
