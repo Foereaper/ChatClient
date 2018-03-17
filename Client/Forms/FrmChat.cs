@@ -838,25 +838,6 @@ namespace BotFarm
             }
         }
 
-        private void listTicket_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                try
-                {
-                    var player = listTicket.SelectedItems[0].Text;
-                    SessionInit.Instance.factoryGame.RequestTicketDetails(player);
-                    FrmTicket frm = new FrmTicket();
-                    frm.Show();
-                }
-                catch
-                {
-                    //Ah fuck we broke it.
-                    SessionInit.Instance.factoryGame.RequestWhoList();
-                }
-            }
-        }
-
         private void refreshWhoList_Click(object sender, EventArgs e)
         {
             SessionInit.Instance.factoryGame.RequestWhoList();
@@ -1089,9 +1070,42 @@ namespace BotFarm
             SessionInit.Instance.factoryGame.LeaveChannel(26, "");
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listTicket_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                try
+                {
+                    var player = listTicket.SelectedItems[0].Text;
+                    SessionInit.Instance.factoryGame.RequestTicketDetails(player);
+                    if (!FormOpen("Ticket")) // look for form by caption.
+                    {
+                        FrmTicket frm = new FrmTicket();
+                        frm.Show();
+                    }
+                    else
+                    {
+                        Application.OpenForms["FrmTicket"].Focus();
+                    }
+                }
+                catch
+                {
+                    //Ah fuck we broke it.
+                    SessionInit.Instance.factoryGame.RequestWhoList();
+                }
+            }
+        }
 
+        private bool FormOpen(string FormName)
+        {
+            foreach (Form form_loaded in Application.OpenForms)
+            {
+                if (form_loaded.Text.IndexOf(FormName) >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

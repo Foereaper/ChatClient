@@ -115,13 +115,19 @@ namespace Client.Forms
         {
             if (PullProp != false)
             {
-                PullProp = false;
                 ticketMessage.Text = ticketMessageData;
                 ticketComment.Text = ticketCommentData;
                 assignName.Text = assignNameData;
                 ticketResponse.Text = ticketResponseData;
                 chatLog.Text = chatLogData;
+                PullProp = false;
+                TimerCheckPull.Enabled = false;
             }
+        }
+
+        private void FrmTicket_Shown(object sender, EventArgs e)
+        {
+            TimerCheckPull.Enabled = true;
         }
 
         private void FrmTicket_Load(object sender, EventArgs e)
@@ -193,5 +199,6 @@ namespace Client.Forms
         {
 
         }
+
     }
 }
