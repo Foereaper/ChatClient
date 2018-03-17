@@ -132,7 +132,7 @@ namespace Client.Forms
 
         private void FrmTicket_Load(object sender, EventArgs e)
         {
-
+            TimerCheckPull.Enabled = true;
         }
 
         private void completeTicketButton_Click(object sender, EventArgs e)
