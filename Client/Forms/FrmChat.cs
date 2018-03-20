@@ -920,13 +920,10 @@ namespace BotFarm
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestWhoList(); }
-            if (tabControl1.SelectedIndex == 2) { SessionInit.Instance.factoryGame.RequestGuildList(); }
+            if (tabControl1.SelectedIndex == 0) { SessionInit.Instance.factoryGame.RequestWhoList(); }
+            if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestGuildList(); }
             if (tabControl1.SelectedIndex == 4) { SessionInit.Instance.factoryGame.RequestFriendList(); }
-            if (tabControl1.SelectedIndex == 5)
-            {
-                SessionInit.Instance.factoryGame.RequestTicketList(false);
-            }
+            if (tabControl1.SelectedIndex == 5) { SessionInit.Instance.factoryGame.RequestTicketList(false); }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)
