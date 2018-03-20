@@ -99,14 +99,16 @@ namespace Client.Authentication.Network
 
         public override void InitHandlers()
         {
-            Handlers = new Dictionary<AuthCommand, CommandHandler>();
+            Handlers = new Dictionary<AuthCommand, CommandHandler>
+            {
+                [AuthCommand.LOGON_CHALLENGE] = HandleRealmLogonChallenge,
+                [AuthCommand.LOGON_PROOF] = HandleRealmLogonProof,
+                [AuthCommand.REALM_LIST] = HandleRealmList
+            };
 
-            Handlers[AuthCommand.LOGON_CHALLENGE] = HandleRealmLogonChallenge;
-            Handlers[AuthCommand.LOGON_PROOF] = HandleRealmLogonProof;
-            Handlers[AuthCommand.REALM_LIST] = HandleRealmList;
         }
 
-        void HandleRealmLogonChallenge()
+        private void HandleRealmLogonChallenge()
         {
             var challenge = new ServerAuthChallenge(new BinaryReader(connection.GetStream()));
 
@@ -116,32 +118,22 @@ namespace Client.Authentication.Network
                 {
                     Game.UI.LogDebug("Received logon challenge");
 
-                    BigInteger N, A, B, a, u, x, S, salt, unk1, g, k;
-                    k = new BigInteger(3);
+                    BigInteger A, a;
+                    var k = new BigInteger(3);
 
                     #region Receive and initialize
 
-                    B = challenge.B.ToBigInteger();            // server public key
-                    g = challenge.g.ToBigInteger();
-                    N = challenge.N.ToBigInteger();            // modulus
-                    salt = challenge.salt.ToBigInteger();
-                    unk1 = challenge.unk3.ToBigInteger();
-
-                    Game.UI.LogDebug("---====== Received from server: ======---");
-                    Game.UI.LogDebug($"B={B.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"N={N.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"salt={challenge.salt.ToHexString()}");
+                    var B = challenge.B.ToBigInteger();
+                    var g = challenge.g.ToBigInteger();
+                    var N = challenge.N.ToBigInteger();
+                    var salt = challenge.salt.ToBigInteger();
+                    var unk1 = challenge.unk3.ToBigInteger();
 
                     #endregion
 
                     #region Hash password
 
-                    x = HashAlgorithm.SHA1.Hash(challenge.salt, PasswordHash).ToBigInteger();
-
-                    Game.UI.LogDebug("---====== shared password hash ======---");
-                    Game.UI.LogDebug($"g={g.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"x={x.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"N={N.ToCleanByteArray().ToHexString()}");
+                    var x = HashAlgorithm.SHA1.Hash(challenge.salt, PasswordHash).ToBigInteger();
 
                     #endregion
 
@@ -158,18 +150,14 @@ namespace Client.Authentication.Network
                         A = g.ModPow(a, N);
                     } while (A.ModPow(1, N) == 0);
 
-                    Game.UI.LogDebug("---====== Send data to server: ======---");
-                    Game.UI.LogDebug($"A={A.ToCleanByteArray().ToHexString()}");
-
                     #endregion
 
                     #region Compute session key
 
-                    u = HashAlgorithm.SHA1.Hash(A.ToCleanByteArray(), B.ToCleanByteArray()).ToBigInteger();
+                    var u = HashAlgorithm.SHA1.Hash(A.ToCleanByteArray(), B.ToCleanByteArray()).ToBigInteger();
 
                     // compute session key
-                    S = ((B + k * (N - g.ModPow(x, N))) % N).ModPow(a + (u * x), N);
-                    byte[] keyHash;
+                    var S = ((B + k * (N - g.ModPow(x, N))) % N).ModPow(a + (u * x), N);
                     var sData = S.ToCleanByteArray();
                     if (sData.Length < 32)
                     {
@@ -183,7 +171,7 @@ namespace Client.Authentication.Network
                     // take every even indices byte, hash, store in even indices
                     for (var i = 0; i < 16; ++i)
                         temp[i] = sData[i * 2];
-                    keyHash = HashAlgorithm.SHA1.Hash(temp);
+                    var keyHash = HashAlgorithm.SHA1.Hash(temp);
                     for (var i = 0; i < 20; ++i)
                         keyData[i * 2] = keyHash[i];
 
@@ -196,11 +184,6 @@ namespace Client.Authentication.Network
 
                     Key = keyData.ToBigInteger();
 
-                    Game.UI.LogDebug("---====== Compute session key ======---");
-                    Game.UI.LogDebug($"u={u.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"S={S.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"K={Key.ToCleanByteArray().ToHexString()}");
-
                     #endregion
 
                     #region Generate crypto proof
@@ -211,12 +194,10 @@ namespace Client.Authentication.Network
                     var nHash = HashAlgorithm.SHA1.Hash(N.ToCleanByteArray());
                     for (var i = 0; i < 20; ++i)
                         gNHash[i] = nHash[i];
-                    Game.UI.LogDebug($"nHash={nHash.ToHexString()}");
 
                     var gHash = HashAlgorithm.SHA1.Hash(g.ToCleanByteArray());
                     for (var i = 0; i < 20; ++i)
                         gNHash[i] ^= gHash[i];
-                    Game.UI.LogDebug($"gHash={gHash.ToHexString()}");
 
                     // hash username
                     var userHash = HashAlgorithm.SHA1.Hash(Encoding.ASCII.GetBytes(Username));
@@ -232,17 +213,6 @@ namespace Client.Authentication.Network
                         Key.ToCleanByteArray()
                     );
 
-                    Game.UI.LogDebug("---====== Client proof: ======---");
-                    Game.UI.LogDebug($"gNHash={gNHash.ToHexString()}");
-                    Game.UI.LogDebug($"userHash={userHash.ToHexString()}");
-                    Game.UI.LogDebug($"salt={challenge.salt.ToHexString()}");
-                    Game.UI.LogDebug($"A={A.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"B={B.ToCleanByteArray().ToHexString()}");
-                    Game.UI.LogDebug($"key={Key.ToCleanByteArray().ToHexString()}");
-
-                    Game.UI.LogDebug("---====== Send proof to server: ======---");
-                    Game.UI.LogDebug($"M={m1Hash.ToHexString()}");
-
                     // expected proof for server
                     m2 = HashAlgorithm.SHA1.Hash(A.ToCleanByteArray(), m1Hash, keyData);
 
@@ -257,8 +227,7 @@ namespace Client.Authentication.Network
                         crc = new byte[20]
                     };
 
-                    Game.UI.LogDebug("Sending logon proof");
-                    Send(proof);
+                     Send(proof);
 
                     #endregion
 
@@ -324,7 +293,7 @@ namespace Client.Authentication.Network
             ReadCommand();
         }
 
-        void HandleRealmList()
+        private void HandleRealmList()
         {
             //connection.
             var reader = new BinaryReader(connection.GetStream());
@@ -355,8 +324,9 @@ namespace Client.Authentication.Network
                     null                // state object
                 );
             }
-            catch(Exception /*ex*/)
+            catch (Exception /*ex*/)
             {
+                // ignored
             }
         }
 
@@ -404,9 +374,6 @@ namespace Client.Authentication.Network
             {
                 connection = new TcpClient(Hostname, Port);
                 stream = connection.GetStream();
-
-                Game.UI.LogDebug("done!");
-
                 SendLogonChallenge();
             }
             catch (SocketException /*ex*/)

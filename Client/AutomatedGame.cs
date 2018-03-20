@@ -1194,19 +1194,19 @@ namespace Client
             }
 
             var groupcount = membersCount;
-            GroupMembersGuids.Clear();
+            groupMembersGuids.Clear();
             for (uint index = 0; index < membersCount; index++)
             {
                 packet.ReadCString();
                 var memberGuid = packet.ReadUInt64();
-                GroupMembersGuids.Add(memberGuid);
-                if (!GroupMembersGuids2.Contains(memberGuid))
+                groupMembersGuids.Add(memberGuid);
+                if (!groupMembersGuids2.Contains(memberGuid))
                 {
-                    if (GroupMembersGuids.Count > GroupMembersGuids2.Count)
+                    if (groupMembersGuids.Count > groupMembersGuids2.Count)
                     {
                         var dummy = (Game.World.PlayerNameLookup.TryGetValue(memberGuid, out var player));
                         msg.Append(player + " joins the party. ");
-                        GroupMembersGuids2.Add(memberGuid);
+                        groupMembersGuids2.Add(memberGuid);
                     }
                 }
                 packet.ReadByte();
@@ -1217,26 +1217,26 @@ namespace Client
 
             GroupLeaderGuid = packet.ReadUInt64();
 
-            if (GroupMembersGuids.Count == 0)
+            if (groupMembersGuids.Count == 0)
             {
                 msg.Append("Your group has been disbanded.");
                 UpdateGroupList("1");
-                GroupMembersGuids2.Clear();
+                groupMembersGuids2.Clear();
                 JoinMessage = 0;
             }
 
             try
             {
-                if (GroupMembersGuids.Count() < GroupMembersGuids2.Count())
+                if (groupMembersGuids.Count() < groupMembersGuids2.Count())
                 {
-                    if (GroupMembersGuids.Count != 0)
+                    if (groupMembersGuids.Count != 0)
                     {
-                        var userleft = GroupMembersGuids2.Except(GroupMembersGuids).ToArray();
+                        var userleft = groupMembersGuids2.Except(groupMembersGuids).ToArray();
                         if (userleft[0].ToString() != "")
                         {
                             var dummy = (Game.World.PlayerNameLookup.TryGetValue(userleft[0], out var playername));
                             msg.Append(playername + " leaves the party.");
-                            GroupMembersGuids2.Remove(userleft[0]);
+                            groupMembersGuids2.Remove(userleft[0]);
                         }
                     }
                 }
@@ -1393,7 +1393,7 @@ namespace Client
         {
             JoinMessage = 2;
             GroupLeaderGuid = 0;
-            GroupMembersGuids.Clear();
+            groupMembersGuids.Clear();
         }
         #endregion
 
@@ -1476,13 +1476,6 @@ namespace Client
         }
 
         public IGameUI UI => this;
-
-        public List<ulong> GroupMembersGuids { get => GroupMembersGuids1; set => GroupMembersGuids1 = value; }
-        public List<ulong> GroupMembersGuids1 { get => groupMembersGuids; set => groupMembersGuids = value; }
-        public List<ulong> GroupMembersGuids2 { get => GroupMembersGuids21; set => GroupMembersGuids21 = value; }
-        public List<ulong> GroupMembersGuids21 { get => GroupMembersGuids22; set => GroupMembersGuids22 = value; }
-        public List<ulong> GroupMembersGuids22 { get => groupMembersGuids2; set => groupMembersGuids2 = value; }
-        public List<ulong> GroupMembersGuids23 { get => groupMembersGuids2; set => groupMembersGuids2 = value; }
 
         public override void PresentChatMessage(ChatMessage message)
         {

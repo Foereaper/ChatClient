@@ -25,53 +25,53 @@ namespace BotFarm
         private void msgPull_Tick(object sender, EventArgs e)
         {
             //DisplayWhoList()
-            var WhoListUpdate = AutomatedGame.WhoListUpdate;
-            if (WhoListUpdate != "")
+            var whoListUpdate = AutomatedGame.WhoListUpdate;
+            if (whoListUpdate != "")
             {
                 DisplayWhoList();
                 AutomatedGame.WhoListUpdate = "";
                 return;
             }
-            var GroupListUpdate = AutomatedGame.UpdateGroupGUIDList;
-            if (GroupListUpdate != "")
+            var groupListUpdate = AutomatedGame.UpdateGroupGUIDList;
+            if (groupListUpdate != "")
             {
                 DisplayGroupList();
                 AutomatedGame.UpdateGroupGUIDList = "";
                 return;
             }
             //FriendListUpdate
-            var FriendListUpdate = AutomatedGame.FriendListUpdate;
-            if (FriendListUpdate != "")
+            var friendListUpdate = AutomatedGame.FriendListUpdate;
+            if (friendListUpdate != "")
             {
                 DisplayFriendList();
                 AutomatedGame.FriendListUpdate = "";
                 return;
             }
             //DefaultChannelListUpdate
-            var UpdateDefaultChannelList = AutomatedGame.DefaultChannelListUpdate;
-            if (UpdateDefaultChannelList != "")
+            var updateDefaultChannelList = AutomatedGame.DefaultChannelListUpdate;
+            if (updateDefaultChannelList != "")
             {
                 DisplayDefaultChannels();
                 AutomatedGame.DefaultChannelListUpdate = "";
                 return;
             }
             //CustomChannelListUpdate
-            var UpdateCustomChannelList = AutomatedGame.CustomChannelListUpdate;
-            if (UpdateCustomChannelList != "")
+            var updateCustomChannelList = AutomatedGame.CustomChannelListUpdate;
+            if (updateCustomChannelList != "")
             {
                 DisplayCustomChannels();
                 AutomatedGame.CustomChannelListUpdate = "";
                 return;
             }
-            var RosterUpdate = AutomatedGame.RosterUpdate;
-            if (RosterUpdate != "")
+            var rosterUpdate = AutomatedGame.RosterUpdate;
+            if (rosterUpdate != "")
             {
                 DisplayRoster();
                 AutomatedGame.RosterUpdate = "";
                 return;
             }
-            var TicketUpdate = AutomatedGame.TicketUpdate;
-            if (TicketUpdate != "")
+            var ticketUpdate = AutomatedGame.TicketUpdate;
+            if (ticketUpdate != "")
             {
                 DisplayTicketList();
                 AutomatedGame.TicketUpdate = "";
@@ -82,8 +82,8 @@ namespace BotFarm
             foreach (var messageData in newMessages)
             {
                 //"[Invited6"
-                var GroupInvite = messageData.Substring(0, 9);
-                if (GroupInvite == "[Invited6")
+                var groupInvite = messageData.Substring(0, 9);
+                if (groupInvite == "[Invited6")
                 {
                     var HandleInvite = new Thread(HandleGroupInvitation);
                     HandleInvite.Start();
@@ -91,16 +91,16 @@ namespace BotFarm
                     continue;
                 }
                 //"[Invited5"
-                var ChannelInvite = messageData.Substring(0, 9);
-                if (ChannelInvite == "[Invited5")
+                var channelInvite = messageData.Substring(0, 9);
+                if (channelInvite == "[Invited5")
                 {
-                    var HandleInvite = new Thread(HandleChannelInvitation);
-                    HandleInvite.Start();
-                    HandleInvite.Join();
+                    var handleInvite = new Thread(HandleChannelInvitation);
+                    handleInvite.Start();
+                    handleInvite.Join();
                     continue;
                 }
-                var WhisperSendC = messageData.Substring(0, 2); //To
-                if (WhisperSendC == "To")
+                var whisperSendC = messageData.Substring(0, 2); //To
+                if (whisperSendC == "To")
                 {
                     AppendText(ChatWindow, messageData + "\r\n", Color.MediumVioletRed);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
@@ -115,16 +115,16 @@ namespace BotFarm
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                var GuildC = messageData.Substring(0, 7); //[Guild] 
-                if (GuildC == "[Guild]")
+                var guildC = messageData.Substring(0, 7); //[Guild] 
+                if (guildC == "[Guild]")
                 {
                     AppendText(ChatWindow, messageData + "\r\n", Color.Green);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                var SystemC = messageData.Substring(0, 8); //[System] 
-                if (SystemC == "[System]")
+                var systemC = messageData.Substring(0, 8); //[System] 
+                if (systemC == "[System]")
                 {
                     AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
@@ -133,10 +133,10 @@ namespace BotFarm
                 }
                 if (messageData.Length > 18)
                 {
-                    var GuildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
-                    if (GuildAchievementC == "[GuildAchievement]")
+                    var guildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
+                    if (guildAchievementC == "[GuildAchievement]")
                     {
-                        AppendText(ChatWindow, messageData + "\r\n", Color.Green, true);
+                        AppendText(ChatWindow, messageData + "\r\n", Color.GreenYellow, true);
                         //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                         //ChatWindow.ScrollToCaret();
                         continue;
@@ -175,7 +175,7 @@ namespace BotFarm
 
         private void FrmChat_Load(object sender, EventArgs e)
         {
-            lblChar.Text = "Logged in as: " + AutomatedGame.characterNameList[AutomatedGame.characterID];
+            lblChar.Text = $"Logged in as: {AutomatedGame.characterNameList[AutomatedGame.characterID]}";
             //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
 
             textMessage.Focus();
@@ -440,10 +440,8 @@ namespace BotFarm
 
         public void DisplayGroupList()
         {
-
-            ColumnHeader columnPlayer, columnLeader;
-            columnPlayer = new ColumnHeader();
-            columnLeader = new ColumnHeader();
+            var columnPlayer = new ColumnHeader();
+            var columnLeader = new ColumnHeader();
 
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
@@ -461,7 +459,7 @@ namespace BotFarm
             listGroup.Items.Clear();
             btnGroupDisband.Enabled = false;
 
-            var memberguids = SessionInit.Instance.factoryGame.GroupMembersGuids;
+            var memberguids = SessionInit.Instance.factoryGame.groupMembersGuids;
             var leaderguid = SessionInit.Instance.factoryGame.GroupLeaderGuid;
 
             if (memberguids.Count != 0)
@@ -596,11 +594,10 @@ namespace BotFarm
         public void DisplayFriendList()
         {
             //listFriends
-            ColumnHeader columnPlayer, columnGuild, columnLvl, columnOnline;
-            columnPlayer = new ColumnHeader();
-            columnGuild = new ColumnHeader();
-            columnLvl = new ColumnHeader();
-            columnOnline = new ColumnHeader();
+            var columnPlayer = new ColumnHeader();
+            var columnGuild = new ColumnHeader();
+            var columnLvl = new ColumnHeader();
+            var columnOnline = new ColumnHeader();
 
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
@@ -653,9 +650,8 @@ namespace BotFarm
 
         public void DisplayDefaultChannels()
         {
-            ColumnHeader columnChannel, columnJoined;
-            columnChannel = new ColumnHeader();
-            columnJoined = new ColumnHeader();
+            var columnChannel = new ColumnHeader();
+            var columnJoined = new ColumnHeader();
 
             columnChannel.Text = "Channel";
             columnChannel.TextAlign = HorizontalAlignment.Left;
@@ -684,9 +680,8 @@ namespace BotFarm
 
         public void DisplayCustomChannels()
         {
-            ColumnHeader columnChannel, columnJoined;
-            columnChannel = new ColumnHeader();
-            columnJoined = new ColumnHeader();
+            var columnChannel = new ColumnHeader();
+            var columnJoined = new ColumnHeader();
 
             columnChannel.Text = "Custom channel";
             columnChannel.TextAlign = HorizontalAlignment.Left;
@@ -715,14 +710,13 @@ namespace BotFarm
 
         public void DisplayRoster()
         {
-            ColumnHeader columnPlayer, columnStatus, columnLevel, columnClass, columnZone, columnNote, columnOfficerNote;
-            columnPlayer = new ColumnHeader();
-            columnStatus = new ColumnHeader();
-            columnLevel = new ColumnHeader();
-            columnClass = new ColumnHeader();
-            columnZone = new ColumnHeader();
-            columnNote = new ColumnHeader();
-            columnOfficerNote = new ColumnHeader();
+            var columnPlayer = new ColumnHeader();
+            var columnStatus = new ColumnHeader();
+            var columnLevel = new ColumnHeader();
+            var columnClass = new ColumnHeader();
+            var columnZone = new ColumnHeader();
+            var columnNote = new ColumnHeader();
+            var columnOfficerNote = new ColumnHeader();
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
             columnPlayer.Width = 80;
@@ -778,12 +772,11 @@ namespace BotFarm
 
         public void DisplayTicketList()
         {
-            ColumnHeader columnPlayer, columnCreate, columnAssignedGuy, columnComment, columnOnline;
-            columnPlayer = new ColumnHeader();
-            columnCreate = new ColumnHeader();
-            columnAssignedGuy = new ColumnHeader();
-            columnComment = new ColumnHeader();
-            columnOnline = new ColumnHeader();
+            var columnPlayer = new ColumnHeader();
+            var columnCreate = new ColumnHeader();
+            var columnAssignedGuy = new ColumnHeader();
+            var columnComment = new ColumnHeader();
+            var columnOnline = new ColumnHeader();
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
             columnPlayer.Width = 80;
@@ -866,27 +859,23 @@ namespace BotFarm
         private void whisperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var player = listWho.SelectedItems[0].Text;
-            if (player != "")
-            {
-                textMessage.Text = "/w " + player + " ";
-                textMessage.Select();
-                textMessage.SelectionStart = textMessage.Text.Length;
-            }
+            if (player == "") return;
+            textMessage.Text = "/w " + player + " ";
+            textMessage.Select();
+            textMessage.SelectionStart = textMessage.Text.Length;
         }
 
         private void inviteToPartyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var player = listWho.SelectedItems[0].Text;
-            if (player != "")
+            if (player == "") return;
+            if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
-                {
-                    SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
-                }
-                else
-                {
-                    MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
+            }
+            else
+            {
+                MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -925,53 +914,45 @@ namespace BotFarm
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                var loc = listGroup.PointToScreen(e.Location);
-                contextMenuGroupList.Show(loc);
-            }
+            if (e.Button != MouseButtons.Right) return;
+            var loc = listGroup.PointToScreen(e.Location);
+            contextMenuGroupList.Show(loc);
         }
 
         private void whisperToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var player = listGroup.SelectedItems[0].Text;
-            if (player != "")
-            {
-                textMessage.Text = "/w " + player + " ";
-                textMessage.Select();
-                textMessage.SelectionStart = textMessage.Text.Length;
-            }
+            if (player == "") return;
+            textMessage.Text = "/w " + player + " ";
+            textMessage.Select();
+            textMessage.SelectionStart = textMessage.Text.Length;
         }
 
         private void addFriendToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var player = listGroup.SelectedItems[0].Text;
-            if (player != "")
+            if (player == "") return;
+            if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
-                {
-                    SessionInit.Instance.factoryGame.AddFriend(player);
-                }
-                else
-                {
-                    MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                SessionInit.Instance.factoryGame.AddFriend(player);
+            }
+            else
+            {
+                MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void ignoreToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var player = listGroup.SelectedItems[0].Text;
-            if (player != "")
+            if (player == "") return;
+            if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
-                {
-                    SessionInit.Instance.factoryGame.IgnorePlayer(player);
-                }
-                else
-                {
-                    MessageBox.Show("You cannot ignore yourself.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                SessionInit.Instance.factoryGame.IgnorePlayer(player);
+            }
+            else
+            {
+                MessageBox.Show("You cannot ignore yourself.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -993,37 +974,31 @@ namespace BotFarm
 
         private void listFriends_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                var loc = listFriends.PointToScreen(e.Location);
-                contextMenuFriendList.Show(loc);
-            }
+            if (e.Button != MouseButtons.Right) return;
+            var loc = listFriends.PointToScreen(e.Location);
+            contextMenuFriendList.Show(loc);
         }
 
         private void whisperToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             var player = listFriends.SelectedItems[0].Text;
-            if (player != "")
-            {
-                textMessage.Text = "/w " + player + " ";
-                textMessage.Select();
-                textMessage.SelectionStart = textMessage.Text.Length;
-            }
+            if (player == "") return;
+            textMessage.Text = "/w " + player + " ";
+            textMessage.Select();
+            textMessage.SelectionStart = textMessage.Text.Length;
         }
 
         private void inviteToPartyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var player = listFriends.SelectedItems[0].Text;
-            if (player != "")
+            if (player == "") return;
+            if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
-                {
-                    SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
-                }
-                else
-                {
-                    MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
+            }
+            else
+            {
+                MessageBox.Show("You cannot invite yourself to a party.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1066,35 +1041,32 @@ namespace BotFarm
 
         private void listTicket_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button != MouseButtons.Left) return;
+            try
             {
-                try
+                var player = listTicket.SelectedItems[0].Text;
+                SessionInit.Instance.factoryGame.RequestTicketDetails(player);
+                if (!IsFormOpen("Ticket")) // look for form by caption.
                 {
-                    var player = listTicket.SelectedItems[0].Text;
-                    SessionInit.Instance.factoryGame.RequestTicketDetails(player);
-                    if (!FormOpen("Ticket")) // look for form by caption.
-                    {
-                        var frm = new FrmTicket();
-                        frm.Show();
-                    }
-                    else
-                    {
-                        Application.OpenForms["FrmTicket"].Focus();
-                    }
+                    var frm = new FrmTicket();
+                    frm.Show();
                 }
-                catch
+                else
                 {
-                    //Ah fuck we broke it.
-                    SessionInit.Instance.factoryGame.RequestWhoList();
+                    Application.OpenForms["FrmTicket"]?.Focus();
                 }
+            }
+            catch
+            {
+                //Ah fuck we broke it.
             }
         }
 
-        private bool FormOpen(string FormName)
+        private bool IsFormOpen(string formName)
         {
-            foreach (Form form_loaded in Application.OpenForms)
+            foreach (Form formLoaded in Application.OpenForms)
             {
-                if (form_loaded.Text.IndexOf(FormName) >= 0)
+                if (formLoaded.Text.IndexOf(formName, StringComparison.Ordinal) >= 0)
                 {
                     return true;
                 }
