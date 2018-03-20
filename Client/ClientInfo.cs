@@ -8,8 +8,8 @@
 
         public ClientInfo(string username, string password)
         {
-            this.Username = username;
-            this.Password = password;
+            Username = username;
+            Password = password;
         }
     }
 }

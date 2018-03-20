@@ -11,6 +11,6 @@
         Shaman = 7,
         Mage = 8,
         Warlock = 9,
-        Druid = 11,
+        Druid = 11
     }
 }

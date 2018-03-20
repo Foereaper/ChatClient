@@ -1,6 +1,6 @@
-﻿using Client.World.Definitions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Client.World.Definitions;
 
 namespace Client.World.Entities
 {
@@ -71,7 +71,7 @@ namespace Client.World.Entities
         public bool IsType(HighGuid highGuidType)
         {
             //return ((GUID & 0xF0F0000000000000) >> 52) == (ulong)highGuidType;
-            return Utility.IsType(GUID, highGuidType);
+            return GUID.IsType(highGuidType);
         }
     }
 

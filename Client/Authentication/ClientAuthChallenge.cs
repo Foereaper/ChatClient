@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.IO;
-using Client.Authentication.Network;
 using System.Net.Sockets;
+using System.Text;
+using Client.Authentication.Network;
 
 namespace Client.Authentication
 {
@@ -11,7 +11,7 @@ namespace Client.Authentication
         public string username;
         public uint IP;
 
-        static readonly byte[] version = new byte[] { 3, 3, 5 };
+        static readonly byte[] version = { 3, 3, 5 };
         const ushort build = 12340;
 
         #region ISendable Members

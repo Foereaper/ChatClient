@@ -1,5 +1,5 @@
-﻿using Client.World.Entities;
-using System;
+﻿using System;
+using Client.World.Entities;
 
 namespace Client.World
 {

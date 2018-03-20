@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -11,13 +12,13 @@ namespace BotFarm
 
     public partial class FrmChat : Form
     {
-        public bool LeaderNotMe = false;
+        public bool LeaderNotMe;
         private int _lockColumnIndex = 0;
 
         public FrmChat()
         {
             InitializeComponent();
-            this.listGroup.ColumnWidthChanging += new ColumnWidthChangingEventHandler(listGroup_ColumnWidthChanging);
+            listGroup.ColumnWidthChanging += listGroup_ColumnWidthChanging;
             cBStatusFlag.Text = "Available";
         }
 
@@ -84,7 +85,7 @@ namespace BotFarm
                 string GroupInvite = messageData.Substring(0, 9);
                 if (GroupInvite == "[Invited6")
                 {
-                    Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleGroupInvitation));
+                    Thread HandleInvite = new Thread(HandleGroupInvitation);
                     HandleInvite.Start();
                     HandleInvite.Join();
                     continue;
@@ -93,7 +94,7 @@ namespace BotFarm
                 string ChannelInvite = messageData.Substring(0, 9);
                 if (ChannelInvite == "[Invited5")
                 {
-                    Thread HandleInvite = new Thread(new ThreadStart(FrmChat.HandleChannelInvitation));
+                    Thread HandleInvite = new Thread(HandleChannelInvitation);
                     HandleInvite.Start();
                     HandleInvite.Join();
                     continue;
@@ -101,7 +102,7 @@ namespace BotFarm
                 string WhisperSendC = messageData.Substring(0, 2); //To
                 if (WhisperSendC == "To")
                 {
-                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageData + "\r\n", Color.MediumVioletRed);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -109,7 +110,7 @@ namespace BotFarm
                 string WhisperC = messageData.Substring(0, 9); //[Whisper] 
                 if (WhisperC == "[Whisper]")
                 {
-                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageData + "\r\n", Color.MediumVioletRed);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -117,7 +118,7 @@ namespace BotFarm
                 string GuildC = messageData.Substring(0, 7); //[Guild] 
                 if (GuildC == "[Guild]")
                 {
-                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Green);
+                    AppendText(ChatWindow, messageData + "\r\n", Color.Green);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -125,7 +126,7 @@ namespace BotFarm
                 string SystemC = messageData.Substring(0, 8); //[System] 
                 if (SystemC == "[System]")
                 {
-                    AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.DarkBlue, true);
+                    AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -135,13 +136,13 @@ namespace BotFarm
                     string GuildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
                     if (GuildAchievementC == "[GuildAchievement]")
                     {
-                        AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Green, true);
+                        AppendText(ChatWindow, messageData + "\r\n", Color.Green, true);
                         //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                         //ChatWindow.ScrollToCaret();
                         continue;
                     }
                 }
-                AppendText(ChatWindow, messageData.ToString() + "\r\n", Color.Black, true);
+                AppendText(ChatWindow, messageData + "\r\n", Color.Black, true);
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
@@ -174,12 +175,12 @@ namespace BotFarm
 
         private void FrmChat_Load(object sender, EventArgs e)
         {
-            lblChar.Text = "Logged in as: " + AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
+            lblChar.Text = "Logged in as: " + AutomatedGame.characterNameList[AutomatedGame.characterID];
             //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
 
             textMessage.Focus();
             textMessage.Select();
-            this.textMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
+            textMessage.KeyPress += CheckEnter;
 
             SessionInit.Instance.factoryGame.JoinChannel(1, "General", "");
             SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
@@ -189,9 +190,9 @@ namespace BotFarm
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             AutomatedGame.DisconClient = true;
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
             Application.Exit();
         }
 
@@ -200,7 +201,7 @@ namespace BotFarm
             MsgSend();
         }
 
-        private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void CheckEnter(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
@@ -220,8 +221,8 @@ namespace BotFarm
                     {
                         var tmp1 = tmp.Replace("/w ", "");
                         string[] msg = tmp1.Split(' ');
-                        var user = msg[0].ToString();
-                        var message = tmp1.Substring(user.Length + 1).ToString();
+                        var user = msg[0];
+                        var message = tmp1.Substring(user.Length + 1);
                         //var message = msg[1].ToString();
                         //AppendText(ChatWindow, "Whisper to" + user + ": " + message + "\r\n", Color.Pink);
                         //ChatWindow.AppendText("Whisper to" + user +": " + message + "\r\n");
@@ -235,9 +236,9 @@ namespace BotFarm
                         //var tmp2 = tmp.Replace("/g ", "");
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(3);
-                        var message = tmp2.ToString();
+                        var message = tmp2;
                         SessionInit.Instance.factoryGame.DoGuildChat(message);
-                        var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
+                        var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID];
                         //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
                         //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
                         //ChatWindow.ScrollToCaret();
@@ -249,7 +250,7 @@ namespace BotFarm
                         //var tmp2 = tmp.Replace("/g ", "");
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(3);
-                        var message = tmp2.ToString();
+                        var message = tmp2;
                         SessionInit.Instance.factoryGame.DoPartyChat(message);
                         //var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
                         //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
@@ -262,7 +263,7 @@ namespace BotFarm
                     {
                         var tmp2 = tmp;
                         tmp2 = tmp2.Substring(8);
-                        var player = tmp2.ToString();
+                        var player = tmp2;
                         SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                         textMessage.Text = string.Empty;
                         return;
@@ -320,7 +321,6 @@ namespace BotFarm
                         //AppendText(ChatWindow, "Say: " + textMessage.Text + "\r\n", Color.DarkGray);
                         SessionInit.Instance.factoryGame.DoSayChat(textMessage.Text);
                         textMessage.Text = string.Empty;
-                        return;
                     }
                 }
                 //textMessage.Text = string.Empty;
@@ -334,16 +334,16 @@ namespace BotFarm
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {
             AutomatedGame.DisconClient = true;
-            this.Hide();
-            System.Threading.Thread.Sleep(1000);
+            Hide();
+            Thread.Sleep(1000);
             Application.Exit();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             AutomatedGame.DisconClient = true;
-            System.Threading.Thread.Sleep(1000);
+            Thread.Sleep(1000);
             Application.Exit();
         }
 
@@ -366,7 +366,7 @@ namespace BotFarm
 
         private void ChatWindow_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(e.LinkText);
+            Process.Start(e.LinkText);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -405,7 +405,7 @@ namespace BotFarm
             ChannelIvtname = ChannelIvtname.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
 
-            DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname.ToString() + "'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            DialogResult Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname + "'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (Accept == DialogResult.Yes)
             {
                 SessionInit.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
@@ -414,7 +414,6 @@ namespace BotFarm
             {
                 SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
             }
-            return;
         }
 
         public static void HandleGroupInvitation()
@@ -423,7 +422,7 @@ namespace BotFarm
             InvitationSender = InvitationSender.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
 
-            DialogResult Accept = MessageBox.Show(InvitationSender.ToString() + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            DialogResult Accept = MessageBox.Show(InvitationSender + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (Accept == DialogResult.Yes)
             {
                 SessionInit.Instance.factoryGame.AcceptGroupInvitation();
@@ -432,7 +431,6 @@ namespace BotFarm
             {
                 SessionInit.Instance.factoryGame.GroupDecline();
             }
-            return;
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -483,13 +481,13 @@ namespace BotFarm
                 }
                 if (LeaderNotMe == false)
                 {
-                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
+                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
                     item.SubItems.Add("Yes");
                     listGroup.Items.Add(item);
                 }
                 else
                 {
-                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID].ToString());
+                    ListViewItem item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
                     item.SubItems.Add("");
                     listGroup.Items.Add(item);
                 }
@@ -515,7 +513,7 @@ namespace BotFarm
             if (e.ColumnIndex == _lockColumnIndex)
             {
                 //Keep the width not changed.
-                e.NewWidth = this.listGroup.Columns[e.ColumnIndex].Width;
+                e.NewWidth = listGroup.Columns[e.ColumnIndex].Width;
                 //Cancel the event.
                 e.Cancel = true;
             }
@@ -850,7 +848,7 @@ namespace BotFarm
                 var player = listWho.SelectedItems[0].Text;
                 if (player != "")
                 {
-                    if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                    if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                     {
                         SessionInit.Instance.factoryGame.AddFriend(player);
                     }
@@ -859,7 +857,7 @@ namespace BotFarm
                         MessageBox.Show("You cannot add yourself as friend.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-            } catch (System.ArgumentOutOfRangeException)
+            } catch (ArgumentOutOfRangeException)
             {
                 MessageBox.Show("Please don't add friends too quickly!", "Hold on", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -882,7 +880,7 @@ namespace BotFarm
             var player = listWho.SelectedItems[0].Text;
             if (player != "")
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                 {
                     SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                 }
@@ -907,7 +905,7 @@ namespace BotFarm
             var player = listWho.SelectedItems[0].Text;
             if (player != "")
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                 {
                     SessionInit.Instance.factoryGame.IgnorePlayer(player);
                 }
@@ -951,7 +949,7 @@ namespace BotFarm
             var player = listGroup.SelectedItems[0].Text;
             if (player != "")
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                 {
                     SessionInit.Instance.factoryGame.AddFriend(player);
                 }
@@ -967,7 +965,7 @@ namespace BotFarm
             var player = listGroup.SelectedItems[0].Text;
             if (player != "")
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                 {
                     SessionInit.Instance.factoryGame.IgnorePlayer(player);
                 }
@@ -1019,7 +1017,7 @@ namespace BotFarm
             var player = listFriends.SelectedItems[0].Text;
             if (player != "")
             {
-                if (AutomatedGame.characterNameList[AutomatedGame.characterID].ToString() != player)
+                if (AutomatedGame.characterNameList[AutomatedGame.characterID] != player)
                 {
                     SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
                 }

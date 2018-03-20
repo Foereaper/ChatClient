@@ -1,5 +1,5 @@
-﻿using Client.World.Network;
-using Client.World.Definitions;
+﻿using Client.World.Definitions;
+using Client.World.Network;
 
 namespace Client.World
 {

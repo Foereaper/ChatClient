@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows;
 using Client.Chat;
 using Client.Chat.Definitions;
-using Client.Forms;
 using static Client.Forms.FrmTicket;
 
 namespace Client.World.Network
@@ -83,7 +81,7 @@ namespace Client.World.Network
             byte questStatus = packet.ReadByte();
             //string questStatusMessage = questStatus.ToString();
             bool canCompleteQuest = packet.ReadBoolean();
-            QuickSysMessage(playerName + "'s status for quest " + questId.ToString() + " is " + questStatus.ToString() + " can be completed status is " + canCompleteQuest.ToString() + " .");
+            QuickSysMessage(playerName + "'s status for quest " + questId + " is " + questStatus + " can be completed status is " + canCompleteQuest + " .");
             //ToDo: Detailed Info
         }
 
@@ -93,7 +91,7 @@ namespace Client.World.Network
             string playerName = packet.ReadCString();
             uint achid = packet.ReadUInt32();
             bool hasCompletedAch = packet.ReadBoolean();
-            QuickSysMessage(playerName + " status for achivement " + achid + " is " + hasCompletedAch.ToString() + " .");
+            QuickSysMessage(playerName + " status for achivement " + achid + " is " + hasCompletedAch + " .");
             //ToDo: Detailed Info
         }
 
@@ -104,7 +102,7 @@ namespace Client.World.Network
             uint questOrAchId = packet.ReadUInt32();
             byte questOrAch = packet.ReadByte();
             if (questOrAch == 2)
-                QuickSysMessage("You have completed achivement " + Client.Extensions.GetAchName(Convert.ToInt32(questOrAchId)) + " for " + playerName + " .");
+                QuickSysMessage("You have completed achivement " + Extensions.GetAchName(Convert.ToInt32(questOrAchId)) + " for " + playerName + " .");
             else
                 QuickSysMessage("You have completed quest " + questOrAchId + " for " + playerName + " .");
         }

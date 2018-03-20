@@ -12,7 +12,7 @@ namespace Client.World.Definitions
         TYPEID_GAMEOBJECT = 5,
         TYPEID_DYNAMICOBJECT = 6,
         TYPEID_CORPSE = 7
-    };
+    }
 
     public enum ObjectUpdateType
     {
@@ -22,7 +22,7 @@ namespace Client.World.Definitions
         UPDATETYPE_CREATE_OBJECT2 = 3,
         UPDATETYPE_OUT_OF_RANGE_OBJECTS = 4,
         UPDATETYPE_NEAR_OBJECTS = 5
-    };
+    }
 
     [Flags]
     public enum ObjectUpdateFlags
@@ -38,7 +38,7 @@ namespace Client.World.Definitions
         UPDATEFLAG_VEHICLE = 0x0080,
         UPDATEFLAG_POSITION = 0x0100,
         UPDATEFLAG_ROTATION = 0x0200
-    };
+    }
 
     [Flags]
     public enum MovementFlags
@@ -74,8 +74,8 @@ namespace Client.World.Definitions
         MOVEMENTFLAG_SPLINE_ENABLED = 0x08000000,
         MOVEMENTFLAG_WATERWALKING = 0x10000000,
         MOVEMENTFLAG_FALLING_SLOW = 0x20000000,
-        MOVEMENTFLAG_HOVER = 0x40000000,
-    };
+        MOVEMENTFLAG_HOVER = 0x40000000
+    }
 
     [Flags]
     public enum MovementFlags2
@@ -97,7 +97,7 @@ namespace Client.World.Definitions
         MOVEMENTFLAG2_UNK14 = 0x00002000,
         MOVEMENTFLAG2_UNK15 = 0x00004000,
         MOVEMENTFLAG2_UNK16 = 0x00008000
-    };
+    }
 
     public enum UnitMoveType
     {
@@ -110,7 +110,7 @@ namespace Client.World.Definitions
         MOVE_FLIGHT = 6,
         MOVE_FLIGHT_BACK = 7,
         MOVE_PITCH_RATE = 8
-    };
+    }
 
     [Flags]
     public enum SplineFlags : uint
@@ -146,7 +146,7 @@ namespace Client.World.Definitions
         Mask_No_Monster_Move = Mask_Final_Facing | Mask_Animations | Done,
         Mask_CatmullRom = Flying | Catmullrom,
         Mask_Unused = No_Spline | Enter_Cycle | Frozen | Unknown7 | Unknown8 | Unknown10 | Unknown11 | Unknown12 | Unknown13
-    };
+    }
 
     public enum SplineEvaluationMode
     {
@@ -155,7 +155,7 @@ namespace Client.World.Definitions
         ModeBezier3_Unused,
         UninitializedMode,
         ModesEnd
-    };
+    }
 
     public enum ObjectField
     {
@@ -701,7 +701,7 @@ namespace Client.World.Definitions
         PLAYER_FLAGS_UNK29 = 0x20000000,
         PLAYER_FLAGS_UNK30 = 0x40000000,
         PLAYER_FLAGS_UNK31 = 0x80000000
-    };
+    }
 
     public enum TradeStatus
     {
@@ -741,5 +741,5 @@ namespace Client.World.Definitions
         GROUPTYPE_UNK1 = 0x04,
         GROUPTYPE_LFG = 0x08
         // 0x10, leave/change group?, I saw this flag when leaving group and after leaving BG while in group
-    };
+    }
 }

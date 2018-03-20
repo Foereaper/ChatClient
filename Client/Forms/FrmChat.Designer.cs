@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace BotFarm
 {
@@ -7,7 +8,7 @@ namespace BotFarm
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -733,66 +734,66 @@ namespace BotFarm
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveConversationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.RichTextBox ChatWindow;
-        private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Label lblChar;
-        private System.Windows.Forms.Button btnDisconnect;
-        private System.Windows.Forms.Timer chattimer;
-        private System.Windows.Forms.TextBox textMessage;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem channelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem joinAllChannelsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createNewChannelToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabGroup;
-        private System.Windows.Forms.TabPage tabChannel;
-        private System.Windows.Forms.TabPage tabWho;
-        private System.Windows.Forms.ListView listGroup;
-        private System.Windows.Forms.Label lblPartyGroupSize;
-        private System.Windows.Forms.Label lblPartyPlayers;
-        private System.Windows.Forms.Button btnGroupDisband;
-        private System.Windows.Forms.ListView listWho;
-        private System.Windows.Forms.ListView listRoster;
-        private System.Windows.Forms.ListView listTicket;
-        private System.Windows.Forms.Label lblplayercount;
-        private System.Windows.Forms.Label lblplayersonline;
-        private System.Windows.Forms.ContextMenuStrip contextMenuWhoList;
-        private System.Windows.Forms.ToolStripMenuItem whisperToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inviteToPartyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addFriendToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ignoreToolStripMenuItem;
-        private System.Windows.Forms.PictureBox refreshWhoList;
-        private System.Windows.Forms.TabPage tabFriend;
-        private System.Windows.Forms.ComboBox cBStatusFlag;
-        private System.Windows.Forms.Label lblStatusflag;
-        private System.Windows.Forms.ListView listCustom;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListView listWorld;
-        private System.Windows.Forms.ContextMenuStrip contextMenuGroupList;
-        private System.Windows.Forms.ToolStripMenuItem whisperToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem addFriendToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ignoreToolStripMenuItem1;
-        private System.Windows.Forms.ListView listFriends;
-        private System.Windows.Forms.Label lblfriendcount;
-        private System.Windows.Forms.Label lblfriends;
-        private System.Windows.Forms.ContextMenuStrip contextMenuFriendList;
-        private System.Windows.Forms.ToolStripMenuItem whisperToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem removeFriendToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inviteToPartyToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem leaveAllChannelsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem leaveChannelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TabPage tabGuild;
-        private System.Windows.Forms.TabPage tabTicket;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem saveConversationToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private RichTextBox ChatWindow;
+        private Button btnSend;
+        private Label lblChar;
+        private Button btnDisconnect;
+        private Timer chattimer;
+        private TextBox textMessage;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem channelToolStripMenuItem;
+        private ToolStripMenuItem joinAllChannelsToolStripMenuItem;
+        private ToolStripMenuItem createNewChannelToolStripMenuItem;
+        private TabControl tabControl1;
+        private TabPage tabGroup;
+        private TabPage tabChannel;
+        private TabPage tabWho;
+        private ListView listGroup;
+        private Label lblPartyGroupSize;
+        private Label lblPartyPlayers;
+        private Button btnGroupDisband;
+        private ListView listWho;
+        private ListView listRoster;
+        private ListView listTicket;
+        private Label lblplayercount;
+        private Label lblplayersonline;
+        private ContextMenuStrip contextMenuWhoList;
+        private ToolStripMenuItem whisperToolStripMenuItem;
+        private ToolStripMenuItem inviteToPartyToolStripMenuItem;
+        private ToolStripMenuItem addFriendToolStripMenuItem;
+        private ToolStripMenuItem ignoreToolStripMenuItem;
+        private PictureBox refreshWhoList;
+        private TabPage tabFriend;
+        private ComboBox cBStatusFlag;
+        private Label lblStatusflag;
+        private ListView listCustom;
+        private Label label2;
+        private ListView listWorld;
+        private ContextMenuStrip contextMenuGroupList;
+        private ToolStripMenuItem whisperToolStripMenuItem1;
+        private ToolStripMenuItem addFriendToolStripMenuItem1;
+        private ToolStripMenuItem ignoreToolStripMenuItem1;
+        private ListView listFriends;
+        private Label lblfriendcount;
+        private Label lblfriends;
+        private ContextMenuStrip contextMenuFriendList;
+        private ToolStripMenuItem whisperToolStripMenuItem2;
+        private ToolStripMenuItem removeFriendToolStripMenuItem;
+        private ToolStripMenuItem inviteToPartyToolStripMenuItem1;
+        private ToolStripMenuItem leaveAllChannelsToolStripMenuItem;
+        private ToolStripMenuItem leaveChannelToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem4;
+        private ToolStripMenuItem toolStripMenuItem5;
+        private ComboBox comboBox1;
+        private TabPage tabGuild;
+        private TabPage tabTicket;
     }
 }

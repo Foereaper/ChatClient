@@ -1,10 +1,9 @@
-﻿using Client.World.Definitions;
-using Client.World.Entities;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
+using Client.World.Definitions;
+using Client.World.Entities;
 
 namespace Client.World.Network
 {
@@ -16,12 +15,11 @@ namespace Client.World.Network
         protected byte[] FinalizedPacket;
 
         public OutPacket(WorldCommand command, int emptyOffset = 0)
-            : base()
         {
-            this.Header = new ClientHeader(command, this);
+            Header = new ClientHeader(command, this);
 
             Buffer = new MemoryStream();
-            base.OutStream = Buffer;
+            OutStream = Buffer;
 
             if (emptyOffset > 0)
                 Write(new byte[emptyOffset]);

@@ -1,11 +1,14 @@
-﻿namespace BotFarm
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace BotFarm
 {
     partial class NewChannel
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -113,11 +116,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblChannelname;
-        private System.Windows.Forms.Label lblChannelpassword;
-        private System.Windows.Forms.TextBox ChannelName;
-        private System.Windows.Forms.TextBox ChannelPassword;
-        private System.Windows.Forms.Button btnNewChannel;
-        private System.Windows.Forms.Button btnCancel;
+        private Label lblChannelname;
+        private Label lblChannelpassword;
+        private TextBox ChannelName;
+        private TextBox ChannelPassword;
+        private Button btnNewChannel;
+        private Button btnCancel;
     }
 }

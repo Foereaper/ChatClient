@@ -1,20 +1,22 @@
 ﻿//#define TESTING
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Client.UI;
 using Client.Authentication;
-using Client.World;
-using Client.Chat;
-using Client.World.Network;
 using Client.Authentication.Network;
-using System.Threading;
+using Client.Chat;
 using Client.Chat.Definitions;
+using Client.UI;
+using Client.World;
 using Client.World.Definitions;
 using Client.World.Entities;
+using Client.World.Network;
 
 public struct TicketInfo
 {
@@ -32,7 +34,7 @@ public struct TicketInfo
     public string assignedPlayer;
     public string ticketComment;
     public bool areTheyOnline;
-};
+}
 
 public struct CurrentTicket
 {
@@ -42,7 +44,7 @@ public struct CurrentTicket
     public string ticketComment;
     public string ticketResponse;
     public string ticketChatLog;
-};
+}
 
 namespace Client
 {
@@ -60,58 +62,31 @@ namespace Client
                 return false;
             }
         }
-        public static List<string> ShowRealmList // yes
-        {
-            get
-            {
-                return presentrealmList;
-            }
-        }
+        public static List<string> ShowRealmList => presentrealmList;
 
-        public static List<string> ShowCharList // yes
-        {
-            get
-            {
-                return presentcharacterList;
-            }
-        }
+        public static List<string> ShowCharList => presentcharacterList;
 
         public static bool RealmChosen // yes
         {
-            set
-            {
-                realmchosen = value;
-            }
+            set => realmchosen = value;
         }
         public static int RealmIDgui // yes
         {
-            set
-            {
-                realmidGUI = value;
-            }
+            set => realmidGUI = value;
         }
 
         public static bool CharacterChosen // yes
         {
-            set
-            {
-                characterchosen = value;
-            }
+            set => characterchosen = value;
         }
         public static int CharacterID // yes
         {
-            set
-            {
-                characterID = value;
-            }
+            set => characterID = value;
         }
 
         public static bool DisconClient // yes
         {
-            set
-            {
-                disconnectclient = value;
-            }
+            set => disconnectclient = value;
         }
 
         public static List<string> player = new List<string>();
@@ -138,9 +113,9 @@ namespace Client
         public static List<string> presentcharacterList = new List<string>();
         public static List<string> characterNameList = new List<string>();
         private static bool LoggedInserver;
-        public static bool AuthenticationError = false;
+        public static bool AuthenticationError;
         public static string AuthErrorText;
-        public static bool disconnectclient = false;
+        public static bool disconnectclient;
         public static int realmidGUI;
         public static bool realmchosen;
         public static int characterID;
@@ -150,7 +125,7 @@ namespace Client
         public static string LastAddedFriend;
         public static string LastRemovedFriend;
         public static int securityLevel;
-        public int JoinMessage = 0;
+        public int JoinMessage;
 
         public static List<string> resolvedFriendList = new List<string>();
         public static List<string> friendGUIList = new List<string>();
@@ -163,7 +138,7 @@ namespace Client
         #region Properties
         public bool Running { get; set; }
         GameSocket socket;
-        public System.Numerics.BigInteger Key { get; private set; }
+        public BigInteger Key { get; private set; }
         public string Hostname { get; private set; }
         public int Port { get; private set; }
         public string Username { get; private set; }
@@ -172,34 +147,14 @@ namespace Client
         public int RealmID { get; private set; }
         public int Character { get; private set; }
         public bool Connected { get; private set; }
-        public string LastSentPacket
-        {
-            get
-            {
-                return socket.LastOutOpcodeName;
-            }
-        }
-        public DateTime LastSentPacketTime
-        {
-            get
-            {
-                return socket.LastOutOpcodeTime;
-            }
-        }
-        public string LastReceivedPacket
-        {
-            get
-            {
-                return socket.LastInOpcodeName;
-            }
-        }
-        public DateTime LastReceivedPacketTime
-        {
-            get
-            {
-                return socket.LastInOpcodeTime;
-            }
-        }
+        public string LastSentPacket => socket.LastOutOpcodeName;
+
+        public DateTime LastSentPacketTime => socket.LastOutOpcodeTime;
+
+        public string LastReceivedPacket => socket.LastInOpcodeName;
+
+        public DateTime LastReceivedPacketTime => socket.LastInOpcodeTime;
+
         public DateTime LastUpdate
         {
             get;
@@ -213,7 +168,6 @@ namespace Client
         public GameWorld World
         {
             get;
-            private set;
         }
         public Player Player
         {
@@ -224,7 +178,7 @@ namespace Client
         {
             get
             {
-                return Client.UI.LogLevel.Error;
+                return LogLevel.Error;
             }
             set
             {
@@ -232,10 +186,7 @@ namespace Client
         }
         public override IGame Game
         {
-            get
-            {
-                return this;
-            }
+            get => this;
             set
             {
             }
@@ -244,20 +195,20 @@ namespace Client
         public Dictionary<ulong, WorldObject> Objects
         {
             get;
-            private set;
         }
 
-        public UInt64 GroupLeaderGuid { get; private set; }
-        public List<UInt64> GroupMembersGuids = new List<UInt64>();
-        public List<UInt64> GroupMembersGuids2 = new List<UInt64>();
+        public ulong GroupLeaderGuid { get; private set; }
+
+        public List<ulong> groupMembersGuids = new List<ulong>();
+        public List<ulong> groupMembersGuids2 = new List<ulong>();
 
 
         #endregion
 
         public AutomatedGame(string hostname, int port, string username, string password, int realmId, int character)
         {
-            this.RealmID = realmId;
-            this.Character = character;
+            RealmID = realmId;
+            Character = character;
             scheduledActions = new ScheduledActions();
             Triggers = new IteratedList<Trigger>();
             World = new GameWorld();
@@ -265,10 +216,10 @@ namespace Client
             Player.OnFieldUpdated += OnFieldUpdate;
             Objects = new Dictionary<ulong, WorldObject>();
 
-            this.Hostname = hostname;
-            this.Port = port;
-            this.Username = username;
-            this.Password = password;
+            Hostname = hostname;
+            Port = port;
+            Username = username;
+            Password = password;
 
             socket = new AuthSocket(this, Hostname, Port, Username, Password);
             socket.InitHandlers();
@@ -277,8 +228,8 @@ namespace Client
         #region Basic Methods
         public void ConnectTo(WorldServerInfo server)
         {
-            if (socket is AuthSocket)
-                Key = ((AuthSocket)socket).Key;
+            if (socket is AuthSocket authSocket)
+                Key = authSocket.Key;
 
             socket.Dispose();
 
@@ -319,7 +270,7 @@ namespace Client
             if (World.SelectedCharacter == null)
                 return;
 
-            if (disconnectclient == true)
+            if (disconnectclient)
             {
                 Disconnect();
                 return;
@@ -388,7 +339,7 @@ namespace Client
             //ClearAIs();
             if (LoggedIn)
             {
-                OutPacket logout = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
+                var logout = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
                 SendPacket(logout);
                 await loggedOutEvent.Task;
             }
@@ -402,11 +353,9 @@ namespace Client
 
         public void SendPacket(OutPacket packet)
         {
-            if (socket is WorldSocket)
-            {
-                ((WorldSocket)socket).Send(packet);
-                HandleTriggerInput(TriggerActionType.Opcode, packet);
-            }
+            if (!(socket is WorldSocket)) return;
+            ((WorldSocket)socket).Send(packet);
+            HandleTriggerInput(TriggerActionType.Opcode, packet);
         }
 
         public override void PresentRealmList(WorldServerList realmList)
@@ -430,22 +379,9 @@ namespace Client
             }, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
 
 
-            WorldServerInfo selectedServer = null;
-
-            if (realmList.Count == 1)
-                selectedServer = realmList[0];
-            else
+            foreach (WorldServerInfo server in realmList)
             {
-                int index = 0;
-
-                foreach (WorldServerInfo server in realmList)
-                {
-                    presentrealmList.Add(server.Name);
-                }
-
-                // select a realm - default to the first realm if there is only one
-                index = realmList.Count == 1 ? 0 : -1;
-                selectedServer = realmList[realmidGUI];
+                presentrealmList.Add(server.Name);
             }
 
             while (realmchosen == false)
@@ -459,11 +395,9 @@ namespace Client
 
         public override void PresentCharacterList(Character[] characterList)
         {
-
-            int index = 0;
             //List<string> charname = new List<string>();
 
-            foreach (Character characterz in characterList)
+            foreach (var characterz in characterList)
             {
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
                 characterNameList.Add(characterz.Name);
@@ -479,8 +413,7 @@ namespace Client
             }
 
 
-            int length = characterList.Length == 10 ? 10 : (characterList.Length + 1);
-            index = -1;
+            const int index = -1;
             /*while (index > length || index < 0)
             {
                 Log("Choose a character:  ");
@@ -488,23 +421,14 @@ namespace Client
                     //LogLine("Selected character: " + charname[index].ToString());
             }*/
 
-            if (index < characterList.Length)
-            {
-
-
-                World.SelectedCharacter = characterList[characterID];
-                // TODO: enter world
-                OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
-                packet.Write(World.SelectedCharacter.GUID);
-                SendPacket(packet);
-                LoggedIn = true;
-                Player.GUID = World.SelectedCharacter.GUID;  
-            }
-            else
-            {
-                // TODO: character creation
-                return;
-            }
+            if (index >= characterList.Length) return;
+            World.SelectedCharacter = characterList[characterID];
+            // TODO: enter world
+            OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
+            packet.Write(World.SelectedCharacter.GUID);
+            SendPacket(packet);
+            LoggedIn = true;
+            Player.GUID = World.SelectedCharacter.GUID;
 
             /*
             World.SelectedCharacter = characterList[Character];
@@ -538,14 +462,11 @@ namespace Client
 
         public int ScheduleAction(Action action, DateTime time, TimeSpan interval = default(TimeSpan), ActionFlag flags = ActionFlag.None, Action cancel = null)
         {
-            if (Running && (flags == ActionFlag.None || !disabledActions.HasFlag(flags)))
-            {
-                scheduledActionCounter++;
-                scheduledActions.Add(new RepeatingAction(action, cancel, time, interval, flags, scheduledActionCounter));
-                return scheduledActionCounter;
-            }
-            else
-                return 0;
+            if (!Running || (flags != ActionFlag.None && disabledActions.HasFlag(flags))) return 0;
+            scheduledActionCounter++;
+            scheduledActions.Add(new RepeatingAction(action, cancel, time, interval, flags, scheduledActionCounter));
+            return scheduledActionCounter;
+
         }
 
         public void CancelActionsByFlag(ActionFlag flag, bool cancel = true)
@@ -575,8 +496,7 @@ namespace Client
 
             await Exit();
 
-            if (socket != null)
-                socket.Dispose();
+            socket?.Dispose();
         }
 
         public virtual void NoCharactersFound()
@@ -585,33 +505,6 @@ namespace Client
         public virtual void InvalidCredentials()
         { }
 
-        protected WorldObject FindClosestObject(HighGuid highGuidType, Func<WorldObject, bool> additionalCheck = null)
-        {
-            float closestDistance = float.MaxValue;
-            WorldObject closestObject = null;
-
-            foreach (var obj in Objects.Values)
-            {
-                if (!obj.IsType(highGuidType))
-                    continue;
-
-                if (additionalCheck != null && !additionalCheck(obj))
-                    continue;
-
-                if (obj.MapID != Player.MapID)
-                    continue;
-
-                float distance = (obj - Player).Length;
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestObject = obj;
-                }
-            }
-
-            return closestObject;
-        }
-
         public string GetPlayerName(WorldObject obj)
         {
             return GetPlayerName(obj.GUID);
@@ -619,11 +512,7 @@ namespace Client
 
         protected string GetPlayerName(ulong guid)
         {
-            string name;
-            if (Game.World.PlayerNameLookup.TryGetValue(guid, out name))
-                return name;
-            else
-                return "";
+            return Game.World.PlayerNameLookup.TryGetValue(guid, out var name) ? name : "";
         }
 
         #endregion
@@ -655,7 +544,7 @@ namespace Client
 
         public void RequestGuildList()
         {
-            OutPacket response = new OutPacket(WorldCommand.CMSG_GUILD_ROSTER);
+            var response = new OutPacket(WorldCommand.CMSG_GUILD_ROSTER);
             response.Write("");
             Game.SendPacket(response);
         }
@@ -670,7 +559,7 @@ namespace Client
 
         public void LeaveChannel(int channel, string channelName)
         {
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_LEAVE_CHANNEL);
+            var packet = new OutPacket(WorldCommand.CMSG_LEAVE_CHANNEL);
             packet.Write(Convert.ToUInt32(channel));
             packet.Write(channelName);
             Game.SendPacket(packet);
@@ -678,52 +567,50 @@ namespace Client
 
         public void JoinChannel(int channel, string channelName, string channelPassword)
         {
-                OutPacket packet = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
-                packet.Write(Convert.ToUInt32(channel));
-                packet.Write((byte)0);
-                packet.Write((byte)0);
-                packet.Write(channelName.ToCString());
-                packet.Write(channelPassword.ToCString());
-                Game.SendPacket(packet);
-
-
+            var packet = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
+            packet.Write(Convert.ToUInt32(channel));
+            packet.Write((byte)0);
+            packet.Write((byte)0);
+            packet.Write(channelName.ToCString());
+            packet.Write(channelPassword.ToCString());
+            Game.SendPacket(packet);
         }
 
         public void ChangeStatus(int status)
         {
             byte[] data = null;
 
-            var Available = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00 };
-            var Away = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x41, 0x77, 0x61, 0x79, 0x00 };
-            var Busy = new byte[] { 0x18, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x42, 0x75, 0x73, 0x79, 0x00 };
+            var available = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00 };
+            var away = new byte[] { 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x41, 0x77, 0x61, 0x79, 0x00 };
+            var busy = new byte[] { 0x18, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x42, 0x75, 0x73, 0x79, 0x00 };
 
             switch (status)
             {
                 case 0:
-                    data = Available;
+                    data = available;
                     break;
                 case 1:
-                    data = Away;
+                    data = away;
                     break;
                 case 2:
-                    data = Busy;
+                    data = busy;
                     break;
                 default:
-                    data = Available;
+                    data = available;
                     break;
             }
             if (status == 0)
             {
-                OutPacket packet1 = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
-                packet1.Write(Away);
+                var packet1 = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
+                packet1.Write(away);
                 Game.SendPacket(packet1);
-                OutPacket packet2 = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
-                packet2.Write(Available);
+                var packet2 = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
+                packet2.Write(available);
                 Game.SendPacket(packet2);
             }
             else
             {
-                OutPacket packet = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
+                var packet = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
                 packet.Write(data);
                 Game.SendPacket(packet);
             }
@@ -735,38 +622,38 @@ namespace Client
             byte[] data = null;
             var endByte = new byte[] { 0x00 };
 
-            var GeneralBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x47, 0x6C, 0x6F, 0x62, 0x61, 0x6C, 0x20, 0x43, 0x68, 0x61, 0x74, 0x00 };
-            var TradeBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x54, 0x72, 0x61, 0x64, 0x65, 0x20, 0x2D, 0x20, 0x43, 0x69, 0x74, 0x79, 0x00 };
-            var LocalDefenseBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x44, 0x65, 0x66, 0x65, 0x6E, 0x73, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00 };
-            var LookingForGroupBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x4C, 0x6F, 0x6F, 0x6B, 0x69, 0x6E, 0x67, 0x46, 0x6F, 0x72, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x00 };
+            var generalBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x47, 0x6C, 0x6F, 0x62, 0x61, 0x6C, 0x20, 0x43, 0x68, 0x61, 0x74, 0x00 };
+            var tradeBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x54, 0x72, 0x61, 0x64, 0x65, 0x20, 0x2D, 0x20, 0x43, 0x69, 0x74, 0x79, 0x00 };
+            var localDefenseBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x4C, 0x6F, 0x63, 0x61, 0x6C, 0x44, 0x65, 0x66, 0x65, 0x6E, 0x73, 0x65, 0x20, 0x2D, 0x20, 0x44, 0x75, 0x6E, 0x20, 0x4D, 0x6F, 0x72, 0x6F, 0x67, 0x68, 0x00 };
+            var lookingForGroupBytes = new byte[] { 0x11, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x4C, 0x6F, 0x6F, 0x6B, 0x69, 0x6E, 0x67, 0x46, 0x6F, 0x72, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x00 };
 
-            byte[] msg = Encoding.ASCII.GetBytes(message);
+            var msg = Encoding.ASCII.GetBytes(message);
 
             switch (channel)
             {
                 case 1:
-                    byte[] gfinal = GeneralBytes.Concat(msg).Concat(endByte).ToArray();
+                    var gfinal = generalBytes.Concat(msg).Concat(endByte).ToArray();
                     data = gfinal;
                     break;
                 case 2:
-                    byte[] tfinal = TradeBytes.Concat(msg).Concat(endByte).ToArray();
+                    var tfinal = tradeBytes.Concat(msg).Concat(endByte).ToArray();
                     data = tfinal;
                     break;
                 case 3:
-                    byte[] ldfinal = LocalDefenseBytes.Concat(msg).Concat(endByte).ToArray();
+                    var ldfinal = localDefenseBytes.Concat(msg).Concat(endByte).ToArray();
                     data = ldfinal;
                     break;
                 case 4:
-                    byte[] lfgfinal = LookingForGroupBytes.Concat(msg).Concat(endByte).ToArray();
+                    var lfgfinal = lookingForGroupBytes.Concat(msg).Concat(endByte).ToArray();
                     data = lfgfinal;
                     break;
                 default:
-                    byte[] deffinal = GeneralBytes.Concat(msg).Concat(endByte).ToArray();
+                    var deffinal = generalBytes.Concat(msg).Concat(endByte).ToArray();
                     data = deffinal;
                     break;
             }
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
+            var packet = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
             packet.Write(data);
             Game.SendPacket(packet);
         }
@@ -777,12 +664,12 @@ namespace Client
             byte[] data = null;
             var endBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-            byte[] InvitedPlayer = Encoding.ASCII.GetBytes(player);
+            var invitedPlayer = Encoding.ASCII.GetBytes(player);
 
-            byte[] packetdata = InvitedPlayer.Concat(endBytes).ToArray();
+            var packetdata = invitedPlayer.Concat(endBytes).ToArray();
             data = packetdata;
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_GROUP_INVITE);
+            var packet = new OutPacket(WorldCommand.CMSG_GROUP_INVITE);
             packet.Write(data);
             Game.SendPacket(packet);
         }
@@ -794,12 +681,12 @@ namespace Client
             byte[] data = null;
             var endBytes = new byte[] { 0x00, 0x00 };
 
-            byte[] PlayertoAdd = Encoding.ASCII.GetBytes(player);
+            var playertoAdd = Encoding.ASCII.GetBytes(player);
 
-            byte[] packetdata = PlayertoAdd.Concat(endBytes).ToArray();
+            var packetdata = playertoAdd.Concat(endBytes).ToArray();
             data = packetdata;
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_ADD_FRIEND);
+            var packet = new OutPacket(WorldCommand.CMSG_ADD_FRIEND);
             packet.Write(data);
             Game.SendPacket(packet);
         }
@@ -811,9 +698,9 @@ namespace Client
             byte[] data = null;
             var endByte = new byte[] { 0x00 };
 
-            byte[] PlayertoIgnore = Encoding.ASCII.GetBytes(player);
+            var playertoIgnore = Encoding.ASCII.GetBytes(player);
 
-            byte[] packetdata = PlayertoIgnore.Concat(endByte).ToArray();
+            byte[] packetdata = playertoIgnore.Concat(endByte).ToArray();
             data = packetdata;
 
             OutPacket packet = new OutPacket(WorldCommand.CMSG_ADD_IGNORE);
@@ -821,20 +708,18 @@ namespace Client
             Game.SendPacket(packet);
         }
 
-        public void RemoveFriend(int guid, string player) 
+        public void RemoveFriend(int guid, string player)
         {
             LastRemovedFriend = player;
-            byte[] bytes = BitConverter.GetBytes(guid);
-            string LittleEndian = "";
-            foreach (byte b in bytes)
-                LittleEndian += b.ToString("X2");
-            byte[] packetdata = new byte[8];
-            for (int i = 0; i < LittleEndian.Length; i += 2)
+            var bytes = BitConverter.GetBytes(guid);
+            var littleEndian = bytes.Aggregate("", (current, b) => current + b.ToString("X2"));
+            var packetdata = new byte[8];
+            for (var i = 0; i < littleEndian.Length; i += 2)
             {
-                packetdata[i / 2] = Convert.ToByte(LittleEndian.Substring(i, 2), 16);
+                packetdata[i / 2] = Convert.ToByte(littleEndian.Substring(i, 2), 16);
             }
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_DEL_FRIEND);
+            var packet = new OutPacket(WorldCommand.CMSG_DEL_FRIEND);
             packet.Write(packetdata);
             Game.SendPacket(packet);
         }
@@ -843,188 +728,228 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_CHANNEL_NOTIFY)]
         protected void HandleChannelList(InPacket packet)
         {
-                ChannelNoticeType noticeType = (ChannelNoticeType)packet.ReadByte();
-                string channelName = packet.ReadCString();
-                if (channelName == "")
-                    channelName = "BlankChannelName";
-                ChannelNotifyMessage(noticeType, channelName);
+            ChannelNoticeType noticeType = (ChannelNoticeType)packet.ReadByte();
+            string channelName = packet.ReadCString();
+            if (channelName == "")
+                channelName = "BlankChannelName";
+            ChannelNotifyMessage(noticeType, channelName);
         }
         public void ChannelNotifyMessage(ChannelNoticeType notice, string channelName)
         {
-            string message = "";
-            ChatMessage chatmsg = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.Channel;
+            var message = "";
+            var chatmsg = new ChatMessage();
+            var channel = new ChatChannel
+            {
+                Type = ChatMessageType.Channel
+            };
             switch (notice)
             {
                 case ChannelNoticeType.PlayerJoined:
                 {
-                        string playerName = "Player"; // To Do: figure out how wow client gets player name when its not sent in the notify packet.
-                        message = playerName + " has joined the channel";
-                }break;
+                    const string
+                        playerName =
+                            "Player"; // To Do: figure out how wow client gets player name when its not sent in the notify packet.
+                    message = playerName + " has joined the channel";
+                }
+                    break;
                 case ChannelNoticeType.PlayerLeft:
                 {
-                        string playerName = "Player"; // To Do: figure out how wow client gets player name when its not sent in the notify packet.
-                        message = playerName + " has left the channel";
-                }break;
+                    message = "Player has left the channel";
+                }
+                    break;
                 case ChannelNoticeType.YouJoined:
                 {
-                        message = "You joined the channel";
-                        if (customChannels.Contains(channelName))
-                            UpdateCustomChannelList("1");
-                        else if (!joinedChannels.Contains(channelName))
-                        {
-                            joinedChannels.Add(channelName);
-                            UpdateDefaultChannelList("1");
-                        }
-                }break;
+                    message = "You joined the channel";
+                    if (customChannels.Contains(channelName))
+                        UpdateCustomChannelList("1");
+                    else if (!joinedChannels.Contains(channelName))
+                    {
+                        joinedChannels.Add(channelName);
+                        UpdateDefaultChannelList("1");
+                    }
+                }
+                    break;
                 case ChannelNoticeType.YouLeft:
                 {
-                        message = "You left the channel";
-                        if (customChannels.Contains(channelName))
-                        {
-                            customChannels.Remove(channelName);
-                            UpdateCustomChannelList("1");
-                        }
-                        else if (joinedChannels.Contains(channelName))
-                        {
-                            joinedChannels.Remove(channelName);
-                            UpdateDefaultChannelList("1");
-                        }
-                }break;
+                    message = "You left the channel";
+                    if (customChannels.Contains(channelName))
+                    {
+                        customChannels.Remove(channelName);
+                        UpdateCustomChannelList("1");
+                    }
+                    else if (joinedChannels.Contains(channelName))
+                    {
+                        joinedChannels.Remove(channelName);
+                        UpdateDefaultChannelList("1");
+                    }
+                }
+                    break;
                 case ChannelNoticeType.WrongPassword:
                 {
-                        message = "You entered the wrong password";
-                }break;
+                    message = "You entered the wrong password";
+                }
+                    break;
                 case ChannelNoticeType.NotMember:
                 {
-                        message = "You are not a member of the channel";
-                }break;
+                    message = "You are not a member of the channel";
+                }
+                    break;
                 case ChannelNoticeType.NotModerator:
                 {
-                        message = "You are not a moderator.";
-                }break;
+                    message = "You are not a moderator.";
+                }
+                    break;
                 case ChannelNoticeType.PasswordChanged:
                 {
-                        message = "The password was channged.";
-                }break;
+                    message = "The password was channged.";
+                }
+                    break;
                 case ChannelNoticeType.OwnerChanged:
                 {
-                        message = "Owner changed";
-                }break;
+                    message = "Owner changed";
+                }
+                    break;
                 case ChannelNoticeType.PlayerNotFound:
                 {
-                        message = "Player not found";
-                }break;
+                    message = "Player not found";
+                }
+                    break;
                 case ChannelNoticeType.NotOwner:
                 {
-                        message = "You are not the owner";
-                }break;
+                    message = "You are not the owner";
+                }
+                    break;
                 case ChannelNoticeType.OwnerIs:
                 {
-                        message = "The owner is not found due to no support for this yet";
-                }break;
+                    message = "The owner is not found due to no support for this yet";
+                }
+                    break;
                 case ChannelNoticeType.ChangeNotice:
                 {
-                        message = "If the has been sent ask the server runner what the fuck are they doing";
-                }break;
+                    message = "If the has been sent ask the server runner what the fuck are they doing";
+                }
+                    break;
                 case ChannelNoticeType.AnnounceOn:
                 {
-                        message = "Channel announcements have been turned on";
-                }break;
+                    message = "Channel announcements have been turned on";
+                }
+                    break;
                 case ChannelNoticeType.AnnounceOff:
                 {
-                        message = "Channel announcements have been turned off";
-                }break;
+                    message = "Channel announcements have been turned off";
+                }
+                    break;
                 case ChannelNoticeType.ModOn:
                 {
-                        message = "Channel moderation has been turned on.";
-                }break;
+                    message = "Channel moderation has been turned on.";
+                }
+                    break;
                 case ChannelNoticeType.ModOff:
                 {
-                        message = "Channel moderation has been turned off";
-                }break;
+                    message = "Channel moderation has been turned off";
+                }
+                    break;
                 case ChannelNoticeType.Muted:
                 {
-                        message = "You can't talk in a channel you are muted in";
-                }break;
+                    message = "You can't talk in a channel you are muted in";
+                }
+                    break;
                 case ChannelNoticeType.PlayerKicked:
                 {
-                        message = "Someone kicked someone";
-                }break;
+                    message = "Someone kicked someone";
+                }
+                    break;
                 case ChannelNoticeType.Banned:
                 {
-                        message = "You are banned from that channel";
-                }break;
+                    message = "You are banned from that channel";
+                }
+                    break;
                 case ChannelNoticeType.PlayerBanned:
                 {
-                        message = "Someone banned someone";
-                }break;
+                    message = "Someone banned someone";
+                }
+                    break;
                 case ChannelNoticeType.PlayerUnbanned:
                 {
-                        message = "Someone unbanned someone";
-                }break;
+                    message = "Someone unbanned someone";
+                }
+                    break;
                 case ChannelNoticeType.NotBanned:
                 {
-                        message = "That person is not banned";
-                }break;
+                    message = "That person is not banned";
+                }
+                    break;
                 case ChannelNoticeType.AlreadyMember:
                 {
-                        message = "You are already a member of the channel";
-                }break;
+                    message = "You are already a member of the channel";
+                }
+                    break;
                 case ChannelNoticeType.Invite:
                 {
-                        message = "You were invited to the channel";
-                        channel.Type = ChatMessageType.ChannelInvitation;
-                }break;
+                    message = "You were invited to the channel";
+                    channel.Type = ChatMessageType.ChannelInvitation;
+                }
+                    break;
                 case ChannelNoticeType.InviteWrongFaction:
                 {
-                        message = "That person is the wrong faction";
-                }break;
+                    message = "That person is the wrong faction";
+                }
+                    break;
                 case ChannelNoticeType.WrongFaction:
                 {
-                        message = "You are the wrong faction for that";
-                }break;
+                    message = "You are the wrong faction for that";
+                }
+                    break;
                 case ChannelNoticeType.InvalidName:
                 {
-                        message = "The chanel name is invalid";
-                }break;
+                    message = "The chanel name is invalid";
+                }
+                    break;
                 case ChannelNoticeType.NotModerated:
                 {
-                        message = "The channel is not moderated";
-                }break;
+                    message = "The channel is not moderated";
+                }
+                    break;
                 case ChannelNoticeType.YouINvited:
                 {
-                        message = "You invited someone to the channel";
-                }break;
+                    message = "You invited someone to the channel";
+                }
+                    break;
                 case ChannelNoticeType.PlayerHasBeenBanned:
                 {
-                        message = "The player has been banned";
-                }break;
+                    message = "The player has been banned";
+                }
+                    break;
                 case ChannelNoticeType.Throttled:
                 {
-                        message = "Your messaged was throttled please try again";
-                }break;
+                    message = "Your messaged was throttled please try again";
+                }
+                    break;
                 case ChannelNoticeType.NotArea:
                 {
-                        message = "You are not in the correct area for that channel";
-                }break;
+                    message = "You are not in the correct area for that channel";
+                }
+                    break;
                 case ChannelNoticeType.NotLFG:
                 {
-                        message = "You must be queued in looking for group before joining this channel";
-                }break;
+                    message = "You must be queued in looking for group before joining this channel";
+                }
+                    break;
                 case ChannelNoticeType.VoiceChatOn:
                 {
-                        message = "Voice chat turned on";
-                }break;
+                    message = "Voice chat turned on";
+                }
+                    break;
                 case ChannelNoticeType.VoiceChatOff:
-				{
-                        message = "Voice chat turned off";
-                }break;
+                {
+                    message = "Voice chat turned off";
+                }
+                    break;
                 default:
-                    message = "Got unknown channel status " + (int)notice + " pls fix men";
+                    message = "Got unknown channel status " + (int) notice + " pls fix men";
                     break;
             }
+
             message += ".";
             channel.ChannelName = channelName;
             chatmsg.Message = message; // + builder.ToString();
@@ -1036,7 +961,7 @@ namespace Client
         //CMSG_GROUP_DISBAND = 123 party
         public void GroupDisband()
         {
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_GROUP_DISBAND);
+            var packet = new OutPacket(WorldCommand.CMSG_GROUP_DISBAND);
             packet.Write("");
             Game.SendPacket(packet);
         }
@@ -1044,7 +969,7 @@ namespace Client
         //CMSG_GROUP_DECLINE = 115 decline party group invite
         public void GroupDecline()
         {
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_GROUP_DECLINE);
+            var packet = new OutPacket(WorldCommand.CMSG_GROUP_DECLINE);
             packet.Write("");
             Game.SendPacket(packet);
         }
@@ -1052,37 +977,34 @@ namespace Client
         //CMSG_DECLINE_CHANNEL_INVITE = 1040
         public void CustomChannelDecline(string channelname)
         {
-            byte[] data = null;
             var endByte = new byte[] { 0x00 };
 
-            byte[] channame = Encoding.ASCII.GetBytes(channelname);
+            var channame = Encoding.ASCII.GetBytes(channelname);
 
-            byte[] packetdata = channame.Concat(endByte).ToArray();
-            data = packetdata;
+            var packetdata = channame.Concat(endByte).ToArray();
+            var data = packetdata;
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_DECLINE_CHANNEL_INVITE);
+            var packet = new OutPacket(WorldCommand.CMSG_DECLINE_CHANNEL_INVITE);
             packet.Write(data);
             Game.SendPacket(packet);
         }
 
         public void AcceptChannelJoin(string channel)
         {
-            byte[] data1 = null;
-            byte[] data2 = null;
             var startByte = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
             var emptyByte = new byte[] { 0x00 };
 
-            byte[] channame = Encoding.ASCII.GetBytes(channel);
-            byte[] channelJoin = startByte.Concat(channame).Concat(emptyByte).Concat(emptyByte).ToArray();
-            byte[] channelAccept = channame.Concat(emptyByte).ToArray();
-            data1 = channelJoin;
-            data2 = channelAccept;
+            var channame = Encoding.ASCII.GetBytes(channel);
+            var channelJoin = startByte.Concat(channame).Concat(emptyByte).Concat(emptyByte).ToArray();
+            var channelAccept = channame.Concat(emptyByte).ToArray();
+            var data1 = channelJoin;
+            var data2 = channelAccept;
 
-            OutPacket packet1 = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
+            var packet1 = new OutPacket(WorldCommand.CMSG_JOIN_CHANNEL);
             packet1.Write(data1);
             Game.SendPacket(packet1);
 
-            OutPacket packet2 = new OutPacket(WorldCommand.CMSG_DECLINE_CHANNEL_INVITE);
+            var packet2 = new OutPacket(WorldCommand.CMSG_DECLINE_CHANNEL_INVITE);
             packet2.Write(data2);
             Game.SendPacket(packet2);
         }
@@ -1090,28 +1012,28 @@ namespace Client
         public void AcceptGroupInvitation()
         {
             //CMSG_GROUP_ACCEPT = 114
-            OutPacket data = new OutPacket(WorldCommand.CMSG_GROUP_ACCEPT);
+            var data = new OutPacket(WorldCommand.CMSG_GROUP_ACCEPT);
             data.Write(new byte[] { 0x00, 0x00, 0x00, 0x00 });
             Game.SendPacket(data);
         }
 
         public void RequestWhoList() //CMSG_WHO = 98,
         {
-            OutPacket response = new OutPacket(WorldCommand.CMSG_WHO);
-            response.Write(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, });
+            var response = new OutPacket(WorldCommand.CMSG_WHO);
+            response.Write(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
             Game.SendPacket(response);
         }
 
         public void RequestFriendList() //CMSG_CONTACT_LIST 0x0066 (102)
         {
-            OutPacket response = new OutPacket(WorldCommand.CMSG_CONTACT_LIST);
+            var response = new OutPacket(WorldCommand.CMSG_CONTACT_LIST);
             response.Write(new byte[] { 0x01, 0x00, 0x00, 0x00 });
             Game.SendPacket(response);
         }
 
         public void RequestChannelList(string channelName) //CMSG_CHANNEL_LIST = 154
         {
-            OutPacket response = new OutPacket(WorldCommand.CMSG_CHANNEL_LIST);
+            var response = new OutPacket(WorldCommand.CMSG_CHANNEL_LIST);
             response.Write(channelName);
             Game.SendPacket(response);
         }
@@ -1144,10 +1066,6 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_WHO)]
         protected void HandleWhoList(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel { Type = 0 };
-            StringBuilder newbuild = new StringBuilder();
-
             player.Clear();
             guild.Clear();
             level.Clear();
@@ -1156,7 +1074,7 @@ namespace Client
             pzone.Clear();
             UInt32 sentResults = packet.ReadUInt32();
             playersonline = (int)packet.ReadUInt32();
-            for (int i = 0; i < sentResults; i++)
+            for (var i = 0; i < sentResults; i++)
             {
                 string playerName = packet.ReadCString();
                 string playerGuild = packet.ReadCString();
@@ -1172,7 +1090,7 @@ namespace Client
                 pclass.Add(className.ToString());
                 Race raceName = (Race)playerRace;
                 prace.Add(raceName.ToString());
-                pzone.Add(Client.Extensions.GetZoneName((int)playerZone));
+                pzone.Add(Extensions.GetZoneName((int)playerZone));
             }
             UpdateWhoList("1");
         }
@@ -1209,19 +1127,19 @@ namespace Client
                 packet.BaseStream.Position = 0;
                 packet.ReadByte();
                 receiverGuid = packet.ReadUInt64();
-                bool resolve = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
+                var dummy = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
             }
 
             if (!player.Contains(playername)) // added
             {
-                if ((char)dump[0] == 0x02) { statusmsg = playername + " has come online."; System.Threading.Thread.Sleep(4000); }
+                if ((char)dump[0] == 0x02) { statusmsg = playername + " has come online."; Thread.Sleep(4000); }
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
             }
             else
             {
-                if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; System.Threading.Thread.Sleep(4000); }
+                if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; Thread.Sleep(4000); }
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
@@ -1249,12 +1167,11 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_GROUP_LIST)]
         protected void HandlePartyList(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.Party;
-            StringBuilder msg = new StringBuilder();
+            var message = new ChatMessage();
+            var channel = new ChatChannel {Type = ChatMessageType.Party};
+            var msg = new StringBuilder();
 
-            GroupType groupType = (GroupType)packet.ReadByte();
+            var groupType = (GroupType)packet.ReadByte();
             packet.ReadByte();
             packet.ReadByte();
             packet.ReadByte();
@@ -1286,8 +1203,8 @@ namespace Client
                     if (GroupMembersGuids.Count > GroupMembersGuids2.Count)
                     {
                         var player = "";
-                        bool resolve = (Game.World.PlayerNameLookup.TryGetValue(memberGuid, out player));
-                        msg.Append(player.ToString() + " joins the party. ");
+                        var dummy = (Game.World.PlayerNameLookup.TryGetValue(memberGuid, out player));
+                        msg.Append(player + " joins the party. ");
                         GroupMembersGuids2.Add(memberGuid);
                     }
                 }
@@ -1313,13 +1230,12 @@ namespace Client
                 {
                     if (GroupMembersGuids.Count != 0)
                     {
-                        var Userleft = GroupMembersGuids2.Except(GroupMembersGuids).ToArray();
-                        string player = null;
-                        if (Userleft[0].ToString() != "")
+                        var userleft = GroupMembersGuids2.Except(GroupMembersGuids).ToArray();
+                        if (userleft[0].ToString() != "")
                         {
-                            bool resolve = (Game.World.PlayerNameLookup.TryGetValue(Userleft[0], out player));
-                            msg.Append(player.ToString() + " leaves the party.");
-                            GroupMembersGuids2.Remove(Userleft[0]);
+                            var dummy = (Game.World.PlayerNameLookup.TryGetValue(userleft[0], out var playername));
+                            msg.Append(playername + " leaves the party.");
+                            GroupMembersGuids2.Remove(userleft[0]);
                         }
                     }
                 }
@@ -1331,14 +1247,12 @@ namespace Client
 
             UpdateGroupList("1");
 
-            if (msg.ToString() != "")
-            {
-                message.Message = msg.ToString();
-                message.Language = 0;
-                message.ChatTag = 0;
-                message.Sender = channel;
-                Game.UI.PresentChatMessage(message);
-            }
+            if (msg.ToString() == "") return;
+            message.Message = msg.ToString();
+            message.Language = 0;
+            message.ChatTag = 0;
+            message.Sender = channel;
+            Game.UI.PresentChatMessage(message);
         }
 
         //SMSG_CONTACT_LIST 0x0067 (103)
@@ -1366,8 +1280,7 @@ namespace Client
                 }
                 if (receiverGuid.IsPlayer()) // isplayer doesn't properly work? 
                 {
-                    var playername = "";
-                    Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);
+                    Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out var playername);
                     if ((int)receiverGuid > 1 && receiverGuid.ToString().Length < 9) // for listview context menu
                     {
                         if (!friendGUIList.Contains(receiverGuid.ToString()))
@@ -1502,7 +1415,7 @@ namespace Client
 
         public override void NewMessage(string message)
         {
-            while(Game.World.mesQue)
+            while (Game.World.mesQue)
             {
                 Thread.Sleep(10);
             }
@@ -1532,7 +1445,7 @@ namespace Client
 
         public override void UpdateWhoList(string message)
         {
-            WhoListUpdate = message;      
+            WhoListUpdate = message;
         }
 
         public override void UpdateRoster(string message)
@@ -1561,24 +1474,25 @@ namespace Client
         {
         }
 
-        public IGameUI UI
-        {
-            get
-            {
-                return this;
-            }
-        }
+        public IGameUI UI => this;
+
+        public List<ulong> GroupMembersGuids { get => GroupMembersGuids1; set => GroupMembersGuids1 = value; }
+        public List<ulong> GroupMembersGuids1 { get => groupMembersGuids; set => groupMembersGuids = value; }
+        public List<ulong> GroupMembersGuids2 { get => GroupMembersGuids21; set => GroupMembersGuids21 = value; }
+        public List<ulong> GroupMembersGuids21 { get => GroupMembersGuids22; set => GroupMembersGuids22 = value; }
+        public List<ulong> GroupMembersGuids22 { get => groupMembersGuids2; set => groupMembersGuids2 = value; }
+        public List<ulong> GroupMembersGuids23 { get => groupMembersGuids2; set => groupMembersGuids2 = value; }
 
         public override void PresentChatMessage(ChatMessage message)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if (message.Sender.Type.ToString() != "Channel" && message.Sender.Type.ToString() != "ChannelInvitation" && message.Sender.Type.ToString() != "partyGroupInvitation")
             {
                 //sb.Append(message.Sender.Type == ChatMessageType.WhisperInform ? "To " : "");
                 //}
                 //else
                 //{
-                sb.Append(message.Sender.Type == ChatMessageType.WhisperInform ? "To " : "[" + message.Sender.Type.ToString() + "] ");
+                sb.Append(message.Sender.Type == ChatMessageType.WhisperInform ? "To " : "[" + message.Sender.Type + "] ");
             }
 
             //! Color codes taken from default chat_cache in WTF folder
@@ -1591,7 +1505,7 @@ namespace Client
                         //Console.ForegroundColor = ConsoleColor.DarkYellow;//Color.DarkSalmon;
                         sb.Append("[");
 
-                        string cname = message.Sender.ChannelName.ToString().Substring(3, 1);
+                        var cname = message.Sender.ChannelName.Substring(3, 1);
                         switch (cname)
                         {
                             case "b": // General
@@ -1601,8 +1515,8 @@ namespace Client
                                 chanNum = "2";
                                 break;
                             case "a": // Localdefense
-                                string chanstock = message.Sender.ChannelName.ToString();
-                                string[] clean = chanstock.Split(new char[] { '\x0020' });
+                                string chanstock = message.Sender.ChannelName;
+                                string[] clean = chanstock.Split('\x0020');
                                 message.Sender.ChannelName = clean[0];
                                 chanNum = "3";
                                 break;
@@ -1614,7 +1528,7 @@ namespace Client
                                 break;
                         }
 
-                        sb.Append(chanNum + ". " + message.Sender.ChannelName.ToString());
+                        sb.Append(chanNum + ". " + message.Sender.ChannelName);
                         sb.Append("] ");
                         break;
                     }
@@ -1708,7 +1622,6 @@ namespace Client
                 case ChatMessageType.Yell:
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     break;
-                case ChatMessageType.Say:
                 default:
                     //sb.ForeColor(Color.FromArgb(255, 255, 255));
                     Console.ForegroundColor = ConsoleColor.White;
@@ -2036,6 +1949,6 @@ namespace Client
             Game.SendPacket(response);
 #endif
         }
-#endregion
+        #endregion
     }
 }

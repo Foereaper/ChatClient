@@ -4,8 +4,10 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using Client.Crypto;
+using HashAlgorithm = Client.Crypto.HashAlgorithm;
 
 namespace Client.Authentication.Network
 {
@@ -57,13 +59,13 @@ namespace Client.Authentication.Network
 
         public AuthSocket(IGame program, string hostname, int port, string username, string password)
         {
-            this.Game = program;
+            Game = program;
 
-            this.Username = username.ToUpper();
-            this.Hostname = hostname;
-            this.Port = port;
+            Username = username.ToUpper();
+            Hostname = hostname;
+            Port = port;
             
-            string authstring = string.Format("{0}:{1}", this.Username, password);
+            string authstring = string.Format("{0}:{1}", Username, password);
 
             PasswordHash = HashAlgorithm.SHA1.Hash(Encoding.ASCII.GetBytes(authstring.ToUpper()));
 
@@ -79,7 +81,7 @@ namespace Client.Authentication.Network
         {
             Game.UI.LogDebug("Sending logon challenge");
 
-            ClientAuthChallenge challenge = new ClientAuthChallenge()
+            ClientAuthChallenge challenge = new ClientAuthChallenge
             {
                 username = Username,
                 IP = BitConverter.ToUInt32((connection.Client.LocalEndPoint as IPEndPoint).Address.GetAddressBytes(), 0)
@@ -155,7 +157,7 @@ namespace Client.Authentication.Network
 
                     #region Create random key pair
 
-                    var rand = System.Security.Cryptography.RandomNumberGenerator.Create();
+                    var rand = RandomNumberGenerator.Create();
 
                     do
                     {
@@ -258,11 +260,11 @@ namespace Client.Authentication.Network
 
                     #region Send proof
 
-                    ClientAuthProof proof = new ClientAuthProof()
+                    ClientAuthProof proof = new ClientAuthProof
                     {
                         A = A.ToCleanByteArray(),
                         M1 = m1Hash,
-                        crc = new byte[20],
+                        crc = new byte[20]
                     };
 
                     Game.UI.LogDebug("Sending logon proof");
@@ -325,10 +327,8 @@ namespace Client.Authentication.Network
                 SendLogonChallenge();
                 return;
             }
-            else
-            {
-                Send(new byte[] { (byte)AuthCommand.REALM_LIST, 0x0, 0x0, 0x0, 0x0 });
-            }
+
+            Send(new byte[] { (byte)AuthCommand.REALM_LIST, 0x0, 0x0, 0x0, 0x0 });
 
             // get next command
             ReadCommand();
@@ -357,11 +357,11 @@ namespace Client.Authentication.Network
         {
             try
             {
-                this.connection.Client.BeginReceive
+                connection.Client.BeginReceive
                 (
                     ReceiveData, 0, 1,    // buffer and buffer bounds
                     SocketFlags.None,    // flags for the read
-                    this.ReadCallback,    // callback to handle completion
+                    ReadCallback,    // callback to handle completion
                     null                // state object
                 );
             }
@@ -374,7 +374,7 @@ namespace Client.Authentication.Network
         {
             try
             {
-                int size = this.connection.Client.EndReceive(result);
+                int size = connection.Client.EndReceive(result);
 
                 if (size == 0)
                 {
@@ -413,7 +413,7 @@ namespace Client.Authentication.Network
         {
             try
             {
-                connection = new TcpClient(this.Hostname, this.Port);
+                connection = new TcpClient(Hostname, Port);
                 stream = connection.GetStream();
 
                 Game.UI.LogDebug("done!");

@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
+using System.Threading.Tasks;
 using Client.Authentication;
+using Client.Chat;
 using Client.UI;
 using Client.World.Network;
-using Client.Chat;
-using System.Threading.Tasks;
 
 namespace Client
 {

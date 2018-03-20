@@ -1,11 +1,14 @@
-﻿namespace BotFarm
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace BotFarm
 {
     partial class FrmSettings
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -213,17 +216,17 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox cBAutoJoin;
-        private System.Windows.Forms.GroupBox gbChat;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.GroupBox gBOther;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox gBInvites;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button btnSave;
+        private CheckBox cBAutoJoin;
+        private GroupBox gbChat;
+        private CheckBox checkBox3;
+        private GroupBox gBOther;
+        private Label label1;
+        private NumericUpDown numericUpDown1;
+        private CheckBox checkBox4;
+        private ComboBox comboBox1;
+        private GroupBox gBInvites;
+        private CheckBox checkBox2;
+        private CheckBox checkBox1;
+        private Button btnSave;
     }
 }

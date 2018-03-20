@@ -10,7 +10,7 @@ namespace Client.World.Network
         {
             if (encryptedCommand == null)
             {
-                encryptedCommand = BitConverter.GetBytes((uint)this.Command);
+                encryptedCommand = BitConverter.GetBytes((uint)Command);
                 authenticationCrypto.Encrypt(encryptedCommand, 0, encryptedCommand.Length);
             }
 
@@ -24,7 +24,7 @@ namespace Client.World.Network
         {
             if (encryptedSize == null)
             {
-                encryptedSize = BitConverter.GetBytes(this.Size).SubArray(0, 2);
+                encryptedSize = BitConverter.GetBytes(Size).SubArray(0, 2);
                 Array.Reverse(encryptedSize);
                 authenticationCrypto.Encrypt(encryptedSize, 0, 2);
             }
@@ -36,7 +36,7 @@ namespace Client.World.Network
 
         public ClientHeader(WorldCommand command, OutPacket packet)
         {
-            this.Command = command;
+            Command = command;
             Packet = packet;
         }
     }

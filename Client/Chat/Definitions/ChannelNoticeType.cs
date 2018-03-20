@@ -1,6 +1,6 @@
 ﻿namespace Client.Chat.Definitions
 {
-    public enum ChannelNoticeType : int
+    public enum ChannelNoticeType
     {
         PlayerJoined = 0,           //+ "%s joined channel.";
         PlayerLeft = 1,           //+ "%s left channel.";

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using Client.Authentication;
-using System.IO;
 
 namespace Client.World.Network
 {
     public partial class WorldSocket : GameSocket
     {
-        static HashSet<WorldCommand> IgnoredOpcodes = new HashSet<WorldCommand>()
+        static HashSet<WorldCommand> IgnoredOpcodes = new HashSet<WorldCommand>
         {
             WorldCommand.SMSG_ADDON_INFO,
             WorldCommand.SMSG_CLIENTCACHE_VERSION,
@@ -69,10 +69,10 @@ namespace Client.World.Network
             WorldCommand.SMSG_SPLINE_MOVE_ROOT,
             WorldCommand.SMSG_GAMEOBJECT_DESPAWN_ANIM,
             WorldCommand.SMSG_DISMOUNT,
-            WorldCommand.CMSG_MOVE_FALL_RESET,
+            WorldCommand.CMSG_MOVE_FALL_RESET
         };
 
-        static HashSet<WorldCommand> NotYetImplementedOpcodes = new HashSet<WorldCommand>()
+        static HashSet<WorldCommand> NotYetImplementedOpcodes = new HashSet<WorldCommand>
         {
             WorldCommand.SMSG_SET_PROFICIENCY,
             WorldCommand.SMSG_POWER_UPDATE,
@@ -195,7 +195,7 @@ namespace Client.World.Network
                 if (!method.TryGetAttributes(false, out attributes))
                     continue;
 
-                PacketHandler handler = (PacketHandler)PacketHandler.CreateDelegate(typeof(PacketHandler), obj, method);
+                PacketHandler handler = (PacketHandler)Delegate.CreateDelegate(typeof(PacketHandler), obj, method);
 
                 foreach (var attribute in attributes)
                 {
@@ -387,7 +387,6 @@ namespace Client.World.Network
             {
                 Game.UI.LogException(ex);
                 Game.Reconnect();
-                return;
             }
         }
 

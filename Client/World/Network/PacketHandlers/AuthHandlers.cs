@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using Client.Crypto;
+using HashAlgorithm = Client.Crypto.HashAlgorithm;
 
 namespace Client.World.Network
 {
@@ -16,7 +18,7 @@ namespace Client.World.Network
             BigInteger seed1 = packet.ReadBytes(16).ToBigInteger();
             BigInteger seed2 = packet.ReadBytes(16).ToBigInteger();
 
-            var rand = System.Security.Cryptography.RandomNumberGenerator.Create();
+            var rand = RandomNumberGenerator.Create();
             byte[] bytes = new byte[4];
             rand.GetBytes(bytes);
             BigInteger ourSeed = bytes.ToBigInteger();

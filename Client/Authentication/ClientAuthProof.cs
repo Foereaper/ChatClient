@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Client.Authentication.Network;
 using System.Net.Sockets;
+using Client.Authentication.Network;
 
 namespace Client.Authentication
 {

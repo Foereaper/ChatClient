@@ -1,5 +1,5 @@
-﻿using Client.World.Definitions;
-using System;
+﻿using System;
+using Client.World.Definitions;
 
 namespace Client.World.Entities
 {
@@ -28,8 +28,8 @@ namespace Client.World.Entities
 
         public Position(float x, float y, float z, float o, int mapID) : base(x, y, z)
         {
-            this.O = o;
-            this.MapID = mapID;
+            O = o;
+            MapID = mapID;
         }
 
         public Position() : this(0.0f, 0.0f, 0.0f, 0.0f, INVALID_MAP_ID)

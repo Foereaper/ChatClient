@@ -1,6 +1,6 @@
-﻿using Client;
+﻿using System;
+using Client;
 using Client.UI;
-using System;
 
 namespace BotFarm
 {

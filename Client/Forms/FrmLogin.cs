@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows.Forms;
 using Client;
-
 
 namespace BotFarm
 {
@@ -22,10 +22,10 @@ namespace BotFarm
         private void FrmLogin_Load(object sender, EventArgs e)
         {
             BtnLogin.Enabled = true;
-            this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnter);
+            password.KeyPress += CheckEnter;
         }
 
-        private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void CheckEnter(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
@@ -36,23 +36,23 @@ namespace BotFarm
         private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             AutomatedGame.DisconClient = true;
-            this.Hide();
-            System.Threading.Thread.Sleep(1000);
+            Hide();
+            Thread.Sleep(1000);
             Application.Exit();
         }
 
         private void authcheck_Tick(object sender, EventArgs e)
         {
-            if (AutomatedGame.IsLoggedIn() == true)
+            if (AutomatedGame.IsLoggedIn())
             {
-                this.Hide();
+                Hide();
                 authcheck.Enabled = false;
                 RealmSelection realmselection = new RealmSelection();
                 realmselection.Show();   
             }
-            if (AutomatedGame.AuthenticationError == true)
+            if (AutomatedGame.AuthenticationError)
             {
-                autherror.Text = AutomatedGame.AuthErrorText.ToString();
+                autherror.Text = AutomatedGame.AuthErrorText;
             }
         }
 
@@ -92,7 +92,7 @@ namespace BotFarm
             BtnLogin.Enabled = false;
             password.Enabled = false;
             TimeSpan timeout = TimeSpan.FromSeconds(10);
-            if (KnockServerPort(logonserver.Text, 3724, timeout) == true)
+            if (KnockServerPort(logonserver.Text, 3724, timeout))
             {
                 SessionInit.setLogonserver = logonserver.Text;
                 SessionInit.setUsername = username.Text;

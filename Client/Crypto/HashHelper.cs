@@ -7,7 +7,7 @@ namespace Client.Crypto
 
     enum HashAlgorithm
     {
-        SHA1,
+        SHA1
     }
 
     static class HashHelper
@@ -49,7 +49,7 @@ namespace Client.Crypto
 
         private static byte[] SHA1(params byte[][] data)
         {
-            using (System.Security.Cryptography.SHA1 alg = CryptoNS.SHA1.Create())
+            using (CryptoNS.SHA1 alg = CryptoNS.SHA1.Create())
             {
                 return alg.ComputeHash(Combine(data));
             }

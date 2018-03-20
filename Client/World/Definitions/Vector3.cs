@@ -22,9 +22,9 @@ namespace Client.World.Definitions
 
         public Vector3(float x, float y, float z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public void Set(float x, float y, float z)

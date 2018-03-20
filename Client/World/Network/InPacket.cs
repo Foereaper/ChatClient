@@ -1,8 +1,7 @@
-﻿using Client.World.Definitions;
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
-
+using Client.World.Definitions;
 
 namespace Client.World.Network
 {
@@ -30,7 +29,7 @@ namespace Client.World.Network
             var mask = ReadByte();
 
             if (mask == 0)
-                return (ulong)0;
+                return 0;
 
             ulong res = 0;
 

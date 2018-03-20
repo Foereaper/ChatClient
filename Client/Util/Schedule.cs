@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,12 +52,12 @@ namespace Client
 
         public RepeatingAction(Action action, Action cancel, DateTime scheduledTime, TimeSpan interval, ActionFlag flags, int id)
         {
-            this.Action = action;
-            this.Cancel = cancel ?? new Action(() => { });
-            this.ScheduledTime = scheduledTime;
-            this.Interval = interval;
-            this.Flags = flags;
-            this.Id = id;
+            Action = action;
+            Cancel = cancel ?? (() => { });
+            ScheduledTime = scheduledTime;
+            Interval = interval;
+            Flags = flags;
+            Id = id;
         }
     }
 
@@ -189,7 +190,7 @@ namespace Client
             return actions.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return actions.GetEnumerator();
         }

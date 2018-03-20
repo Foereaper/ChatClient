@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 using Client;
 
@@ -15,25 +16,25 @@ namespace BotFarm
         {
             AutomatedGame.realmidGUI = lb1.SelectedIndex;
             AutomatedGame.realmchosen = true;
-            this.Hide();
-            CharacterSelection characterselection = new CharacterSelection();
+            Hide();
+            var characterselection = new CharacterSelection();
             characterselection.Show();
         }
 
         private void RealmSelection_Load(object sender, EventArgs e)
         {
             lb1.Items.Clear();
-            foreach (string realmname in AutomatedGame.presentrealmList)
+            foreach (var realmname in AutomatedGame.presentrealmList)
             {
-                lb1.Items.Add(realmname.ToString());
+                lb1.Items.Add(realmname);
             }
         }
 
         private void RealmSelection_FormClosing(object sender, FormClosingEventArgs e)
         {
             AutomatedGame.DisconClient = true;
-            this.Hide();
-            System.Threading.Thread.Sleep(1000);
+            Hide();
+            Thread.Sleep(1000);
             Application.Exit();
         }
     }

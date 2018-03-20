@@ -2276,7 +2276,7 @@
         SMSG_CLIENT_CHAT_ACCESS = 1346,
         SMSG_CLIENT_TICKET_LIST = 1347,
         Maximum,
-        Unknown,
+        Unknown
     }
 
 }

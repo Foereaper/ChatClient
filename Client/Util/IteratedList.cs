@@ -60,12 +60,9 @@ namespace Client
         {
             if (iterating)
                 throw new NotSupportedException();
-            else
-            {
-                internalList.Clear();
-                toBeAdded.Clear();
-                toBeRemoved.Clear();
-            }
+            internalList.Clear();
+            toBeAdded.Clear();
+            toBeRemoved.Clear();
         }
 
         bool ICollection<T>.Contains(T item)
@@ -97,8 +94,7 @@ namespace Client
         {
             if (iterating)
                 throw new NotSupportedException("Use" + nameof(Add) + " method");
-            else
-                internalList.Insert(index, item);
+            internalList.Insert(index, item);
         }
 
         bool ICollection<T>.Remove(T item)
@@ -108,16 +104,15 @@ namespace Client
                 toBeRemoved.Add(item);
                 return internalList.Contains(item);
             }
-            else
-                return internalList.Remove(item);
+
+            return internalList.Remove(item);
         }
 
         void IList<T>.RemoveAt(int index)
         {
             if (iterating)
                 throw new NotSupportedException("Use" + nameof(ICollection<T>.Remove) + " method");
-            else
-                internalList.RemoveAt(index);
+            internalList.RemoveAt(index);
         }
 
         public void ForEach(Action<T> action)
@@ -149,8 +144,8 @@ namespace Client
                 toBeRemoved.AddRange(matched);
                 return matched.Count;
             }
-            else
-                return internalList.RemoveAll(match);
+
+            return internalList.RemoveAll(match);
         }
     }
 }

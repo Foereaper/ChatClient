@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
-using System.Linq;
 using System.Xml;
+
 namespace Client
 {
     public static class Extensions
@@ -148,7 +149,7 @@ namespace Client
                         }
                     }
                 }
-                catch (System.Xml.XmlException err)
+                catch (XmlException err)
                 {
 
                     return "Error reading XML FILE " + err.Message;
@@ -183,7 +184,7 @@ namespace Client
                         }
                     }
                 }
-                catch (System.Xml.XmlException err)
+                catch (XmlException err)
                 {
 
                     return "Error reading XML FILE " + err.Message;

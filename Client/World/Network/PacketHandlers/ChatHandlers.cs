@@ -118,7 +118,7 @@ namespace Client.World.Network
                     i = slen;
                 }
             }
-            message.Message = Player.ToString() + " declines your group invitation.";
+            message.Message = Player + " declines your group invitation.";
             message.Language = 0;
             message.ChatTag = 0;
             message.Sender = channel;
@@ -173,13 +173,13 @@ namespace Client.World.Network
             switch (ResultCommand.ToString())
             {
                 case "":
-                    message.Message = "You invited '" + Player.ToString() + "' to join your group.";
+                    message.Message = "You invited '" + Player + "' to join your group.";
                     break;
                 case "1":
-                    message.Message = "Player '" + Player.ToString() + "' doesn't exist.";
+                    message.Message = "Player '" + Player + "' doesn't exist.";
                     break;
                 case "5":
-                    message.Message = "Player '" + Player.ToString() + "' is already in a group.";
+                    message.Message = "Player '" + Player + "' is already in a group.";
                     break;
                 case "7":
                     message.Message = "You are already in this group.";
@@ -317,7 +317,7 @@ namespace Client.World.Network
             for(int c = 0; c < totalMembers; c++)
             {
                 UInt64 playerGuid = packet.ReadUInt64();
-                int memberFlags = (int)packet.ReadByte();
+                int memberFlags = packet.ReadByte();
                 string playerName = packet.ReadCString();
                 UInt32 playerRank = packet.ReadUInt32();
                 byte playerLevel = packet.ReadByte();
@@ -347,31 +347,27 @@ namespace Client.World.Network
                 Game.World.guildStatus.Add(status);
                 Game.World.guildLevel.Add(playerLevel);
                 Game.World.guildClass.Add(playerClass.ToString());
-                Game.World.guildZone.Add(Client.Extensions.GetZoneName((int)playerZone));
+                Game.World.guildZone.Add(Extensions.GetZoneName((int)playerZone));
                 Game.World.guildNote.Add(publicNote);
                 Game.World.guildOfficerNote.Add(officeNote);
             }
             Game.UI.UpdateRoster("1");
-            if (!Game.World.sawGuildMessageBefore)
-            {
-                ChatMessage message = new ChatMessage();
-                ChatChannel channel = new ChatChannel();
-                channel.Type = 0;
-                message.Message = guildMOTD;
-                message.Language = 0;
-                message.ChatTag = 0;
-                message.Sender = channel;
-                Game.UI.PresentChatMessage(message);
-                ChatMessage message2 = new ChatMessage();
-                ChatChannel channel2 = new ChatChannel();
-                channel2.Type = 0;
-                message2.Message = guildInfo;
-                message2.Language = 0;
-                message2.ChatTag = 0;
-                message2.Sender = channel;
-                Game.UI.PresentChatMessage(message2);
-                Game.World.sawGuildMessageBefore = true;
-            }
+            if (Game.World.sawGuildMessageBefore) return;
+            var message = new ChatMessage();
+            var channel = new ChatChannel {Type = 0};
+            message.Message = guildMOTD;
+            message.Language = 0;
+            message.ChatTag = 0;
+            message.Sender = channel;
+            Game.UI.PresentChatMessage(message);
+            var message2 = new ChatMessage();
+            var channel2 = new ChatChannel {Type = 0};
+            message2.Message = guildInfo;
+            message2.Language = 0;
+            message2.ChatTag = 0;
+            message2.Sender = channel;
+            Game.UI.PresentChatMessage(message2);
+            Game.World.sawGuildMessageBefore = true;
         }
 
         /*
@@ -513,7 +509,7 @@ namespace Client.World.Network
         {
             var chatType = (ChatMessageType)packet.ReadByte();
             var language = (Language)packet.ReadInt32();
-            UInt64 senderGuid = packet.ReadUInt64();
+            var senderGuid = packet.ReadUInt64();
             var unkInt = packet.ReadUInt32();
 
             UInt32 senderNameLen = 0;
@@ -583,55 +579,54 @@ namespace Client.World.Network
 
             if (chatType == ChatMessageType.Achievement || chatType == ChatMessageType.GuildAchievement)
             {
-                int achievementId = (int)packet.ReadUInt32();
+                var achievementId = (int)packet.ReadUInt32();
                 
-                string achName = Client.Extensions.GetAchName(achievementId);
+                var achName = Extensions.GetAchName(achievementId);
                 message = message.Replace("$a", achName);
                 message = message.Replace("%s", "$REPLACEME53582");
 
             }
-            ChatChannel channel = new ChatChannel();
-            channel.Type = chatType;
+
+            ChatChannel channel = new ChatChannel {Type = chatType};
 
             if (chatType == ChatMessageType.Channel)
                 channel.ChannelName = channelName;
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.Message = message;
-            chatMessage.Language = language;
-            chatMessage.ChatTag = chatTag;
-            chatMessage.Sender = channel;
-            if (chatMessage.Language.ToString() != "Addon")
+            var chatMessage = new ChatMessage
             {
-                //! If we know the name of the sender GUID, use it
-                //! For system messages sender GUID is 0, don't need to do anything fancy
-                if (senderGuid == 0 || !string.IsNullOrEmpty(senderName)
-                || Game.World.PlayerNameLookup.TryGetValue(senderGuid, out senderName))
-                {
-                    chatMessage.Sender.Sender = senderName;
-                    chatMessage.Message = chatMessage.Message.Replace("$REPLACEME53582", senderName);
-                    Game.UI.PresentChatMessage(chatMessage);
-                    return;
-                }
-
-                //! If not we place the message in the queue,
-                //! .. either existent
-                Queue<ChatMessage> messageQueue = null;
-                if (Game.World.QueuedChatMessages.TryGetValue(senderGuid, out messageQueue))
-                    messageQueue.Enqueue(chatMessage);
-                //! or non existent
-                else
-                {
-                    messageQueue = new Queue<ChatMessage>();
-                    messageQueue.Enqueue(chatMessage);
-                    Game.World.QueuedChatMessages.Add(senderGuid, messageQueue);
-                }
-
-                //! Furthermore we send CMSG_NAME_QUERY to the server to retrieve the name of the sender
-                OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
-                response.Write(senderGuid);
-                Game.SendPacket(response);
+                Message = message,
+                Language = language,
+                ChatTag = chatTag,
+                Sender = channel
+            };
+            if (chatMessage.Language.ToString() == "Addon") return;
+            //! If we know the name of the sender GUID, use it
+            //! For system messages sender GUID is 0, don't need to do anything fancy
+            if (senderGuid == 0 || !string.IsNullOrEmpty(senderName)
+                                || Game.World.PlayerNameLookup.TryGetValue(senderGuid, out senderName))
+            {
+                chatMessage.Sender.Sender = senderName;
+                chatMessage.Message = chatMessage.Message.Replace("$REPLACEME53582", senderName);
+                Game.UI.PresentChatMessage(chatMessage);
+                return;
             }
+
+            //! If not we place the message in the queue,
+            //! .. either existent
+            if (Game.World.QueuedChatMessages.TryGetValue(senderGuid, out var messageQueue))
+                messageQueue.Enqueue(chatMessage);
+            //! or non existent
+            else
+            {
+                messageQueue = new Queue<ChatMessage>();
+                messageQueue.Enqueue(chatMessage);
+                Game.World.QueuedChatMessages.Add(senderGuid, messageQueue);
+            }
+
+            //! Furthermore we send CMSG_NAME_QUERY to the server to retrieve the name of the sender
+            var response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
+            response.Write(senderGuid);
+            Game.SendPacket(response);
             //! Enqueued chat will be printed when we receive SMSG_NAME_QUERY_RESPONSE
         }
 
@@ -641,20 +636,21 @@ namespace Client.World.Network
         protected void HandleMessageChat5(InPacket packet)
         {
             string notification = packet.ReadCString();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.System;
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.Message = notification;
-            chatMessage.Language = Language.Universal;
-            chatMessage.ChatTag = 0;
-            chatMessage.Sender = channel;
+            var channel = new ChatChannel {Type = ChatMessageType.System};
+            var chatMessage = new ChatMessage
+            {
+                Message = notification,
+                Language = Language.Universal,
+                ChatTag = 0,
+                Sender = channel
+            };
             Game.UI.PresentChatMessage(chatMessage);
         }
 
         [PacketHandler(WorldCommand.SMSG_SERVER_MESSAGE)]
         protected void HandleMessageChat6(InPacket packet)
         {
-            UInt32 type = packet.ReadUInt32();
+            var type = packet.ReadUInt32();
             /*
             SERVER_MSG_SHUTDOWN_TIME      = 1,
             SERVER_MSG_RESTART_TIME       = 2,
@@ -662,18 +658,17 @@ namespace Client.World.Network
             SERVER_MSG_SHUTDOWN_CANCELLED = 4,
             SERVER_MSG_RESTART_CANCELLED  = 5
             */
-            if (type >= 3)
+            if (type < 3) return;
+            var notification = packet.ReadCString();
+            var channel = new ChatChannel {Type = ChatMessageType.System};
+            ChatMessage chatMessage = new ChatMessage
             {
-                string notification = packet.ReadCString();
-                ChatChannel channel = new ChatChannel();
-                channel.Type = ChatMessageType.System;
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.Message = notification;
-                chatMessage.Language = Language.Universal;
-                chatMessage.ChatTag = 0;
-                chatMessage.Sender = channel;
-                Game.UI.PresentChatMessage(chatMessage);
-            }
+                Message = notification,
+                Language = Language.Universal,
+                ChatTag = 0,
+                Sender = channel
+            };
+            Game.UI.PresentChatMessage(chatMessage);
         }
 
         [PacketHandler(WorldCommand.CMSG_MESSAGECHAT)]
@@ -684,15 +679,14 @@ namespace Client.World.Network
             var guid = packet.ReadUInt64();
             var unkInt = packet.ReadInt32();
 
-            ChatChannel channel = new ChatChannel();
-            channel.Type = type;
+            var channel = new ChatChannel {Type = type};
 
             if (type == ChatMessageType.Channel)
                 channel.ChannelName = packet.ReadCString();
 
             var sender = packet.ReadUInt64();
 
-            ChatMessage message = new ChatMessage();
+            var message = new ChatMessage();
             var textLen = packet.ReadInt32();
             message.Message = packet.ReadCString();
             message.Language = lang;
@@ -704,35 +698,25 @@ namespace Client.World.Network
 
         //  CMSG_NAME_QUERY = 80,
         //  SMSG_NAME_QUERY_RESPONSE = 81,
-
-        [PacketHandler(WorldCommand.CMSG_NAME_QUERY)]
-        protected void HandleCMSGNameQuery(InPacket packet)
-        {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
-            string result = System.Text.Encoding.UTF8.GetString(packet.ReadToEnd());
-        }
-
         [PacketHandler(WorldCommand.SMSG_NAME_QUERY_RESPONSE)]
-        protected void HandleSMSGNameQueryResponse(InPacket packet)
+        protected void HandleSmsgNameQueryResponse(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
-            string result = System.Text.Encoding.UTF8.GetString(packet.ReadToEnd());
+            var message = new ChatMessage();
+            var channel = new ChatChannel {Type = 0};
+            var result = Encoding.UTF8.GetString(packet.ReadToEnd());
         }
 
         [PacketHandler(WorldCommand.SMSG_CHAT_PLAYER_NOT_FOUND)]
         protected void HandleChatPlayerNotFound(InPacket packet)
         {
-            ChatChannel channelgc = new ChatChannel();
-            channelgc.Type = 0;
-            ChatMessage message = new ChatMessage();
-            message.Message = String.Format("Player '{0}' doesn't exist!", packet.ReadCString());
-            message.Language = 0;
-            message.ChatTag = 0;
-            message.Sender = channelgc;
+            var channelgc = new ChatChannel {Type = 0};
+            var message = new ChatMessage
+            {
+                Message = $"Player '{packet.ReadCString()}' doesn't exist!",
+                Language = 0,
+                ChatTag = 0,
+                Sender = channelgc
+            };
             Game.UI.PresentChatMessage(message);
         }
 

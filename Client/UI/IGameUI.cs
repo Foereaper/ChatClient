@@ -1,9 +1,9 @@
 ﻿using System;
-using Client.Authentication;
-using Client.World;
-using Client.Chat;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Client.Authentication;
+using Client.Chat;
+using Client.World;
 
 namespace Client.UI
 {

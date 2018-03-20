@@ -1,11 +1,14 @@
-﻿namespace Client.Forms
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Client.Forms
 {
     partial class FrmTicket
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -507,48 +510,48 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox ticketMessage;
-        private System.Windows.Forms.TextBox assignName;
-        private System.Windows.Forms.RichTextBox ticketComment;
-        private System.Windows.Forms.RichTextBox ticketResponse;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button assignButton;
-        private System.Windows.Forms.Button commentButton;
-        private System.Windows.Forms.Button responseButton;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox addItemEntry;
-        private System.Windows.Forms.TextBox addItemCount;
-        private System.Windows.Forms.TextBox removeItemId;
-        private System.Windows.Forms.TextBox removeItemCount;
-        private System.Windows.Forms.TextBox checkQuestId;
-        private System.Windows.Forms.TextBox checkAchId;
-        private System.Windows.Forms.TextBox checkItemId;
-        private System.Windows.Forms.TextBox completeQuestId;
-        private System.Windows.Forms.TextBox completeAchId;
-        private System.Windows.Forms.TextBox mailSubject;
-        private System.Windows.Forms.RichTextBox mailBody;
-        private System.Windows.Forms.Button addItemButton;
-        private System.Windows.Forms.Button removeItemButton;
-        private System.Windows.Forms.Button checkQuestBotton;
-        private System.Windows.Forms.Button checkAchButton;
-        private System.Windows.Forms.Button checkItemButton;
-        private System.Windows.Forms.Button completeQuestButton;
-        private System.Windows.Forms.Button completeAchButton;
-        private System.Windows.Forms.Button sendMailButton;
-        private System.Windows.Forms.Button completeTicketButton;
-        private System.Windows.Forms.Button deleteTicketButton;
-        private System.Windows.Forms.RichTextBox chatLog;
-        private System.Windows.Forms.Timer TimerCheckPull;
+        private RichTextBox ticketMessage;
+        private TextBox assignName;
+        private RichTextBox ticketComment;
+        private RichTextBox ticketResponse;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Button assignButton;
+        private Button commentButton;
+        private Button responseButton;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private TextBox addItemEntry;
+        private TextBox addItemCount;
+        private TextBox removeItemId;
+        private TextBox removeItemCount;
+        private TextBox checkQuestId;
+        private TextBox checkAchId;
+        private TextBox checkItemId;
+        private TextBox completeQuestId;
+        private TextBox completeAchId;
+        private TextBox mailSubject;
+        private RichTextBox mailBody;
+        private Button addItemButton;
+        private Button removeItemButton;
+        private Button checkQuestBotton;
+        private Button checkAchButton;
+        private Button checkItemButton;
+        private Button completeQuestButton;
+        private Button completeAchButton;
+        private Button sendMailButton;
+        private Button completeTicketButton;
+        private Button deleteTicketButton;
+        private RichTextBox chatLog;
+        private Timer TimerCheckPull;
     }
 }

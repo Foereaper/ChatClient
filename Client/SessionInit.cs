@@ -1,6 +1,6 @@
-﻿using Client;
+﻿using System.Diagnostics;
+using Client;
 using Client.UI;
-using System.Diagnostics;
 
 namespace BotFarm
 {

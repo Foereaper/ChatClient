@@ -1,9 +1,9 @@
-﻿using Client.World;
-using Client.World.Entities;
-using Client.World.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Client.World;
+using Client.World.Entities;
+using Client.World.Network;
 
 namespace Client
 {
@@ -102,8 +102,7 @@ namespace Client
 
             if (PacketChecker != null)
                 return PacketChecker(packet);
-            else
-                return true;
+            return true;
         }
     }
 

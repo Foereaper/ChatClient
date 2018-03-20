@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace BotFarm
 {
@@ -7,7 +8,7 @@ namespace BotFarm
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -184,17 +185,17 @@ namespace BotFarm
 
         #endregion
 
-        private System.Windows.Forms.TextBox logonserver;
-        private System.Windows.Forms.TextBox username;
-        private System.Windows.Forms.TextBox password;
-        private System.Windows.Forms.PictureBox Logo;
-        private System.Windows.Forms.Label lblAcc;
-        private System.Windows.Forms.Label lblPass;
-        private System.Windows.Forms.Button BtnLogin;
-        private System.Windows.Forms.Label lblLogonserver;
-        private System.Windows.Forms.Label autherror;
-        private System.Windows.Forms.Timer authcheck;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
+        private TextBox logonserver;
+        private TextBox username;
+        private TextBox password;
+        private PictureBox Logo;
+        private Label lblAcc;
+        private Label lblPass;
+        private Button BtnLogin;
+        private Label lblLogonserver;
+        private Label autherror;
+        private Timer authcheck;
+        private Button button1;
+        private Label label1;
     }
 }

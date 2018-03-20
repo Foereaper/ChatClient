@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 using Client;
 
@@ -22,7 +23,7 @@ namespace BotFarm
                 charfound.Enabled = false;
                 AutomatedGame.characterID = lb1.SelectedIndex;
                 AutomatedGame.characterchosen = true;
-                this.Hide();
+                Hide();
                 FrmChat frmchat = new FrmChat();
                 frmchat.Show();
             }
@@ -30,8 +31,8 @@ namespace BotFarm
             {
                 MessageBox.Show("This account does not seem to have any characters.", "we hit a wall", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 AutomatedGame.DisconClient = true;
-                this.Hide();
-                System.Threading.Thread.Sleep(1000);
+                Hide();
+                Thread.Sleep(1000);
                 Application.Exit();
             }
         }
@@ -61,9 +62,9 @@ namespace BotFarm
             else
             {
                 charfound.Enabled = false;
-                foreach (string charactername in AutomatedGame.presentcharacterList)
+                foreach (var charactername in AutomatedGame.presentcharacterList)
                 {
-                    lb1.Items.Add(charactername.ToString()); //charactername.ToString()
+                    lb1.Items.Add(charactername); //charactername.ToString()
                 }
             }
         }
@@ -71,8 +72,8 @@ namespace BotFarm
         private void CharacterSelection_FormClosing(object sender, FormClosingEventArgs e)
         {
             AutomatedGame.DisconClient = true;
-            this.Hide();
-            System.Threading.Thread.Sleep(1000);
+            Hide();
+            Thread.Sleep(1000);
             Application.Exit();
         }
     }
