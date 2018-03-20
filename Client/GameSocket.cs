@@ -21,10 +21,7 @@ namespace Client
 
         public AuthenticationCrypto authenticationCrypto = new AuthenticationCrypto();
 
-        public bool IsConnected
-        {
-            get { return connection.Connected; }
-        }
+        public bool IsConnected => connection.Connected;
 
         public bool Disposed
         {
@@ -40,13 +37,7 @@ namespace Client
 
         #region Asynchronous Reading
 
-        protected byte[] ReceiveData
-        {
-            get
-            {
-                return _receiveData;
-            }
-        }
+        protected byte[] ReceiveData => _receiveData;
         private byte[] _receiveData;
         protected int ReceiveDataLength;
         protected void ReserveData(int size, bool reset = false)
@@ -108,7 +99,7 @@ namespace Client
 
         void SocketShutdownCallback(IAsyncResult result)
         {
-            int size = connection.Client.EndReceive(result);
+            var size = connection.Client.EndReceive(result);
             if (size > 0)
                 connection.Client.BeginReceive(_receiveData, 0, _receiveData.Length, SocketFlags.None, SocketShutdownCallback, null);
             else

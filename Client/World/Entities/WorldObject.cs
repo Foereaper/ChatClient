@@ -8,10 +8,7 @@ namespace Client.World.Entities
     {
         public ulong GUID
         {
-            get
-            {
-                return _guid;
-            }
+            get => _guid;
             set
             {
                 Reset();
@@ -22,10 +19,7 @@ namespace Client.World.Entities
 
         public uint this[PlayerField index]
         {
-            get
-            {
-                return this[(int)index];
-            }
+            get => this[(int)index];
             set
             {
                 this[(int)index] = value;
@@ -34,10 +28,7 @@ namespace Client.World.Entities
 
         public uint this[UnitField index]
         {
-            get
-            {
-                return this[(int)index];
-            }
+            get => this[(int)index];
             set
             {
                 this[(int)index] = value;
@@ -48,8 +39,7 @@ namespace Client.World.Entities
         {
             get
             {
-                uint value;
-                objectFields.TryGetValue(index, out value);
+                objectFields.TryGetValue(index, out var value);
                 return value;
             }
             set

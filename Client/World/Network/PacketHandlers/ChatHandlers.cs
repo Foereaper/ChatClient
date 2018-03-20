@@ -53,16 +53,18 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_GROUP_INVITE)]
         protected void HandleGroupInvite(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.partyGroupInvitation;
+            var message = new ChatMessage();
+            var channel = new ChatChannel
+            {
+                Type = ChatMessageType.partyGroupInvitation
+            };
             // index[0] 1 == invited to party group
 
-            StringBuilder builder = new StringBuilder();
-            byte[] dump = packet.ReadToEnd();
+            var builder = new StringBuilder();
+            var dump = packet.ReadToEnd();
 
-            int slen = ((int)packet.BaseStream.Length);
-            for (int i = 1; i < slen; i++)
+            var slen = ((int)packet.BaseStream.Length);
+            for (var i = 1; i < slen; i++)
             {
                 if ((char)dump[i] != 0x00)
                 {
@@ -89,7 +91,7 @@ namespace Client.World.Network
         protected void HandleChannelInvite(InPacket packet)
         {
             // 1 == party invite
-            byte[] dump = packet.ReadToEnd();
+            var dump = packet.ReadToEnd();
             //var tes = "";
             //new OutPacket(WorldCommand.CMSG_GROUP_ACCEPT, 4);
         }
@@ -98,16 +100,18 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_GROUP_DECLINE)]
         protected void handleGroupDecline(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.System;
+            var message = new ChatMessage();
+            var channel = new ChatChannel
+            {
+                Type = ChatMessageType.System
+            };
 
-            StringBuilder Player = new StringBuilder();
+            var Player = new StringBuilder();
 
-            byte[] dump = packet.ReadToEnd();
+            var dump = packet.ReadToEnd();
 
-            int slen = ((int)packet.BaseStream.Length);
-            for (int i = 0; i < slen; i++)
+            var slen = ((int)packet.BaseStream.Length);
+            for (var i = 0; i < slen; i++)
             {
                 if ((char)dump[i] != 0x00)
                 {
@@ -131,21 +135,23 @@ namespace Client.World.Network
         protected void HandlePartyCommand(InPacket packet)
         {
             //var notifymsg = "";
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = ChatMessageType.Party;
+            var message = new ChatMessage();
+            var channel = new ChatChannel
+            {
+                Type = ChatMessageType.Party
+            };
 
             // 1 byte after invited username 1 means user doesn't exist
             // 1 byte after invited username 5 means user already in group party
 
-            StringBuilder Player = new StringBuilder();
-            StringBuilder ResultCommand = new StringBuilder();
-            byte[] dump = packet.ReadToEnd();
+            var Player = new StringBuilder();
+            var ResultCommand = new StringBuilder();
+            var dump = packet.ReadToEnd();
 
             //packet.BaseStream.Position = 0;
-            int state = 0;
-            int slen = ((int)packet.BaseStream.Length);
-            for (int i = 4; i < slen; i++)
+            var state = 0;
+            var slen = ((int)packet.BaseStream.Length);
+            for (var i = 4; i < slen; i++)
             {
                 if ((char)dump[i] != 0x00)
                 {
@@ -257,16 +263,18 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_MOTD)]
         protected void HandleServerMOTD(InPacket packet)
         {
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
-
-            StringBuilder builder = new StringBuilder();
-            packet.BaseStream.Position = 0;
-            int slen = ((int)packet.BaseStream.Length);
-            for (int i = 0; i < slen; i++)
+            var message = new ChatMessage();
+            var channel = new ChatChannel
             {
-                int currentbyte = packet.BaseStream.ReadByte();
+                Type = 0
+            };
+
+            var builder = new StringBuilder();
+            packet.BaseStream.Position = 0;
+            var slen = ((int)packet.BaseStream.Length);
+            for (var i = 0; i < slen; i++)
+            {
+                var currentbyte = packet.BaseStream.ReadByte();
                 if (currentbyte != 0x00 && currentbyte != 0x01)
                 {
                     builder.Append((char)currentbyte);
@@ -300,39 +308,39 @@ namespace Client.World.Network
             Game.World.guildNote.Clear();
             Game.World.guildOfficerNote.Clear();
 
-            UInt32 totalMembers = packet.ReadUInt32();
-            string guildMOTD = packet.ReadCString();
-            string guildInfo = packet.ReadCString();
-            UInt32 numberOfRanks = packet.ReadUInt32();
-            for (int i = 0; i < numberOfRanks; i++)
+            var totalMembers = packet.ReadUInt32();
+            var guildMOTD = packet.ReadCString();
+            var guildInfo = packet.ReadCString();
+            var numberOfRanks = packet.ReadUInt32();
+            for (var i = 0; i < numberOfRanks; i++)
             {
-                UInt32 rankRights = packet.ReadUInt32();
-                UInt32 goldWithdrawlLimit = packet.ReadUInt32();
-                for (int j = 0; j < 6; j++)
+                var rankRights = packet.ReadUInt32();
+                var goldWithdrawlLimit = packet.ReadUInt32();
+                for (var j = 0; j < 6; j++)
                 {
-                    UInt32 guildBankRights = packet.ReadUInt32();
-                    UInt32 guildBankSlots = packet.ReadUInt32();
+                    var guildBankRights = packet.ReadUInt32();
+                    var guildBankSlots = packet.ReadUInt32();
                 }
             }
-            for(int c = 0; c < totalMembers; c++)
+            for(var c = 0; c < totalMembers; c++)
             {
-                UInt64 playerGuid = packet.ReadUInt64();
+                var playerGuid = packet.ReadUInt64();
                 int memberFlags = packet.ReadByte();
-                string playerName = packet.ReadCString();
-                UInt32 playerRank = packet.ReadUInt32();
-                byte playerLevel = packet.ReadByte();
-                Class playerClass = (Class)packet.ReadByte();
-                byte whyTheFuckHasntAnyEmulationProjectDocumentedWhatThisUInt8IsForFucksSake = packet.ReadByte();
-                UInt32 playerZone = packet.ReadUInt32();
+                var playerName = packet.ReadCString();
+                var playerRank = packet.ReadUInt32();
+                var playerLevel = packet.ReadByte();
+                var playerClass = (Class)packet.ReadByte();
+                var whyTheFuckHasntAnyEmulationProjectDocumentedWhatThisUInt8IsForFucksSake = packet.ReadByte();
+                var playerZone = packet.ReadUInt32();
                 float timeSinceLastLogIn = 0;
                 if (memberFlags == 0)
                     timeSinceLastLogIn = packet.ReadSingle();
-                string publicNote = packet.ReadCString();
-                string officeNote = packet.ReadCString();
+                var publicNote = packet.ReadCString();
+                var officeNote = packet.ReadCString();
                 if (memberFlags == 0)
                     continue;
 
-                string status = "Online";
+                var status = "Online";
 
                 if ((memberFlags & 8) != 0)
                     status = "Chat Client";
@@ -573,8 +581,8 @@ namespace Client.World.Network
                     break;
             }
 
-            UInt32 messageLen = packet.ReadUInt32();
-            string message = packet.ReadCString();
+            var messageLen = packet.ReadUInt32();
+            var message = packet.ReadCString();
             var chatTag = (ChatTag)packet.ReadByte();
 
             if (chatType == ChatMessageType.Achievement || chatType == ChatMessageType.GuildAchievement)
@@ -587,7 +595,7 @@ namespace Client.World.Network
 
             }
 
-            ChatChannel channel = new ChatChannel {Type = chatType};
+            var channel = new ChatChannel {Type = chatType};
 
             if (chatType == ChatMessageType.Channel)
                 channel.ChannelName = channelName;
@@ -635,7 +643,7 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_NOTIFICATION)]
         protected void HandleMessageChat5(InPacket packet)
         {
-            string notification = packet.ReadCString();
+            var notification = packet.ReadCString();
             var channel = new ChatChannel {Type = ChatMessageType.System};
             var chatMessage = new ChatMessage
             {
@@ -661,7 +669,7 @@ namespace Client.World.Network
             if (type < 3) return;
             var notification = packet.ReadCString();
             var channel = new ChatChannel {Type = ChatMessageType.System};
-            ChatMessage chatMessage = new ChatMessage
+            var chatMessage = new ChatMessage
             {
                 Message = notification,
                 Language = Language.Universal,

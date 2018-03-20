@@ -12,20 +12,20 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.ServerAuthChallenge)]
         protected void HandleServerAuthChallenge(InPacket packet)
         {
-            uint one = packet.ReadUInt32();
-            uint seed = packet.ReadUInt32();
+            var one = packet.ReadUInt32();
+            var seed = packet.ReadUInt32();
 
-            BigInteger seed1 = packet.ReadBytes(16).ToBigInteger();
-            BigInteger seed2 = packet.ReadBytes(16).ToBigInteger();
+            var seed1 = packet.ReadBytes(16).ToBigInteger();
+            var seed2 = packet.ReadBytes(16).ToBigInteger();
 
             var rand = RandomNumberGenerator.Create();
-            byte[] bytes = new byte[4];
+            var bytes = new byte[4];
             rand.GetBytes(bytes);
-            BigInteger ourSeed = bytes.ToBigInteger();
+            var ourSeed = bytes.ToBigInteger();
 
             uint zero = 0;
 
-            byte[] authResponse = HashAlgorithm.SHA1.Hash
+            var authResponse = HashAlgorithm.SHA1.Hash
             (
                 Encoding.ASCII.GetBytes(Game.Username.ToUpper()),
                 BitConverter.GetBytes(zero),
@@ -34,7 +34,7 @@ namespace Client.World.Network
                 Game.Key.ToCleanByteArray()
             );
 
-            OutPacket response = new OutPacket(WorldCommand.ClientAuthSession);
+            var response = new OutPacket(WorldCommand.ClientAuthSession);
             response.Write((uint)12340);        // client build
             response.Write(zero);
             response.Write(Game.Username.ToUpper().ToCString());
@@ -58,16 +58,16 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.ServerAuthResponse)]
         protected void HandleServerAuthResponse(InPacket packet)
         {
-            CommandDetail detail = (CommandDetail)packet.ReadByte();
+            var detail = (CommandDetail)packet.ReadByte();
 
-            uint billingTimeRemaining = packet.ReadUInt32();
-            byte billingFlags = packet.ReadByte();
-            uint billingTimeRested = packet.ReadUInt32();
-            byte expansion = packet.ReadByte();
+            var billingTimeRemaining = packet.ReadUInt32();
+            var billingFlags = packet.ReadByte();
+            var billingTimeRested = packet.ReadUInt32();
+            var expansion = packet.ReadByte();
 
             if (detail == CommandDetail.AUTH_OK)
             {
-                OutPacket request = new OutPacket(WorldCommand.CMSG_CHAR_ENUM);
+                var request = new OutPacket(WorldCommand.CMSG_CHAR_ENUM);
                 Send(request);
             }
             else
@@ -79,7 +79,7 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CHAR_ENUM)]
         protected void HandleCharEnum(InPacket packet)
         {
-            byte count = packet.ReadByte();
+            var count = packet.ReadByte();
 
             if (count == 0)
             {
@@ -87,7 +87,7 @@ namespace Client.World.Network
             }
             else
             {
-                Character[] characters = new Character[count];
+                var characters = new Character[count];
                 for (byte i = 0; i < count; ++i)
                     characters[i] = new Character(packet);
 

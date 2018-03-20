@@ -47,7 +47,7 @@ namespace BotFarm
             {
                 Hide();
                 authcheck.Enabled = false;
-                RealmSelection realmselection = new RealmSelection();
+                var realmselection = new RealmSelection();
                 realmselection.Show();   
             }
             if (AutomatedGame.AuthenticationError)
@@ -91,13 +91,13 @@ namespace BotFarm
 
             BtnLogin.Enabled = false;
             password.Enabled = false;
-            TimeSpan timeout = TimeSpan.FromSeconds(10);
+            var timeout = TimeSpan.FromSeconds(10);
             if (KnockServerPort(logonserver.Text, 3724, timeout))
             {
                 SessionInit.setLogonserver = logonserver.Text;
                 SessionInit.setUsername = username.Text;
                 SessionInit.setPassword = password.Text;
-                SessionInit start = new SessionInit();
+                var start = new SessionInit();
                 GC.KeepAlive(start);
             }
             else

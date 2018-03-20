@@ -95,10 +95,7 @@ namespace Client
 
         public RepeatingAction this[int index]
         {
-            get
-            {
-                return actions[index];
-            }
+            get => actions[index];
             set
             {
                 actions[index] = value;
@@ -138,21 +135,9 @@ namespace Client
             actions.CopyTo(array, arrayIndex);
         }
 
-        public int Count
-        {
-            get
-            {
-                return actions.Count;
-            }
-        }
+        public int Count => actions.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public bool Remove(RepeatingAction item)
         {

@@ -66,7 +66,7 @@ namespace Client.Forms
 
         private static void GenerateTicketData()
         {
-            CurrentTicket ticket = SessionInit.Instance.factoryGame.Game.World.currentViewedTicket;
+            var ticket = SessionInit.Instance.factoryGame.Game.World.currentViewedTicket;
             frm.ticketMessageProp = ticket.ticketMessage;
             frm.ticketCommentProp = ticket.ticketComment;
             frm.assignNameProp = ticket.assignedPlayer;

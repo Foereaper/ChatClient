@@ -13,9 +13,9 @@ namespace Client
     {
         public static string ToHexString(this byte[] array)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
-            for (int i = array.Length - 1; i >= 0; --i)
+            for (var i = array.Length - 1; i >= 0; --i)
                 builder.Append(array[i].ToString("X2"));
 
             return builder.ToString();
@@ -45,11 +45,11 @@ namespace Client
         /// </summary>
         public static byte[] ToCleanByteArray(this BigInteger b)
         {
-            byte[] array = b.ToByteArray();
+            var array = b.ToByteArray();
             if (array[array.Length - 1] != 0)
                 return array;
 
-            byte[] temp = new byte[array.Length - 1];
+            var temp = new byte[array.Length - 1];
             Array.Copy(array, temp, temp.Length);
             return temp;
         }
@@ -62,11 +62,11 @@ namespace Client
 
         public static string ReadCString(this BinaryReader reader)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             while (true)
             {
-                byte letter = reader.ReadByte();
+                var letter = reader.ReadByte();
                 if (letter == 0)
                     break;
 
@@ -78,14 +78,14 @@ namespace Client
 
         public static byte[] SubArray(this byte[] array, int start, int count)
         {
-            byte[] subArray = new byte[count];
+            var subArray = new byte[count];
             Array.Copy(array, start, subArray, 0, count);
             return subArray;
         }
 
         public static byte[] ToCString(this string str)
         {
-            byte[] data = new byte[str.Length + 1];
+            var data = new byte[str.Length + 1];
             Array.Copy(Encoding.ASCII.GetBytes(str), data, str.Length);
             data[data.Length - 1] = 0;
             return data;
@@ -107,15 +107,15 @@ namespace Client
 
         public static IEnumerable<TSource> TakeRandom<TSource>(this IEnumerable<TSource> source, int count)
         {
-            Random random = new Random();
-            List<int> indexes = new List<int>(source.Count());
-            for (int index = 0; index < indexes.Capacity; index++)
+            var random = new Random();
+            var indexes = new List<int>(source.Count());
+            for (var index = 0; index < indexes.Capacity; index++)
                 indexes.Add(index);
 
-            List<TSource> result = new List<TSource>(count);
-            for (int index = 0; index < count && indexes.Count() > 0; index++)
+            var result = new List<TSource>(count);
+            for (var index = 0; index < count && indexes.Count() > 0; index++)
             {
-                int randomIndex = random.Next(indexes.Count());
+                var randomIndex = random.Next(indexes.Count());
                 result.Add(source.ElementAt(randomIndex));
                 indexes.Remove(randomIndex);
             }
@@ -127,8 +127,8 @@ namespace Client
         {
             if (!File.Exists("data\\achievements.xml"))
                 return "Why did you delete achievements.xml?";
-            string achName = "Error404AchNotFound";
-            using (XmlReader reader = XmlReader.Create("data\\achievements.xml"))
+            var achName = "Error404AchNotFound";
+            using (var reader = XmlReader.Create("data\\achievements.xml"))
             {
                 try
                 {
@@ -162,8 +162,8 @@ namespace Client
         {
             if (!File.Exists("data\\areatable.xml"))
                 return "data\\areatable.xml not found";
-            string zoneName = "Nobody Knows";
-            using (XmlReader reader = XmlReader.Create("data\\areatable.xml"))
+            var zoneName = "Nobody Knows";
+            using (var reader = XmlReader.Create("data\\areatable.xml"))
             {
                 try
                 {

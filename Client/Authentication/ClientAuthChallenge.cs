@@ -15,13 +15,7 @@ namespace Client.Authentication
         const ushort build = 12340;
 
         #region ISendable Members
-        public AuthCommand Command
-        {
-            get
-            {
-                return AuthCommand.LOGON_CHALLENGE;
-            }
-        }
+        public AuthCommand Command => AuthCommand.LOGON_CHALLENGE;
 
         public void Send(NetworkStream writer)
         {

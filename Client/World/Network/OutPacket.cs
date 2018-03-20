@@ -29,9 +29,9 @@ namespace Client.World.Network
         {
             if (FinalizedPacket == null)
             {
-                byte[] data = new byte[6 + Buffer.Length];
-                byte[] size = ((ClientHeader)Header).EncryptedSize(authenticationCrypto);
-                byte[] command = ((ClientHeader)Header).EncryptedCommand(authenticationCrypto);
+                var data = new byte[6 + Buffer.Length];
+                var size = ((ClientHeader)Header).EncryptedSize(authenticationCrypto);
+                var command = ((ClientHeader)Header).EncryptedCommand(authenticationCrypto);
 
                 Array.Copy(size, 0, data, 0, 2);
                 Array.Copy(command, 0, data, 2, 4);
@@ -45,7 +45,7 @@ namespace Client.World.Network
 
         public void WritePacketGuid(UInt64 guid)
         {
-            byte[] packGUID = new byte[8+1];
+            var packGUID = new byte[8+1];
             packGUID[0] = 0;
             var size = 1;
             for (byte i = 0;guid != 0;++i)

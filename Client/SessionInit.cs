@@ -14,10 +14,7 @@ namespace BotFarm
 
         public static string setLogonserver
         {
-            set
-            {
-                Logonserver = value;
-            }
+            set => Logonserver = value;
             get
             {
                 return Logonserver;
@@ -26,10 +23,7 @@ namespace BotFarm
 
         public static string setUsername
         {
-            set
-            {
-                Username = value;
-            }
+            set => Username = value;
             get
             {
                 return Username;
@@ -38,10 +32,7 @@ namespace BotFarm
 
         public static string setPassword
         {
-            set
-            {
-                Password = value;
-            }
+            set => Password = value;
             get
             {
                 return Password;

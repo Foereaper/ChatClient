@@ -20,8 +20,7 @@ namespace Client.World.Network
                 //! Add name definition per GUID
                 Game.World.PlayerNameLookup.Add(pguid, name);
                 //! See if any queued messages for this GUID are stored
-                Queue<ChatMessage> messageQueue = null;
-                if (Game.World.QueuedChatMessages.TryGetValue(pguid, out messageQueue))
+                if (Game.World.QueuedChatMessages.TryGetValue(pguid, out var messageQueue))
                 {
                     ChatMessage m;
                     while (messageQueue.GetEnumerator().MoveNext())

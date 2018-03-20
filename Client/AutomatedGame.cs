@@ -322,7 +322,7 @@ namespace Client
         {
             if (LoggedIn)
             {
-                OutPacket logout = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
+                var logout = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
                 SendPacket(logout);
             }
             else
@@ -379,7 +379,7 @@ namespace Client
             }, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
 
 
-            foreach (WorldServerInfo server in realmList)
+            foreach (var server in realmList)
             {
                 presentrealmList.Add(server.Name);
             }
@@ -424,7 +424,7 @@ namespace Client
             if (index >= characterList.Length) return;
             World.SelectedCharacter = characterList[characterID];
             // TODO: enter world
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
+            var packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
             packet.Write(World.SelectedCharacter.GUID);
             SendPacket(packet);
             LoggedIn = true;
@@ -700,10 +700,10 @@ namespace Client
 
             var playertoIgnore = Encoding.ASCII.GetBytes(player);
 
-            byte[] packetdata = playertoIgnore.Concat(endByte).ToArray();
+            var packetdata = playertoIgnore.Concat(endByte).ToArray();
             data = packetdata;
 
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_ADD_IGNORE);
+            var packet = new OutPacket(WorldCommand.CMSG_ADD_IGNORE);
             packet.Write(data);
             Game.SendPacket(packet);
         }
@@ -728,8 +728,8 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_CHANNEL_NOTIFY)]
         protected void HandleChannelList(InPacket packet)
         {
-            ChannelNoticeType noticeType = (ChannelNoticeType)packet.ReadByte();
-            string channelName = packet.ReadCString();
+            var noticeType = (ChannelNoticeType)packet.ReadByte();
+            var channelName = packet.ReadCString();
             if (channelName == "")
                 channelName = "BlankChannelName";
             ChannelNotifyMessage(noticeType, channelName);
@@ -1072,23 +1072,23 @@ namespace Client
             pclass.Clear();
             prace.Clear();
             pzone.Clear();
-            UInt32 sentResults = packet.ReadUInt32();
+            var sentResults = packet.ReadUInt32();
             playersonline = (int)packet.ReadUInt32();
             for (var i = 0; i < sentResults; i++)
             {
-                string playerName = packet.ReadCString();
-                string playerGuild = packet.ReadCString();
-                UInt32 playerLevel = packet.ReadUInt32();
-                UInt32 playerClass = packet.ReadUInt32();
-                UInt32 playerRace = packet.ReadUInt32();
-                byte playerGender = packet.ReadByte();
-                UInt32 playerZone = packet.ReadUInt32();
+                var playerName = packet.ReadCString();
+                var playerGuild = packet.ReadCString();
+                var playerLevel = packet.ReadUInt32();
+                var playerClass = packet.ReadUInt32();
+                var playerRace = packet.ReadUInt32();
+                var playerGender = packet.ReadByte();
+                var playerZone = packet.ReadUInt32();
                 player.Add(playerName);
                 guild.Add(playerGuild);
                 level.Add((int)playerLevel);
-                Class className = (Class)playerClass;
+                var className = (Class)playerClass;
                 pclass.Add(className.ToString());
-                Race raceName = (Race)playerRace;
+                var raceName = (Race)playerRace;
                 prace.Add(raceName.ToString());
                 pzone.Add(Extensions.GetZoneName((int)playerZone));
             }
@@ -1101,9 +1101,11 @@ namespace Client
         {
             UInt64 receiverGuid = 0;
             var statusmsg = "";
-            ChatMessage message = new ChatMessage();
-            ChatChannel channel = new ChatChannel();
-            channel.Type = 0;
+            var message = new ChatMessage();
+            var channel = new ChatChannel
+            {
+                Type = 0
+            };
 
             // [0] 2 = friend came online?
             // [0] 3 = gone offline
@@ -1114,9 +1116,9 @@ namespace Client
             // [0] 14 = ? 
             // [0] 15 = added to ignore list
 
-            byte[] dump = packet.ReadToEnd();
+            var dump = packet.ReadToEnd();
 
-            string playername = "";
+            var playername = "";
 
             //RequestWhoList(); // added
             //System.Threading.Thread.Sleep(3000);
@@ -1182,7 +1184,7 @@ namespace Client
             }
             packet.ReadUInt64();
             packet.ReadUInt32();
-            uint membersCount = packet.ReadUInt32();
+            var membersCount = packet.ReadUInt32();
 
             if (membersCount > 0) { JoinMessage += 1; }
 
@@ -1196,14 +1198,13 @@ namespace Client
             for (uint index = 0; index < membersCount; index++)
             {
                 packet.ReadCString();
-                UInt64 memberGuid = packet.ReadUInt64();
+                var memberGuid = packet.ReadUInt64();
                 GroupMembersGuids.Add(memberGuid);
                 if (!GroupMembersGuids2.Contains(memberGuid))
                 {
                     if (GroupMembersGuids.Count > GroupMembersGuids2.Count)
                     {
-                        var player = "";
-                        var dummy = (Game.World.PlayerNameLookup.TryGetValue(memberGuid, out player));
+                        var dummy = (Game.World.PlayerNameLookup.TryGetValue(memberGuid, out var player));
                         msg.Append(player + " joins the party. ");
                         GroupMembersGuids2.Add(memberGuid);
                     }
@@ -1264,10 +1265,10 @@ namespace Client
             friendGUIList.Clear();
             RequestWhoList();
 
-            byte[] dump = packet.ReadToEnd();
-            int len = ((int)packet.BaseStream.Length);
+            var dump = packet.ReadToEnd();
+            var len = ((int)packet.BaseStream.Length);
             packet.BaseStream.Position = 0;
-            for (int i = 0; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
                 if (dump[i] != 0 && dump[i + 1] != 0)
                 {
@@ -1299,7 +1300,7 @@ namespace Client
                     {
                         if (receiverGuid != 0 && receiverGuid.ToString().Length < 9) // don't waste bandwidth on non player guids.
                         {
-                            OutPacket response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
+                            var response = new OutPacket(WorldCommand.CMSG_NAME_QUERY);
                             response.Write(receiverGuid);
                             Game.SendPacket(response);
                         }
@@ -1343,7 +1344,7 @@ namespace Client
             Player.Z = packet.ReadSingle();
             Player.O = packet.ReadSingle();
 
-            OutPacket result = new OutPacket(WorldCommand.MSG_MOVE_WORLDPORT_ACK);
+            var result = new OutPacket(WorldCommand.MSG_MOVE_WORLDPORT_ACK);
             SendPacket(result);
         }
 
@@ -1367,8 +1368,8 @@ namespace Client
         [PacketHandler(WorldCommand.SMSG_LOGOUT_RESPONSE)]
         protected void HandleLogoutResponse(InPacket packet)
         {
-            bool logoutOk = packet.ReadUInt32() == 0;
-            bool instant = packet.ReadByte() != 0;
+            var logoutOk = packet.ReadUInt32() == 0;
+            var instant = packet.ReadByte() != 0;
 
             if (instant || !logoutOk)
             {
@@ -1515,8 +1516,8 @@ namespace Client
                                 chanNum = "2";
                                 break;
                             case "a": // Localdefense
-                                string chanstock = message.Sender.ChannelName;
-                                string[] clean = chanstock.Split('\x0020');
+                                var chanstock = message.Sender.ChannelName;
+                                var clean = chanstock.Split('\x0020');
                                 message.Sender.ChannelName = clean[0];
                                 chanNum = "3";
                                 break;

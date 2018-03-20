@@ -4,21 +4,9 @@ namespace Client.World.Entities
 {
     public class Player : Unit
     {
-        public bool IsGhost
-        {
-            get
-            {
-                return HasFlag(PlayerFlags.PLAYER_FLAGS_GHOST);
-            }
-        }
+        public bool IsGhost => HasFlag(PlayerFlags.PLAYER_FLAGS_GHOST);
 
-        public bool IsAlive
-        {
-            get
-            {
-                return this[UnitField.UNIT_FIELD_HEALTH] > 0 && !IsGhost;
-            }
-        }
+        public bool IsAlive => this[UnitField.UNIT_FIELD_HEALTH] > 0 && !IsGhost;
 
         public bool HasFlag(PlayerFlags flag)
         {

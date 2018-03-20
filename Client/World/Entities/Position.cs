@@ -18,13 +18,7 @@ namespace Client.World.Entities
             set;
         }
 
-        public bool IsValid
-        {
-            get
-            {
-                return X != 0.0f && Y != 0.0f && Z != 0.0f && MapID != INVALID_MAP_ID;
-            }
-        }
+        public bool IsValid => X != 0.0f && Y != 0.0f && Z != 0.0f && MapID != INVALID_MAP_ID;
 
         public Position(float x, float y, float z, float o, int mapID) : base(x, y, z)
         {

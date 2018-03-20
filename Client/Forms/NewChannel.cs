@@ -21,7 +21,7 @@ namespace BotFarm
         private void btnNewChannel_Click(object sender, EventArgs e)
         {
             var input = ChannelName.Text;
-            bool cnametest = true;//Regex.IsMatch(input, @"^[a-zA-Z0-9~!@#$%^&*()[]_+{}:;|<>?,./\-]+$"); //@"^[a-zA-Z0-9~!@#$%^&*()_+{}:;|<>?,./]+$"
+            var cnametest = true;//Regex.IsMatch(input, @"^[a-zA-Z0-9~!@#$%^&*()[]_+{}:;|<>?,./\-]+$"); //@"^[a-zA-Z0-9~!@#$%^&*()_+{}:;|<>?,./]+$"
             if (cnametest && AutomatedGame.customChannels.Count < 6)
             {
                 if (!AutomatedGame.customChannels.Contains(ChannelName.Text))

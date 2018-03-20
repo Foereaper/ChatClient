@@ -9,8 +9,8 @@ namespace Client.World.Network
     {
         public void QuickSysMessage(string message)
         {
-            ChatMessage chmessage = new ChatMessage();
-            ChatChannel channel = new ChatChannel
+            var chmessage = new ChatMessage();
+            var channel = new ChatChannel
             {
                 Type = ChatMessageType.System
             };
@@ -28,8 +28,8 @@ namespace Client.World.Network
         protected void HandleTicketList(InPacket packet)
         {
             Game.World.ticketList.Clear();
-            uint ticketCount = packet.ReadUInt32();
-            for (int i = 0; i < ticketCount; i++)
+            var ticketCount = packet.ReadUInt32();
+            for (var i = 0; i < ticketCount; i++)
             {
                 TicketInfo ticket;
                 ticket.playerName = packet.ReadCString();
@@ -59,28 +59,28 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CLIENT_HAS_ITEM)]
         protected void HasItemReply(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            uint itemId = packet.ReadUInt32();
-            string itemName = packet.ReadCString();
-            uint itemCount = packet.ReadUInt32();
+            var playerName = packet.ReadCString();
+            var itemId = packet.ReadUInt32();
+            var itemName = packet.ReadCString();
+            var itemCount = packet.ReadUInt32();
         }
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_ONLINE_REPLY)]
         protected void IsPlayerOnlineReply(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            string isOnline = packet.ReadByte() == 1 ? "Online" : "Offline";
+            var playerName = packet.ReadCString();
+            var isOnline = packet.ReadByte() == 1 ? "Online" : "Offline";
             QuickSysMessage(playerName + " is " + isOnline + ".");
         }
 
         [PacketHandler(WorldCommand.SMSG_CLIENT_QUEST_STATUS)]
         protected void QuestStatusReply(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            uint questId = packet.ReadUInt32();
-            byte questStatus = packet.ReadByte();
+            var playerName = packet.ReadCString();
+            var questId = packet.ReadUInt32();
+            var questStatus = packet.ReadByte();
             //string questStatusMessage = questStatus.ToString();
-            bool canCompleteQuest = packet.ReadBoolean();
+            var canCompleteQuest = packet.ReadBoolean();
             QuickSysMessage(playerName + "'s status for quest " + questId + " is " + questStatus + " can be completed status is " + canCompleteQuest + " .");
             //ToDo: Detailed Info
         }
@@ -88,9 +88,9 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CLIENT_ACH_STATUS)]
         protected void AchStatusReply(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            uint achid = packet.ReadUInt32();
-            bool hasCompletedAch = packet.ReadBoolean();
+            var playerName = packet.ReadCString();
+            var achid = packet.ReadUInt32();
+            var hasCompletedAch = packet.ReadBoolean();
             QuickSysMessage(playerName + " status for achivement " + achid + " is " + hasCompletedAch + " .");
             //ToDo: Detailed Info
         }
@@ -98,9 +98,9 @@ namespace Client.World.Network
         [PacketHandler(WorldCommand.SMSG_CLIENT_COMPLETE_X_REPLY)]
         protected void CompleteXReply(InPacket packet)
         {
-            string playerName = packet.ReadCString();
-            uint questOrAchId = packet.ReadUInt32();
-            byte questOrAch = packet.ReadByte();
+            var playerName = packet.ReadCString();
+            var questOrAchId = packet.ReadUInt32();
+            var questOrAch = packet.ReadByte();
             if (questOrAch == 2)
                 QuickSysMessage("You have completed achivement " + Extensions.GetAchName(Convert.ToInt32(questOrAchId)) + " for " + playerName + " .");
             else

@@ -21,10 +21,7 @@ namespace Client
 
         T IList<T>.this[int index]
         {
-            get
-            {
-                return internalList[index];
-            }
+            get => internalList[index];
 
             set
             {
@@ -32,21 +29,9 @@ namespace Client
             }
         }
 
-        int ICollection<T>.Count
-        {
-            get
-            {
-                return internalList.Count;
-            }
-        }
+        int ICollection<T>.Count => internalList.Count;
 
-        bool ICollection<T>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<T>.IsReadOnly => false;
 
         public void Add(T item)
         {

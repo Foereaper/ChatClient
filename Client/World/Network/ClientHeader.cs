@@ -17,7 +17,7 @@ namespace Client.World.Network
             return encryptedCommand;
         }
 
-        public int Size { get { return (int)Packet.BaseStream.Length + 4; } }
+        public int Size => (int)Packet.BaseStream.Length + 4;
 
         private byte[] encryptedSize;
         public byte[] EncryptedSize (AuthenticationCrypto authenticationCrypto)

@@ -26,8 +26,8 @@ namespace Client.Authentication
             locked = reader.ReadByte();
             Flags = reader.ReadByte();
             Name = reader.ReadCString();
-            string address = reader.ReadCString();
-            string[] tokens = address.Split(':');
+            var address = reader.ReadCString();
+            var tokens = address.Split(':');
             Address = tokens[0];
             Port = tokens.Length > 1 ? int.Parse(tokens[1]) : 8085;
             Population = reader.ReadSingle();

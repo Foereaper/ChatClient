@@ -20,9 +20,8 @@ namespace Client
         /// </summary>
         public IEnumerable<T> BatchDequeue()
         {
-            T item;
-            for (int currentCount = queue.Count; currentCount > 0; currentCount--)
-                if (queue.TryDequeue(out item))
+            for (var currentCount = queue.Count; currentCount > 0; currentCount--)
+                if (queue.TryDequeue(out var item))
                     yield return item;
         }
     }

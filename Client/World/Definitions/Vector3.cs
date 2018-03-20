@@ -41,12 +41,6 @@ namespace Client.World.Definitions
             Z = v.Z;
         }
 
-        public float Length
-        {
-            get
-            {
-                return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
-            }
-        }
+        public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
     }
 }

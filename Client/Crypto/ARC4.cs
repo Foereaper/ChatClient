@@ -22,17 +22,17 @@
             byte index1 = 0;
             byte index2 = 0;
 
-            for (int counter = 0; counter < 256; counter++)
+            for (var counter = 0; counter < 256; counter++)
             {
                 state[counter] = (byte)counter;
             }
             x = 0;
             y = 0;
-            for (int counter = 0; counter < 256; counter++)
+            for (var counter = 0; counter < 256; counter++)
             {
                 index2 = (byte)(key[index1] + state[counter] + index2);
                 // swap byte
-                byte tmp = state[counter];
+                var tmp = state[counter];
                 state[counter] = state[index2];
                 state[index2] = tmp;
                 index1 = (byte)((index1 + 1) % key.Length);

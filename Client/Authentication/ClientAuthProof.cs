@@ -12,13 +12,7 @@ namespace Client.Authentication
 
         #region ISendable Members
 
-        public AuthCommand Command
-        {
-            get
-            {
-                return AuthCommand.LOGON_PROOF;
-            }
-        }
+        public AuthCommand Command => AuthCommand.LOGON_PROOF;
 
         public void Send(NetworkStream writer)
         {

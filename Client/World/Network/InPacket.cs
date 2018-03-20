@@ -20,7 +20,7 @@ namespace Client.World.Network
         {
             Header = header;
             
-            string hh = header.ToString();
+            var hh = header.ToString();
 
         }
 
@@ -77,13 +77,13 @@ namespace Client.World.Network
 
         public InPacket Inflate()
         {
-            uint uncompressedSize = ReadUInt32();
+            var uncompressedSize = ReadUInt32();
             //Skip first 2 bytes used by zlib only
             ReadBytes(2);
 
-            using (DeflateStream decompressedStream = new DeflateStream(BaseStream, CompressionMode.Decompress))
+            using (var decompressedStream = new DeflateStream(BaseStream, CompressionMode.Decompress))
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (var memoryStream = new MemoryStream())
                 {
                     decompressedStream.CopyTo(memoryStream);
                     memoryStream.Position = 0;

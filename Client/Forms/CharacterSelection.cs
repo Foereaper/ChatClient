@@ -24,7 +24,7 @@ namespace BotFarm
                 AutomatedGame.characterID = lb1.SelectedIndex;
                 AutomatedGame.characterchosen = true;
                 Hide();
-                FrmChat frmchat = new FrmChat();
+                var frmchat = new FrmChat();
                 frmchat.Show();
             }
             else

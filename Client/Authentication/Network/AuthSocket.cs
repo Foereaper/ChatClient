@@ -28,13 +28,8 @@ namespace Client.Authentication.Network
 
         Dictionary<AuthCommand, CommandHandler> Handlers;
 
-        public override string LastOutOpcodeName
-        {
-            get
-            {
-                return LastOutOpcode?.ToString();
-            }
-        }
+        public override string LastOutOpcodeName => LastOutOpcode?.ToString();
+
         public AuthCommand? LastOutOpcode
         {
             get;
@@ -42,13 +37,8 @@ namespace Client.Authentication.Network
         }
         public override DateTime LastOutOpcodeTime => _lastOutOpcodeTime;
         protected DateTime _lastOutOpcodeTime;
-        public override string LastInOpcodeName
-        {
-            get
-            {
-                return LastInOpcode?.ToString();
-            }
-        }
+        public override string LastInOpcodeName => LastInOpcode?.ToString();
+
         public AuthCommand? LastInOpcode
         {
             get;
@@ -65,7 +55,7 @@ namespace Client.Authentication.Network
             Hostname = hostname;
             Port = port;
             
-            string authstring = string.Format("{0}:{1}", Username, password);
+            var authstring = $"{Username}:{password}";
 
             PasswordHash = HashAlgorithm.SHA1.Hash(Encoding.ASCII.GetBytes(authstring.ToUpper()));
 
@@ -81,7 +71,7 @@ namespace Client.Authentication.Network
         {
             Game.UI.LogDebug("Sending logon challenge");
 
-            ClientAuthChallenge challenge = new ClientAuthChallenge
+            var challenge = new ClientAuthChallenge
             {
                 username = Username,
                 IP = BitConverter.ToUInt32((connection.Client.LocalEndPoint as IPEndPoint).Address.GetAddressBytes(), 0)
@@ -118,7 +108,7 @@ namespace Client.Authentication.Network
 
         void HandleRealmLogonChallenge()
         {
-            ServerAuthChallenge challenge = new ServerAuthChallenge(new BinaryReader(connection.GetStream()));
+            var challenge = new ServerAuthChallenge(new BinaryReader(connection.GetStream()));
 
             switch (challenge.error)
             {
@@ -138,9 +128,9 @@ namespace Client.Authentication.Network
                     unk1 = challenge.unk3.ToBigInteger();
 
                     Game.UI.LogDebug("---====== Received from server: ======---");
-                    Game.UI.LogDebug(string.Format("B={0}", B.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("N={0}", N.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("salt={0}", challenge.salt.ToHexString()));
+                    Game.UI.LogDebug($"B={B.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"N={N.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"salt={challenge.salt.ToHexString()}");
 
                     #endregion
 
@@ -149,9 +139,9 @@ namespace Client.Authentication.Network
                     x = HashAlgorithm.SHA1.Hash(challenge.salt, PasswordHash).ToBigInteger();
 
                     Game.UI.LogDebug("---====== shared password hash ======---");
-                    Game.UI.LogDebug(string.Format("g={0}", g.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("x={0}", x.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("N={0}", N.ToCleanByteArray().ToHexString()));
+                    Game.UI.LogDebug($"g={g.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"x={x.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"N={N.ToCleanByteArray().ToHexString()}");
 
                     #endregion
 
@@ -161,7 +151,7 @@ namespace Client.Authentication.Network
 
                     do
                     {
-                        byte[] randBytes = new byte[19];
+                        var randBytes = new byte[19];
                         rand.GetBytes(randBytes);
                         a = randBytes.ToBigInteger();
 
@@ -169,7 +159,7 @@ namespace Client.Authentication.Network
                     } while (A.ModPow(1, N) == 0);
 
                     Game.UI.LogDebug("---====== Send data to server: ======---");
-                    Game.UI.LogDebug(string.Format("A={0}", A.ToCleanByteArray().ToHexString()));
+                    Game.UI.LogDebug($"A={A.ToCleanByteArray().ToHexString()}");
 
                     #endregion
 
@@ -180,59 +170,59 @@ namespace Client.Authentication.Network
                     // compute session key
                     S = ((B + k * (N - g.ModPow(x, N))) % N).ModPow(a + (u * x), N);
                     byte[] keyHash;
-                    byte[] sData = S.ToCleanByteArray();
+                    var sData = S.ToCleanByteArray();
                     if (sData.Length < 32)
                     {
                         var tmpBuffer = new byte[32];
                         Buffer.BlockCopy(sData, 0, tmpBuffer, 32 - sData.Length, sData.Length);
                         sData = tmpBuffer;
                     }
-                    byte[] keyData = new byte[40];
-                    byte[] temp = new byte[16];
+                    var keyData = new byte[40];
+                    var temp = new byte[16];
 
                     // take every even indices byte, hash, store in even indices
-                    for (int i = 0; i < 16; ++i)
+                    for (var i = 0; i < 16; ++i)
                         temp[i] = sData[i * 2];
                     keyHash = HashAlgorithm.SHA1.Hash(temp);
-                    for (int i = 0; i < 20; ++i)
+                    for (var i = 0; i < 20; ++i)
                         keyData[i * 2] = keyHash[i];
 
                     // do the same for odd indices
-                    for (int i = 0; i < 16; ++i)
+                    for (var i = 0; i < 16; ++i)
                         temp[i] = sData[i * 2 + 1];
                     keyHash = HashAlgorithm.SHA1.Hash(temp);
-                    for (int i = 0; i < 20; ++i)
+                    for (var i = 0; i < 20; ++i)
                         keyData[i * 2 + 1] = keyHash[i];
 
                     Key = keyData.ToBigInteger();
 
                     Game.UI.LogDebug("---====== Compute session key ======---");
-                    Game.UI.LogDebug(string.Format("u={0}", u.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("S={0}", S.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("K={0}", Key.ToCleanByteArray().ToHexString()));
+                    Game.UI.LogDebug($"u={u.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"S={S.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"K={Key.ToCleanByteArray().ToHexString()}");
 
                     #endregion
 
                     #region Generate crypto proof
 
                     // XOR the hashes of N and g together
-                    byte[] gNHash = new byte[20];
+                    var gNHash = new byte[20];
 
-                    byte[] nHash = HashAlgorithm.SHA1.Hash(N.ToCleanByteArray());
-                    for (int i = 0; i < 20; ++i)
+                    var nHash = HashAlgorithm.SHA1.Hash(N.ToCleanByteArray());
+                    for (var i = 0; i < 20; ++i)
                         gNHash[i] = nHash[i];
-                    Game.UI.LogDebug(string.Format("nHash={0}", nHash.ToHexString()));
+                    Game.UI.LogDebug($"nHash={nHash.ToHexString()}");
 
-                    byte[] gHash = HashAlgorithm.SHA1.Hash(g.ToCleanByteArray());
-                    for (int i = 0; i < 20; ++i)
+                    var gHash = HashAlgorithm.SHA1.Hash(g.ToCleanByteArray());
+                    for (var i = 0; i < 20; ++i)
                         gNHash[i] ^= gHash[i];
-                    Game.UI.LogDebug(string.Format("gHash={0}", gHash.ToHexString()));
+                    Game.UI.LogDebug($"gHash={gHash.ToHexString()}");
 
                     // hash username
-                    byte[] userHash = HashAlgorithm.SHA1.Hash(Encoding.ASCII.GetBytes(Username));
+                    var userHash = HashAlgorithm.SHA1.Hash(Encoding.ASCII.GetBytes(Username));
 
                     // our proof
-                    byte[] m1Hash = HashAlgorithm.SHA1.Hash
+                    var m1Hash = HashAlgorithm.SHA1.Hash
                     (
                         gNHash,
                         userHash,
@@ -243,15 +233,15 @@ namespace Client.Authentication.Network
                     );
 
                     Game.UI.LogDebug("---====== Client proof: ======---");
-                    Game.UI.LogDebug(string.Format("gNHash={0}", gNHash.ToHexString()));
-                    Game.UI.LogDebug(string.Format("userHash={0}", userHash.ToHexString()));
-                    Game.UI.LogDebug(string.Format("salt={0}", challenge.salt.ToHexString()));
-                    Game.UI.LogDebug(string.Format("A={0}", A.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("B={0}", B.ToCleanByteArray().ToHexString()));
-                    Game.UI.LogDebug(string.Format("key={0}", Key.ToCleanByteArray().ToHexString()));
+                    Game.UI.LogDebug($"gNHash={gNHash.ToHexString()}");
+                    Game.UI.LogDebug($"userHash={userHash.ToHexString()}");
+                    Game.UI.LogDebug($"salt={challenge.salt.ToHexString()}");
+                    Game.UI.LogDebug($"A={A.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"B={B.ToCleanByteArray().ToHexString()}");
+                    Game.UI.LogDebug($"key={Key.ToCleanByteArray().ToHexString()}");
 
                     Game.UI.LogDebug("---====== Send proof to server: ======---");
-                    Game.UI.LogDebug(string.Format("M={0}", m1Hash.ToHexString()));
+                    Game.UI.LogDebug($"M={m1Hash.ToHexString()}");
 
                     // expected proof for server
                     m2 = HashAlgorithm.SHA1.Hash(A.ToCleanByteArray(), m1Hash, keyData);
@@ -260,7 +250,7 @@ namespace Client.Authentication.Network
 
                     #region Send proof
 
-                    ClientAuthProof proof = new ClientAuthProof
+                    var proof = new ClientAuthProof
                     {
                         A = A.ToCleanByteArray(),
                         M1 = m1Hash,
@@ -292,7 +282,7 @@ namespace Client.Authentication.Network
 
         void HandleRealmLogonProof()
         {
-            ServerAuthProof proof = new ServerAuthProof(new BinaryReader(connection.GetStream()));
+            var proof = new ServerAuthProof(new BinaryReader(connection.GetStream()));
 
             switch (proof.error)
             {
@@ -316,9 +306,9 @@ namespace Client.Authentication.Network
                 return;
             }
 
-            bool equal = true;
+            var equal = true;
             equal = m2 != null && m2.Length == 20;
-            for (int i = 0; i < m2.Length && equal; ++i)
+            for (var i = 0; i < m2.Length && equal; ++i)
                 if (!(equal = m2[i] == proof.M2[i]))
                     break;
 
@@ -337,10 +327,10 @@ namespace Client.Authentication.Network
         void HandleRealmList()
         {
             //connection.
-            BinaryReader reader = new BinaryReader(connection.GetStream());
+            var reader = new BinaryReader(connection.GetStream());
 
             uint size = reader.ReadUInt16();
-            WorldServerList realmList = new WorldServerList(reader);
+            var realmList = new WorldServerList(reader);
             Game.UI.PresentRealmList(realmList);
         }
 
@@ -374,19 +364,18 @@ namespace Client.Authentication.Network
         {
             try
             {
-                int size = connection.Client.EndReceive(result);
+                var size = connection.Client.EndReceive(result);
 
                 if (size == 0)
                 {
                     Game.Exit();
                 }
 
-                AuthCommand command = (AuthCommand)ReceiveData[0];
+                var command = (AuthCommand)ReceiveData[0];
                 LastInOpcode = command;
                 _lastInOpcodeTime = DateTime.Now;
 
-                CommandHandler handler;
-                if (Handlers.TryGetValue(command, out handler))
+                if (Handlers.TryGetValue(command, out var handler))
                     handler();
             }
             // these exceptions can happen as race condition on shutdown

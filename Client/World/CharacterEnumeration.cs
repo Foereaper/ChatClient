@@ -45,11 +45,11 @@ namespace Client.World
             PetFamilyId = packet.ReadUInt32();
 
             // read items
-            for (int i = 0; i < Items.Length; ++i)
+            for (var i = 0; i < Items.Length; ++i)
                 Items[i] = new Item(packet);
 
             // read bags
-            for (int i = 0; i < 4; ++i)
+            for (var i = 0; i < 4; ++i)
             {
                 packet.ReadUInt32();
                 packet.ReadByte();

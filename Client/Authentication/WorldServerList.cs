@@ -16,20 +16,17 @@ namespace Client.Authentication
             Count = reader.ReadUInt16();
             serverList = new WorldServerInfo[Count];
 
-            for (int i = 0; i < Count; ++i)
+            for (var i = 0; i < Count; ++i)
                 serverList[i] = new WorldServerInfo(reader);
         }
 
-        public WorldServerInfo this[int index]
-        {
-            get { return serverList[index]; }
-        }
+        public WorldServerInfo this[int index] => serverList[index];
 
         #region IEnumerable<WorldServerInfo> Members
 
         public IEnumerator<WorldServerInfo> GetEnumerator()
         {
-            foreach (WorldServerInfo server in serverList)
+            foreach (var server in serverList)
                 yield return server;
         }
 
@@ -39,7 +36,7 @@ namespace Client.Authentication
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (WorldServerInfo realm in serverList)
+            foreach (var realm in serverList)
                 yield return realm;
         }
 

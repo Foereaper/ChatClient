@@ -45,12 +45,12 @@ namespace Client.World.Network
         public void Initialize(byte[] sessionKey)
         {
             // create RC4-drop[1024] stream
-            using(HMACSHA1 outputHMAC = new HMACSHA1(encryptionKey))
+            using(var outputHMAC = new HMACSHA1(encryptionKey))
                 encryptionStream = new ARC4(outputHMAC.ComputeHash(sessionKey));
             encryptionStream.Process(new byte[1024], 0, 1024);
 
             // create RC4-drop[1024] stream
-            using(HMACSHA1 inputHMAC = new HMACSHA1(decryptionKey))
+            using(var inputHMAC = new HMACSHA1(decryptionKey))
                 decryptionStream = new ARC4(inputHMAC.ComputeHash(sessionKey));
             decryptionStream.Process(new byte[1024], 0, 1024);
 

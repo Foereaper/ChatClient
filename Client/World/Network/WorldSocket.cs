@@ -127,21 +127,16 @@ namespace Client.World.Network
         WorldServerInfo ServerInfo;
 
         private long transferred;
-        public long Transferred { get { return transferred; } }
+        public long Transferred => transferred;
 
         private long sent;
-        public long Sent { get { return sent; } }
+        public long Sent => sent;
 
         private long received;
-        public long Received { get { return received; } }
+        public long Received => received;
 
-        public override string LastOutOpcodeName
-        {
-            get
-            {
-                return LastOutOpcode?.ToString();
-            }
-        }
+        public override string LastOutOpcodeName => LastOutOpcode?.ToString();
+
         public WorldCommand? LastOutOpcode
         {
             get;
@@ -149,13 +144,8 @@ namespace Client.World.Network
         }
         public override DateTime LastOutOpcodeTime => _lastOutOpcodeTime;
         protected DateTime _lastOutOpcodeTime;
-        public override string LastInOpcodeName
-        {
-            get
-            {
-                return LastInOpcode?.ToString();
-            }
-        }
+        public override string LastInOpcodeName => LastInOpcode?.ToString();
+
         public WorldCommand? LastInOpcode
         {
             get;
@@ -187,19 +177,18 @@ namespace Client.World.Network
         void RegisterHandlersFrom(object obj)
         {
             // create binding flags to discover all non-static methods
-            BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-            IEnumerable<PacketHandlerAttribute> attributes;
             foreach (var method in obj.GetType().GetMethods(flags))
             {
-                if (!method.TryGetAttributes(false, out attributes))
+                if (!method.TryGetAttributes(false, out IEnumerable<PacketHandlerAttribute> attributes))
                     continue;
 
-                PacketHandler handler = (PacketHandler)Delegate.CreateDelegate(typeof(PacketHandler), obj, method);
+                var handler = (PacketHandler)Delegate.CreateDelegate(typeof(PacketHandler), obj, method);
 
                 foreach (var attribute in attributes)
                 {
-                    Game.UI.LogDebug(string.Format("Registered '{0}.{1}' to '{2}'", obj.GetType().Name, method.Name, attribute.Command));
+                    Game.UI.LogDebug($"Registered '{obj.GetType().Name}.{method.Name}' to '{attribute.Command}'");
                     PacketHandlers[attribute.Command] = handler;
                 }
             }
@@ -231,7 +220,7 @@ namespace Client.World.Network
         {
             try
             {
-                int bytesRead = e.BytesTransferred;
+                var bytesRead = e.BytesTransferred;
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
@@ -246,7 +235,7 @@ namespace Client.World.Network
                 if ((ReceiveData[0] & 0x80) != 0)
                 {
                     // need to resize the buffer
-                    byte temp = ReceiveData[0];
+                    var temp = ReceiveData[0];
                     ReserveData(5);
                     ReceiveData[0] = (byte)((0x7f & temp));
 
@@ -284,7 +273,7 @@ namespace Client.World.Network
         {
             try
             {
-                int bytesRead = e.BytesTransferred;
+                var bytesRead = e.BytesTransferred;
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
@@ -300,11 +289,11 @@ namespace Client.World.Network
                     // finished reading header
                     // the first byte was decrypted already, so skip it
                     authenticationCrypto.Decrypt(ReceiveData, 1, ReceiveDataLength - 1);
-                    ServerHeader header = new ServerHeader(ReceiveData, ReceiveDataLength);
+                    var header = new ServerHeader(ReceiveData, ReceiveDataLength);
 
                     Game.UI.LogDebug(header.ToString());
                     if (header.InputDataLength > 5 || header.InputDataLength < 4)
-                        Game.UI.LogException(String.Format("Header.InputDataLength invalid: {0}", header.InputDataLength));
+                        Game.UI.LogException($"Header.InputDataLength invalid: {header.InputDataLength}");
 
                     if (header.Size > 0)
                     {
@@ -351,7 +340,7 @@ namespace Client.World.Network
         {
             try
             {
-                int bytesRead = e.BytesTransferred;
+                var bytesRead = e.BytesTransferred;
                 if (bytesRead == 0)
                 {
                     // TODO: world server disconnect
@@ -365,7 +354,7 @@ namespace Client.World.Network
                 if (bytesRead == Remaining)
                 {
                     // get header and packet, handle it
-                    ServerHeader header = (ServerHeader)SocketAsyncState;
+                    var header = (ServerHeader)SocketAsyncState;
                     QueuePacket(new InPacket(header, ReceiveData, ReceiveDataLength));
 
                     // start new asynchronous read
@@ -404,16 +393,15 @@ namespace Client.World.Network
             {
                 LastInOpcode = packet.Header.Command;
                 _lastInOpcodeTime = DateTime.Now;
-                PacketHandler handler;
-                if (PacketHandlers.TryGetValue(packet.Header.Command, out handler))
+                if (PacketHandlers.TryGetValue(packet.Header.Command, out var handler))
                 {
-                    Game.UI.LogDebug(string.Format("Received {0}", packet.Header.Command));
+                    Game.UI.LogDebug($"Received {packet.Header.Command}");
                     handler(packet);
                 }
                 else
                 {
                     if (!IgnoredOpcodes.Contains(packet.Header.Command) && !NotYetImplementedOpcodes.Contains(packet.Header.Command))
-                        Game.UI.LogDebug(string.Format("Unknown or unhandled command '{0}'", packet.Header.Command));
+                        Game.UI.LogDebug($"Unknown or unhandled command '{packet.Header.Command}'");
                 }
                 Game.HandleTriggerInput(TriggerActionType.Opcode, packet);
             }
@@ -464,7 +452,7 @@ namespace Client.World.Network
         {
             LastOutOpcode = packet.Header.Command;
             _lastOutOpcodeTime = DateTime.Now;
-            byte[] data = packet.Finalize(authenticationCrypto);
+            var data = packet.Finalize(authenticationCrypto);
 
             try
             {

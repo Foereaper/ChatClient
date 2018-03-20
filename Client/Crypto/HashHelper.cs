@@ -25,13 +25,13 @@ namespace Client.Crypto
 
         private static byte[] Combine(byte[][] buffers)
         {
-            int length = 0;
+            var length = 0;
             foreach (var buffer in buffers)
                 length += buffer.Length;
 
-            byte[] result = new byte[length];
+            var result = new byte[length];
 
-            int position = 0;
+            var position = 0;
 
             foreach (var buffer in buffers)
             {
@@ -49,7 +49,7 @@ namespace Client.Crypto
 
         private static byte[] SHA1(params byte[][] data)
         {
-            using (CryptoNS.SHA1 alg = CryptoNS.SHA1.Create())
+            using (var alg = CryptoNS.SHA1.Create())
             {
                 return alg.ComputeHash(Combine(data));
             }

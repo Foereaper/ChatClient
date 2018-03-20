@@ -30,7 +30,7 @@ namespace Client.World.Network
 
         public override string ToString()
         {
-            return String.Format("Command {0} Header Size {1} Packet Size {2}", Command, InputDataLength, Size);
+            return $"Command {Command} Header Size {InputDataLength} Packet Size {Size}";
         }
     }
 }
