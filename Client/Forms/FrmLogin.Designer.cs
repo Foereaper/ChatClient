@@ -62,7 +62,7 @@ namespace BotFarm
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(112, 20);
             this.username.TabIndex = 1;
-            this.username.Text = Client.Properties.Settings.Default.Username;
+            this.username.Text = global::Client.Properties.Settings.Default.Username;
             // 
             // password
             // 
@@ -71,7 +71,7 @@ namespace BotFarm
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(112, 20);
             this.password.TabIndex = 2;
-            this.password.Text = Client.Properties.Settings.Default.Password;
+            this.password.Text = global::Client.Properties.Settings.Default.Password;
             // 
             // lblAcc
             // 

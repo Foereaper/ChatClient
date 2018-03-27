@@ -34,20 +34,20 @@ namespace BotFarm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.cBAutoJoin = new System.Windows.Forms.CheckBox();
             this.gbChat = new System.Windows.Forms.GroupBox();
-            this.gBOther = new System.Windows.Forms.GroupBox();
-            this.gBInvites = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.gBOther = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.gBInvites = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
-            this.gBInvites.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.gBInvites.SuspendLayout();
             this.SuspendLayout();
             // 
             // cBAutoJoin
@@ -71,6 +71,18 @@ namespace BotFarm
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
             // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(7, 43);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(155, 17);
+            this.checkBox3.TabIndex = 1;
+            this.checkBox3.Text = "Use enter to send message";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
             // gBOther
             // 
             this.gBOther.Controls.Add(this.label1);
@@ -84,70 +96,14 @@ namespace BotFarm
             this.gBOther.TabStop = false;
             this.gBOther.Text = "Other";
             // 
-            // gBInvites
+            // label1
             // 
-            this.gBInvites.Controls.Add(this.checkBox2);
-            this.gBInvites.Controls.Add(this.checkBox1);
-            this.gBInvites.Location = new System.Drawing.Point(6, 87);
-            this.gBInvites.Name = "gBInvites";
-            this.gBInvites.Size = new System.Drawing.Size(181, 89);
-            this.gBInvites.TabIndex = 3;
-            this.gBInvites.TabStop = false;
-            this.gBInvites.Text = "Invites";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 20);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(115, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Ignore party invites";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(7, 44);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(130, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Ignore channel invites";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(7, 43);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(155, 17);
-            this.checkBox3.TabIndex = 1;
-            this.checkBox3.Text = "Use enter to send message";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Away",
-            "Busy"});
-            this.comboBox1.Location = new System.Drawing.Point(132, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(64, 21);
-            this.comboBox1.TabIndex = 0;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(7, 23);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(122, 17);
-            this.checkBox4.TabIndex = 1;
-            this.checkBox4.Text = "Change my status to";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "After being afk for minutes :";
             // 
             // numericUpDown1
             // 
@@ -171,14 +127,58 @@ namespace BotFarm
             0,
             0});
             // 
-            // label1
+            // checkBox4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "After being afk for minutes :";
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(7, 23);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(122, 17);
+            this.checkBox4.TabIndex = 1;
+            this.checkBox4.Text = "Change my status to";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Away",
+            "Busy"});
+            this.comboBox1.Location = new System.Drawing.Point(132, 20);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(64, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // gBInvites
+            // 
+            this.gBInvites.Controls.Add(this.checkBox2);
+            this.gBInvites.Controls.Add(this.checkBox1);
+            this.gBInvites.Location = new System.Drawing.Point(6, 87);
+            this.gBInvites.Name = "gBInvites";
+            this.gBInvites.Size = new System.Drawing.Size(181, 89);
+            this.gBInvites.TabIndex = 3;
+            this.gBInvites.TabStop = false;
+            this.gBInvites.Text = "Invites";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(7, 44);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(130, 17);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Ignore channel invites";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(7, 20);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(115, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Ignore party invites";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -207,9 +207,9 @@ namespace BotFarm
             this.gbChat.PerformLayout();
             this.gBOther.ResumeLayout(false);
             this.gBOther.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.gBInvites.ResumeLayout(false);
             this.gBInvites.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
