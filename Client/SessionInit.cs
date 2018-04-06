@@ -39,9 +39,29 @@ namespace BotFarm
             }
         }
 
+        public static bool setAFKCheck
+        {
+            set => AFKCheck = value;
+            get
+            {
+                return AFKCheck;
+            }
+        }
+
+        public static int setAFKStatus
+        {
+            set => AFKStatus = value;
+            get
+            {
+                return AFKStatus;
+            }
+        }
+
         private static string Logonserver;
         private static string Username;
         private static string Password;
+        private static bool AFKCheck;
+        private static int AFKStatus;
         public static string Logging;
         
         public AutomatedGame factoryGame;
