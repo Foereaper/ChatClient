@@ -85,18 +85,16 @@ namespace BotFarm
                 var groupInvite = messageData.Substring(0, 9);
                 if (groupInvite == "[Invited6")
                 {
-                    var HandleInvite = new Thread(HandleGroupInvitation);
-                    HandleInvite.Start();
-                    HandleInvite.Join();
+                    var tInvt = new Thread(() => HandleGroupInvitation(messageData));
+                    tInvt.Start();
                     continue;
                 }
                 //"[Invited5"
                 var channelInvite = messageData.Substring(0, 9);
                 if (channelInvite == "[Invited5")
                 {
-                    var handleInvite = new Thread(HandleChannelInvitation);
-                    handleInvite.Start();
-                    handleInvite.Join();
+                    var tInvt = new Thread(() => HandleChannelInvitation(messageData));
+                    tInvt.Start();
                     continue;
                 }
                 var whisperSendC = messageData.Substring(0, 2); //To
@@ -399,9 +397,9 @@ namespace BotFarm
             frmChannel.Show();
         }
 
-        public static void HandleChannelInvitation()
+        public static void HandleChannelInvitation(string invtdat)
         {
-            var ChannelIvtname = AutomatedGame.NewMessageData;
+            var ChannelIvtname = invtdat;
             ChannelIvtname = ChannelIvtname.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
 
@@ -416,9 +414,9 @@ namespace BotFarm
             }
         }
 
-        public static void HandleGroupInvitation()
+        public static void HandleGroupInvitation(string invtdat)
         {
-            var InvitationSender = AutomatedGame.NewMessageData;
+            var InvitationSender = invtdat;
             InvitationSender = InvitationSender.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
 
