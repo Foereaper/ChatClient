@@ -51,7 +51,7 @@ namespace Client
     public class AutomatedGame : IGameUI, IGame
     {
 
-        public static bool IsLoggedIn() // yes
+        public static bool IsLoggedIn()
         {
             try
             {
@@ -66,25 +66,25 @@ namespace Client
 
         public static List<string> ShowCharList => presentcharacterList;
 
-        public static bool RealmChosen // yes
+        public static bool RealmChosen
         {
             set => realmchosen = value;
         }
-        public static int RealmIDgui // yes
+        public static int RealmIDgui
         {
             set => realmidGUI = value;
         }
 
-        public static bool CharacterChosen // yes
+        public static bool CharacterChosen
         {
             set => characterchosen = value;
         }
-        public static int CharacterID // yes
+        public static int CharacterID
         {
             set => characterID = value;
         }
 
-        public static bool DisconClient // yes
+        public static bool DisconClient
         {
             set => disconnectclient = value;
         }
