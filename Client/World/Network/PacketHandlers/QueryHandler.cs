@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Client.Chat;
+﻿using Client.Chat;
 
 namespace Client.World.Network
 {
