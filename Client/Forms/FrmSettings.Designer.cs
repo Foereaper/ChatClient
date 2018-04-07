@@ -37,16 +37,16 @@ namespace BotFarm
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.gBOther = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.numAfkMins = new System.Windows.Forms.NumericUpDown();
+            this.cbAfk = new System.Windows.Forms.CheckBox();
+            this.cboxAfkStatus = new System.Windows.Forms.ComboBox();
             this.gBInvites = new System.Windows.Forms.GroupBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).BeginInit();
             this.gBInvites.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,9 +86,9 @@ namespace BotFarm
             // gBOther
             // 
             this.gBOther.Controls.Add(this.label1);
-            this.gBOther.Controls.Add(this.numericUpDown1);
-            this.gBOther.Controls.Add(this.checkBox4);
-            this.gBOther.Controls.Add(this.comboBox1);
+            this.gBOther.Controls.Add(this.numAfkMins);
+            this.gBOther.Controls.Add(this.cbAfk);
+            this.gBOther.Controls.Add(this.cboxAfkStatus);
             this.gBOther.Location = new System.Drawing.Point(193, 6);
             this.gBOther.Name = "gBOther";
             this.gBOther.Size = new System.Drawing.Size(207, 170);
@@ -105,49 +105,50 @@ namespace BotFarm
             this.label1.TabIndex = 3;
             this.label1.Text = "After being afk for minutes :";
             // 
-            // numericUpDown1
+            // numAfkMins
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(149, 47);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numAfkMins.Location = new System.Drawing.Point(149, 47);
+            this.numAfkMins.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numAfkMins.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(47, 20);
-            this.numericUpDown1.TabIndex = 2;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numAfkMins.Name = "numAfkMins";
+            this.numAfkMins.Size = new System.Drawing.Size(47, 20);
+            this.numAfkMins.TabIndex = 2;
+            this.numAfkMins.Value = new decimal(new int[] {
             30,
             0,
             0,
             0});
             // 
-            // checkBox4
+            // cbAfk
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(7, 23);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(122, 17);
-            this.checkBox4.TabIndex = 1;
-            this.checkBox4.Text = "Change my status to";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.cbAfk.AutoSize = true;
+            this.cbAfk.Location = new System.Drawing.Point(7, 23);
+            this.cbAfk.Name = "cbAfk";
+            this.cbAfk.Size = new System.Drawing.Size(122, 17);
+            this.cbAfk.TabIndex = 1;
+            this.cbAfk.Text = "Change my status to";
+            this.cbAfk.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cboxAfkStatus
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cboxAfkStatus.DisplayMember = "ter";
+            this.cboxAfkStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxAfkStatus.FormattingEnabled = true;
+            this.cboxAfkStatus.Items.AddRange(new object[] {
             "Away",
             "Busy"});
-            this.comboBox1.Location = new System.Drawing.Point(132, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(64, 21);
-            this.comboBox1.TabIndex = 0;
+            this.cboxAfkStatus.Location = new System.Drawing.Point(132, 20);
+            this.cboxAfkStatus.Name = "cboxAfkStatus";
+            this.cboxAfkStatus.Size = new System.Drawing.Size(64, 21);
+            this.cboxAfkStatus.TabIndex = 0;
             // 
             // gBInvites
             // 
@@ -188,6 +189,7 @@ namespace BotFarm
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Okay";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // FrmSettings
             // 
@@ -207,7 +209,7 @@ namespace BotFarm
             this.gbChat.PerformLayout();
             this.gBOther.ResumeLayout(false);
             this.gBOther.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).EndInit();
             this.gBInvites.ResumeLayout(false);
             this.gBInvites.PerformLayout();
             this.ResumeLayout(false);
@@ -221,9 +223,9 @@ namespace BotFarm
         private CheckBox checkBox3;
         private GroupBox gBOther;
         private Label label1;
-        private NumericUpDown numericUpDown1;
-        private CheckBox checkBox4;
-        private ComboBox comboBox1;
+        private NumericUpDown numAfkMins;
+        private CheckBox cbAfk;
+        private ComboBox cboxAfkStatus;
         private GroupBox gBInvites;
         private CheckBox checkBox2;
         private CheckBox checkBox1;

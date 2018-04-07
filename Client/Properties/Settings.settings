@@ -2,6 +2,15 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Client.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
+    <Setting Name="AFKcheck" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AFKstatus" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AFKmins" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
     <Setting Name="Username" Type="System.String" Scope="User">
       <Value Profile="(Default)"></Value>
     </Setting>
