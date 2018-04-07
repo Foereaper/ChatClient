@@ -80,6 +80,15 @@ namespace BotFarm
             var newMessages = SessionInit.Instance.factoryGame.Game.World.newMessageQue;
             foreach (var messageData in newMessages)
             {
+                /*
+                ToDo: Something like this to add color support
+                if (messageData.Contains("|c"))
+                {
+                    var index = messageData.IndexOf("|c", StringComparison.Ordinal);
+                    index += 2; //we want the FF+data
+                    var colorString = messageData.Substring(index, 8);                   
+                    messageData.Replace(colorString, ColorConverter.ConvertFromString(colorString);)
+                }*/
                 //"[Invited6"
                 var groupInvite = messageData.Substring(0, 9);
                 if (groupInvite == "[Invited6")
