@@ -55,8 +55,7 @@ namespace Client
         protected EventHandler<SocketAsyncEventArgs> SocketCallback;
         private void CallSocketCallback(object sender, SocketAsyncEventArgs e)
         {
-            if (SocketCallback != null)
-                SocketCallback(sender, e);
+            SocketCallback?.Invoke(sender, e);
         }
 
         public abstract void Start();

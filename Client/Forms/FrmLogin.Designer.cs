@@ -45,6 +45,7 @@ namespace BotFarm
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Logo = new System.Windows.Forms.PictureBox();
+            this.loginSave = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,11 +154,22 @@ namespace BotFarm
             this.Logo.TabIndex = 3;
             this.Logo.TabStop = false;
             // 
+            // loginSave
+            // 
+            this.loginSave.AutoSize = true;
+            this.loginSave.Location = new System.Drawing.Point(182, 248);
+            this.loginSave.Name = "loginSave";
+            this.loginSave.Size = new System.Drawing.Size(86, 17);
+            this.loginSave.TabIndex = 12;
+            this.loginSave.Text = "Save Login?";
+            this.loginSave.UseVisualStyleBackColor = true;
+            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 274);
+            this.Controls.Add(this.loginSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.autherror);
@@ -197,5 +209,6 @@ namespace BotFarm
         private Timer authcheck;
         private Button button1;
         private Label label1;
+        private CheckBox loginSave;
     }
 }

@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
+using Client.Properties;
 
 namespace BotFarm
 {
@@ -97,6 +98,12 @@ namespace BotFarm
                 SessionInit.setLogonserver = logonserver.Text;
                 SessionInit.setUsername = username.Text;
                 SessionInit.setPassword = password.Text;
+                if (loginSave.Checked)
+                {
+                    Settings.Default.Username = username.Text;
+                    Settings.Default.Password = password.Text;
+                    Settings.Default.Save();
+                }
                 var start = new SessionInit();
                 GC.KeepAlive(start);
             }
