@@ -10,10 +10,14 @@ namespace BotFarm
         {
             InitializeComponent();
 
-            Settings.Default.AFKcheck = cbAfk.Checked;
-            Settings.Default.AFKstatus = Convert.ToByte(cboxAfkStatus.SelectedIndex);
-            Settings.Default.AFKmins = Convert.ToInt32(numAfkMins.Value);
-            Settings.Default.Save();
+            try
+            {
+                Settings.Default.AFKcheck = cbAfk.Checked;
+                Settings.Default.AFKstatus = Convert.ToByte(cboxAfkStatus.SelectedIndex);
+                Settings.Default.AFKmins = Convert.ToInt32(numAfkMins.Value);
+                Settings.Default.Save();
+            }
+            catch { }
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
