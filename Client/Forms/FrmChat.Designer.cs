@@ -446,7 +446,7 @@ namespace BotFarm
             // lblPartyGroupSize
             // 
             this.lblPartyGroupSize.AutoSize = true;
-            this.lblPartyGroupSize.Location = new System.Drawing.Point(123, 123);
+            this.lblPartyGroupSize.Location = new System.Drawing.Point(119, 396);
             this.lblPartyGroupSize.Name = "lblPartyGroupSize";
             this.lblPartyGroupSize.Size = new System.Drawing.Size(0, 13);
             this.lblPartyGroupSize.TabIndex = 3;
