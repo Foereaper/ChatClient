@@ -38,9 +38,9 @@ namespace Client.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public byte AFKstatus {
+        public int AFKstatus {
             get {
-                return ((byte)(this["AFKstatus"]));
+                return ((int)(this["AFKstatus"]));
             }
             set {
                 this["AFKstatus"] = value;

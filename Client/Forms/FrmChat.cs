@@ -529,13 +529,12 @@ namespace BotFarm
 
         public void DisplayWhoList()
         {
-            ColumnHeader columnPlayer, columnGuild, columnLvl, columnClass, columnRace, columnZone;
-            columnPlayer = new ColumnHeader();
-            columnGuild = new ColumnHeader();
-            columnLvl = new ColumnHeader();
-            columnClass = new ColumnHeader();
-            columnRace = new ColumnHeader();
-            columnZone = new ColumnHeader();
+            var columnPlayer = new ColumnHeader();
+            var columnGuild = new ColumnHeader();
+            var columnLvl = new ColumnHeader();
+            var columnClass = new ColumnHeader();
+            var columnRace = new ColumnHeader();
+            var columnZone = new ColumnHeader();
             columnPlayer.Text = "Player";
             columnPlayer.TextAlign = HorizontalAlignment.Left;
             columnPlayer.Width = 100;

@@ -5,7 +5,7 @@
     <Setting Name="AFKcheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AFKstatus" Type="System.Byte" Scope="User">
+    <Setting Name="AFKstatus" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AFKmins" Type="System.Int32" Scope="User">

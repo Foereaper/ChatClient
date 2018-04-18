@@ -13,11 +13,16 @@ namespace BotFarm
             try
             {
                 Settings.Default.AFKcheck = cbAfk.Checked;
-                Settings.Default.AFKstatus = Convert.ToByte(cboxAfkStatus.SelectedIndex);
+                Settings.Default.AFKstatus = cboxAfkStatus.SelectedIndex;
                 Settings.Default.AFKmins = Convert.ToInt32(numAfkMins.Value);
                 Settings.Default.Save();
             }
-            catch { }
+            catch
+            {
+                MessageBox.Show("There is an issue with your settings file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
