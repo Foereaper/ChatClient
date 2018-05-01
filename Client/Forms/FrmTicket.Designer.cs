@@ -437,7 +437,6 @@ namespace Client.Forms
             // 
             // chatLog
             // 
-            this.chatLog.Enabled = false;
             this.chatLog.Location = new System.Drawing.Point(548, 204);
             this.chatLog.Name = "chatLog";
             this.chatLog.ReadOnly = true;
