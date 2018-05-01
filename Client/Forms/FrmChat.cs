@@ -870,6 +870,20 @@ namespace BotFarm
             textMessage.SelectionStart = textMessage.Text.Length;
         }
 
+        private void tbButtonToolStripMenuItemItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if (player == "") return;
+            SessionInit.Instance.factoryGame.TbButton(player);
+        }
+
+        private void resurrectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var player = listWho.SelectedItems[0].Text;
+            if (player == "") return;
+            SessionInit.Instance.factoryGame.RevivePlayer(player);
+        }
+
         private void inviteToPartyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var player = listWho.SelectedItems[0].Text;

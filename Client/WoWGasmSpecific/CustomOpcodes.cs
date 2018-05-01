@@ -36,7 +36,7 @@ namespace Client.World.Network
                 ticket.createTime = packet.ReadCString();
                 ticket.assignedPlayer = packet.ReadCString();
                 ticket.ticketComment = packet.ReadCString();
-                ticket.areTheyOnline = packet.ReadBoolean();
+                ticket.areTheyOnline = Convert.ToBoolean(packet.ReadByte());
                 Game.World.ticketList.Add(ticket);
             }
             AutomatedGame.TicketUpdate = "1";
