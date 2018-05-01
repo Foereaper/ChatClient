@@ -829,6 +829,12 @@ namespace BotFarm
             if (e.Button == MouseButtons.Right)
             {
                 var loc = listWho.PointToScreen(e.Location);
+                if (AutomatedGame.securityLevel == 0)
+                {
+                    tbButtonToolStripMenuItem.Visible = false;
+                    resurrectToolStripMenuItem.Visible = false;
+                }
+
                 contextMenuWhoList.Show(loc);
             }
         }
