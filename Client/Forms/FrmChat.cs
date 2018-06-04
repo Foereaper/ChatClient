@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Client;
 using Client.Forms;
+using Client.Properties;
 
 namespace BotFarm
 {
@@ -186,12 +187,18 @@ namespace BotFarm
 
             textMessage.Focus();
             textMessage.Select();
-            textMessage.KeyPress += CheckEnter;
+            if(Settings.Default.SmgSendEnter == true)
+            {
+                textMessage.KeyPress += CheckEnter;
+            }
 
-            SessionInit.Instance.factoryGame.JoinChannel(1, "General", "");
-            SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
-            SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
-            SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
+            if (Settings.Default.AutoJoinChannel == true)
+            {
+                SessionInit.Instance.factoryGame.JoinChannel(1, "General", "");
+                SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
+                SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
+                SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
+            }
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -214,6 +221,24 @@ namespace BotFarm
                 MsgSend();
             }
         }
+
+        /*private void NoEnterCheck(object sender, KeyPressEventArgs e)
+        {
+            MsgSend();
+        }
+
+        public void ChatCheckEnter(bool enable)
+        {
+            if (enable == true)
+            {
+                textMessage.KeyPress += CheckEnter;
+            }
+            else
+            {
+                textMessage.KeyPress -= CheckEnter;
+                textMessage.KeyPress += NoEnterCheck;
+            }
+        }*/
 
         private void MsgSend()
         {
@@ -382,7 +407,12 @@ namespace BotFarm
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Commands :\n\nIMPORTANT MESSAGE <> means your INPUT.\n\nFor whisper: /w <username> <message>\nFor Guild: /g <message>\nFor Say: <message>\nFor channels: /1 <message> (/1 means Global, 2 Trade, 3 LocalDefense, 4 LFG)\n", "Thank you for RTFM.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Commands :\n\nIMPORTANT MESSAGE <> means your INPUT." +  Environment.NewLine + Environment.NewLine +
+                "For whisper: /w <username> <message>" + Environment.NewLine + 
+                "For Guild: /g <message>" + Environment.NewLine + 
+                "For Say: <message>" + Environment.NewLine + 
+                "For channels: /1 <message> (/1 means Global, 2 Trade, 3 LocalDefense, 4 LFG)" + Environment.NewLine
+                , "Thank you for RTFM.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -410,15 +440,21 @@ namespace BotFarm
             var ChannelIvtname = invtdat;
             ChannelIvtname = ChannelIvtname.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
-
-            var Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname + "'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-            if (Accept == DialogResult.Yes)
+            if (Settings.Default.IngoreChannelInvite == true)
             {
-                SessionInit.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
+                SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
             }
             else
             {
-                SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+                var Accept = MessageBox.Show("You have been invited to join the channel '" + ChannelIvtname + "'.", "Do you want to join this channel?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                if (Accept == DialogResult.Yes)
+                {
+                    SessionInit.Instance.factoryGame.AcceptChannelJoin(ChannelIvtname);
+                }
+                else
+                {
+                    SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+                }
             }
         }
 
@@ -427,15 +463,21 @@ namespace BotFarm
             var InvitationSender = invtdat;
             InvitationSender = InvitationSender.Remove(0, 9);
             AutomatedGame.NewMessageData = null;
-
-            var Accept = MessageBox.Show(InvitationSender + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-            if (Accept == DialogResult.Yes)
+            if(Settings.Default.IgnoreGroupInvite == true)
             {
-                SessionInit.Instance.factoryGame.AcceptGroupInvitation();
+                SessionInit.Instance.factoryGame.GroupDecline();
             }
             else
             {
-                SessionInit.Instance.factoryGame.GroupDecline();
+                var Accept = MessageBox.Show(InvitationSender + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                if (Accept == DialogResult.Yes)
+                {
+                    SessionInit.Instance.factoryGame.AcceptGroupInvitation();
+                }
+                else
+                {
+                    SessionInit.Instance.factoryGame.GroupDecline();
+                }
             }
         }
 

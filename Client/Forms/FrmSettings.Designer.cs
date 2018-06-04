@@ -34,15 +34,18 @@ namespace BotFarm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.cBAutoJoin = new System.Windows.Forms.CheckBox();
             this.gbChat = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.cbSendWithEnter = new System.Windows.Forms.CheckBox();
             this.gBOther = new System.Windows.Forms.GroupBox();
+            this.rAfkDectM2 = new System.Windows.Forms.RadioButton();
+            this.lblAfkDection = new System.Windows.Forms.Label();
+            this.rAfkDectM1 = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.numAfkMins = new System.Windows.Forms.NumericUpDown();
             this.cbAfk = new System.Windows.Forms.CheckBox();
             this.cboxAfkStatus = new System.Windows.Forms.ComboBox();
             this.gBInvites = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbIgnoreChannelInvite = new System.Windows.Forms.CheckBox();
+            this.cbIgnoreGroupInvite = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
@@ -62,7 +65,7 @@ namespace BotFarm
             // 
             // gbChat
             // 
-            this.gbChat.Controls.Add(this.checkBox3);
+            this.gbChat.Controls.Add(this.cbSendWithEnter);
             this.gbChat.Controls.Add(this.cBAutoJoin);
             this.gbChat.Location = new System.Drawing.Point(6, 6);
             this.gbChat.Name = "gbChat";
@@ -71,20 +74,21 @@ namespace BotFarm
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
             // 
-            // checkBox3
+            // cbSendWithEnter
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(7, 43);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(155, 17);
-            this.checkBox3.TabIndex = 1;
-            this.checkBox3.Text = "Use enter to send message";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cbSendWithEnter.AutoSize = true;
+            this.cbSendWithEnter.Location = new System.Drawing.Point(7, 43);
+            this.cbSendWithEnter.Name = "cbSendWithEnter";
+            this.cbSendWithEnter.Size = new System.Drawing.Size(155, 17);
+            this.cbSendWithEnter.TabIndex = 1;
+            this.cbSendWithEnter.Text = "Use enter to send message";
+            this.cbSendWithEnter.UseVisualStyleBackColor = true;
             // 
             // gBOther
             // 
+            this.gBOther.Controls.Add(this.rAfkDectM2);
+            this.gBOther.Controls.Add(this.lblAfkDection);
+            this.gBOther.Controls.Add(this.rAfkDectM1);
             this.gBOther.Controls.Add(this.label1);
             this.gBOther.Controls.Add(this.numAfkMins);
             this.gBOther.Controls.Add(this.cbAfk);
@@ -95,6 +99,37 @@ namespace BotFarm
             this.gBOther.TabIndex = 2;
             this.gBOther.TabStop = false;
             this.gBOther.Text = "Other";
+            // 
+            // rAfkDectM2
+            // 
+            this.rAfkDectM2.AutoSize = true;
+            this.rAfkDectM2.Location = new System.Drawing.Point(7, 125);
+            this.rAfkDectM2.Name = "rAfkDectM2";
+            this.rAfkDectM2.Size = new System.Drawing.Size(196, 17);
+            this.rAfkDectM2.TabIndex = 6;
+            this.rAfkDectM2.TabStop = true;
+            this.rAfkDectM2.Text = "No XY mouse pos change detection";
+            this.rAfkDectM2.UseVisualStyleBackColor = true;
+            // 
+            // lblAfkDection
+            // 
+            this.lblAfkDection.AutoSize = true;
+            this.lblAfkDection.Location = new System.Drawing.Point(7, 81);
+            this.lblAfkDection.Name = "lblAfkDection";
+            this.lblAfkDection.Size = new System.Drawing.Size(162, 13);
+            this.lblAfkDection.TabIndex = 5;
+            this.lblAfkDection.Text = "AFK detection engine based on :";
+            // 
+            // rAfkDectM1
+            // 
+            this.rAfkDectM1.AutoSize = true;
+            this.rAfkDectM1.Location = new System.Drawing.Point(7, 101);
+            this.rAfkDectM1.Name = "rAfkDectM1";
+            this.rAfkDectM1.Size = new System.Drawing.Size(181, 17);
+            this.rAfkDectM1.TabIndex = 4;
+            this.rAfkDectM1.TabStop = true;
+            this.rAfkDectM1.Text = "Last sent chat message to server";
+            this.rAfkDectM1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -152,8 +187,8 @@ namespace BotFarm
             // 
             // gBInvites
             // 
-            this.gBInvites.Controls.Add(this.checkBox2);
-            this.gBInvites.Controls.Add(this.checkBox1);
+            this.gBInvites.Controls.Add(this.cbIgnoreChannelInvite);
+            this.gBInvites.Controls.Add(this.cbIgnoreGroupInvite);
             this.gBInvites.Location = new System.Drawing.Point(6, 87);
             this.gBInvites.Name = "gBInvites";
             this.gBInvites.Size = new System.Drawing.Size(181, 89);
@@ -161,25 +196,25 @@ namespace BotFarm
             this.gBInvites.TabStop = false;
             this.gBInvites.Text = "Invites";
             // 
-            // checkBox2
+            // cbIgnoreChannelInvite
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(7, 44);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(130, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Ignore channel invites";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbIgnoreChannelInvite.AutoSize = true;
+            this.cbIgnoreChannelInvite.Location = new System.Drawing.Point(7, 44);
+            this.cbIgnoreChannelInvite.Name = "cbIgnoreChannelInvite";
+            this.cbIgnoreChannelInvite.Size = new System.Drawing.Size(130, 17);
+            this.cbIgnoreChannelInvite.TabIndex = 1;
+            this.cbIgnoreChannelInvite.Text = "Ignore channel invites";
+            this.cbIgnoreChannelInvite.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // cbIgnoreGroupInvite
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 20);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(115, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Ignore party invites";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbIgnoreGroupInvite.AutoSize = true;
+            this.cbIgnoreGroupInvite.Location = new System.Drawing.Point(7, 20);
+            this.cbIgnoreGroupInvite.Name = "cbIgnoreGroupInvite";
+            this.cbIgnoreGroupInvite.Size = new System.Drawing.Size(115, 17);
+            this.cbIgnoreGroupInvite.TabIndex = 0;
+            this.cbIgnoreGroupInvite.Text = "Ignore party invites";
+            this.cbIgnoreGroupInvite.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -220,15 +255,18 @@ namespace BotFarm
 
         private CheckBox cBAutoJoin;
         private GroupBox gbChat;
-        private CheckBox checkBox3;
+        private CheckBox cbSendWithEnter;
         private GroupBox gBOther;
         private Label label1;
         private NumericUpDown numAfkMins;
         private CheckBox cbAfk;
         private ComboBox cboxAfkStatus;
         private GroupBox gBInvites;
-        private CheckBox checkBox2;
-        private CheckBox checkBox1;
+        private CheckBox cbIgnoreChannelInvite;
+        private CheckBox cbIgnoreGroupInvite;
         private Button btnSave;
+        private RadioButton rAfkDectM2;
+        private Label lblAfkDection;
+        private RadioButton rAfkDectM1;
     }
 }
