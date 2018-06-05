@@ -93,9 +93,9 @@ namespace BotFarm
             BtnLogin.Enabled = false;
             password.Enabled = false;
             var timeout = TimeSpan.FromSeconds(10);
-            if (KnockServerPort(logonserver.Text, 3724, timeout))
+            if (KnockServerPort("logon.wowgasm-reloaded.org", 3724, timeout))
             {
-                SessionInit.setLogonserver = logonserver.Text;
+                SessionInit.setLogonserver = "logon.wowgasm-reloaded.org";
                 SessionInit.setUsername = username.Text;
                 SessionInit.setPassword = password.Text;
                 if (loginSave.Checked)

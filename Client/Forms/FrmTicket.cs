@@ -66,34 +66,15 @@ namespace Client.Forms
         {
             public static void DataUpdate()
             {
-                GenerateTicketData();
             }
         }
 
         private static void GenerateTicketData()
         {
-            var ticket = SessionInit.Instance.factoryGame.Game.World.currentViewedTicket;
-            frm.ticketNameProp = ticket.playerName;
-            frm.ticketMessageProp = ticket.ticketMessage;
-            frm.ticketCommentProp = ticket.ticketComment;
-            frm.assignNameProp = ticket.assignedPlayer;
-            frm.ticketResponseProp = ticket.ticketResponse;
-            frm.chatLogProp = ticket.ticketChatLog;
-            frm.PullProp = true;
         }
 
         private void TimerCheckPull_Tick(object sender, EventArgs e)
         {
-            if (PullProp)
-            {
-                ticketMessage.Text = ticketMessageData;
-                ticketComment.Text = ticketCommentData;
-                assignName.Text = assignNameData;
-                ticketResponse.Text = ticketResponseData;
-                chatLog.Text = chatLogData;
-                PullProp = false;
-                TimerCheckPull.Enabled = false;
-            }
         }
 
         private void FrmTicket_Shown(object sender, EventArgs e)

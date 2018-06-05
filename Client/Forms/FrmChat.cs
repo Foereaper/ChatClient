@@ -153,17 +153,9 @@ namespace BotFarm
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
-            if (AutomatedGame.securityLevel == 0)
-            {
-                if (tabControl1.Contains(tabTicket))
-                    tabControl1.TabPages.Remove(tabTicket);
-            }
-            else
-            {
-                if (!tabControl1.Contains(tabTicket))
-                    tabControl1.TabPages.Insert(5, tabTicket);
 
-            }
+            if (tabControl1.Contains(tabTicket))
+                tabControl1.TabPages.Remove(tabTicket);
         }
 
         private void AppendText(RichTextBox box, string text, Color color, bool bold = false)
@@ -871,12 +863,9 @@ namespace BotFarm
             if (e.Button == MouseButtons.Right)
             {
                 var loc = listWho.PointToScreen(e.Location);
-                if (AutomatedGame.securityLevel == 0)
-                {
-                    tbButtonToolStripMenuItem.Visible = false;
-                    resurrectToolStripMenuItem.Visible = false;
-                }
 
+                tbButtonToolStripMenuItem.Visible = false;
+                resurrectToolStripMenuItem.Visible = false;
                 contextMenuWhoList.Show(loc);
             }
         }

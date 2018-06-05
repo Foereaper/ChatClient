@@ -33,13 +33,11 @@ namespace BotFarm
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
-            this.logonserver = new System.Windows.Forms.TextBox();
             this.username = new System.Windows.Forms.TextBox();
             this.password = new System.Windows.Forms.TextBox();
             this.lblAcc = new System.Windows.Forms.Label();
             this.lblPass = new System.Windows.Forms.Label();
             this.BtnLogin = new System.Windows.Forms.Button();
-            this.lblLogonserver = new System.Windows.Forms.Label();
             this.autherror = new System.Windows.Forms.Label();
             this.authcheck = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
@@ -48,14 +46,6 @@ namespace BotFarm
             this.loginSave = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // logonserver
-            // 
-            this.logonserver.Location = new System.Drawing.Point(33, 125);
-            this.logonserver.Name = "logonserver";
-            this.logonserver.Size = new System.Drawing.Size(217, 20);
-            this.logonserver.TabIndex = 0;
-            this.logonserver.Text = "logon.wowgasm-reloaded.org";
             // 
             // username
             // 
@@ -101,15 +91,6 @@ namespace BotFarm
             this.BtnLogin.Text = "Login";
             this.BtnLogin.UseVisualStyleBackColor = true;
             this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
-            // 
-            // lblLogonserver
-            // 
-            this.lblLogonserver.AutoSize = true;
-            this.lblLogonserver.Location = new System.Drawing.Point(30, 109);
-            this.lblLogonserver.Name = "lblLogonserver";
-            this.lblLogonserver.Size = new System.Drawing.Size(75, 13);
-            this.lblLogonserver.TabIndex = 7;
-            this.lblLogonserver.Text = "Logon server :";
             // 
             // autherror
             // 
@@ -173,14 +154,12 @@ namespace BotFarm
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.autherror);
-            this.Controls.Add(this.lblLogonserver);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.lblPass);
             this.Controls.Add(this.lblAcc);
             this.Controls.Add(this.Logo);
             this.Controls.Add(this.password);
             this.Controls.Add(this.username);
-            this.Controls.Add(this.logonserver);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -196,15 +175,12 @@ namespace BotFarm
         }
 
         #endregion
-
-        private TextBox logonserver;
         private TextBox username;
         private TextBox password;
         private PictureBox Logo;
         private Label lblAcc;
         private Label lblPass;
         private Button BtnLogin;
-        private Label lblLogonserver;
         private Label autherror;
         private Timer authcheck;
         private Button button1;
