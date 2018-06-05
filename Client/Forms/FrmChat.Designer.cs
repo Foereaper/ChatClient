@@ -55,34 +55,13 @@ namespace BotFarm
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.chattimer = new System.Windows.Forms.Timer(this.components);
             this.textMessage = new System.Windows.Forms.TextBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabWho = new System.Windows.Forms.TabPage();
-            this.refreshWhoList = new System.Windows.Forms.PictureBox();
-            this.lblplayercount = new System.Windows.Forms.Label();
-            this.lblplayersonline = new System.Windows.Forms.Label();
-            this.listWho = new System.Windows.Forms.ListView();
-            this.tabGuild = new System.Windows.Forms.TabPage();
-            this.listRoster = new System.Windows.Forms.ListView();
-            this.tabChannel = new System.Windows.Forms.TabPage();
-            this.listCustom = new System.Windows.Forms.ListView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.listWorld = new System.Windows.Forms.ListView();
-            this.tabGroup = new System.Windows.Forms.TabPage();
-            this.lblPartyGroupSize = new System.Windows.Forms.Label();
-            this.lblPartyPlayers = new System.Windows.Forms.Label();
-            this.btnGroupDisband = new System.Windows.Forms.Button();
-            this.listGroup = new System.Windows.Forms.ListView();
-            this.tabFriend = new System.Windows.Forms.TabPage();
-            this.lblfriendcount = new System.Windows.Forms.Label();
-            this.lblfriends = new System.Windows.Forms.Label();
-            this.listFriends = new System.Windows.Forms.ListView();
-            this.tabTicket = new System.Windows.Forms.TabPage();
-            this.listTicket = new System.Windows.Forms.ListView();
             this.contextMenuWhoList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ignoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resurrectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cBStatusFlag = new System.Windows.Forms.ComboBox();
             this.lblStatusflag = new System.Windows.Forms.Label();
             this.contextMenuGroupList = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -93,21 +72,41 @@ namespace BotFarm
             this.whisperToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tbButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resurrectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabTicket = new System.Windows.Forms.TabPage();
+            this.listTicket = new System.Windows.Forms.ListView();
+            this.tabFriend = new System.Windows.Forms.TabPage();
+            this.listFriends = new System.Windows.Forms.ListView();
+            this.lblfriends = new System.Windows.Forms.Label();
+            this.lblfriendcount = new System.Windows.Forms.Label();
+            this.tabGroup = new System.Windows.Forms.TabPage();
+            this.listGroup = new System.Windows.Forms.ListView();
+            this.btnGroupDisband = new System.Windows.Forms.Button();
+            this.lblPartyPlayers = new System.Windows.Forms.Label();
+            this.lblPartyGroupSize = new System.Windows.Forms.Label();
+            this.tabChannel = new System.Windows.Forms.TabPage();
+            this.listWorld = new System.Windows.Forms.ListView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listCustom = new System.Windows.Forms.ListView();
+            this.tabGuild = new System.Windows.Forms.TabPage();
+            this.listRoster = new System.Windows.Forms.ListView();
+            this.tabWho = new System.Windows.Forms.TabPage();
+            this.listWho = new System.Windows.Forms.ListView();
+            this.lblplayersonline = new System.Windows.Forms.Label();
+            this.lblplayercount = new System.Windows.Forms.Label();
+            this.refreshWhoList = new System.Windows.Forms.PictureBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabWho.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
-            this.tabGuild.SuspendLayout();
-            this.tabChannel.SuspendLayout();
-            this.tabGroup.SuspendLayout();
-            this.tabFriend.SuspendLayout();
-            this.tabTicket.SuspendLayout();
             this.contextMenuWhoList.SuspendLayout();
             this.contextMenuGroupList.SuspendLayout();
             this.contextMenuFriendList.SuspendLayout();
+            this.tabTicket.SuspendLayout();
+            this.tabFriend.SuspendLayout();
+            this.tabGroup.SuspendLayout();
+            this.tabChannel.SuspendLayout();
+            this.tabGuild.SuspendLayout();
+            this.tabWho.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -255,7 +254,7 @@ namespace BotFarm
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(443, 518);
+            this.btnSend.Location = new System.Drawing.Point(364, 514);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 3;
@@ -278,9 +277,9 @@ namespace BotFarm
             this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDisconnect.Location = new System.Drawing.Point(520, 29);
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(18, 23);
+            this.btnDisconnect.Size = new System.Drawing.Size(63, 23);
             this.btnDisconnect.TabIndex = 8;
-            this.btnDisconnect.Text = "<";
+            this.btnDisconnect.Text = "Logout";
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
@@ -293,265 +292,10 @@ namespace BotFarm
             // textMessage
             // 
             this.textMessage.BackColor = System.Drawing.Color.DarkGray;
-            this.textMessage.Location = new System.Drawing.Point(94, 521);
+            this.textMessage.Location = new System.Drawing.Point(12, 518);
             this.textMessage.Name = "textMessage";
             this.textMessage.Size = new System.Drawing.Size(346, 20);
             this.textMessage.TabIndex = 9;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabWho);
-            this.tabControl1.Controls.Add(this.tabGuild);
-            this.tabControl1.Controls.Add(this.tabChannel);
-            this.tabControl1.Controls.Add(this.tabGroup);
-            this.tabControl1.Controls.Add(this.tabFriend);
-            this.tabControl1.Controls.Add(this.tabTicket);
-            this.tabControl1.Location = new System.Drawing.Point(520, 58);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(514, 483);
-            this.tabControl1.TabIndex = 20;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabWho
-            // 
-            this.tabWho.Controls.Add(this.refreshWhoList);
-            this.tabWho.Controls.Add(this.lblplayercount);
-            this.tabWho.Controls.Add(this.lblplayersonline);
-            this.tabWho.Controls.Add(this.listWho);
-            this.tabWho.Location = new System.Drawing.Point(4, 22);
-            this.tabWho.Name = "tabWho";
-            this.tabWho.Size = new System.Drawing.Size(506, 457);
-            this.tabWho.TabIndex = 2;
-            this.tabWho.Text = "Who";
-            this.tabWho.UseVisualStyleBackColor = true;
-            // 
-            // refreshWhoList
-            // 
-            this.refreshWhoList.Image = ((System.Drawing.Image)(resources.GetObject("refreshWhoList.Image")));
-            this.refreshWhoList.Location = new System.Drawing.Point(476, 4);
-            this.refreshWhoList.Name = "refreshWhoList";
-            this.refreshWhoList.Size = new System.Drawing.Size(27, 23);
-            this.refreshWhoList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.refreshWhoList.TabIndex = 4;
-            this.refreshWhoList.TabStop = false;
-            this.refreshWhoList.Click += new System.EventHandler(this.refreshWhoList_Click);
-            // 
-            // lblplayercount
-            // 
-            this.lblplayercount.Location = new System.Drawing.Point(88, 13);
-            this.lblplayercount.Name = "lblplayercount";
-            this.lblplayercount.Size = new System.Drawing.Size(49, 14);
-            this.lblplayercount.TabIndex = 3;
-            // 
-            // lblplayersonline
-            // 
-            this.lblplayersonline.AutoSize = true;
-            this.lblplayersonline.Location = new System.Drawing.Point(7, 13);
-            this.lblplayersonline.Name = "lblplayersonline";
-            this.lblplayersonline.Size = new System.Drawing.Size(78, 13);
-            this.lblplayersonline.TabIndex = 2;
-            this.lblplayersonline.Text = "Players online :";
-            // 
-            // listWho
-            // 
-            this.listWho.FullRowSelect = true;
-            this.listWho.GridLines = true;
-            this.listWho.Location = new System.Drawing.Point(0, 30);
-            this.listWho.Name = "listWho";
-            this.listWho.Size = new System.Drawing.Size(506, 434);
-            this.listWho.TabIndex = 1;
-            this.listWho.UseCompatibleStateImageBehavior = false;
-            this.listWho.View = System.Windows.Forms.View.Details;
-            this.listWho.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listWho_MouseClick);
-            // 
-            // tabGuild
-            // 
-            this.tabGuild.Controls.Add(this.listRoster);
-            this.tabGuild.Location = new System.Drawing.Point(4, 22);
-            this.tabGuild.Name = "tabGuild";
-            this.tabGuild.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGuild.Size = new System.Drawing.Size(506, 457);
-            this.tabGuild.TabIndex = 4;
-            this.tabGuild.Text = "Guild";
-            this.tabGuild.UseVisualStyleBackColor = true;
-            // 
-            // listRoster
-            // 
-            this.listRoster.FullRowSelect = true;
-            this.listRoster.GridLines = true;
-            this.listRoster.Location = new System.Drawing.Point(0, 30);
-            this.listRoster.Name = "listRoster";
-            this.listRoster.Size = new System.Drawing.Size(506, 434);
-            this.listRoster.TabIndex = 4;
-            this.listRoster.UseCompatibleStateImageBehavior = false;
-            this.listRoster.View = System.Windows.Forms.View.Details;
-            // 
-            // tabChannel
-            // 
-            this.tabChannel.Controls.Add(this.listCustom);
-            this.tabChannel.Controls.Add(this.label2);
-            this.tabChannel.Controls.Add(this.listWorld);
-            this.tabChannel.Location = new System.Drawing.Point(4, 22);
-            this.tabChannel.Name = "tabChannel";
-            this.tabChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChannel.Size = new System.Drawing.Size(506, 457);
-            this.tabChannel.TabIndex = 1;
-            this.tabChannel.Text = "Channel";
-            this.tabChannel.UseVisualStyleBackColor = true;
-            // 
-            // listCustom
-            // 
-            this.listCustom.FullRowSelect = true;
-            this.listCustom.GridLines = true;
-            this.listCustom.Location = new System.Drawing.Point(3, 115);
-            this.listCustom.Name = "listCustom";
-            this.listCustom.Size = new System.Drawing.Size(297, 96);
-            this.listCustom.TabIndex = 2;
-            this.listCustom.UseCompatibleStateImageBehavior = false;
-            this.listCustom.View = System.Windows.Forms.View.Details;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "World";
-            // 
-            // listWorld
-            // 
-            this.listWorld.FullRowSelect = true;
-            this.listWorld.GridLines = true;
-            this.listWorld.Location = new System.Drawing.Point(3, 20);
-            this.listWorld.Name = "listWorld";
-            this.listWorld.Size = new System.Drawing.Size(297, 97);
-            this.listWorld.TabIndex = 0;
-            this.listWorld.UseCompatibleStateImageBehavior = false;
-            this.listWorld.View = System.Windows.Forms.View.Details;
-            // 
-            // tabGroup
-            // 
-            this.tabGroup.Controls.Add(this.lblPartyGroupSize);
-            this.tabGroup.Controls.Add(this.lblPartyPlayers);
-            this.tabGroup.Controls.Add(this.btnGroupDisband);
-            this.tabGroup.Controls.Add(this.listGroup);
-            this.tabGroup.Location = new System.Drawing.Point(4, 22);
-            this.tabGroup.Name = "tabGroup";
-            this.tabGroup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGroup.Size = new System.Drawing.Size(506, 457);
-            this.tabGroup.TabIndex = 0;
-            this.tabGroup.Text = "Group";
-            this.tabGroup.UseVisualStyleBackColor = true;
-            // 
-            // lblPartyGroupSize
-            // 
-            this.lblPartyGroupSize.AutoSize = true;
-            this.lblPartyGroupSize.Location = new System.Drawing.Point(119, 396);
-            this.lblPartyGroupSize.Name = "lblPartyGroupSize";
-            this.lblPartyGroupSize.Size = new System.Drawing.Size(0, 13);
-            this.lblPartyGroupSize.TabIndex = 3;
-            // 
-            // lblPartyPlayers
-            // 
-            this.lblPartyPlayers.AutoSize = true;
-            this.lblPartyPlayers.Location = new System.Drawing.Point(3, 396);
-            this.lblPartyPlayers.Name = "lblPartyPlayers";
-            this.lblPartyPlayers.Size = new System.Drawing.Size(110, 13);
-            this.lblPartyPlayers.TabIndex = 2;
-            this.lblPartyPlayers.Text = "Total players in party :";
-            // 
-            // btnGroupDisband
-            // 
-            this.btnGroupDisband.Enabled = false;
-            this.btnGroupDisband.Location = new System.Drawing.Point(157, 428);
-            this.btnGroupDisband.Name = "btnGroupDisband";
-            this.btnGroupDisband.Size = new System.Drawing.Size(78, 23);
-            this.btnGroupDisband.TabIndex = 1;
-            this.btnGroupDisband.Text = "Leave party";
-            this.btnGroupDisband.UseVisualStyleBackColor = true;
-            this.btnGroupDisband.Click += new System.EventHandler(this.btnGroupDisband_Click);
-            // 
-            // listGroup
-            // 
-            this.listGroup.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listGroup.FullRowSelect = true;
-            this.listGroup.GridLines = true;
-            this.listGroup.HoverSelection = true;
-            this.listGroup.Location = new System.Drawing.Point(0, 0);
-            this.listGroup.MultiSelect = false;
-            this.listGroup.Name = "listGroup";
-            this.listGroup.Scrollable = false;
-            this.listGroup.Size = new System.Drawing.Size(510, 393);
-            this.listGroup.TabIndex = 0;
-            this.listGroup.UseCompatibleStateImageBehavior = false;
-            this.listGroup.View = System.Windows.Forms.View.Details;
-            this.listGroup.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listGroup_MouseClick);
-            // 
-            // tabFriend
-            // 
-            this.tabFriend.Controls.Add(this.lblfriendcount);
-            this.tabFriend.Controls.Add(this.lblfriends);
-            this.tabFriend.Controls.Add(this.listFriends);
-            this.tabFriend.Location = new System.Drawing.Point(4, 22);
-            this.tabFriend.Name = "tabFriend";
-            this.tabFriend.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFriend.Size = new System.Drawing.Size(506, 457);
-            this.tabFriend.TabIndex = 3;
-            this.tabFriend.Text = "Friends";
-            this.tabFriend.UseVisualStyleBackColor = true;
-            // 
-            // lblfriendcount
-            // 
-            this.lblfriendcount.Location = new System.Drawing.Point(71, 13);
-            this.lblfriendcount.Name = "lblfriendcount";
-            this.lblfriendcount.Size = new System.Drawing.Size(24, 16);
-            this.lblfriendcount.TabIndex = 2;
-            // 
-            // lblfriends
-            // 
-            this.lblfriends.AutoSize = true;
-            this.lblfriends.Location = new System.Drawing.Point(7, 14);
-            this.lblfriends.Name = "lblfriends";
-            this.lblfriends.Size = new System.Drawing.Size(61, 13);
-            this.lblfriends.TabIndex = 1;
-            this.lblfriends.Text = "My friends :";
-            // 
-            // listFriends
-            // 
-            this.listFriends.FullRowSelect = true;
-            this.listFriends.GridLines = true;
-            this.listFriends.Location = new System.Drawing.Point(0, 30);
-            this.listFriends.Name = "listFriends";
-            this.listFriends.Size = new System.Drawing.Size(510, 434);
-            this.listFriends.TabIndex = 0;
-            this.listFriends.UseCompatibleStateImageBehavior = false;
-            this.listFriends.View = System.Windows.Forms.View.Details;
-            this.listFriends.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listFriends_MouseClick);
-            // 
-            // tabTicket
-            // 
-            this.tabTicket.Controls.Add(this.listTicket);
-            this.tabTicket.Location = new System.Drawing.Point(4, 22);
-            this.tabTicket.Name = "tabTicket";
-            this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTicket.Size = new System.Drawing.Size(506, 457);
-            this.tabTicket.TabIndex = 5;
-            this.tabTicket.Text = "Tickets";
-            this.tabTicket.UseVisualStyleBackColor = true;
-            // 
-            // listTicket
-            // 
-            this.listTicket.FullRowSelect = true;
-            this.listTicket.GridLines = true;
-            this.listTicket.Location = new System.Drawing.Point(0, 30);
-            this.listTicket.Name = "listTicket";
-            this.listTicket.Size = new System.Drawing.Size(506, 434);
-            this.listTicket.TabIndex = 5;
-            this.listTicket.UseCompatibleStateImageBehavior = false;
-            this.listTicket.View = System.Windows.Forms.View.Details;
-            this.listTicket.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTicket_MouseDoubleClick);
             // 
             // contextMenuWhoList
             // 
@@ -563,35 +307,49 @@ namespace BotFarm
             this.tbButtonToolStripMenuItem,
             this.resurrectToolStripMenuItem});
             this.contextMenuWhoList.Name = "contextMenuWhoList";
-            this.contextMenuWhoList.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuWhoList.Size = new System.Drawing.Size(148, 136);
             // 
             // whisperToolStripMenuItem
             // 
             this.whisperToolStripMenuItem.Name = "whisperToolStripMenuItem";
-            this.whisperToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.whisperToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.whisperToolStripMenuItem.Text = "Whisper";
             this.whisperToolStripMenuItem.Click += new System.EventHandler(this.whisperToolStripMenuItem_Click);
             // 
             // inviteToPartyToolStripMenuItem
             // 
             this.inviteToPartyToolStripMenuItem.Name = "inviteToPartyToolStripMenuItem";
-            this.inviteToPartyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.inviteToPartyToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.inviteToPartyToolStripMenuItem.Text = "Invite to party";
             this.inviteToPartyToolStripMenuItem.Click += new System.EventHandler(this.inviteToPartyToolStripMenuItem_Click);
             // 
             // addFriendToolStripMenuItem
             // 
             this.addFriendToolStripMenuItem.Name = "addFriendToolStripMenuItem";
-            this.addFriendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addFriendToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.addFriendToolStripMenuItem.Text = "Add friend";
             this.addFriendToolStripMenuItem.Click += new System.EventHandler(this.addFriendToolStripMenuItem_Click);
             // 
             // ignoreToolStripMenuItem
             // 
             this.ignoreToolStripMenuItem.Name = "ignoreToolStripMenuItem";
-            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.ignoreToolStripMenuItem.Text = "Ignore";
             this.ignoreToolStripMenuItem.Click += new System.EventHandler(this.ignoreToolStripMenuItem_Click);
+            // 
+            // tbButtonToolStripMenuItem
+            // 
+            this.tbButtonToolStripMenuItem.Name = "tbButtonToolStripMenuItem";
+            this.tbButtonToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.tbButtonToolStripMenuItem.Text = "Tb Button";
+            this.tbButtonToolStripMenuItem.Click += new System.EventHandler(this.tbButtonToolStripMenuItemItem_Click);
+            // 
+            // resurrectToolStripMenuItem
+            // 
+            this.resurrectToolStripMenuItem.Name = "resurrectToolStripMenuItem";
+            this.resurrectToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.resurrectToolStripMenuItem.Text = "Resurrect";
+            this.resurrectToolStripMenuItem.Click += new System.EventHandler(this.resurrectToolStripMenuItem_Click);
             // 
             // cBStatusFlag
             // 
@@ -676,41 +434,266 @@ namespace BotFarm
             this.removeFriendToolStripMenuItem.Text = "Remove friend";
             this.removeFriendToolStripMenuItem.Click += new System.EventHandler(this.removeFriendToolStripMenuItem_Click);
             // 
-            // comboBox1
+            // tabTicket
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Global",
-            "Guild",
-            "Officer",
-            "Party",
-            "Raid"});
-            this.comboBox1.Location = new System.Drawing.Point(0, 520);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(88, 21);
-            this.comboBox1.TabIndex = 23;
+            this.tabTicket.Controls.Add(this.listTicket);
+            this.tabTicket.Location = new System.Drawing.Point(4, 22);
+            this.tabTicket.Name = "tabTicket";
+            this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTicket.Size = new System.Drawing.Size(506, 457);
+            this.tabTicket.TabIndex = 5;
+            this.tabTicket.Text = "Tickets";
+            this.tabTicket.UseVisualStyleBackColor = true;
             // 
-            // tbButtonToolStripMenuItem
+            // listTicket
             // 
-            this.tbButtonToolStripMenuItem.Name = "tbButtonToolStripMenuItem";
-            this.tbButtonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tbButtonToolStripMenuItem.Text = "Tb Button";
-            this.tbButtonToolStripMenuItem.Click += new System.EventHandler(this.tbButtonToolStripMenuItemItem_Click);
-
+            this.listTicket.FullRowSelect = true;
+            this.listTicket.GridLines = true;
+            this.listTicket.Location = new System.Drawing.Point(0, 30);
+            this.listTicket.Name = "listTicket";
+            this.listTicket.Size = new System.Drawing.Size(506, 434);
+            this.listTicket.TabIndex = 5;
+            this.listTicket.UseCompatibleStateImageBehavior = false;
+            this.listTicket.View = System.Windows.Forms.View.Details;
+            this.listTicket.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTicket_MouseDoubleClick);
             // 
-            // resurrectToolStripMenuItem
+            // tabFriend
             // 
-            this.resurrectToolStripMenuItem.Name = "resurrectToolStripMenuItem";
-            this.resurrectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resurrectToolStripMenuItem.Text = "Resurrect";
-            this.resurrectToolStripMenuItem.Click += new System.EventHandler(this.resurrectToolStripMenuItem_Click);
+            this.tabFriend.Controls.Add(this.lblfriendcount);
+            this.tabFriend.Controls.Add(this.lblfriends);
+            this.tabFriend.Controls.Add(this.listFriends);
+            this.tabFriend.Location = new System.Drawing.Point(4, 22);
+            this.tabFriend.Name = "tabFriend";
+            this.tabFriend.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFriend.Size = new System.Drawing.Size(506, 457);
+            this.tabFriend.TabIndex = 3;
+            this.tabFriend.Text = "Friends";
+            this.tabFriend.UseVisualStyleBackColor = true;
+            // 
+            // listFriends
+            // 
+            this.listFriends.FullRowSelect = true;
+            this.listFriends.GridLines = true;
+            this.listFriends.Location = new System.Drawing.Point(0, 30);
+            this.listFriends.Name = "listFriends";
+            this.listFriends.Size = new System.Drawing.Size(510, 434);
+            this.listFriends.TabIndex = 0;
+            this.listFriends.UseCompatibleStateImageBehavior = false;
+            this.listFriends.View = System.Windows.Forms.View.Details;
+            this.listFriends.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listFriends_MouseClick);
+            // 
+            // lblfriends
+            // 
+            this.lblfriends.AutoSize = true;
+            this.lblfriends.Location = new System.Drawing.Point(7, 14);
+            this.lblfriends.Name = "lblfriends";
+            this.lblfriends.Size = new System.Drawing.Size(61, 13);
+            this.lblfriends.TabIndex = 1;
+            this.lblfriends.Text = "My friends :";
+            // 
+            // lblfriendcount
+            // 
+            this.lblfriendcount.Location = new System.Drawing.Point(71, 13);
+            this.lblfriendcount.Name = "lblfriendcount";
+            this.lblfriendcount.Size = new System.Drawing.Size(24, 16);
+            this.lblfriendcount.TabIndex = 2;
+            // 
+            // tabGroup
+            // 
+            this.tabGroup.Controls.Add(this.lblPartyGroupSize);
+            this.tabGroup.Controls.Add(this.lblPartyPlayers);
+            this.tabGroup.Controls.Add(this.btnGroupDisband);
+            this.tabGroup.Controls.Add(this.listGroup);
+            this.tabGroup.Location = new System.Drawing.Point(4, 22);
+            this.tabGroup.Name = "tabGroup";
+            this.tabGroup.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGroup.Size = new System.Drawing.Size(506, 457);
+            this.tabGroup.TabIndex = 0;
+            this.tabGroup.Text = "Group";
+            this.tabGroup.UseVisualStyleBackColor = true;
+            // 
+            // listGroup
+            // 
+            this.listGroup.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listGroup.FullRowSelect = true;
+            this.listGroup.GridLines = true;
+            this.listGroup.HoverSelection = true;
+            this.listGroup.Location = new System.Drawing.Point(0, 0);
+            this.listGroup.MultiSelect = false;
+            this.listGroup.Name = "listGroup";
+            this.listGroup.Scrollable = false;
+            this.listGroup.Size = new System.Drawing.Size(510, 393);
+            this.listGroup.TabIndex = 0;
+            this.listGroup.UseCompatibleStateImageBehavior = false;
+            this.listGroup.View = System.Windows.Forms.View.Details;
+            this.listGroup.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listGroup_MouseClick);
+            // 
+            // btnGroupDisband
+            // 
+            this.btnGroupDisband.Enabled = false;
+            this.btnGroupDisband.Location = new System.Drawing.Point(157, 428);
+            this.btnGroupDisband.Name = "btnGroupDisband";
+            this.btnGroupDisband.Size = new System.Drawing.Size(78, 23);
+            this.btnGroupDisband.TabIndex = 1;
+            this.btnGroupDisband.Text = "Leave party";
+            this.btnGroupDisband.UseVisualStyleBackColor = true;
+            this.btnGroupDisband.Click += new System.EventHandler(this.btnGroupDisband_Click);
+            // 
+            // lblPartyPlayers
+            // 
+            this.lblPartyPlayers.AutoSize = true;
+            this.lblPartyPlayers.Location = new System.Drawing.Point(3, 396);
+            this.lblPartyPlayers.Name = "lblPartyPlayers";
+            this.lblPartyPlayers.Size = new System.Drawing.Size(110, 13);
+            this.lblPartyPlayers.TabIndex = 2;
+            this.lblPartyPlayers.Text = "Total players in party :";
+            // 
+            // lblPartyGroupSize
+            // 
+            this.lblPartyGroupSize.AutoSize = true;
+            this.lblPartyGroupSize.Location = new System.Drawing.Point(119, 396);
+            this.lblPartyGroupSize.Name = "lblPartyGroupSize";
+            this.lblPartyGroupSize.Size = new System.Drawing.Size(0, 13);
+            this.lblPartyGroupSize.TabIndex = 3;
+            // 
+            // tabChannel
+            // 
+            this.tabChannel.Controls.Add(this.listCustom);
+            this.tabChannel.Controls.Add(this.label2);
+            this.tabChannel.Controls.Add(this.listWorld);
+            this.tabChannel.Location = new System.Drawing.Point(4, 22);
+            this.tabChannel.Name = "tabChannel";
+            this.tabChannel.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChannel.Size = new System.Drawing.Size(506, 457);
+            this.tabChannel.TabIndex = 1;
+            this.tabChannel.Text = "Channel";
+            this.tabChannel.UseVisualStyleBackColor = true;
+            // 
+            // listWorld
+            // 
+            this.listWorld.FullRowSelect = true;
+            this.listWorld.GridLines = true;
+            this.listWorld.Location = new System.Drawing.Point(3, 20);
+            this.listWorld.Name = "listWorld";
+            this.listWorld.Size = new System.Drawing.Size(297, 97);
+            this.listWorld.TabIndex = 0;
+            this.listWorld.UseCompatibleStateImageBehavior = false;
+            this.listWorld.View = System.Windows.Forms.View.Details;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "World";
+            // 
+            // listCustom
+            // 
+            this.listCustom.FullRowSelect = true;
+            this.listCustom.GridLines = true;
+            this.listCustom.Location = new System.Drawing.Point(3, 115);
+            this.listCustom.Name = "listCustom";
+            this.listCustom.Size = new System.Drawing.Size(297, 96);
+            this.listCustom.TabIndex = 2;
+            this.listCustom.UseCompatibleStateImageBehavior = false;
+            this.listCustom.View = System.Windows.Forms.View.Details;
+            // 
+            // tabGuild
+            // 
+            this.tabGuild.Controls.Add(this.listRoster);
+            this.tabGuild.Location = new System.Drawing.Point(4, 22);
+            this.tabGuild.Name = "tabGuild";
+            this.tabGuild.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGuild.Size = new System.Drawing.Size(506, 457);
+            this.tabGuild.TabIndex = 4;
+            this.tabGuild.Text = "Guild";
+            this.tabGuild.UseVisualStyleBackColor = true;
+            // 
+            // listRoster
+            // 
+            this.listRoster.FullRowSelect = true;
+            this.listRoster.GridLines = true;
+            this.listRoster.Location = new System.Drawing.Point(0, 30);
+            this.listRoster.Name = "listRoster";
+            this.listRoster.Size = new System.Drawing.Size(506, 434);
+            this.listRoster.TabIndex = 4;
+            this.listRoster.UseCompatibleStateImageBehavior = false;
+            this.listRoster.View = System.Windows.Forms.View.Details;
+            // 
+            // tabWho
+            // 
+            this.tabWho.Controls.Add(this.refreshWhoList);
+            this.tabWho.Controls.Add(this.lblplayercount);
+            this.tabWho.Controls.Add(this.lblplayersonline);
+            this.tabWho.Controls.Add(this.listWho);
+            this.tabWho.Location = new System.Drawing.Point(4, 22);
+            this.tabWho.Name = "tabWho";
+            this.tabWho.Size = new System.Drawing.Size(506, 457);
+            this.tabWho.TabIndex = 2;
+            this.tabWho.Text = "Who";
+            this.tabWho.UseVisualStyleBackColor = true;
+            // 
+            // listWho
+            // 
+            this.listWho.FullRowSelect = true;
+            this.listWho.GridLines = true;
+            this.listWho.Location = new System.Drawing.Point(0, 30);
+            this.listWho.Name = "listWho";
+            this.listWho.Size = new System.Drawing.Size(506, 434);
+            this.listWho.TabIndex = 1;
+            this.listWho.UseCompatibleStateImageBehavior = false;
+            this.listWho.View = System.Windows.Forms.View.Details;
+            this.listWho.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listWho_MouseClick);
+            // 
+            // lblplayersonline
+            // 
+            this.lblplayersonline.AutoSize = true;
+            this.lblplayersonline.Location = new System.Drawing.Point(7, 13);
+            this.lblplayersonline.Name = "lblplayersonline";
+            this.lblplayersonline.Size = new System.Drawing.Size(78, 13);
+            this.lblplayersonline.TabIndex = 2;
+            this.lblplayersonline.Text = "Players online :";
+            // 
+            // lblplayercount
+            // 
+            this.lblplayercount.Location = new System.Drawing.Point(88, 13);
+            this.lblplayercount.Name = "lblplayercount";
+            this.lblplayercount.Size = new System.Drawing.Size(49, 14);
+            this.lblplayercount.TabIndex = 3;
+            // 
+            // refreshWhoList
+            // 
+            this.refreshWhoList.Image = ((System.Drawing.Image)(resources.GetObject("refreshWhoList.Image")));
+            this.refreshWhoList.Location = new System.Drawing.Point(476, 4);
+            this.refreshWhoList.Name = "refreshWhoList";
+            this.refreshWhoList.Size = new System.Drawing.Size(27, 23);
+            this.refreshWhoList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.refreshWhoList.TabIndex = 4;
+            this.refreshWhoList.TabStop = false;
+            this.refreshWhoList.Click += new System.EventHandler(this.refreshWhoList_Click);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabWho);
+            this.tabControl1.Controls.Add(this.tabGuild);
+            this.tabControl1.Controls.Add(this.tabChannel);
+            this.tabControl1.Controls.Add(this.tabGroup);
+            this.tabControl1.Controls.Add(this.tabFriend);
+            this.tabControl1.Controls.Add(this.tabTicket);
+            this.tabControl1.Location = new System.Drawing.Point(520, 58);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(514, 483);
+            this.tabControl1.TabIndex = 20;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 544);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblStatusflag);
             this.Controls.Add(this.cBStatusFlag);
             this.Controls.Add(this.tabControl1);
@@ -731,21 +714,21 @@ namespace BotFarm
             this.Load += new System.EventHandler(this.FrmChat_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabWho.ResumeLayout(false);
-            this.tabWho.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
-            this.tabGuild.ResumeLayout(false);
-            this.tabChannel.ResumeLayout(false);
-            this.tabChannel.PerformLayout();
-            this.tabGroup.ResumeLayout(false);
-            this.tabGroup.PerformLayout();
-            this.tabFriend.ResumeLayout(false);
-            this.tabFriend.PerformLayout();
-            this.tabTicket.ResumeLayout(false);
             this.contextMenuWhoList.ResumeLayout(false);
             this.contextMenuGroupList.ResumeLayout(false);
             this.contextMenuFriendList.ResumeLayout(false);
+            this.tabTicket.ResumeLayout(false);
+            this.tabFriend.ResumeLayout(false);
+            this.tabFriend.PerformLayout();
+            this.tabGroup.ResumeLayout(false);
+            this.tabGroup.PerformLayout();
+            this.tabChannel.ResumeLayout(false);
+            this.tabChannel.PerformLayout();
+            this.tabGuild.ResumeLayout(false);
+            this.tabWho.ResumeLayout(false);
+            this.tabWho.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -769,38 +752,17 @@ namespace BotFarm
         private ToolStripMenuItem channelToolStripMenuItem;
         private ToolStripMenuItem joinAllChannelsToolStripMenuItem;
         private ToolStripMenuItem createNewChannelToolStripMenuItem;
-        private TabControl tabControl1;
-        private TabPage tabGroup;
-        private TabPage tabChannel;
-        private TabPage tabWho;
-        private ListView listGroup;
-        private Label lblPartyGroupSize;
-        private Label lblPartyPlayers;
-        private Button btnGroupDisband;
-        private ListView listWho;
-        private ListView listRoster;
-        private ListView listTicket;
-        private Label lblplayercount;
-        private Label lblplayersonline;
         private ContextMenuStrip contextMenuWhoList;
         private ToolStripMenuItem whisperToolStripMenuItem;
         private ToolStripMenuItem inviteToPartyToolStripMenuItem;
         private ToolStripMenuItem addFriendToolStripMenuItem;
         private ToolStripMenuItem ignoreToolStripMenuItem;
-        private PictureBox refreshWhoList;
-        private TabPage tabFriend;
         private ComboBox cBStatusFlag;
         private Label lblStatusflag;
-        private ListView listCustom;
-        private Label label2;
-        private ListView listWorld;
         private ContextMenuStrip contextMenuGroupList;
         private ToolStripMenuItem whisperToolStripMenuItem1;
         private ToolStripMenuItem addFriendToolStripMenuItem1;
         private ToolStripMenuItem ignoreToolStripMenuItem1;
-        private ListView listFriends;
-        private Label lblfriendcount;
-        private Label lblfriends;
         private ContextMenuStrip contextMenuFriendList;
         private ToolStripMenuItem whisperToolStripMenuItem2;
         private ToolStripMenuItem removeFriendToolStripMenuItem;
@@ -811,10 +773,30 @@ namespace BotFarm
         private ToolStripMenuItem toolStripMenuItem3;
         private ToolStripMenuItem toolStripMenuItem4;
         private ToolStripMenuItem toolStripMenuItem5;
-        private ComboBox comboBox1;
-        private TabPage tabGuild;
-        private TabPage tabTicket;
         private ToolStripMenuItem tbButtonToolStripMenuItem;
         private ToolStripMenuItem resurrectToolStripMenuItem;
+        private TabPage tabTicket;
+        private ListView listTicket;
+        private TabPage tabFriend;
+        private Label lblfriendcount;
+        private Label lblfriends;
+        private ListView listFriends;
+        private TabPage tabGroup;
+        private Label lblPartyGroupSize;
+        private Label lblPartyPlayers;
+        private Button btnGroupDisband;
+        private ListView listGroup;
+        private TabPage tabChannel;
+        private ListView listCustom;
+        private Label label2;
+        private ListView listWorld;
+        private TabPage tabGuild;
+        private ListView listRoster;
+        private TabPage tabWho;
+        private PictureBox refreshWhoList;
+        private Label lblplayercount;
+        private Label lblplayersonline;
+        private ListView listWho;
+        private TabControl tabControl1;
     }
 }
