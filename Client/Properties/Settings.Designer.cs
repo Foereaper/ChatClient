@@ -142,5 +142,17 @@ namespace Client.Properties {
                 this["AFKDM"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IgnoreMode {
+            get {
+                return ((int)(this["IgnoreMode"]));
+            }
+            set {
+                this["IgnoreMode"] = value;
+            }
+        }
     }
 }

@@ -83,6 +83,8 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ignoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resurrectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cBStatusFlag = new System.Windows.Forms.ComboBox();
             this.lblStatusflag = new System.Windows.Forms.Label();
             this.contextMenuGroupList = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -94,8 +96,6 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tbButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resurrectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -563,35 +563,49 @@ namespace BotFarm
             this.tbButtonToolStripMenuItem,
             this.resurrectToolStripMenuItem});
             this.contextMenuWhoList.Name = "contextMenuWhoList";
-            this.contextMenuWhoList.Size = new System.Drawing.Size(181, 158);
+            this.contextMenuWhoList.Size = new System.Drawing.Size(148, 136);
             // 
             // whisperToolStripMenuItem
             // 
             this.whisperToolStripMenuItem.Name = "whisperToolStripMenuItem";
-            this.whisperToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.whisperToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.whisperToolStripMenuItem.Text = "Whisper";
             this.whisperToolStripMenuItem.Click += new System.EventHandler(this.whisperToolStripMenuItem_Click);
             // 
             // inviteToPartyToolStripMenuItem
             // 
             this.inviteToPartyToolStripMenuItem.Name = "inviteToPartyToolStripMenuItem";
-            this.inviteToPartyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.inviteToPartyToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.inviteToPartyToolStripMenuItem.Text = "Invite to party";
             this.inviteToPartyToolStripMenuItem.Click += new System.EventHandler(this.inviteToPartyToolStripMenuItem_Click);
             // 
             // addFriendToolStripMenuItem
             // 
             this.addFriendToolStripMenuItem.Name = "addFriendToolStripMenuItem";
-            this.addFriendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addFriendToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.addFriendToolStripMenuItem.Text = "Add friend";
             this.addFriendToolStripMenuItem.Click += new System.EventHandler(this.addFriendToolStripMenuItem_Click);
             // 
             // ignoreToolStripMenuItem
             // 
             this.ignoreToolStripMenuItem.Name = "ignoreToolStripMenuItem";
-            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.ignoreToolStripMenuItem.Text = "Ignore";
             this.ignoreToolStripMenuItem.Click += new System.EventHandler(this.ignoreToolStripMenuItem_Click);
+            // 
+            // tbButtonToolStripMenuItem
+            // 
+            this.tbButtonToolStripMenuItem.Name = "tbButtonToolStripMenuItem";
+            this.tbButtonToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.tbButtonToolStripMenuItem.Text = "Tb Button";
+            this.tbButtonToolStripMenuItem.Click += new System.EventHandler(this.tbButtonToolStripMenuItemItem_Click);
+            // 
+            // resurrectToolStripMenuItem
+            // 
+            this.resurrectToolStripMenuItem.Name = "resurrectToolStripMenuItem";
+            this.resurrectToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.resurrectToolStripMenuItem.Text = "Resurrect";
+            this.resurrectToolStripMenuItem.Click += new System.EventHandler(this.resurrectToolStripMenuItem_Click);
             // 
             // cBStatusFlag
             // 
@@ -689,21 +703,6 @@ namespace BotFarm
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(88, 21);
             this.comboBox1.TabIndex = 23;
-            // 
-            // tbButtonToolStripMenuItem
-            // 
-            this.tbButtonToolStripMenuItem.Name = "tbButtonToolStripMenuItem";
-            this.tbButtonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tbButtonToolStripMenuItem.Text = "Tb Button";
-            this.tbButtonToolStripMenuItem.Click += new System.EventHandler(this.tbButtonToolStripMenuItemItem_Click);
-
-            // 
-            // resurrectToolStripMenuItem
-            // 
-            this.resurrectToolStripMenuItem.Name = "resurrectToolStripMenuItem";
-            this.resurrectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resurrectToolStripMenuItem.Text = "Resurrect";
-            this.resurrectToolStripMenuItem.Click += new System.EventHandler(this.resurrectToolStripMenuItem_Click);
             // 
             // FrmChat
             // 

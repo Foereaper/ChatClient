@@ -14,6 +14,8 @@ namespace BotFarm
     {
         public bool LeaderNotMe;
         private int _lockColumnIndex = 0;
+        public DateTime lastChatMessage;
+        public DateTime timeNow;
 
         public FrmChat()
         {
@@ -199,6 +201,23 @@ namespace BotFarm
                 SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
                 SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
             }
+
+            if (Settings.Default.AFKcheck == true)
+            {
+                int afkminutes = Settings.Default.AFKmins;
+                if(Settings.Default.AFKDM == 1)
+                {
+                    var AfkDM1 = new Thread(() => AfkDetectionM1());
+                    AfkDM1.Start();
+                }
+                if (Settings.Default.AFKDM == 2)
+                {
+                    var AfkDM2 = new Thread(() => AfkDetectionM2());
+                    AfkDM2.Start();
+                }
+            }
+            //create starttime for afk detection m1 thread
+            lastChatMessage = DateTime.Now;
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -222,27 +241,10 @@ namespace BotFarm
             }
         }
 
-        /*private void NoEnterCheck(object sender, KeyPressEventArgs e)
-        {
-            MsgSend();
-        }
-
-        public void ChatCheckEnter(bool enable)
-        {
-            if (enable == true)
-            {
-                textMessage.KeyPress += CheckEnter;
-            }
-            else
-            {
-                textMessage.KeyPress -= CheckEnter;
-                textMessage.KeyPress += NoEnterCheck;
-            }
-        }*/
-
         private void MsgSend()
         {
             /// this terrible code, for testing must obviously be changed/removed on release version.
+            lastChatMessage = DateTime.Now; //for AFK detection mode 1
             try
             {
                 var tmp = textMessage.Text;
@@ -358,7 +360,7 @@ namespace BotFarm
             }
             catch
             {
-
+                AppendText(ChatWindow, "[System] : Malformed message." + "\r\n", Color.DarkRed, true);
             }
         }
 
@@ -435,6 +437,77 @@ namespace BotFarm
             frmChannel.Show();
         }
 
+        public delegate void SetCharStatusCallBack(Control control, string text);
+        public static void InvokeSetCharStatus(Control control, string text)
+        {
+            if (control.InvokeRequired)
+            {
+                SetCharStatusCallBack d = new SetCharStatusCallBack(InvokeSetCharStatus);
+                control.Invoke(d, new object[] { control, text });
+            }
+            else
+            {
+                control.Text = text;
+            }
+        }
+
+        ///<summary>
+        /// Afk detection methode 1 afk if last sent message to server was x minutes ago.
+        /// in settings > afk:
+        /// 1 == away
+        /// 2 == busy
+        /// in GUI combobox:
+        /// Available == 0
+        /// Away == 1
+        /// Busy == 2
+        ///</summary>
+        public void AfkDetectionM1()
+        {
+            while (true)
+            {
+                string userstate = null;
+                timeNow = DateTime.Now;
+                TimeSpan span = timeNow.Subtract(lastChatMessage);
+                int mdiff = (int)Math.Round(span.TotalMinutes);
+                int afkminutes = Settings.Default.AFKmins;
+                cBStatusFlag.Invoke(new Action(() => userstate = cBStatusFlag.Text));
+                if (mdiff == afkminutes || mdiff > afkminutes)
+                {
+                    switch (Settings.Default.AFKstatus)
+                    {
+                        case 0:
+                            if (userstate != "Away")
+                            {
+                                InvokeSetCharStatus(cBStatusFlag, "Away");
+                                SessionInit.Instance.factoryGame.ChangeStatus(1);
+                            }
+                            break;
+                        case 1:
+                            if (userstate != "Busy")
+                            {
+                                InvokeSetCharStatus(cBStatusFlag, "Busy");
+                                SessionInit.Instance.factoryGame.ChangeStatus(2);
+                            }
+                            break;
+                    }
+                }
+                else
+                { 
+                    if (userstate != "Available")
+                    {
+                        InvokeSetCharStatus(cBStatusFlag, "Available");
+                        SessionInit.Instance.factoryGame.ChangeStatus(0);
+                    }
+                }
+                Thread.Sleep(5000);
+            }
+        }
+
+        public static void AfkDetectionM2()
+        {
+            //todo but less important
+        }
+
         public static void HandleChannelInvitation(string invtdat)
         {
             var ChannelIvtname = invtdat;
@@ -442,7 +515,14 @@ namespace BotFarm
             AutomatedGame.NewMessageData = null;
             if (Settings.Default.IngoreChannelInvite == true)
             {
-                SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+                if(Settings.Default.IgnoreMode == 1)
+                {
+                    SessionInit.Instance.factoryGame.CustomChannelDecline(ChannelIvtname);
+                }
+                if (Settings.Default.IgnoreMode == 2)
+                {
+                    //ignore ..
+                }
             }
             else
             {
@@ -465,7 +545,14 @@ namespace BotFarm
             AutomatedGame.NewMessageData = null;
             if(Settings.Default.IgnoreGroupInvite == true)
             {
-                SessionInit.Instance.factoryGame.GroupDecline();
+                if (Settings.Default.IgnoreMode == 1)
+                {
+                    SessionInit.Instance.factoryGame.GroupDecline();
+                }
+                if (Settings.Default.IgnoreMode == 2)
+                {
+                    //ignore ..
+                }
             }
             else
             {
@@ -1140,5 +1227,6 @@ namespace BotFarm
             }
             return false;
         }
+
     }
 }
