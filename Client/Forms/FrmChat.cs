@@ -224,8 +224,8 @@ namespace BotFarm
         {
             Hide();
             AutomatedGame.DisconClient = true;
-            Thread.Sleep(1000);
-            Application.Exit();
+            Thread.Sleep(3000);
+            Environment.Exit(1);
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -366,18 +366,18 @@ namespace BotFarm
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AutomatedGame.DisconClient = true;
             Hide();
-            Thread.Sleep(1000);
-            Application.Exit();
+            AutomatedGame.DisconClient = true;
+            Thread.Sleep(3000);
+            Environment.Exit(1);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hide();
             AutomatedGame.DisconClient = true;
-            Thread.Sleep(1000);
-            Application.Exit();
+            Thread.Sleep(3000);
+            Environment.Exit(1);
         }
 
         private void saveConversationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1228,5 +1228,13 @@ namespace BotFarm
             return false;
         }
 
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AutomatedGame.DisconClient = true;
+            AutomatedGame.SetLoggedIn = false;
+            FrmLogin frmlogin = new FrmLogin();
+            frmlogin.Show();
+        }
     }
 }

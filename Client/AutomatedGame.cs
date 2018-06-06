@@ -66,6 +66,11 @@ namespace Client
 
         public static List<string> ShowCharList => presentcharacterList;
 
+        public static bool SetLoggedIn
+        {
+            set => LoggedInserver = value;
+        }
+
         public static bool RealmChosen
         {
             set => realmchosen = value;
@@ -378,7 +383,7 @@ namespace Client
                     SendPacket(new OutPacket(WorldCommand.CMSG_KEEP_ALIVE));
             }, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
 
-
+            presentrealmList.Clear();
             foreach (var server in realmList)
             {
                 presentrealmList.Add(server.Name);
@@ -397,6 +402,7 @@ namespace Client
         {
             //List<string> charname = new List<string>();
 
+            presentcharacterList.Clear();
             foreach (var characterz in characterList)
             {
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
