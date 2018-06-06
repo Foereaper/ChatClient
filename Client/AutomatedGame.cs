@@ -402,9 +402,7 @@ namespace Client
             }
             Charsloaded = true;
             //Thread.Sleep(1000);
-#if TESTING
             HelloDad();
-#endif
             while (characterchosen == false)
             {
                 //Thread.Sleep(500);
@@ -412,30 +410,14 @@ namespace Client
 
 
             const int index = -1;
-            /*while (index > length || index < 0)
-            {
-                Log("Choose a character:  ");
-                if (!int.TryParse(Console.ReadLine(), out index))
-                    //LogLine("Selected character: " + charname[index].ToString());
-            }*/
 
             if (index >= characterList.Length) return;
             World.SelectedCharacter = characterList[characterID];
-            // TODO: enter world
             var packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
             packet.Write(World.SelectedCharacter.GUID);
             SendPacket(packet);
             LoggedIn = true;
             Player.GUID = World.SelectedCharacter.GUID;
-
-            /*
-            World.SelectedCharacter = characterList[Character];
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
-            packet.Write(World.SelectedCharacter.GUID);
-            SendPacket(packet);
-            LoggedIn = true;
-            Player.GUID = World.SelectedCharacter.GUID;
-            */
         }
 
         public override string ReadLine()

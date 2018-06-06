@@ -47,6 +47,8 @@ namespace BotFarm
             this.cbIgnoreChannelInvite = new System.Windows.Forms.CheckBox();
             this.cbIgnoreGroupInvite = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.rbIgnoreM1 = new System.Windows.Forms.RadioButton();
+            this.rbIgnoreM2 = new System.Windows.Forms.RadioButton();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).BeginInit();
@@ -69,7 +71,7 @@ namespace BotFarm
             this.gbChat.Controls.Add(this.cBAutoJoin);
             this.gbChat.Location = new System.Drawing.Point(6, 6);
             this.gbChat.Name = "gbChat";
-            this.gbChat.Size = new System.Drawing.Size(180, 79);
+            this.gbChat.Size = new System.Drawing.Size(194, 79);
             this.gbChat.TabIndex = 1;
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
@@ -93,12 +95,12 @@ namespace BotFarm
             this.gBOther.Controls.Add(this.numAfkMins);
             this.gBOther.Controls.Add(this.cbAfk);
             this.gBOther.Controls.Add(this.cboxAfkStatus);
-            this.gBOther.Location = new System.Drawing.Point(193, 6);
+            this.gBOther.Location = new System.Drawing.Point(206, 6);
             this.gBOther.Name = "gBOther";
             this.gBOther.Size = new System.Drawing.Size(207, 170);
             this.gBOther.TabIndex = 2;
             this.gBOther.TabStop = false;
-            this.gBOther.Text = "Other";
+            this.gBOther.Text = "Away from keyboard";
             // 
             // rAfkDectM2
             // 
@@ -107,7 +109,6 @@ namespace BotFarm
             this.rAfkDectM2.Name = "rAfkDectM2";
             this.rAfkDectM2.Size = new System.Drawing.Size(196, 17);
             this.rAfkDectM2.TabIndex = 6;
-            this.rAfkDectM2.TabStop = true;
             this.rAfkDectM2.Text = "No XY mouse pos change detection";
             this.rAfkDectM2.UseVisualStyleBackColor = true;
             // 
@@ -123,6 +124,7 @@ namespace BotFarm
             // rAfkDectM1
             // 
             this.rAfkDectM1.AutoSize = true;
+            this.rAfkDectM1.Checked = true;
             this.rAfkDectM1.Location = new System.Drawing.Point(7, 101);
             this.rAfkDectM1.Name = "rAfkDectM1";
             this.rAfkDectM1.Size = new System.Drawing.Size(181, 17);
@@ -136,9 +138,9 @@ namespace BotFarm
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 13);
+            this.label1.Size = new System.Drawing.Size(130, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "After being afk for minutes :";
+            this.label1.Text = "After being afk for minutes";
             // 
             // numAfkMins
             // 
@@ -171,6 +173,7 @@ namespace BotFarm
             this.cbAfk.TabIndex = 1;
             this.cbAfk.Text = "Change my status to";
             this.cbAfk.UseVisualStyleBackColor = true;
+            this.cbAfk.CheckedChanged += new System.EventHandler(this.cbAfk_CheckedChanged);
             // 
             // cboxAfkStatus
             // 
@@ -187,11 +190,13 @@ namespace BotFarm
             // 
             // gBInvites
             // 
+            this.gBInvites.Controls.Add(this.rbIgnoreM2);
+            this.gBInvites.Controls.Add(this.rbIgnoreM1);
             this.gBInvites.Controls.Add(this.cbIgnoreChannelInvite);
             this.gBInvites.Controls.Add(this.cbIgnoreGroupInvite);
             this.gBInvites.Location = new System.Drawing.Point(6, 87);
             this.gBInvites.Name = "gBInvites";
-            this.gBInvites.Size = new System.Drawing.Size(181, 89);
+            this.gBInvites.Size = new System.Drawing.Size(194, 89);
             this.gBInvites.TabIndex = 3;
             this.gBInvites.TabStop = false;
             this.gBInvites.Text = "Invites";
@@ -205,6 +210,7 @@ namespace BotFarm
             this.cbIgnoreChannelInvite.TabIndex = 1;
             this.cbIgnoreChannelInvite.Text = "Ignore channel invites";
             this.cbIgnoreChannelInvite.UseVisualStyleBackColor = true;
+            this.cbIgnoreChannelInvite.CheckedChanged += new System.EventHandler(this.cbIgnoreChannelInvite_CheckedChanged);
             // 
             // cbIgnoreGroupInvite
             // 
@@ -215,22 +221,45 @@ namespace BotFarm
             this.cbIgnoreGroupInvite.TabIndex = 0;
             this.cbIgnoreGroupInvite.Text = "Ignore party invites";
             this.cbIgnoreGroupInvite.UseVisualStyleBackColor = true;
+            this.cbIgnoreGroupInvite.CheckedChanged += new System.EventHandler(this.cbIgnoreGroupInvite_CheckedChanged);
             // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(6, 182);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(394, 23);
+            this.btnSave.Size = new System.Drawing.Size(407, 23);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Okay";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // rbIgnoreM1
+            // 
+            this.rbIgnoreM1.AutoSize = true;
+            this.rbIgnoreM1.Checked = true;
+            this.rbIgnoreM1.Location = new System.Drawing.Point(13, 64);
+            this.rbIgnoreM1.Name = "rbIgnoreM1";
+            this.rbIgnoreM1.Size = new System.Drawing.Size(94, 17);
+            this.rbIgnoreM1.TabIndex = 2;
+            this.rbIgnoreM1.TabStop = true;
+            this.rbIgnoreM1.Text = "Decline invites";
+            this.rbIgnoreM1.UseVisualStyleBackColor = true;
+            // 
+            // rbIgnoreM2
+            // 
+            this.rbIgnoreM2.AutoSize = true;
+            this.rbIgnoreM2.Location = new System.Drawing.Point(112, 64);
+            this.rbIgnoreM2.Name = "rbIgnoreM2";
+            this.rbIgnoreM2.Size = new System.Drawing.Size(76, 17);
+            this.rbIgnoreM2.TabIndex = 3;
+            this.rbIgnoreM2.Text = "Just ignore";
+            this.rbIgnoreM2.UseVisualStyleBackColor = true;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 211);
+            this.ClientSize = new System.Drawing.Size(419, 211);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gBInvites);
             this.Controls.Add(this.gBOther);
@@ -268,5 +297,7 @@ namespace BotFarm
         private RadioButton rAfkDectM2;
         private Label lblAfkDection;
         private RadioButton rAfkDectM1;
+        private RadioButton rbIgnoreM2;
+        private RadioButton rbIgnoreM1;
     }
 }
