@@ -33,7 +33,7 @@ namespace BotFarm
                 AutomatedGame.DisconClient = true;
                 Hide();
                 Thread.Sleep(1000);
-                Application.Exit();
+                Environment.Exit(1);
             }
         }
 
@@ -71,10 +71,10 @@ namespace BotFarm
 
         private void CharacterSelection_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AutomatedGame.DisconClient = true;
             Hide();
-            Thread.Sleep(1000);
-            Application.Exit();
+            AutomatedGame.DisconClient = true;
+            Thread.Sleep(3000);
+            Environment.Exit(1);
         }
     }
 }

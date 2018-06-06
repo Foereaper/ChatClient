@@ -36,10 +36,10 @@ namespace BotFarm
 
         private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AutomatedGame.DisconClient = true;
             Hide();
+            AutomatedGame.DisconClient = true;
             Thread.Sleep(1000);
-            Application.Exit();
+            Environment.Exit(1);
         }
 
         private void authcheck_Tick(object sender, EventArgs e)
