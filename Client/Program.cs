@@ -6,12 +6,22 @@ namespace BotFarm
     class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmLogin());
+
+            if (args.Length != 0)
+            {
+                if (args[0] == "autologin")
+                {
+                    Application.Run(new FrmLogin(true));
+                }
+            }
+            else
+            {
+                Application.Run(new FrmLogin(false));
+            }
         }
-  
     }
 }

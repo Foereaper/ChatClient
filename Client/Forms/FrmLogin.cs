@@ -10,9 +10,13 @@ namespace BotFarm
     public partial class FrmLogin : Form
     {
         
-        public FrmLogin()
+        public FrmLogin(bool autologin)
         {
             InitializeComponent();
+            if(autologin == true)
+            {
+                DoLogin();
+            }
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)

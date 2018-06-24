@@ -94,6 +94,12 @@ namespace Client
             set => disconnectclient = value;
         }
 
+        public static bool charlogoutSucceeded
+        {
+            get => logoutSucceededSMSG;
+            set => logoutSucceededSMSG = value;
+        }
+
         public static List<string> player = new List<string>();
         public static List<string> guild = new List<string>();
         public static List<int> level = new List<int>();
@@ -117,6 +123,8 @@ namespace Client
         public static List<string> presentrealmList = new List<string>();
         public static List<string> presentcharacterList = new List<string>();
         public static List<string> characterNameList = new List<string>();
+        //public static List<string> characterGUIDList = new List<string>();
+        private static bool logoutSucceededSMSG;
         private static bool LoggedInserver;
         public static bool AuthenticationError;
         public static string AuthErrorText;
@@ -407,6 +415,7 @@ namespace Client
             {
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
                 characterNameList.Add(characterz.Name);
+                //characterGUIDList.Add(Convert.ToUInt32(characterz.GUID).ToString());
             }
             Charsloaded = true;
             //Thread.Sleep(1000);
@@ -562,6 +571,23 @@ namespace Client
         CMSG_CHANNEL_LIST = 154,
         SMSG_CHANNEL_LIST = 155,
         */
+
+        public void charLogout()
+        {           
+            var packet = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
+            packet.Write("");
+            Game.SendPacket(packet);
+        }
+
+        public void charLogin(int charID)
+        {
+            //World.SelectedCharacter.GUID = Convert.ToUInt64(characterGUIDList[charID]);
+            //World.SelectedCharacter.GUID = Convert.ToUInt64(charID);
+            var packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
+            packet.Write(World.SelectedCharacter.GUID);
+            SendPacket(packet);
+            Player.GUID = World.SelectedCharacter.GUID;
+        }
 
         public void LeaveChannel(int channel, string channelName)
         {
@@ -1067,6 +1093,13 @@ namespace Client
             response.Write(player.ToCString());
             response.Write(message.ToCString());
             SendPacket(response);
+        }
+
+        [PacketHandler(WorldCommand.SMSG_LOGOUT_RESPONSE)]
+        protected void logoutResponse(InPacket packet)
+        {
+            packet.ReadBytes(4);
+            logoutSucceededSMSG = Convert.ToBoolean(packet.ReadUInt32());
         }
 
         [PacketHandler(WorldCommand.SMSG_WHO)]

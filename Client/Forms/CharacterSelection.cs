@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using Client;
+using Client.World;
 
 namespace BotFarm
 {
@@ -20,12 +21,25 @@ namespace BotFarm
                 {
                     return;
                 }
-                charfound.Enabled = false;
-                AutomatedGame.characterID = lb1.SelectedIndex;
-                AutomatedGame.characterchosen = true;
-                Hide();
-                var frmchat = new FrmChat();
-                frmchat.Show();
+                /*if(AutomatedGame.charlogoutSucceeded == true)
+                {
+                    SessionInit.Instance.factoryGame.charLogin(lb1.SelectedIndex);
+                    charfound.Enabled = false;
+                    AutomatedGame.characterID = lb1.SelectedIndex;
+                    AutomatedGame.characterchosen = true;
+                    Hide();
+                    var frmchat = new FrmChat();
+                    frmchat.Show();
+                }
+                else
+                {*/
+                    charfound.Enabled = false;
+                    AutomatedGame.characterID = lb1.SelectedIndex;
+                    AutomatedGame.characterchosen = true;
+                    Hide();
+                    var frmchat = new FrmChat();
+                    frmchat.Show();
+                //}
             }
             else
             {

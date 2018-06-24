@@ -7,9 +7,9 @@ using Client;
 using Client.Forms;
 using Client.Properties;
 
+
 namespace BotFarm
 {
-
     public partial class FrmChat : Form
     {
         public bool LeaderNotMe;
@@ -1230,11 +1230,31 @@ namespace BotFarm
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            /*this.Hide();
             AutomatedGame.DisconClient = true;
             AutomatedGame.SetLoggedIn = false;
             FrmLogin frmlogin = new FrmLogin();
-            frmlogin.Show();
+            frmlogin.Show();*/
+
+            System.Diagnostics.Process.Start(Application.ExecutablePath);
+            Environment.Exit(1);
+        }
+
+        private void changeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*SessionInit.Instance.factoryGame.charLogout();
+            Thread.Sleep(2000);
+            AutomatedGame.charlogoutSucceeded = true;
+            this.Hide();
+            AutomatedGame.DisconClient = true;
+            AutomatedGame.SetLoggedIn = false;
+            CharacterSelection frmchar = new CharacterSelection();
+            frmchar.Show();*/
+            Hide();
+            AutomatedGame.DisconClient = true;
+            Thread.Sleep(500);
+            System.Diagnostics.Process.Start(Application.ExecutablePath, "autologin");
+            Environment.Exit(1);
         }
     }
 }
