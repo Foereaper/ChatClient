@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
@@ -83,6 +84,7 @@ namespace BotFarm
             var newMessages = SessionInit.Instance.factoryGame.Game.World.newMessageQue;
             foreach (var messageData in newMessages)
             {
+                
                 /*
                 ToDo: Something like this to add color support
                 if (messageData.Contains("|c"))
@@ -92,66 +94,70 @@ namespace BotFarm
                     var colorString = messageData.Substring(index, 8);                   
                     messageData.Replace(colorString, ColorConverter.ConvertFromString(colorString);)
                 }*/
+
+                byte[] bytes = Encoding.Default.GetBytes(messageData);
+                var messageDataUTF8 = Encoding.UTF8.GetString(bytes).ToString();
+
                 //"[Invited6"
-                var groupInvite = messageData.Substring(0, 9);
+                var groupInvite = messageDataUTF8.Substring(0, 9);
                 if (groupInvite == "[Invited6")
                 {
-                    var tInvt = new Thread(() => HandleGroupInvitation(messageData));
+                    var tInvt = new Thread(() => HandleGroupInvitation(messageDataUTF8));
                     tInvt.Start();
                     continue;
                 }
                 //"[Invited5"
-                var channelInvite = messageData.Substring(0, 9);
+                var channelInvite = messageDataUTF8.Substring(0, 9);
                 if (channelInvite == "[Invited5")
                 {
-                    var tInvt = new Thread(() => HandleChannelInvitation(messageData));
+                    var tInvt = new Thread(() => HandleChannelInvitation(messageDataUTF8));
                     tInvt.Start();
                     continue;
                 }
-                var whisperSendC = messageData.Substring(0, 2); //To
+                var whisperSendC = messageDataUTF8.Substring(0, 2); //To
                 if (whisperSendC == "To")
                 {
-                    AppendText(ChatWindow, messageData + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                var WhisperC = messageData.Substring(0, 9); //[Whisper] 
+                var WhisperC = messageDataUTF8.Substring(0, 9); //[Whisper] 
                 if (WhisperC == "[Whisper]")
                 {
-                    AppendText(ChatWindow, messageData + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                var guildC = messageData.Substring(0, 7); //[Guild] 
+                var guildC = messageDataUTF8.Substring(0, 7); //[Guild] 
                 if (guildC == "[Guild]")
                 {
-                    AppendText(ChatWindow, messageData + "\r\n", Color.Green);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Green);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                var systemC = messageData.Substring(0, 8); //[System] 
+                var systemC = messageDataUTF8.Substring(0, 8); //[System] 
                 if (systemC == "[System]")
                 {
-                    AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
-                if (messageData.Length > 18)
+                if (messageDataUTF8.Length > 18)
                 {
-                    var guildAchievementC = messageData.Substring(0, 18); //[GuildAchievement]
+                    var guildAchievementC = messageDataUTF8.Substring(0, 18); //[GuildAchievement]
                     if (guildAchievementC == "[GuildAchievement]")
                     {
-                        AppendText(ChatWindow, messageData + "\r\n", Color.GreenYellow, true);
+                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.GreenYellow, true);
                         //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                         //ChatWindow.ScrollToCaret();
                         continue;
                     }
                 }
-                AppendText(ChatWindow, messageData + "\r\n", Color.Black, true);
+                AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
@@ -184,7 +190,9 @@ namespace BotFarm
 
         private void FrmChat_Load(object sender, EventArgs e)
         {
-            lblChar.Text = $"Logged in as: {AutomatedGame.characterNameList[AutomatedGame.characterID]}";
+            byte[] bytes = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+            lblChar.Text = $"Logged in as: {Encoding.UTF8.GetString(bytes).ToString()}";
+            //lblChar.Text = $"Logged in as: {AutomatedGame.characterNameList[AutomatedGame.characterID]}";
             //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
 
             textMessage.Focus();
@@ -705,7 +713,8 @@ namespace BotFarm
                 var index = 0;
                 foreach (var player in players)
                 {
-                    var item = new ListViewItem(player);
+                    byte[] bytes = Encoding.Default.GetBytes(player);
+                    var item = new ListViewItem(Encoding.UTF8.GetString(bytes).ToString());
                     item.SubItems.Add(AutomatedGame.guild[index]);
                     item.SubItems.Add(AutomatedGame.level[index].ToString());
                     item.SubItems.Add(AutomatedGame.pclass[index]);
@@ -761,7 +770,8 @@ namespace BotFarm
             foreach (var friend in friends)
             {
                 var listindex = AutomatedGame.player.IndexOf(friend);
-                var item = new ListViewItem(friend);
+                byte[] bytes = Encoding.Default.GetBytes(friend);
+                var item = new ListViewItem(Encoding.UTF8.GetString(bytes).ToString());
                 if (listindex != -1)
                 {
                     item.SubItems.Add(AutomatedGame.guild[listindex]);

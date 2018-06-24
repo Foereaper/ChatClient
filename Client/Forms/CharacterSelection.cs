@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
@@ -78,7 +79,8 @@ namespace BotFarm
                 charfound.Enabled = false;
                 foreach (var charactername in AutomatedGame.presentcharacterList)
                 {
-                    lb1.Items.Add(charactername); //charactername.ToString()
+                    byte[] bytes = Encoding.Default.GetBytes(charactername);
+                    lb1.Items.Add(Encoding.UTF8.GetString(bytes).ToString());
                 }
             }
         }
