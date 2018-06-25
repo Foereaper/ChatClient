@@ -85,8 +85,10 @@ namespace Client
 
         public static byte[] ToCString(this string str)
         {
-            var data = new byte[str.Length + 1];
-            Array.Copy(Encoding.ASCII.GetBytes(str), data, str.Length);
+            byte[] bEncoding = Encoding.UTF8.GetBytes(str);          
+            var data = new byte[bEncoding.Length + 1];
+            //Array.Copy(Encoding.ASCII.GetBytes(str), data, str.Length);
+            Array.Copy(Encoding.UTF8.GetBytes(str), data, bEncoding.Length);
             data[data.Length - 1] = 0;
             return data;
         }
