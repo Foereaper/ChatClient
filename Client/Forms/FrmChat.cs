@@ -95,8 +95,8 @@ namespace BotFarm
                     messageData.Replace(colorString, ColorConverter.ConvertFromString(colorString);)
                 }*/
 
-                byte[] bytes = Encoding.Default.GetBytes(messageData);
-                var messageDataUTF8 = Encoding.UTF8.GetString(bytes).ToString();
+                byte[] msgData = Encoding.Default.GetBytes(messageData);
+                var messageDataUTF8 = Encoding.UTF8.GetString(msgData).ToString();
 
                 //"[Invited6"
                 var groupInvite = messageDataUTF8.Substring(0, 9);
@@ -141,7 +141,9 @@ namespace BotFarm
                 var systemC = messageDataUTF8.Substring(0, 8); //[System] 
                 if (systemC == "[System]")
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.DarkBlue, true);
+                    // We don't need UTF8 here because it already has the right encoding
+
+                    AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -190,8 +192,8 @@ namespace BotFarm
 
         private void FrmChat_Load(object sender, EventArgs e)
         {
-            byte[] bytes = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
-            lblChar.Text = $"Logged in as: {Encoding.UTF8.GetString(bytes).ToString()}";
+            byte[] currentUser = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+            lblChar.Text = $"Logged in as: {Encoding.UTF8.GetString(currentUser).ToString()}";
             //lblChar.Text = $"Logged in as: {AutomatedGame.characterNameList[AutomatedGame.characterID]}";
             //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
 
@@ -267,7 +269,7 @@ namespace BotFarm
                         //var message = msg[1].ToString();
                         //AppendText(ChatWindow, "Whisper to" + user + ": " + message + "\r\n", Color.Pink);
                         //ChatWindow.AppendText("Whisper to" + user +": " + message + "\r\n");
-                        //ChatWindow.ScrollToCaret();
+                        //ChatWindow.ScrollToCaret();                   
                         SessionInit.Instance.factoryGame.DoWhisperChat(message, user);
                         textMessage.Text = string.Empty;
                         return;
@@ -550,6 +552,7 @@ namespace BotFarm
         {
             var InvitationSender = invtdat;
             InvitationSender = InvitationSender.Remove(0, 9);
+            byte[] senderName = Encoding.Default.GetBytes(InvitationSender);
             AutomatedGame.NewMessageData = null;
             if(Settings.Default.IgnoreGroupInvite == true)
             {
@@ -564,7 +567,7 @@ namespace BotFarm
             }
             else
             {
-                var Accept = MessageBox.Show(InvitationSender + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                var Accept = MessageBox.Show(Encoding.UTF8.GetString(senderName).ToString() + " invites you to a group.", "Do you want to join this group?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 if (Accept == DialogResult.Yes)
                 {
                     SessionInit.Instance.factoryGame.AcceptGroupInvitation();
@@ -610,8 +613,10 @@ namespace BotFarm
                 btnGroupDisband.Enabled = true;
                 foreach (var guid in memberguids)
                 {
-                    var resolve = (SessionInit.Instance.factoryGame.Game.World.PlayerNameLookup.TryGetValue(guid, out var player));
-                    var item = new ListViewItem(player);
+                    var resolve = (SessionInit.Instance.factoryGame.Game.World.PlayerNameLookup.TryGetValue(guid, out string player));
+                    if (player == null) { player = "Unresolved player"; }
+                    byte[] playerName = Encoding.Default.GetBytes(player);
+                    var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
                     if (guid == leaderguid)
                     {
                         item.SubItems.Add("Yes");
@@ -621,13 +626,17 @@ namespace BotFarm
                 }
                 if (LeaderNotMe == false)
                 {
-                    var item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+                    byte[] playerName = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+                    var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
+                    //var item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
                     item.SubItems.Add("Yes");
                     listGroup.Items.Add(item);
                 }
                 else
                 {
-                    var item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+                    byte[] playerName = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+                    var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
+                    //var item = new ListViewItem(AutomatedGame.characterNameList[AutomatedGame.characterID]);
                     item.SubItems.Add("");
                     listGroup.Items.Add(item);
                 }
@@ -640,7 +649,6 @@ namespace BotFarm
             {
                 lblPartyGroupSize.Text = listGroup.Items.Count.ToString();
             }
-
         }
 
         private void btnGroupDisband_Click(object sender, EventArgs e)
@@ -713,9 +721,11 @@ namespace BotFarm
                 var index = 0;
                 foreach (var player in players)
                 {
-                    byte[] bytes = Encoding.Default.GetBytes(player);
-                    var item = new ListViewItem(Encoding.UTF8.GetString(bytes).ToString());
-                    item.SubItems.Add(AutomatedGame.guild[index]);
+                    byte[] playerName = Encoding.Default.GetBytes(player);
+                    var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
+                    byte[] playerGuild = Encoding.Default.GetBytes(AutomatedGame.guild[index]);
+                    item.SubItems.Add(Encoding.UTF8.GetString(playerGuild).ToString());
+                    //item.SubItems.Add(AutomatedGame.guild[index]);
                     item.SubItems.Add(AutomatedGame.level[index].ToString());
                     item.SubItems.Add(AutomatedGame.pclass[index]);
                     item.SubItems.Add(AutomatedGame.prace[index]);
@@ -770,11 +780,13 @@ namespace BotFarm
             foreach (var friend in friends)
             {
                 var listindex = AutomatedGame.player.IndexOf(friend);
-                byte[] bytes = Encoding.Default.GetBytes(friend);
-                var item = new ListViewItem(Encoding.UTF8.GetString(bytes).ToString());
+                byte[] nameFriend = Encoding.Default.GetBytes(friend);
+                var item = new ListViewItem(Encoding.UTF8.GetString(nameFriend).ToString());
                 if (listindex != -1)
                 {
-                    item.SubItems.Add(AutomatedGame.guild[listindex]);
+                    byte[] guildFriend = Encoding.Default.GetBytes(AutomatedGame.guild[listindex]);
+                    item.SubItems.Add(Encoding.UTF8.GetString(guildFriend).ToString());
+                    //item.SubItems.Add(AutomatedGame.guild[listindex]);
                     item.SubItems.Add(AutomatedGame.level[listindex].ToString());
                     item.SubItems.Add("Yes");
                 }
@@ -846,7 +858,8 @@ namespace BotFarm
 
             foreach (var channel in customchannels)
             {
-                var item = new ListViewItem(channel);
+                byte[] channelName = Encoding.Default.GetBytes(channel);
+                var item = new ListViewItem(Encoding.UTF8.GetString(channelName).ToString());
                 item.SubItems.Add("Yes");
                 listCustom.Items.Add(item);
             }
@@ -902,7 +915,8 @@ namespace BotFarm
             var index = 0;
             foreach (var player in players)
             {
-                var item = new ListViewItem(player);
+                byte[] playerName = Encoding.Default.GetBytes(player);
+                var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
                 item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildStatus[index]);
                 item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildLevel[index].ToString());
                 item.SubItems.Add(SessionInit.Instance.factoryGame.Game.World.guildClass[index]);
@@ -954,10 +968,13 @@ namespace BotFarm
 
             foreach (var ticket in tickets)
             {
-                var item = new ListViewItem(ticket.playerName);
+                byte[] playerName = Encoding.Default.GetBytes(ticket.playerName);
+                var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
                 item.SubItems.Add(ticket.createTime);
-                item.SubItems.Add(ticket.assignedPlayer);
-                item.SubItems.Add(ticket.ticketComment);
+                byte[] assignedPlayer = Encoding.Default.GetBytes(ticket.assignedPlayer);
+                item.SubItems.Add(Encoding.UTF8.GetString(assignedPlayer).ToString());
+                byte[] ticketComment = Encoding.Default.GetBytes(ticket.ticketComment);
+                item.SubItems.Add(Encoding.UTF8.GetString(ticketComment).ToString());
                 item.SubItems.Add(ticket.areTheyOnline.ToString());
                 listTicket.Items.Add(item);
             }
@@ -1240,18 +1257,20 @@ namespace BotFarm
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            #region test
             /*this.Hide();
             AutomatedGame.DisconClient = true;
             AutomatedGame.SetLoggedIn = false;
             FrmLogin frmlogin = new FrmLogin();
             frmlogin.Show();*/
-
+            #endregion
             System.Diagnostics.Process.Start(Application.ExecutablePath);
             Environment.Exit(1);
         }
 
         private void changeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            #region test
             /*SessionInit.Instance.factoryGame.charLogout();
             Thread.Sleep(2000);
             AutomatedGame.charlogoutSucceeded = true;
@@ -1260,6 +1279,7 @@ namespace BotFarm
             AutomatedGame.SetLoggedIn = false;
             CharacterSelection frmchar = new CharacterSelection();
             frmchar.Show();*/
+            #endregion
             Hide();
             AutomatedGame.DisconClient = true;
             Thread.Sleep(500);

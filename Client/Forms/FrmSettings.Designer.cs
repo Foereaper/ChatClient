@@ -44,11 +44,12 @@ namespace BotFarm
             this.cbAfk = new System.Windows.Forms.CheckBox();
             this.cboxAfkStatus = new System.Windows.Forms.ComboBox();
             this.gBInvites = new System.Windows.Forms.GroupBox();
+            this.rbIgnoreM2 = new System.Windows.Forms.RadioButton();
+            this.rbIgnoreM1 = new System.Windows.Forms.RadioButton();
             this.cbIgnoreChannelInvite = new System.Windows.Forms.CheckBox();
             this.cbIgnoreGroupInvite = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.rbIgnoreM1 = new System.Windows.Forms.RadioButton();
-            this.rbIgnoreM2 = new System.Windows.Forms.RadioButton();
+            this.cbConnectionLost = new System.Windows.Forms.CheckBox();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).BeginInit();
@@ -67,11 +68,12 @@ namespace BotFarm
             // 
             // gbChat
             // 
+            this.gbChat.Controls.Add(this.cbConnectionLost);
             this.gbChat.Controls.Add(this.cbSendWithEnter);
             this.gbChat.Controls.Add(this.cBAutoJoin);
             this.gbChat.Location = new System.Drawing.Point(6, 6);
             this.gbChat.Name = "gbChat";
-            this.gbChat.Size = new System.Drawing.Size(194, 79);
+            this.gbChat.Size = new System.Drawing.Size(194, 102);
             this.gbChat.TabIndex = 1;
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
@@ -97,7 +99,7 @@ namespace BotFarm
             this.gBOther.Controls.Add(this.cboxAfkStatus);
             this.gBOther.Location = new System.Drawing.Point(206, 6);
             this.gBOther.Name = "gBOther";
-            this.gBOther.Size = new System.Drawing.Size(207, 170);
+            this.gBOther.Size = new System.Drawing.Size(207, 189);
             this.gBOther.TabIndex = 2;
             this.gBOther.TabStop = false;
             this.gBOther.Text = "Away from keyboard";
@@ -194,12 +196,34 @@ namespace BotFarm
             this.gBInvites.Controls.Add(this.rbIgnoreM1);
             this.gBInvites.Controls.Add(this.cbIgnoreChannelInvite);
             this.gBInvites.Controls.Add(this.cbIgnoreGroupInvite);
-            this.gBInvites.Location = new System.Drawing.Point(6, 87);
+            this.gBInvites.Location = new System.Drawing.Point(6, 107);
             this.gBInvites.Name = "gBInvites";
             this.gBInvites.Size = new System.Drawing.Size(194, 89);
             this.gBInvites.TabIndex = 3;
             this.gBInvites.TabStop = false;
             this.gBInvites.Text = "Invites";
+            // 
+            // rbIgnoreM2
+            // 
+            this.rbIgnoreM2.AutoSize = true;
+            this.rbIgnoreM2.Location = new System.Drawing.Point(112, 64);
+            this.rbIgnoreM2.Name = "rbIgnoreM2";
+            this.rbIgnoreM2.Size = new System.Drawing.Size(76, 17);
+            this.rbIgnoreM2.TabIndex = 3;
+            this.rbIgnoreM2.Text = "Just ignore";
+            this.rbIgnoreM2.UseVisualStyleBackColor = true;
+            // 
+            // rbIgnoreM1
+            // 
+            this.rbIgnoreM1.AutoSize = true;
+            this.rbIgnoreM1.Checked = true;
+            this.rbIgnoreM1.Location = new System.Drawing.Point(13, 64);
+            this.rbIgnoreM1.Name = "rbIgnoreM1";
+            this.rbIgnoreM1.Size = new System.Drawing.Size(94, 17);
+            this.rbIgnoreM1.TabIndex = 2;
+            this.rbIgnoreM1.TabStop = true;
+            this.rbIgnoreM1.Text = "Decline invites";
+            this.rbIgnoreM1.UseVisualStyleBackColor = true;
             // 
             // cbIgnoreChannelInvite
             // 
@@ -225,7 +249,7 @@ namespace BotFarm
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(6, 182);
+            this.btnSave.Location = new System.Drawing.Point(6, 201);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(407, 23);
             this.btnSave.TabIndex = 4;
@@ -233,33 +257,21 @@ namespace BotFarm
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // rbIgnoreM1
+            // cbConnectionLost
             // 
-            this.rbIgnoreM1.AutoSize = true;
-            this.rbIgnoreM1.Checked = true;
-            this.rbIgnoreM1.Location = new System.Drawing.Point(13, 64);
-            this.rbIgnoreM1.Name = "rbIgnoreM1";
-            this.rbIgnoreM1.Size = new System.Drawing.Size(94, 17);
-            this.rbIgnoreM1.TabIndex = 2;
-            this.rbIgnoreM1.TabStop = true;
-            this.rbIgnoreM1.Text = "Decline invites";
-            this.rbIgnoreM1.UseVisualStyleBackColor = true;
-            // 
-            // rbIgnoreM2
-            // 
-            this.rbIgnoreM2.AutoSize = true;
-            this.rbIgnoreM2.Location = new System.Drawing.Point(112, 64);
-            this.rbIgnoreM2.Name = "rbIgnoreM2";
-            this.rbIgnoreM2.Size = new System.Drawing.Size(76, 17);
-            this.rbIgnoreM2.TabIndex = 3;
-            this.rbIgnoreM2.Text = "Just ignore";
-            this.rbIgnoreM2.UseVisualStyleBackColor = true;
+            this.cbConnectionLost.AutoSize = true;
+            this.cbConnectionLost.Location = new System.Drawing.Point(7, 67);
+            this.cbConnectionLost.Name = "cbConnectionLost";
+            this.cbConnectionLost.Size = new System.Drawing.Size(158, 17);
+            this.cbConnectionLost.TabIndex = 2;
+            this.cbConnectionLost.Text = "Logout after lost connection";
+            this.cbConnectionLost.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 211);
+            this.ClientSize = new System.Drawing.Size(419, 227);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gBInvites);
             this.Controls.Add(this.gBOther);
@@ -299,5 +311,6 @@ namespace BotFarm
         private RadioButton rAfkDectM1;
         private RadioButton rbIgnoreM2;
         private RadioButton rbIgnoreM1;
+        private CheckBox cbConnectionLost;
     }
 }

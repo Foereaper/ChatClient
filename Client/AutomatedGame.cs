@@ -12,6 +12,7 @@ using Client.Authentication;
 using Client.Authentication.Network;
 using Client.Chat;
 using Client.Chat.Definitions;
+using Client.Properties;
 using Client.UI;
 using Client.World;
 using Client.World.Definitions;
@@ -255,7 +256,10 @@ namespace Client
                 Connected = true;
             }
             else
+            {
                 Reconnect();
+            }
+                
         }
 
         public virtual void Start()
@@ -313,6 +317,11 @@ namespace Client
 
         public void Reconnect()
         {
+            if (Settings.Default.ConnectionLostLogout == true)
+            {
+                System.Diagnostics.Process.Start(Application.ExecutablePath);
+                Environment.Exit(1);
+            }
             Connected = false;
             LoggedIn = false;
             while (Running)
@@ -696,7 +705,7 @@ namespace Client
             byte[] data = null;
             var endBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-            var invitedPlayer = Encoding.ASCII.GetBytes(player);
+            var invitedPlayer = Encoding.UTF8.GetBytes(player);
 
             var packetdata = invitedPlayer.Concat(endBytes).ToArray();
             data = packetdata;
@@ -713,7 +722,7 @@ namespace Client
             byte[] data = null;
             var endBytes = new byte[] { 0x00, 0x00 };
 
-            var playertoAdd = Encoding.ASCII.GetBytes(player);
+            var playertoAdd = Encoding.UTF8.GetBytes(player);
 
             var packetdata = playertoAdd.Concat(endBytes).ToArray();
             data = packetdata;
@@ -730,7 +739,7 @@ namespace Client
             byte[] data = null;
             var endByte = new byte[] { 0x00 };
 
-            var playertoIgnore = Encoding.ASCII.GetBytes(player);
+            var playertoIgnore = Encoding.UTF8.GetBytes(player);
 
             var packetdata = playertoIgnore.Concat(endByte).ToArray();
             data = packetdata;
@@ -1139,7 +1148,7 @@ namespace Client
         protected void HandleFriendStatus(InPacket packet)
         {
             UInt64 receiverGuid = 0;
-            var statusmsg = "";
+            string statusmsg = "";
             var message = new ChatMessage();
             var channel = new ChatChannel
             {
@@ -1157,7 +1166,7 @@ namespace Client
 
             var dump = packet.ReadToEnd();
 
-            var playername = "";
+            string playername = "";
 
             //RequestWhoList(); // added
             //System.Threading.Thread.Sleep(3000);
@@ -1168,19 +1177,22 @@ namespace Client
                 packet.BaseStream.Position = 0;
                 packet.ReadByte();
                 receiverGuid = packet.ReadUInt64();
-                var dummy = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
+                //var dummy = (Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername));
+                Game.World.PlayerNameLookup.TryGetValue(receiverGuid, out playername);
             }
 
             if (!player.Contains(playername)) // added
             {
-                if ((char)dump[0] == 0x02) { statusmsg = playername + " has come online."; Thread.Sleep(4000); }
+                byte[] playerName = Encoding.Default.GetBytes(playername);
+                if ((char)dump[0] == 0x02) { statusmsg = Encoding.UTF8.GetString(playerName).ToString() + " has come online."; Thread.Sleep(4000); }
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
             }
             else
             {
-                if ((char)dump[0] == 0x03) { statusmsg = playername + " has gone offline."; Thread.Sleep(4000); }
+                byte[] playerName = Encoding.Default.GetBytes(playername);
+                if ((char)dump[0] == 0x03) { statusmsg = Encoding.UTF8.GetString(playerName).ToString() + " has gone offline."; Thread.Sleep(4000); }
                 RequestWhoList();
                 RequestFriendList();
                 UpdateFriendList("1");
