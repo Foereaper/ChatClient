@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Client;
@@ -17,6 +19,43 @@ namespace BotFarm
         private int _lockColumnIndex = 0;
         public DateTime lastChatMessage;
         public DateTime timeNow;
+
+        [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]
+        public struct CHARFORMAT2
+        {
+            public int cbSize;
+            public int dwMask;
+            public int dwEffects;
+            public int yHeight;
+            public int yOffset;
+            public int crTextColor;
+            public byte bCharSet;
+            public byte bPitchAndFamily;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string szFaceName;
+            public short wWeight;
+            public short sSpacing;
+            public int crBackColor;
+            public int lcid;
+            public int dwReserved;
+            public short sStyle;
+            public short wKerning;
+            public byte bUnderlineType;
+            public byte bAnimation;
+            public byte bRevAuthor;
+            public byte bReserved1;
+        }
+
+        const int CFE_LINK = 0x20;
+        const int CFM_LINK = 0x20;
+        const int CFM_LCID = 0x2000000;
+        const int CFM_REVAUTHOR = 0x8000;
+        const int EM_SETCHARFORMAT = 0x444;
+        const int SCF_SELECTION = 0x1;
+        const int SCF_WORD = 0x2;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
         public FrmChat()
         {
@@ -125,7 +164,9 @@ namespace BotFarm
                 var WhisperC = messageDataUTF8.Substring(0, 9); //[Whisper] 
                 if (WhisperC == "[Whisper]")
                 {
+                    //AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
                     AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
+                    clickableUserName(messageDataUTF8.Substring(15, messageDataUTF8.IndexOf(":")-14), messageDataUTF8);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -141,9 +182,16 @@ namespace BotFarm
                 var systemC = messageDataUTF8.Substring(0, 8); //[System] 
                 if (systemC == "[System]")
                 {
-                    // We don't need UTF8 here because it already has the right encoding
-
-                    AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
+                    Match m = Regex.Match(messageData, @"(\|)cff");
+                    if (m.Success)
+                    {
+                        systemChannelColor(messageData);
+                    }
+                    else
+                    {
+                        AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
+                    }               
+                    //AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -188,6 +236,62 @@ namespace BotFarm
             box.AppendText(text);
             box.SelectionColor = box.ForeColor;
             box.ScrollToCaret();
+        }
+
+        private void systemChannelColor(string channelText)
+        {
+            string colorhex = "";
+            string message = "";
+            Color textcolor = Color.DarkBlue; // default
+            string[] colors = Regex.Split(channelText, @"(\|)cff"); // don't hate me for this.
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colorhex = string.Empty;
+                message = string.Empty;
+                if (colors[i].Length != 1)
+                {
+                    if (colors[i] != "[System] : ")
+                    {
+                        colorhex = colors[i].Substring(0, 6);
+                        message = colors[i].Substring(6, colors[i].Length - 6);
+                        textcolor = System.Drawing.ColorTranslator.FromHtml("#" + colorhex);
+                    }
+                    else
+                    {
+                        message = "[System] : ";
+                    }
+                }
+                if (i == colors.Length - 1)
+                {
+                    if (message.Substring(message.Length - 2, 2) == "|r")
+                    {
+                        message = message.Remove(message.Length - 2);
+                    }
+                    AppendText(ChatWindow, message + "\r\n", textcolor, true);
+                }
+                else
+                {
+                    if (message != "") { AppendText(ChatWindow, message, textcolor, true); }
+                }
+            }
+        }
+
+        private void clickableUserName(string username, string fullmsg)
+        {
+            int selstart = fullmsg.Length - 14;
+            int selstartcalculated = ChatWindow.Text.Length - selstart;
+            ChatWindow.SelectionStart = selstartcalculated;
+            ChatWindow.SelectionLength = username.Length;
+
+            CHARFORMAT2 myFormat = new CHARFORMAT2();
+            myFormat.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(myFormat);
+            myFormat.dwEffects = CFE_LINK;
+            myFormat.dwMask = CFM_REVAUTHOR + CFM_LCID + CFM_LINK;
+            myFormat.bRevAuthor = 3;
+
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(myFormat));
+            Marshal.StructureToPtr(myFormat, lParam, false);
+            SendMessage(ChatWindow.Handle, (UInt32)EM_SETCHARFORMAT, (IntPtr)(SCF_SELECTION + SCF_WORD), lParam);
         }
 
         private void FrmChat_Load(object sender, EventArgs e)
@@ -399,7 +503,7 @@ namespace BotFarm
         {
             MessageBox.Show("Credits to jackpoz's work on their project BotFarm." + Environment.NewLine +
                  "Developer Credits: StackerDEV, Foereaper and Terrorblade." + Environment.NewLine +
-            "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects.");
+            "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects.", "Information", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         private void btnPlayerRefresh_Click(object sender, EventArgs e)
@@ -409,7 +513,16 @@ namespace BotFarm
 
         private void ChatWindow_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            if (e.LinkText.Contains(":"))
+            {
+                textMessage.Text = "/w " + e.LinkText.Remove(e.LinkText.Length - 1) + " ";
+                textMessage.Select();
+                textMessage.SelectionStart = textMessage.Text.Length;
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
