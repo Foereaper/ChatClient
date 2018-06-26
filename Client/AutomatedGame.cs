@@ -581,7 +581,7 @@ namespace Client
         SMSG_CHANNEL_LIST = 155,
         */
 
-        public void charLogout()
+        /*public void charLogout()
         {           
             var packet = new OutPacket(WorldCommand.CMSG_LOGOUT_REQUEST);
             packet.Write("");
@@ -596,7 +596,7 @@ namespace Client
             packet.Write(World.SelectedCharacter.GUID);
             SendPacket(packet);
             Player.GUID = World.SelectedCharacter.GUID;
-        }
+        }*/
 
         public void LeaveChannel(int channel, string channelName)
         {
