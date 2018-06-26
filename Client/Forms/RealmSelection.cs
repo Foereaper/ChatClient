@@ -14,11 +14,14 @@ namespace BotFarm
 
         private void lb1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AutomatedGame.realmidGUI = lb1.SelectedIndex;
-            AutomatedGame.realmchosen = true;
-            Hide();
-            var characterselection = new CharacterSelection();
-            characterselection.Show();
+            if(lb1.SelectedIndex != -1)
+            {
+                AutomatedGame.realmidGUI = lb1.SelectedIndex;
+                AutomatedGame.realmchosen = true;
+                Hide();
+                var characterselection = new CharacterSelection();
+                characterselection.Show();
+            }
         }
 
         private void RealmSelection_Load(object sender, EventArgs e)
