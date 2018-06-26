@@ -513,7 +513,7 @@ namespace BotFarm
 
         private void ChatWindow_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            if (e.LinkText.Contains(":"))
+            if (e.LinkText.Substring(e.LinkText.Length - 1, 1) == ":")
             {
                 textMessage.Text = "/w " + e.LinkText.Remove(e.LinkText.Length - 1) + " ";
                 textMessage.Select();
