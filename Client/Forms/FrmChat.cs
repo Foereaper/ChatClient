@@ -267,7 +267,7 @@ namespace BotFarm
                     {
                         colorhex = colors[i].Substring(0, 6);
                         message = colors[i].Substring(6, colors[i].Length - 6);
-                        if(message.Substring(message.Length-2, 2) == "|r")
+                        if(message.Contains("|r") == true) // some messages don't have |r at the end, so we use contains
                         {
                             message = message.Replace("|r", "");
                         }
@@ -355,7 +355,8 @@ namespace BotFarm
         {
             Hide();
             AutomatedGame.DisconClient = true;
-            Thread.Sleep(3000);
+            Thread.Sleep(500);
+            System.Diagnostics.Process.Start(Application.ExecutablePath, "autologin");
             Environment.Exit(1);
         }
 
