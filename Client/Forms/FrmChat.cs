@@ -267,7 +267,7 @@ namespace BotFarm
                     {
                         colorhex = colors[i].Substring(0, 6);
                         message = colors[i].Substring(6, colors[i].Length - 6);
-                        if(message.Contains("|r") == true) // some messages don't have |r at the end, so we use contains
+                        if(message.Contains("|r") == true)
                         {
                             message = message.Replace("|r", "");
                         }
