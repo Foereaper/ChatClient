@@ -190,7 +190,7 @@ namespace BotFarm
                     else
                     {
                         AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
-                    }               
+                    }
                     //AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
@@ -254,6 +254,10 @@ namespace BotFarm
                     {
                         colorhex = colors[i].Substring(0, 6);
                         message = colors[i].Substring(6, colors[i].Length - 6);
+                        if(message.Substring(message.Length-2, 2) == "|r")
+                        {
+                            message = message.Replace("|r", "");
+                        }
                         textcolor = System.Drawing.ColorTranslator.FromHtml("#" + colorhex);
                     }
                     else
