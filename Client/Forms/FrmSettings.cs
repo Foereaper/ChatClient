@@ -44,6 +44,7 @@ namespace BotFarm
                 cBAutoJoin.Checked = Settings.Default.AutoJoinChannel;
                 cbSendWithEnter.Checked = Settings.Default.SmgSendEnter;
                 cbConnectionLost.Checked = Settings.Default.ConnectionLostLogout;
+                cbNpcChat.Checked = Settings.Default.NPCChat;
                 // INVITE
                 cbIgnoreGroupInvite.Checked = Settings.Default.IgnoreGroupInvite;
                 cbIgnoreChannelInvite.Checked = Settings.Default.IngoreChannelInvite;
@@ -96,6 +97,7 @@ namespace BotFarm
                 Settings.Default.AutoJoinChannel = cBAutoJoin.Checked;
                 Settings.Default.SmgSendEnter = cbSendWithEnter.Checked;
                 Settings.Default.ConnectionLostLogout = cbConnectionLost.Checked;
+                Settings.Default.NPCChat = cbNpcChat.Checked;
                 // INVITE
                 Settings.Default.IgnoreGroupInvite = cbIgnoreGroupInvite.Checked;
                 Settings.Default.IngoreChannelInvite = cbIgnoreChannelInvite.Checked;

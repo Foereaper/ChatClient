@@ -207,7 +207,20 @@ namespace BotFarm
                         continue;
                     }
                 }
-                AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                //"[MonsterSay] Death Knight Initiate: Our enemies will be annihilated!"	string
+                var monsterSayC = messageDataUTF8.Substring(0, 12);
+                if (monsterSayC == "[MonsterSay]")
+                {
+                    if(Settings.Default.NPCChat == false)
+                    {
+                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                    }
+                }
+                else
+                {
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                }
+                
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;

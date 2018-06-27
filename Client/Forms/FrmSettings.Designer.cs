@@ -34,6 +34,7 @@ namespace BotFarm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.cBAutoJoin = new System.Windows.Forms.CheckBox();
             this.gbChat = new System.Windows.Forms.GroupBox();
+            this.cbConnectionLost = new System.Windows.Forms.CheckBox();
             this.cbSendWithEnter = new System.Windows.Forms.CheckBox();
             this.gBOther = new System.Windows.Forms.GroupBox();
             this.rAfkDectM2 = new System.Windows.Forms.RadioButton();
@@ -49,7 +50,7 @@ namespace BotFarm
             this.cbIgnoreChannelInvite = new System.Windows.Forms.CheckBox();
             this.cbIgnoreGroupInvite = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.cbConnectionLost = new System.Windows.Forms.CheckBox();
+            this.cbNpcChat = new System.Windows.Forms.CheckBox();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).BeginInit();
@@ -68,15 +69,26 @@ namespace BotFarm
             // 
             // gbChat
             // 
+            this.gbChat.Controls.Add(this.cbNpcChat);
             this.gbChat.Controls.Add(this.cbConnectionLost);
             this.gbChat.Controls.Add(this.cbSendWithEnter);
             this.gbChat.Controls.Add(this.cBAutoJoin);
             this.gbChat.Location = new System.Drawing.Point(6, 6);
             this.gbChat.Name = "gbChat";
-            this.gbChat.Size = new System.Drawing.Size(194, 102);
+            this.gbChat.Size = new System.Drawing.Size(194, 106);
             this.gbChat.TabIndex = 1;
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
+            // 
+            // cbConnectionLost
+            // 
+            this.cbConnectionLost.AutoSize = true;
+            this.cbConnectionLost.Location = new System.Drawing.Point(7, 66);
+            this.cbConnectionLost.Name = "cbConnectionLost";
+            this.cbConnectionLost.Size = new System.Drawing.Size(158, 17);
+            this.cbConnectionLost.TabIndex = 2;
+            this.cbConnectionLost.Text = "Logout after lost connection";
+            this.cbConnectionLost.UseVisualStyleBackColor = true;
             // 
             // cbSendWithEnter
             // 
@@ -99,7 +111,7 @@ namespace BotFarm
             this.gBOther.Controls.Add(this.cboxAfkStatus);
             this.gBOther.Location = new System.Drawing.Point(206, 6);
             this.gBOther.Name = "gBOther";
-            this.gBOther.Size = new System.Drawing.Size(207, 189);
+            this.gBOther.Size = new System.Drawing.Size(207, 201);
             this.gBOther.TabIndex = 2;
             this.gBOther.TabStop = false;
             this.gBOther.Text = "Away from keyboard";
@@ -196,7 +208,7 @@ namespace BotFarm
             this.gBInvites.Controls.Add(this.rbIgnoreM1);
             this.gBInvites.Controls.Add(this.cbIgnoreChannelInvite);
             this.gBInvites.Controls.Add(this.cbIgnoreGroupInvite);
-            this.gBInvites.Location = new System.Drawing.Point(6, 107);
+            this.gBInvites.Location = new System.Drawing.Point(6, 118);
             this.gBInvites.Name = "gBInvites";
             this.gBInvites.Size = new System.Drawing.Size(194, 89);
             this.gBInvites.TabIndex = 3;
@@ -249,7 +261,7 @@ namespace BotFarm
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(6, 201);
+            this.btnSave.Location = new System.Drawing.Point(6, 213);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(407, 23);
             this.btnSave.TabIndex = 4;
@@ -257,21 +269,21 @@ namespace BotFarm
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // cbConnectionLost
+            // cbNpcChat
             // 
-            this.cbConnectionLost.AutoSize = true;
-            this.cbConnectionLost.Location = new System.Drawing.Point(7, 67);
-            this.cbConnectionLost.Name = "cbConnectionLost";
-            this.cbConnectionLost.Size = new System.Drawing.Size(158, 17);
-            this.cbConnectionLost.TabIndex = 2;
-            this.cbConnectionLost.Text = "Logout after lost connection";
-            this.cbConnectionLost.UseVisualStyleBackColor = true;
+            this.cbNpcChat.AutoSize = true;
+            this.cbNpcChat.Location = new System.Drawing.Point(7, 87);
+            this.cbNpcChat.Name = "cbNpcChat";
+            this.cbNpcChat.Size = new System.Drawing.Size(110, 17);
+            this.cbNpcChat.TabIndex = 3;
+            this.cbNpcChat.Text = "Disable NPC chat";
+            this.cbNpcChat.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 227);
+            this.ClientSize = new System.Drawing.Size(419, 242);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gBInvites);
             this.Controls.Add(this.gBOther);
@@ -312,5 +324,6 @@ namespace BotFarm
         private RadioButton rbIgnoreM2;
         private RadioButton rbIgnoreM1;
         private CheckBox cbConnectionLost;
+        private CheckBox cbNpcChat;
     }
 }

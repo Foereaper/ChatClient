@@ -166,5 +166,17 @@ namespace Client.Properties {
                 this["ConnectionLostLogout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool NPCChat {
+            get {
+                return ((bool)(this["NPCChat"]));
+            }
+            set {
+                this["NPCChat"] = value;
+            }
+        }
     }
 }
