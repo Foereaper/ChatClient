@@ -251,7 +251,7 @@ namespace BotFarm
             // 
             // ChatWindow
             // 
-            this.ChatWindow.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ChatWindow.BackColor = System.Drawing.Color.DarkGray;
             this.ChatWindow.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.ChatWindow.Location = new System.Drawing.Point(12, 27);
             this.ChatWindow.Name = "ChatWindow";
@@ -261,6 +261,7 @@ namespace BotFarm
             this.ChatWindow.TabIndex = 1;
             this.ChatWindow.Text = "";
             this.ChatWindow.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.ChatWindow_LinkClicked);
+            this.ChatWindow.TextChanged += new System.EventHandler(this.ChatWindow_TextChanged);
             // 
             // btnSend
             // 

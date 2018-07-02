@@ -1417,5 +1417,10 @@ namespace BotFarm
             System.Diagnostics.Process.Start(Application.ExecutablePath, "autologin");
             Environment.Exit(1);
         }
+
+        private void ChatWindow_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
