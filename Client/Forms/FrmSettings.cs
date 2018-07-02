@@ -242,10 +242,7 @@ namespace BotFarm
                 string B = Convert.ToInt32(colorEditor.Color.B).ToString();
                 AutomatedGame.chatWindowBGColor = R + ":" + G + ":" + B;
             }
-            catch
-            {
-
-            }
+            catch {}
         }
 
         private void colorGrid_ColorChanged(object sender, EventArgs e)
@@ -257,7 +254,7 @@ namespace BotFarm
         private void btnRestoreDefault_Click(object sender, EventArgs e)
         {
             ChatWindowPreview.BackColor = Color.WhiteSmoke;
-            colorEditor.Color = Color.FromArgb(unchecked((int)0xFFF5F5F5));
+            colorEditor.Color = Color.FromArgb(unchecked((int)0xFFF5F5F5)); //255,245,245,245
             colorWheel.Color = Color.FromArgb(unchecked((int)0xFFF5F5F5));
             string R = Convert.ToInt32(colorEditor.Color.R).ToString();
             string G = Convert.ToInt32(colorEditor.Color.G).ToString();
