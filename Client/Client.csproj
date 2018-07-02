@@ -218,6 +218,11 @@
     <None Include="Resources\bg.jpg" />
     <None Include="Resources\textbox_white.png" />
     <None Include="Resources\login1.png" />
+    <None Include="Resources\loginbox.png" />
+    <None Include="Resources\loginbox1.png" />
+    <None Include="Resources\loginbox_fin.png" />
+    <None Include="Resources\loginbox_fin1.png" />
+    <None Include="Resources\loginbox_fin2.png" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
