@@ -27,7 +27,11 @@ namespace BotFarm
         private void FrmLogin_Load(object sender, EventArgs e)
         {
             BtnLogin.Enabled = true;
+
             password.KeyPress += CheckEnter;
+            
+
+
         }
 
         private void CheckEnter(object sender, KeyPressEventArgs e)
