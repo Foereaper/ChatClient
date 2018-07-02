@@ -766,7 +766,6 @@ namespace BotFarm
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
-        private RichTextBox ChatWindow;
         private Button btnSend;
         private Label lblChar;
         private Button btnDisconnect;
@@ -825,5 +824,6 @@ namespace BotFarm
         private ToolStripMenuItem resurrectToolStripMenuItem;
         private ToolStripMenuItem changeToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
+        public RichTextBox ChatWindow;
     }
 }

@@ -101,6 +101,12 @@ namespace Client
             set => logoutSucceededSMSG = value;
         }
 
+        public static string chatWindowBGColor
+        {
+            get => ChatWindowBackGroundColor;
+            set => ChatWindowBackGroundColor = value;
+        }
+
         public static List<string> player = new List<string>();
         public static List<string> guild = new List<string>();
         public static List<int> level = new List<int>();
@@ -111,6 +117,8 @@ namespace Client
 
         public Race Race { get; private set; }
         public Class Class { get; private set; }
+
+        public static string ChatWindowBackGroundColor;
 
         public static string NewMessageData;
         public static string UpdateGroupGUIDList;

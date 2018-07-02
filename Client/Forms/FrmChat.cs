@@ -66,6 +66,12 @@ namespace BotFarm
 
         private void msgPull_Tick(object sender, EventArgs e)
         {
+            if(AutomatedGame.chatWindowBGColor != null && AutomatedGame.chatWindowBGColor != "")
+            {
+                string[] BGRGB = AutomatedGame.chatWindowBGColor.Split(':');
+                ChatWindow.BackColor = Color.FromArgb(Convert.ToInt32(BGRGB[0]), Convert.ToInt32(BGRGB[1]), Convert.ToInt32(BGRGB[2]));
+                AutomatedGame.chatWindowBGColor = string.Empty;
+            }
             //DisplayWhoList()
             var whoListUpdate = AutomatedGame.WhoListUpdate;
             if (whoListUpdate != "")
@@ -166,7 +172,10 @@ namespace BotFarm
                 {
                     //AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
                     AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
-                    clickableUserName(messageDataUTF8.Substring(15, messageDataUTF8.IndexOf(":")-14), messageDataUTF8);
+                    if(Settings.Default.DisableClickableUsernames == false)
+                    {
+                        clickableUserName(messageDataUTF8.Substring(15, messageDataUTF8.IndexOf(":") - 14), messageDataUTF8);
+                    }                   
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -245,7 +254,14 @@ namespace BotFarm
             //{
             //   box.Font = Font = new Font(box.Font, FontStyle.Bold);
             //}
-            box.SelectionColor = color;
+            if(Settings.Default.DisableAllChatColors == true)
+            {
+                box.SelectionColor = Color.DarkBlue;
+            }
+            else
+            {
+                box.SelectionColor = color;
+            }          
             box.AppendText(text);
             box.SelectionColor = box.ForeColor;
             box.ScrollToCaret();
@@ -284,11 +300,28 @@ namespace BotFarm
                     {
                         message = message.Remove(message.Length - 2);
                     }
-                    AppendText(ChatWindow, message + "\r\n", textcolor, true);
+                    if(Settings.Default.DisableSystemChannelColors == true)
+                    {
+                        AppendText(ChatWindow, message + "\r\n", Color.DarkBlue, true);
+                    }
+                    else
+                    {
+                        AppendText(ChatWindow, message + "\r\n", textcolor, true);
+                    }                    
                 }
                 else
                 {
-                    if (message != "") { AppendText(ChatWindow, message, textcolor, true); }
+                    if (message != "")
+                    {
+                        if (Settings.Default.DisableSystemChannelColors == true)
+                        {
+                            AppendText(ChatWindow, message, Color.DarkBlue, true);
+                        }
+                        else
+                        {
+                            AppendText(ChatWindow, message, textcolor, true);
+                        }                            
+                    }
                 }
             }
         }
@@ -331,6 +364,13 @@ namespace BotFarm
                 SessionInit.Instance.factoryGame.JoinChannel(2, "Trade", "");
                 SessionInit.Instance.factoryGame.JoinChannel(22, "LocalDefense", "");
                 SessionInit.Instance.factoryGame.JoinChannel(26, "LookingForGroup", "");
+            }
+
+            if (Settings.Default.ChatWindowBackgroundColor != "")
+            {
+                string WindowBGColor = Settings.Default.ChatWindowBackgroundColor;
+                string[] BGRGB = WindowBGColor.Split(':');
+                ChatWindow.BackColor = Color.FromArgb(Convert.ToInt32(BGRGB[0]), Convert.ToInt32(BGRGB[1]), Convert.ToInt32(BGRGB[2]));
             }
 
             if (Settings.Default.AFKcheck == true)
@@ -871,7 +911,6 @@ namespace BotFarm
             }
 
             lblplayercount.Text = AutomatedGame.playersonline.ToString();
-
             refreshWhoList.Visible = true;
         }
 
@@ -1027,7 +1066,6 @@ namespace BotFarm
             columnOfficerNote.TextAlign = HorizontalAlignment.Left;
             columnOfficerNote.Width = 80;
 
-
             listRoster.Columns.Clear();
 
             listRoster.Columns.Add(columnPlayer);
@@ -1081,8 +1119,6 @@ namespace BotFarm
             columnOnline.Text = "Online";
             columnOnline.TextAlign = HorizontalAlignment.Left;
             columnOnline.Width = 50;
-
-
 
             listTicket.Columns.Clear();
 

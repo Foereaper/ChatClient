@@ -34,6 +34,11 @@ namespace BotFarm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.cBAutoJoin = new System.Windows.Forms.CheckBox();
             this.gbChat = new System.Windows.Forms.GroupBox();
+            this.btnChatWindowBGC = new System.Windows.Forms.Button();
+            this.cbDisableAllColors = new System.Windows.Forms.CheckBox();
+            this.cbDisableClickableUsernames = new System.Windows.Forms.CheckBox();
+            this.cbDisableChannelColors = new System.Windows.Forms.CheckBox();
+            this.cbNpcChat = new System.Windows.Forms.CheckBox();
             this.cbConnectionLost = new System.Windows.Forms.CheckBox();
             this.cbSendWithEnter = new System.Windows.Forms.CheckBox();
             this.gBOther = new System.Windows.Forms.GroupBox();
@@ -50,7 +55,12 @@ namespace BotFarm
             this.cbIgnoreChannelInvite = new System.Windows.Forms.CheckBox();
             this.cbIgnoreGroupInvite = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.cbNpcChat = new System.Windows.Forms.CheckBox();
+            this.colorGrid = new Cyotek.Windows.Forms.ColorGrid();
+            this.colorEditor = new Cyotek.Windows.Forms.ColorEditor();
+            this.colorWheel = new Cyotek.Windows.Forms.ColorWheel();
+            this.ChatWindowPreview = new System.Windows.Forms.RichTextBox();
+            this.lbExampletxt = new System.Windows.Forms.Label();
+            this.btnRestoreDefault = new System.Windows.Forms.Button();
             this.gbChat.SuspendLayout();
             this.gBOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkMins)).BeginInit();
@@ -69,16 +79,70 @@ namespace BotFarm
             // 
             // gbChat
             // 
+            this.gbChat.Controls.Add(this.btnChatWindowBGC);
+            this.gbChat.Controls.Add(this.cbDisableAllColors);
+            this.gbChat.Controls.Add(this.cbDisableClickableUsernames);
+            this.gbChat.Controls.Add(this.cbDisableChannelColors);
             this.gbChat.Controls.Add(this.cbNpcChat);
             this.gbChat.Controls.Add(this.cbConnectionLost);
             this.gbChat.Controls.Add(this.cbSendWithEnter);
             this.gbChat.Controls.Add(this.cBAutoJoin);
             this.gbChat.Location = new System.Drawing.Point(6, 6);
             this.gbChat.Name = "gbChat";
-            this.gbChat.Size = new System.Drawing.Size(194, 106);
+            this.gbChat.Size = new System.Drawing.Size(211, 248);
             this.gbChat.TabIndex = 1;
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
+            // 
+            // btnChatWindowBGC
+            // 
+            this.btnChatWindowBGC.Location = new System.Drawing.Point(20, 194);
+            this.btnChatWindowBGC.Name = "btnChatWindowBGC";
+            this.btnChatWindowBGC.Size = new System.Drawing.Size(171, 36);
+            this.btnChatWindowBGC.TabIndex = 8;
+            this.btnChatWindowBGC.Text = "Change chat window background color";
+            this.btnChatWindowBGC.UseVisualStyleBackColor = true;
+            this.btnChatWindowBGC.Click += new System.EventHandler(this.btnChatWindowBGC_Click);
+            // 
+            // cbDisableAllColors
+            // 
+            this.cbDisableAllColors.AutoSize = true;
+            this.cbDisableAllColors.Location = new System.Drawing.Point(6, 160);
+            this.cbDisableAllColors.Name = "cbDisableAllColors";
+            this.cbDisableAllColors.Size = new System.Drawing.Size(200, 17);
+            this.cbDisableAllColors.TabIndex = 7;
+            this.cbDisableAllColors.Text = "Disable all colors (default is darkblue)";
+            this.cbDisableAllColors.UseVisualStyleBackColor = true;
+            // 
+            // cbDisableClickableUsernames
+            // 
+            this.cbDisableClickableUsernames.AutoSize = true;
+            this.cbDisableClickableUsernames.Location = new System.Drawing.Point(6, 136);
+            this.cbDisableClickableUsernames.Name = "cbDisableClickableUsernames";
+            this.cbDisableClickableUsernames.Size = new System.Drawing.Size(182, 17);
+            this.cbDisableClickableUsernames.TabIndex = 6;
+            this.cbDisableClickableUsernames.Text = "Disable clickable usernames (/w)";
+            this.cbDisableClickableUsernames.UseVisualStyleBackColor = true;
+            // 
+            // cbDisableChannelColors
+            // 
+            this.cbDisableChannelColors.AutoSize = true;
+            this.cbDisableChannelColors.Location = new System.Drawing.Point(7, 112);
+            this.cbDisableChannelColors.Name = "cbDisableChannelColors";
+            this.cbDisableChannelColors.Size = new System.Drawing.Size(168, 17);
+            this.cbDisableChannelColors.TabIndex = 5;
+            this.cbDisableChannelColors.Text = "Disable system channel colors";
+            this.cbDisableChannelColors.UseVisualStyleBackColor = true;
+            // 
+            // cbNpcChat
+            // 
+            this.cbNpcChat.AutoSize = true;
+            this.cbNpcChat.Location = new System.Drawing.Point(7, 89);
+            this.cbNpcChat.Name = "cbNpcChat";
+            this.cbNpcChat.Size = new System.Drawing.Size(110, 17);
+            this.cbNpcChat.TabIndex = 3;
+            this.cbNpcChat.Text = "Disable NPC chat";
+            this.cbNpcChat.UseVisualStyleBackColor = true;
             // 
             // cbConnectionLost
             // 
@@ -109,9 +173,9 @@ namespace BotFarm
             this.gBOther.Controls.Add(this.numAfkMins);
             this.gBOther.Controls.Add(this.cbAfk);
             this.gBOther.Controls.Add(this.cboxAfkStatus);
-            this.gBOther.Location = new System.Drawing.Point(206, 6);
+            this.gBOther.Location = new System.Drawing.Point(223, 6);
             this.gBOther.Name = "gBOther";
-            this.gBOther.Size = new System.Drawing.Size(207, 201);
+            this.gBOther.Size = new System.Drawing.Size(207, 153);
             this.gBOther.TabIndex = 2;
             this.gBOther.TabStop = false;
             this.gBOther.Text = "Away from keyboard";
@@ -208,9 +272,9 @@ namespace BotFarm
             this.gBInvites.Controls.Add(this.rbIgnoreM1);
             this.gBInvites.Controls.Add(this.cbIgnoreChannelInvite);
             this.gBInvites.Controls.Add(this.cbIgnoreGroupInvite);
-            this.gBInvites.Location = new System.Drawing.Point(6, 118);
+            this.gBInvites.Location = new System.Drawing.Point(223, 165);
             this.gBInvites.Name = "gBInvites";
-            this.gBInvites.Size = new System.Drawing.Size(194, 89);
+            this.gBInvites.Size = new System.Drawing.Size(207, 89);
             this.gBInvites.TabIndex = 3;
             this.gBInvites.TabStop = false;
             this.gBInvites.Text = "Invites";
@@ -261,33 +325,91 @@ namespace BotFarm
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(6, 213);
+            this.btnSave.Location = new System.Drawing.Point(6, 260);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(407, 23);
+            this.btnSave.Size = new System.Drawing.Size(424, 27);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Okay";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // cbNpcChat
+            // colorGrid
             // 
-            this.cbNpcChat.AutoSize = true;
-            this.cbNpcChat.Location = new System.Drawing.Point(7, 87);
-            this.cbNpcChat.Name = "cbNpcChat";
-            this.cbNpcChat.Size = new System.Drawing.Size(110, 17);
-            this.cbNpcChat.TabIndex = 3;
-            this.cbNpcChat.Text = "Disable NPC chat";
-            this.cbNpcChat.UseVisualStyleBackColor = true;
+            this.colorGrid.AutoAddColors = false;
+            this.colorGrid.CellBorderStyle = Cyotek.Windows.Forms.ColorCellBorderStyle.None;
+            this.colorGrid.Columns = 40;
+            this.colorGrid.EditMode = Cyotek.Windows.Forms.ColorEditingMode.Both;
+            this.colorGrid.Location = new System.Drawing.Point(446, 6);
+            this.colorGrid.Name = "colorGrid";
+            this.colorGrid.Padding = new System.Windows.Forms.Padding(0);
+            this.colorGrid.SelectedCellStyle = Cyotek.Windows.Forms.ColorGridSelectedCellStyle.Standard;
+            this.colorGrid.ShowCustomColors = false;
+            this.colorGrid.Size = new System.Drawing.Size(480, 48);
+            this.colorGrid.Spacing = new System.Drawing.Size(0, 0);
+            this.colorGrid.TabIndex = 21;
+            this.colorGrid.ColorChanged += new System.EventHandler(this.colorGrid_ColorChanged);
+            // 
+            // colorEditor
+            // 
+            this.colorEditor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.colorEditor.Location = new System.Drawing.Point(448, 49);
+            this.colorEditor.Name = "colorEditor";
+            this.colorEditor.Size = new System.Drawing.Size(162, 228);
+            this.colorEditor.TabIndex = 20;
+            this.colorEditor.ColorChanged += new System.EventHandler(this.colorEditor_ColorChanged);
+            // 
+            // colorWheel
+            // 
+            this.colorWheel.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.colorWheel.Location = new System.Drawing.Point(616, 55);
+            this.colorWheel.Name = "colorWheel";
+            this.colorWheel.Size = new System.Drawing.Size(105, 101);
+            this.colorWheel.TabIndex = 19;
+            this.colorWheel.ColorChanged += new System.EventHandler(this.colorWheel_ColorChanged);
+            // 
+            // ChatWindowPreview
+            // 
+            this.ChatWindowPreview.Location = new System.Drawing.Point(616, 155);
+            this.ChatWindowPreview.Name = "ChatWindowPreview";
+            this.ChatWindowPreview.Size = new System.Drawing.Size(310, 130);
+            this.ChatWindowPreview.TabIndex = 22;
+            this.ChatWindowPreview.Text = "";
+            // 
+            // lbExampletxt
+            // 
+            this.lbExampletxt.AutoSize = true;
+            this.lbExampletxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbExampletxt.Location = new System.Drawing.Point(723, 135);
+            this.lbExampletxt.Name = "lbExampletxt";
+            this.lbExampletxt.Size = new System.Drawing.Size(194, 13);
+            this.lbExampletxt.TabIndex = 23;
+            this.lbExampletxt.Text = "Chat background color example :";
+            // 
+            // btnRestoreDefault
+            // 
+            this.btnRestoreDefault.Location = new System.Drawing.Point(781, 82);
+            this.btnRestoreDefault.Name = "btnRestoreDefault";
+            this.btnRestoreDefault.Size = new System.Drawing.Size(107, 23);
+            this.btnRestoreDefault.TabIndex = 24;
+            this.btnRestoreDefault.Text = "Restore default";
+            this.btnRestoreDefault.UseVisualStyleBackColor = true;
+            this.btnRestoreDefault.Click += new System.EventHandler(this.btnRestoreDefault_Click);
             // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 242);
+            this.ClientSize = new System.Drawing.Size(437, 291);
+            this.Controls.Add(this.btnRestoreDefault);
+            this.Controls.Add(this.lbExampletxt);
+            this.Controls.Add(this.ChatWindowPreview);
+            this.Controls.Add(this.colorEditor);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gBInvites);
             this.Controls.Add(this.gBOther);
             this.Controls.Add(this.gbChat);
+            this.Controls.Add(this.colorGrid);
+            this.Controls.Add(this.colorWheel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmSettings";
@@ -301,6 +423,7 @@ namespace BotFarm
             this.gBInvites.ResumeLayout(false);
             this.gBInvites.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -325,5 +448,15 @@ namespace BotFarm
         private RadioButton rbIgnoreM1;
         private CheckBox cbConnectionLost;
         private CheckBox cbNpcChat;
+        private Button btnChatWindowBGC;
+        private CheckBox cbDisableAllColors;
+        private CheckBox cbDisableClickableUsernames;
+        private CheckBox cbDisableChannelColors;
+        private Cyotek.Windows.Forms.ColorGrid colorGrid;
+        private Cyotek.Windows.Forms.ColorEditor colorEditor;
+        private Cyotek.Windows.Forms.ColorWheel colorWheel;
+        private RichTextBox ChatWindowPreview;
+        private Label lbExampletxt;
+        private Button btnRestoreDefault;
     }
 }

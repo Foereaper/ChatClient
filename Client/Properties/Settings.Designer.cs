@@ -178,5 +178,53 @@ namespace Client.Properties {
                 this["NPCChat"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableSystemChannelColors {
+            get {
+                return ((bool)(this["DisableSystemChannelColors"]));
+            }
+            set {
+                this["DisableSystemChannelColors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableClickableUsernames {
+            get {
+                return ((bool)(this["DisableClickableUsernames"]));
+            }
+            set {
+                this["DisableClickableUsernames"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisableAllChatColors {
+            get {
+                return ((bool)(this["DisableAllChatColors"]));
+            }
+            set {
+                this["DisableAllChatColors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatWindowBackgroundColor {
+            get {
+                return ((string)(this["ChatWindowBackgroundColor"]));
+            }
+            set {
+                this["ChatWindowBackgroundColor"] = value;
+            }
+        }
     }
 }
