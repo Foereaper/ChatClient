@@ -519,7 +519,7 @@ namespace BotFarm
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Credits to jackpoz's work on their project BotFarm." + Environment.NewLine +
+            MessageBox.Show("Credits to jackpoz's project" + Environment.NewLine +
                  "Developer Credits: StackerDEV, Foereaper and Terrorblade." + Environment.NewLine +
             "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects.", "Information", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
@@ -1419,6 +1419,11 @@ namespace BotFarm
         }
 
         private void ChatWindow_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cBStatusFlag_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

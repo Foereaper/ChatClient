@@ -33,83 +33,75 @@ namespace BotFarm
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
-            this.logonserver = new System.Windows.Forms.TextBox();
             this.username = new System.Windows.Forms.TextBox();
-            this.password = new System.Windows.Forms.TextBox();
             this.lblAcc = new System.Windows.Forms.Label();
             this.lblPass = new System.Windows.Forms.Label();
             this.BtnLogin = new System.Windows.Forms.Button();
-            this.lblLogonserver = new System.Windows.Forms.Label();
             this.autherror = new System.Windows.Forms.Label();
             this.authcheck = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.Logo = new System.Windows.Forms.PictureBox();
             this.loginSave = new System.Windows.Forms.CheckBox();
+            this.lblLogonserver = new System.Windows.Forms.Label();
+            this.logonserver = new System.Windows.Forms.TextBox();
+            this.printPreviewControl1 = new System.Windows.Forms.PrintPreviewControl();
+            this.Logo = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.password = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // logonserver
-            // 
-            this.logonserver.Location = new System.Drawing.Point(33, 125);
-            this.logonserver.Name = "logonserver";
-            this.logonserver.Size = new System.Drawing.Size(217, 20);
-            this.logonserver.TabIndex = 0;
-            this.logonserver.Text = "logon.wowgasm-reloaded.org";
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(48, 175);
+            this.username.BackColor = System.Drawing.Color.White;
+            this.username.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.username.Location = new System.Drawing.Point(27, 149);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(112, 20);
+            this.username.Size = new System.Drawing.Size(202, 13);
             this.username.TabIndex = 1;
             this.username.Text = global::Client.Properties.Settings.Default.Username;
-            // 
-            // password
-            // 
-            this.password.Location = new System.Drawing.Point(48, 221);
-            this.password.Name = "password";
-            this.password.PasswordChar = '*';
-            this.password.Size = new System.Drawing.Size(112, 20);
-            this.password.TabIndex = 2;
-            this.password.Text = global::Client.Properties.Settings.Default.Password;
+            this.username.TextChanged += new System.EventHandler(this.username_TextChanged);
             // 
             // lblAcc
             // 
             this.lblAcc.AutoSize = true;
-            this.lblAcc.Location = new System.Drawing.Point(46, 159);
+            this.lblAcc.BackColor = System.Drawing.Color.Transparent;
+            this.lblAcc.ForeColor = System.Drawing.Color.White;
+            this.lblAcc.Location = new System.Drawing.Point(12, 125);
             this.lblAcc.Name = "lblAcc";
-            this.lblAcc.Size = new System.Drawing.Size(53, 13);
+            this.lblAcc.Size = new System.Drawing.Size(81, 13);
             this.lblAcc.TabIndex = 4;
-            this.lblAcc.Text = "Account :";
+            this.lblAcc.Text = "Account Name:";
+            this.lblAcc.Click += new System.EventHandler(this.lblAcc_Click);
             // 
             // lblPass
             // 
             this.lblPass.AutoSize = true;
-            this.lblPass.Location = new System.Drawing.Point(46, 205);
+            this.lblPass.BackColor = System.Drawing.Color.Transparent;
+            this.lblPass.ForeColor = System.Drawing.Color.White;
+            this.lblPass.Location = new System.Drawing.Point(12, 178);
             this.lblPass.Name = "lblPass";
-            this.lblPass.Size = new System.Drawing.Size(59, 13);
+            this.lblPass.Size = new System.Drawing.Size(56, 13);
             this.lblPass.TabIndex = 5;
-            this.lblPass.Text = "Password :";
+            this.lblPass.Text = "Password:";
             // 
             // BtnLogin
             // 
-            this.BtnLogin.Location = new System.Drawing.Point(178, 175);
+            this.BtnLogin.BackColor = System.Drawing.Color.Transparent;
+            this.BtnLogin.BackgroundImage = global::Client.Properties.Resources.login1;
+            this.BtnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BtnLogin.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnLogin.Location = new System.Drawing.Point(65, 239);
             this.BtnLogin.Name = "BtnLogin";
-            this.BtnLogin.Size = new System.Drawing.Size(90, 72);
+            this.BtnLogin.Size = new System.Drawing.Size(126, 38);
             this.BtnLogin.TabIndex = 6;
             this.BtnLogin.Text = "Login";
-            this.BtnLogin.UseVisualStyleBackColor = true;
+            this.BtnLogin.UseVisualStyleBackColor = false;
             this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
-            // 
-            // lblLogonserver
-            // 
-            this.lblLogonserver.AutoSize = true;
-            this.lblLogonserver.Location = new System.Drawing.Point(30, 109);
-            this.lblLogonserver.Name = "lblLogonserver";
-            this.lblLogonserver.Size = new System.Drawing.Size(75, 13);
-            this.lblLogonserver.TabIndex = 7;
-            this.lblLogonserver.Text = "Logon server :";
             // 
             // autherror
             // 
@@ -144,31 +136,103 @@ namespace BotFarm
             this.label1.TabIndex = 11;
             this.label1.Text = "Debug shizzle :";
             // 
+            // loginSave
+            // 
+            this.loginSave.AutoSize = true;
+            this.loginSave.BackColor = System.Drawing.Color.Transparent;
+            this.loginSave.ForeColor = System.Drawing.Color.White;
+            this.loginSave.Location = new System.Drawing.Point(80, 287);
+            this.loginSave.Name = "loginSave";
+            this.loginSave.Size = new System.Drawing.Size(94, 17);
+            this.loginSave.TabIndex = 12;
+            this.loginSave.Text = "Remember me";
+            this.loginSave.UseVisualStyleBackColor = false;
+            this.loginSave.CheckedChanged += new System.EventHandler(this.loginSave_CheckedChanged);
+            // 
+            // lblLogonserver
+            // 
+            this.lblLogonserver.AutoSize = true;
+            this.lblLogonserver.Location = new System.Drawing.Point(59, 358);
+            this.lblLogonserver.Name = "lblLogonserver";
+            this.lblLogonserver.Size = new System.Drawing.Size(75, 13);
+            this.lblLogonserver.TabIndex = 7;
+            this.lblLogonserver.Text = "Logon server :";
+            this.lblLogonserver.Visible = false;
+            this.lblLogonserver.Click += new System.EventHandler(this.lblLogonserver_Click);
+            // 
+            // logonserver
+            // 
+            this.logonserver.Location = new System.Drawing.Point(62, 386);
+            this.logonserver.Name = "logonserver";
+            this.logonserver.Size = new System.Drawing.Size(217, 20);
+            this.logonserver.TabIndex = 0;
+            this.logonserver.Text = "logon.wowgasm-reloaded.org";
+            this.logonserver.Visible = false;
+            this.logonserver.TextChanged += new System.EventHandler(this.logonserver_TextChanged);
+            // 
+            // printPreviewControl1
+            // 
+            this.printPreviewControl1.Location = new System.Drawing.Point(158, 400);
+            this.printPreviewControl1.Name = "printPreviewControl1";
+            this.printPreviewControl1.Size = new System.Drawing.Size(100, 100);
+            this.printPreviewControl1.TabIndex = 13;
+            // 
             // Logo
             // 
+            this.Logo.BackColor = System.Drawing.Color.Transparent;
+            this.Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Logo.Image = global::Client.Properties.Resources.logo_new;
-            this.Logo.Location = new System.Drawing.Point(20, 12);
+            this.Logo.Location = new System.Drawing.Point(1, 6);
             this.Logo.Name = "Logo";
             this.Logo.Size = new System.Drawing.Size(260, 93);
             this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Logo.TabIndex = 3;
             this.Logo.TabStop = false;
+            this.Logo.Click += new System.EventHandler(this.Logo_Click);
             // 
-            // loginSave
+            // pictureBox1
             // 
-            this.loginSave.AutoSize = true;
-            this.loginSave.Location = new System.Drawing.Point(182, 248);
-            this.loginSave.Name = "loginSave";
-            this.loginSave.Size = new System.Drawing.Size(86, 17);
-            this.loginSave.TabIndex = 12;
-            this.loginSave.Text = "Save Login?";
-            this.loginSave.UseVisualStyleBackColor = true;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::Client.Properties.Resources.textbox_white;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 141);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(232, 30);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImage = global::Client.Properties.Resources.textbox_white;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(12, 194);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(232, 30);
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            // 
+            // password
+            // 
+            this.password.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.password.Location = new System.Drawing.Point(27, 202);
+            this.password.Name = "password";
+            this.password.PasswordChar = '*';
+            this.password.Size = new System.Drawing.Size(202, 13);
+            this.password.TabIndex = 2;
+            this.password.Text = global::Client.Properties.Settings.Default.Password;
             // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 274);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = global::Client.Properties.Resources.bg;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(262, 331);
+            this.Controls.Add(this.username);
+            this.Controls.Add(this.printPreviewControl1);
             this.Controls.Add(this.loginSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -179,36 +243,41 @@ namespace BotFarm
             this.Controls.Add(this.lblAcc);
             this.Controls.Add(this.Logo);
             this.Controls.Add(this.password);
-            this.Controls.Add(this.username);
             this.Controls.Add(this.logonserver);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = ".:: WoWGasm Chat Login";
+            this.Text = "Log in";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLogin_FormClosing);
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private TextBox logonserver;
         private TextBox username;
-        private TextBox password;
         private PictureBox Logo;
         private Label lblAcc;
         private Label lblPass;
         private Button BtnLogin;
-        private Label lblLogonserver;
         private Label autherror;
         private Timer authcheck;
         private Button button1;
         private Label label1;
         private CheckBox loginSave;
+        private Label lblLogonserver;
+        private TextBox logonserver;
+        private PrintPreviewControl printPreviewControl1;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private TextBox password;
     }
 }

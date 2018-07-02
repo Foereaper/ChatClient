@@ -85,6 +85,11 @@
     <Compile Include="Forms\FrmTicket.Designer.cs">
       <DependentUpon>FrmTicket.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -148,11 +153,6 @@
       <DependentUpon>NewChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Forms\RealmSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +215,9 @@
     <Content Include="Data\areatable.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\bg.jpg" />
+    <None Include="Resources\textbox_white.png" />
+    <None Include="Resources\login1.png" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>

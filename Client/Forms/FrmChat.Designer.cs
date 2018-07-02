@@ -39,14 +39,7 @@ namespace BotFarm
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.channelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.joinAllChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createNewChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.leaveAllChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.leaveChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,6 +90,11 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.leaveChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -121,7 +119,7 @@ namespace BotFarm
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1087, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1038, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu";
             // 
@@ -159,74 +157,18 @@ namespace BotFarm
             // channelToolStripMenuItem
             // 
             this.channelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.joinAllChannelsToolStripMenuItem,
             this.createNewChannelToolStripMenuItem,
-            this.leaveAllChannelsToolStripMenuItem,
             this.leaveChannelToolStripMenuItem});
             this.channelToolStripMenuItem.Name = "channelToolStripMenuItem";
             this.channelToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.channelToolStripMenuItem.Text = "Channel";
             // 
-            // joinAllChannelsToolStripMenuItem
-            // 
-            this.joinAllChannelsToolStripMenuItem.Name = "joinAllChannelsToolStripMenuItem";
-            this.joinAllChannelsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.joinAllChannelsToolStripMenuItem.Text = "Join all default channels";
-            this.joinAllChannelsToolStripMenuItem.Click += new System.EventHandler(this.joinAllChannelsToolStripMenuItem_Click);
-            // 
             // createNewChannelToolStripMenuItem
             // 
             this.createNewChannelToolStripMenuItem.Name = "createNewChannelToolStripMenuItem";
-            this.createNewChannelToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.createNewChannelToolStripMenuItem.Text = "Create new channel";
+            this.createNewChannelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createNewChannelToolStripMenuItem.Text = "Join/Create channel";
             this.createNewChannelToolStripMenuItem.Click += new System.EventHandler(this.createNewChannelToolStripMenuItem_Click);
-            // 
-            // leaveAllChannelsToolStripMenuItem
-            // 
-            this.leaveAllChannelsToolStripMenuItem.Name = "leaveAllChannelsToolStripMenuItem";
-            this.leaveAllChannelsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.leaveAllChannelsToolStripMenuItem.Text = "Leave all channels";
-            this.leaveAllChannelsToolStripMenuItem.Click += new System.EventHandler(this.leaveAllChannelsToolStripMenuItem_Click);
-            // 
-            // leaveChannelToolStripMenuItem
-            // 
-            this.leaveChannelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4,
-            this.toolStripMenuItem5});
-            this.leaveChannelToolStripMenuItem.Name = "leaveChannelToolStripMenuItem";
-            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.leaveChannelToolStripMenuItem.Text = "Leave channel";
-            this.leaveChannelToolStripMenuItem.Click += new System.EventHandler(this.leaveChannelToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(179, 22);
-            this.toolStripMenuItem2.Text = "1. General";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(179, 22);
-            this.toolStripMenuItem3.Text = "2. Trade";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(179, 22);
-            this.toolStripMenuItem4.Text = "3. LocalDefense";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(179, 22);
-            this.toolStripMenuItem5.Text = "4. LookingForGroup";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -303,9 +245,9 @@ namespace BotFarm
             // textMessage
             // 
             this.textMessage.BackColor = System.Drawing.Color.DarkGray;
-            this.textMessage.Location = new System.Drawing.Point(94, 521);
+            this.textMessage.Location = new System.Drawing.Point(12, 521);
             this.textMessage.Name = "textMessage";
-            this.textMessage.Size = new System.Drawing.Size(346, 20);
+            this.textMessage.Size = new System.Drawing.Size(428, 20);
             this.textMessage.TabIndex = 9;
             // 
             // tabControl1
@@ -625,16 +567,17 @@ namespace BotFarm
             "Available",
             "Away",
             "Busy"});
-            this.cBStatusFlag.Location = new System.Drawing.Point(1018, 36);
+            this.cBStatusFlag.Location = new System.Drawing.Point(960, 39);
             this.cBStatusFlag.Name = "cBStatusFlag";
             this.cBStatusFlag.Size = new System.Drawing.Size(69, 21);
             this.cBStatusFlag.TabIndex = 21;
+            this.cBStatusFlag.SelectedIndexChanged += new System.EventHandler(this.cBStatusFlag_SelectedIndexChanged);
             this.cBStatusFlag.SelectionChangeCommitted += new System.EventHandler(this.cBStatusFlag_SelectionChangeCommitted);
             // 
             // lblStatusflag
             // 
             this.lblStatusflag.AutoSize = true;
-            this.lblStatusflag.Location = new System.Drawing.Point(975, 39);
+            this.lblStatusflag.Location = new System.Drawing.Point(917, 42);
             this.lblStatusflag.Name = "lblStatusflag";
             this.lblStatusflag.Size = new System.Drawing.Size(37, 13);
             this.lblStatusflag.TabIndex = 22;
@@ -713,12 +656,53 @@ namespace BotFarm
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(88, 21);
             this.comboBox1.TabIndex = 23;
+            this.comboBox1.Visible = false;
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Text = "1. General";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "2. Trade";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Text = "3. LocalDefense";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Text = "4. LookingForGroup";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            // 
+            // leaveChannelToolStripMenuItem
+            // 
+            this.leaveChannelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5});
+            this.leaveChannelToolStripMenuItem.Name = "leaveChannelToolStripMenuItem";
+            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.leaveChannelToolStripMenuItem.Text = "Leave channel";
+            this.leaveChannelToolStripMenuItem.Click += new System.EventHandler(this.leaveChannelToolStripMenuItem_Click);
             // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1087, 544);
+            this.ClientSize = new System.Drawing.Size(1038, 544);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblStatusflag);
             this.Controls.Add(this.cBStatusFlag);
@@ -775,7 +759,6 @@ namespace BotFarm
         private TextBox textMessage;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem channelToolStripMenuItem;
-        private ToolStripMenuItem joinAllChannelsToolStripMenuItem;
         private ToolStripMenuItem createNewChannelToolStripMenuItem;
         private TabControl tabControl1;
         private TabPage tabGroup;
@@ -813,12 +796,6 @@ namespace BotFarm
         private ToolStripMenuItem whisperToolStripMenuItem2;
         private ToolStripMenuItem removeFriendToolStripMenuItem;
         private ToolStripMenuItem inviteToPartyToolStripMenuItem1;
-        private ToolStripMenuItem leaveAllChannelsToolStripMenuItem;
-        private ToolStripMenuItem leaveChannelToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
-        private ToolStripMenuItem toolStripMenuItem4;
-        private ToolStripMenuItem toolStripMenuItem5;
         private ComboBox comboBox1;
         private TabPage tabGuild;
         private TabPage tabTicket;
@@ -826,5 +803,10 @@ namespace BotFarm
         private ToolStripMenuItem resurrectToolStripMenuItem;
         private ToolStripMenuItem changeToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
+        private ToolStripMenuItem leaveChannelToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem4;
+        private ToolStripMenuItem toolStripMenuItem5;
     }
 }

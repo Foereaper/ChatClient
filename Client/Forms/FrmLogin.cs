@@ -122,5 +122,41 @@ namespace BotFarm
         private void button1_Click(object sender, EventArgs e)
         {
         }
+
+        private void lblAcc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Logo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void logonserver_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblLogonserver_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loginSave_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void username_TextChanged(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
