@@ -9,11 +9,20 @@ namespace BotFarm
 {
     public partial class FrmLogin : Form
     {
-        
+        private const int WM_NCLBUTTONDBLCLK = 0x00A3;
+
         public FrmLogin(bool autologin)
         {
             InitializeComponent();
-            if(autologin == true)
+            // Optimalize window for heavy graphics display (reduce flickering).
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.Opaque, false);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+
+            if (autologin == true)
             {
                 DoLogin();
             }
@@ -27,11 +36,7 @@ namespace BotFarm
         private void FrmLogin_Load(object sender, EventArgs e)
         {
             BtnLogin.Enabled = true;
-
             password.KeyPress += CheckEnter;
-            
-
-
         }
 
         private void CheckEnter(object sender, KeyPressEventArgs e)
@@ -123,44 +128,45 @@ namespace BotFarm
             password.Enabled = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        #region movableWindow & mutex
+        protected override void WndProc(ref Message m)
         {
+            //movablewindow
+            switch (m.Msg)
+            {
+                case 0x84:
+                    base.WndProc(ref m);
+                    if ((int)m.Result == 0x1)
+                        m.Result = (IntPtr)0x2;
+                    return;
+            }
+
+            //disable double click to fullscreen the launcher
+            if (m.Msg == WM_NCLBUTTONDBLCLK)
+            {
+                m.Result = IntPtr.Zero;
+                return;
+            }
+
+            base.WndProc(ref m);
+            //mutex
+            if (m.Msg == NativeMethods.WM_SHOWME)
+            {
+                ShowMe();
+            }
+            base.WndProc(ref m);
         }
 
-        private void lblAcc_Click(object sender, EventArgs e)
+        private void ShowMe()
         {
-
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+            bool top = TopMost;
+            TopMost = true;
+            TopMost = top;
         }
-
-        private void Logo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void logonserver_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblLogonserver_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void loginSave_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void username_TextChanged(object sender, EventArgs e)
-        {
-            
-            
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

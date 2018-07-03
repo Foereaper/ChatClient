@@ -64,7 +64,6 @@ namespace BotFarm
             this.username.Size = new System.Drawing.Size(202, 13);
             this.username.TabIndex = 1;
             this.username.Text = global::Client.Properties.Settings.Default.Username;
-            this.username.TextChanged += new System.EventHandler(this.username_TextChanged);
             // 
             // lblAcc
             // 
@@ -76,7 +75,6 @@ namespace BotFarm
             this.lblAcc.Size = new System.Drawing.Size(81, 13);
             this.lblAcc.TabIndex = 4;
             this.lblAcc.Text = "Account Name:";
-            this.lblAcc.Click += new System.EventHandler(this.lblAcc_Click);
             // 
             // lblPass
             // 
@@ -128,7 +126,6 @@ namespace BotFarm
             this.button1.TabIndex = 10;
             this.button1.Text = "Copy debug log";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -151,7 +148,6 @@ namespace BotFarm
             this.loginSave.TabIndex = 12;
             this.loginSave.Text = "Remember my credentials";
             this.loginSave.UseVisualStyleBackColor = false;
-            this.loginSave.CheckedChanged += new System.EventHandler(this.loginSave_CheckedChanged);
             // 
             // lblLogonserver
             // 
@@ -162,7 +158,6 @@ namespace BotFarm
             this.lblLogonserver.TabIndex = 7;
             this.lblLogonserver.Text = "Logon server :";
             this.lblLogonserver.Visible = false;
-            this.lblLogonserver.Click += new System.EventHandler(this.lblLogonserver_Click);
             // 
             // logonserver
             // 
@@ -172,7 +167,6 @@ namespace BotFarm
             this.logonserver.TabIndex = 0;
             this.logonserver.Text = "logon.wowgasm-reloaded.org";
             this.logonserver.Visible = false;
-            this.logonserver.TextChanged += new System.EventHandler(this.logonserver_TextChanged);
             // 
             // printPreviewControl1
             // 
@@ -192,7 +186,6 @@ namespace BotFarm
             this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Logo.TabIndex = 3;
             this.Logo.TabStop = false;
-            this.Logo.Click += new System.EventHandler(this.Logo_Click);
             // 
             // pictureBox1
             // 
@@ -204,7 +197,6 @@ namespace BotFarm
             this.pictureBox1.Size = new System.Drawing.Size(232, 30);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
