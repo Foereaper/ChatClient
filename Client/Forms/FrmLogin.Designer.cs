@@ -107,8 +107,10 @@ namespace BotFarm
             // autherror
             // 
             this.autherror.AutoSize = true;
+            this.autherror.BackColor = System.Drawing.Color.Transparent;
+            this.autherror.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autherror.ForeColor = System.Drawing.Color.Red;
-            this.autherror.Location = new System.Drawing.Point(16, 252);
+            this.autherror.Location = new System.Drawing.Point(23, 252);
             this.autherror.Name = "autherror";
             this.autherror.Size = new System.Drawing.Size(0, 13);
             this.autherror.TabIndex = 9;
@@ -226,7 +228,7 @@ namespace BotFarm
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.BackgroundImage = global::Client.Properties.Resources.bg;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(262, 322);
             this.Controls.Add(this.username);
