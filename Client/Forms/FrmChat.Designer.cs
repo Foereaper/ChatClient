@@ -94,6 +94,7 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lblChannelIndicator = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -234,7 +235,7 @@ namespace BotFarm
             // 
             this.ChatWindow.BackColor = System.Drawing.Color.DarkGray;
             this.ChatWindow.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ChatWindow.Location = new System.Drawing.Point(3, 27);
+            this.ChatWindow.Location = new System.Drawing.Point(4, 24);
             this.ChatWindow.Name = "ChatWindow";
             this.ChatWindow.ReadOnly = true;
             this.ChatWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
@@ -292,9 +293,9 @@ namespace BotFarm
             this.textMessage.BackColor = System.Drawing.Color.Black;
             this.textMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textMessage.ForeColor = System.Drawing.Color.White;
-            this.textMessage.Location = new System.Drawing.Point(89, 520);
+            this.textMessage.Location = new System.Drawing.Point(149, 520);
             this.textMessage.Name = "textMessage";
-            this.textMessage.Size = new System.Drawing.Size(345, 20);
+            this.textMessage.Size = new System.Drawing.Size(285, 20);
             this.textMessage.TabIndex = 9;
             // 
             // tabControl1
@@ -358,7 +359,7 @@ namespace BotFarm
             this.listWho.GridLines = true;
             this.listWho.Location = new System.Drawing.Point(0, 30);
             this.listWho.Name = "listWho";
-            this.listWho.Size = new System.Drawing.Size(506, 434);
+            this.listWho.Size = new System.Drawing.Size(506, 377);
             this.listWho.TabIndex = 1;
             this.listWho.UseCompatibleStateImageBehavior = false;
             this.listWho.View = System.Windows.Forms.View.Details;
@@ -696,6 +697,18 @@ namespace BotFarm
             this.comboBox1.TabIndex = 23;
             this.comboBox1.Visible = false;
             // 
+            // lblChannelIndicator
+            // 
+            this.lblChannelIndicator.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblChannelIndicator.BackColor = System.Drawing.Color.Black;
+            this.lblChannelIndicator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblChannelIndicator.Location = new System.Drawing.Point(81, 519);
+            this.lblChannelIndicator.Name = "lblChannelIndicator";
+            this.lblChannelIndicator.Size = new System.Drawing.Size(68, 20);
+            this.lblChannelIndicator.TabIndex = 24;
+            this.lblChannelIndicator.Text = "Say:";
+            this.lblChannelIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -703,6 +716,7 @@ namespace BotFarm
             this.BackgroundImage = global::Client.Properties.Resources.bgdesign4;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1038, 544);
+            this.Controls.Add(this.lblChannelIndicator);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.cBStatusFlag);
@@ -807,5 +821,6 @@ namespace BotFarm
         private ToolStripMenuItem toolStripMenuItem3;
         private ToolStripMenuItem toolStripMenuItem4;
         private ToolStripMenuItem toolStripMenuItem5;
+        private Label lblChannelIndicator;
     }
 }

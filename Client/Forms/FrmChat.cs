@@ -426,6 +426,8 @@ namespace BotFarm
                             int.Parse(lValueParts[0].Replace("/", "")));
                         break;
                 }
+
+                lblChannelIndicator.Text = $"{_currentChannel.ToString()}:";
             }
             else
             {
