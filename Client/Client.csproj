@@ -146,6 +146,7 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameSocket.cs" />
+    <Compile Include="Util\Channel.cs" />
     <Compile Include="Util\IteratedList.cs" />
     <Compile Include="Forms\NewChannel.cs">
       <SubType>Form</SubType>
