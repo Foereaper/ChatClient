@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,6 +20,9 @@ namespace BotFarm
         private int _lockColumnIndex = 0;
         public DateTime lastChatMessage;
         public DateTime timeNow;
+
+        private Channel _currentChannel = Channel.Say;
+        private string _currentChannelUser = null;
 
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]
         public struct CHARFORMAT2
@@ -375,125 +379,82 @@ namespace BotFarm
 
         private void MsgSend()
         {
-            /// this terrible code, for testing must obviously be changed/removed on release version.
-            lastChatMessage = DateTime.Now; //for AFK detection mode 1
-            try
+            // Redefine last chat message timestamp as current datetime for AFK detection regardless of message succession.
+            lastChatMessage = DateTime.Now;
+
+            // Store actual user-typed value in local variable for further processing.
+            var lMessage = textMessage.Text;
+
+            // Define string-array for holding the actual message components.
+            var lValueParts = lMessage.Split(new[] { ' ' }, 2);
+
+            if (lMessage.StartsWith("/"))
             {
-                var tmp = textMessage.Text;
-                if (tmp.Length > 3)
+                // Assume that an entered value consists out of multiple parts and assess first index of parts prior to handling actual content.
+                var lCommand = lValueParts[0];
+                switch (lCommand)
                 {
-                    if ((tmp.Substring(0, 3) == "/w "))
-                    {
-                        var tmp1 = tmp.Replace("/w ", "");
-                        var msg = tmp1.Split(' ');
-                        var user = msg[0];
-                        var message = tmp1.Substring(user.Length + 1);
-                        //var message = msg[1].ToString();
-                        //AppendText(ChatWindow, "Whisper to" + user + ": " + message + "\r\n", Color.Pink);
-                        //ChatWindow.AppendText("Whisper to" + user +": " + message + "\r\n");
-                        //ChatWindow.ScrollToCaret();                   
-                        SessionInit.Instance.factoryGame.DoWhisperChat(message, user);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if ((tmp.Substring(0, 3) == "/g "))
-                    {
-                        //var tmp2 = tmp.Replace("/g ", "");
-                        var tmp2 = tmp;
-                        tmp2 = tmp2.Substring(3);
-                        var message = tmp2;
-                        SessionInit.Instance.factoryGame.DoGuildChat(message);
-                        var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID];
-                        //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
-                        //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
-                        //ChatWindow.ScrollToCaret();
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if ((tmp.Substring(0, 3) == "/p "))
-                    {
-                        //var tmp2 = tmp.Replace("/g ", "");
-                        var tmp2 = tmp;
-                        tmp2 = tmp2.Substring(3);
-                        var message = tmp2;
-                        SessionInit.Instance.factoryGame.DoPartyChat(message);
-                        //var mychar = AutomatedGame.characterNameList[AutomatedGame.characterID].ToString();
-                        //AppendText(ChatWindow, "[Guild] [" + mychar + "]: " + message + "\r\n", Color.Green);
-                        //ChatWindow.AppendText("[Guild] [" + mychar + "]: " + message + "\r\n");
-                        //ChatWindow.ScrollToCaret();
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if ((tmp.Substring(0, 3) == "/in"))
-                    {
-                        var tmp2 = tmp;
-                        tmp2 = tmp2.Substring(8);
-                        var player = tmp2;
-                        SessionInit.Instance.factoryGame.InvitePlayerToParty(player);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
+                    default:
+                    case "/s":
+                    case "/":
+                        _currentChannel = Channel.Say;
+                        SessionInit.Instance.factoryGame.DoSayChat(lValueParts[1]);
+                        break;
+                    case "/w":
+                        lValueParts = lValueParts[1].Split(new[] {' '}, 2);
+                        _currentChannel = Channel.Whisper;
+                        _currentChannelUser = lValueParts[0];
+                        SessionInit.Instance.factoryGame.DoWhisperChat(lValueParts[1], lValueParts[0]);
+                        break;
+                    case "/g":
+                        _currentChannel = Channel.Guild;
+                        SessionInit.Instance.factoryGame.DoGuildChat(lValueParts[1]);
+                        break;
+                    case "/in":
+                        SessionInit.Instance.factoryGame.InvitePlayerToParty(lValueParts[1]);
+                        break;
+                    case "/p":
+                        _currentChannel = Channel.Party;
+                        SessionInit.Instance.factoryGame.DoPartyChat(lValueParts[1]);
+                        break;
+                    case "/1":
+                    case "/2":
+                    case "/3":
+                    case "/4":
+                        _currentChannel = (Channel)int.Parse(lValueParts[0].Replace("/", ""));
+                        SessionInit.Instance.factoryGame.SayChannel(lValueParts[1],
+                            int.Parse(lValueParts[0].Replace("/", "")));
+                        break;
                 }
-                if (tmp.Length > 2)
-                {
-                    if (tmp.Substring(0, 2) == "/j")
-                    {
-                        SessionInit.Instance.factoryGame.DoSayChat(textMessage.Text);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                }
-                if (tmp.Length > 1)
-                {
-                    if (tmp.Substring(0, 2) == "/1")
-                    {
-                        tmp = tmp.TrimStart('/');
-                        tmp = tmp.TrimStart('1');
-                        tmp = tmp.TrimStart(' ');
-                        SessionInit.Instance.factoryGame.SayChannel(tmp, 1);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if (tmp.Substring(0, 2) == "/2")
-                    {
-                        tmp = tmp.TrimStart('/');
-                        tmp = tmp.TrimStart('2');
-                        tmp = tmp.TrimStart(' ');
-                        SessionInit.Instance.factoryGame.SayChannel(tmp, 2);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if (tmp.Substring(0, 2) == "/3")
-                    {
-                        tmp = tmp.TrimStart('/');
-                        tmp = tmp.TrimStart('3');
-                        tmp = tmp.TrimStart(' ');
-                        SessionInit.Instance.factoryGame.SayChannel(tmp, 3);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if (tmp.Substring(0, 2) == "/4")
-                    {
-                        tmp = tmp.TrimStart('/');
-                        tmp = tmp.TrimStart('4');
-                        tmp = tmp.TrimStart(' ');
-                        SessionInit.Instance.factoryGame.SayChannel(tmp, 4);
-                        textMessage.Text = string.Empty;
-                        return;
-                    }
-                    if (tmp.Substring(0, 1) != "/")
-                    {
-                        //AppendText(ChatWindow, "Say: " + textMessage.Text + "\r\n", Color.DarkGray);
-                        SessionInit.Instance.factoryGame.DoSayChat(textMessage.Text);
-                        textMessage.Text = string.Empty;
-                    }
-                }
-                //textMessage.Text = string.Empty;
             }
-            catch
+            else
             {
-                AppendText(ChatWindow, "[System] : Malformed message." + "\r\n", Color.DarkRed, true);
+                switch (_currentChannel)
+                {
+                    default:
+                    case Channel.Say:
+                        SessionInit.Instance.factoryGame.DoSayChat(lMessage);
+                        break;
+                    case Channel.Whisper:
+                        SessionInit.Instance.factoryGame.DoWhisperChat(lMessage, _currentChannelUser);
+                        break;
+                    case Channel.Guild:
+                        SessionInit.Instance.factoryGame.DoGuildChat(lMessage);
+                        break;
+                    case Channel.Party:
+                        SessionInit.Instance.factoryGame.DoPartyChat(lMessage);
+                        break;
+                    case Channel.Channel1:
+                    case Channel.Channel2:
+                    case Channel.Channel3:
+                    case Channel.Channel4:
+                        SessionInit.Instance.factoryGame.SayChannel(lMessage, (int)_currentChannel);
+                        break;
+                }
             }
+
+            // Clear textMessage TextBox control to prevent 'easy' spamming.
+            textMessage.Clear();
         }
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
