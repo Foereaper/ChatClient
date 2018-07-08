@@ -364,7 +364,7 @@ namespace BotFarm
             // colorEditor
             // 
             this.colorEditor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.colorEditor.Location = new System.Drawing.Point(448, 49);
+            this.colorEditor.Location = new System.Drawing.Point(448, 56);
             this.colorEditor.Name = "colorEditor";
             this.colorEditor.Size = new System.Drawing.Size(162, 228);
             this.colorEditor.TabIndex = 20;
@@ -412,6 +412,7 @@ namespace BotFarm
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(437, 291);
+            this.Controls.Add(this.colorGrid);
             this.Controls.Add(this.btnRestoreDefault);
             this.Controls.Add(this.lbExampletxt);
             this.Controls.Add(this.ChatWindowPreview);
@@ -420,7 +421,6 @@ namespace BotFarm
             this.Controls.Add(this.gBInvites);
             this.Controls.Add(this.gBOther);
             this.Controls.Add(this.gbChat);
-            this.Controls.Add(this.colorGrid);
             this.Controls.Add(this.colorWheel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
