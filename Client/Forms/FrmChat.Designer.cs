@@ -292,11 +292,12 @@ namespace BotFarm
             // 
             this.textMessage.BackColor = System.Drawing.Color.Black;
             this.textMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textMessage.ForeColor = System.Drawing.Color.White;
+            this.textMessage.ForeColor = System.Drawing.Color.Gray;
             this.textMessage.Location = new System.Drawing.Point(149, 520);
             this.textMessage.Name = "textMessage";
             this.textMessage.Size = new System.Drawing.Size(285, 20);
             this.textMessage.TabIndex = 9;
+            this.textMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textMessage_KeyDown);
             // 
             // tabControl1
             // 
@@ -701,7 +702,7 @@ namespace BotFarm
             // 
             this.lblChannelIndicator.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblChannelIndicator.BackColor = System.Drawing.Color.Black;
-            this.lblChannelIndicator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblChannelIndicator.ForeColor = System.Drawing.Color.Gray;
             this.lblChannelIndicator.Location = new System.Drawing.Point(81, 519);
             this.lblChannelIndicator.Name = "lblChannelIndicator";
             this.lblChannelIndicator.Size = new System.Drawing.Size(68, 20);

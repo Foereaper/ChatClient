@@ -402,7 +402,7 @@ namespace BotFarm
                         case "/":
                             if (lValueParts.Length < 2) throw new CommandSyntaxException("Say requires at least one parameter (/(s) [message])");
 
-                            _currentChannel = Channel.Say;
+                            SwitchUserChannel(Channel.Say);
                             SessionInit.Instance.factoryGame.DoSayChat(lValueParts[1]);
                             break;
                         case "/w":
@@ -410,14 +410,13 @@ namespace BotFarm
                                 throw new CommandSyntaxException("Whispering requires three parameters (/w [user] [message])");
 
                             lValueParts = lValueParts[1].Split(new[] {' '}, 2);
-                            _currentChannel = Channel.Whisper;
-                            _currentChannelUser = lValueParts[0];
+                            SwitchUserChannel(Channel.Whisper, lValueParts[0]);
                             SessionInit.Instance.factoryGame.DoWhisperChat(lValueParts[1], _currentChannelUser);
                             break;
                         case "/g":
                             if (lValueParts.Length < 2) throw new CommandSyntaxException("Guild chat requires one parameter (/g [message])");
 
-                            _currentChannel = Channel.Guild;
+                            SwitchUserChannel(Channel.Guild);
                             SessionInit.Instance.factoryGame.DoGuildChat(lValueParts[1]);
                             break;
                         case "/in":
@@ -428,7 +427,7 @@ namespace BotFarm
                         case "/p":
                             if (lValueParts.Length < 2) throw new CommandSyntaxException("Party chat requires one parameter (/p [message])");
 
-                            _currentChannel = Channel.Party;
+                            SwitchUserChannel(Channel.Party);
                             SessionInit.Instance.factoryGame.DoPartyChat(lValueParts[1]);
                             break;
                         case "/1":
@@ -437,13 +436,11 @@ namespace BotFarm
                         case "/4":
                             if (lValueParts.Length < 2) throw new CommandSyntaxException("Channel messages expect at least one parameter (/1-4 [message])");
 
-                            _currentChannel = (Channel)int.Parse(lValueParts[0].Replace("/", ""));
+                            SwitchUserChannel((Channel)int.Parse(lValueParts[0].Replace("/", "")));
                             SessionInit.Instance.factoryGame.SayChannel(lValueParts[1],
                                 int.Parse(lValueParts[0].Replace("/", "")));
                             break;
                     }
-
-                    lblChannelIndicator.Text = $"{_currentChannel.ToString()}:";
                 }
                 else
                 {
@@ -478,6 +475,34 @@ namespace BotFarm
 
             // Clear textMessage TextBox control to prevent 'easy' spamming.
             textMessage.Clear();
+        }
+
+        private void SwitchUserChannel(Channel aChannel, string aUser = null)
+        {
+            var lColor = Color.Gray;
+
+            switch (aChannel)
+            {
+                default:
+                case Channel.Say:
+                    lColor = Color.Gray;
+                    break;
+                case Channel.Guild:
+                    lColor = Color.Green;
+                    break;
+                case Channel.Party:
+                    lColor = Color.Blue;
+                    break;
+                case Channel.Whisper:
+                    lColor = Color.MediumVioletRed;
+                    break;
+            }
+
+            _currentChannel = aChannel;
+            _currentChannelUser = aUser;
+            lblChannelIndicator.ForeColor = lColor;
+            textMessage.ForeColor = lColor;
+            lblChannelIndicator.Text = $"{_currentChannel.ToString()}:";
         }
 
         private void FrmChat_FormClosing(object sender, FormClosingEventArgs e)
@@ -1410,6 +1435,63 @@ namespace BotFarm
         private void cBStatusFlag_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Handles the KeyDown event of the textMessage control.
+        /// Is used for automated channel selection after a user pressed the spacebar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+        private void textMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Validate whether a keypress of the spacebar was registered, the entered value is at least 2 characters long 
+            // and starts with the command operator (/). If not, stop code execution; no further needs beyond that point.
+            if (e.KeyCode != Keys.Space || !(textMessage.Text.Length >= 1) || !textMessage.Text.StartsWith("/")) return;
+
+            // If validation was passed, continue handling automated channel switching.
+            var lCapturedCommand = textMessage.Text.Split(' ');
+
+            switch (lCapturedCommand.First())
+            {
+                case "/":
+                case "/s":
+                    SwitchUserChannel(Channel.Say);
+                    SanitizeMessageInput();
+                    e.SuppressKeyPress = true;
+                    break;
+                case "/g":
+                    SwitchUserChannel(Channel.Guild);
+                    SanitizeMessageInput();
+                    e.SuppressKeyPress = true;
+                    break;
+                case "/w":
+                    if (lCapturedCommand.Length == 2)
+                    {
+                        SwitchUserChannel(Channel.Whisper, lCapturedCommand[1]);
+                        SanitizeMessageInput();
+                        e.SuppressKeyPress = true;
+                    }
+                    break;
+                case "/p":
+                    SwitchUserChannel(Channel.Party);
+                    SanitizeMessageInput();
+                    e.SuppressKeyPress = true;
+                    break;
+                case "/1":
+                case "/2":
+                case "/3":
+                case "/4":
+                    SwitchUserChannel((Channel)int.Parse(lCapturedCommand.First().Replace("/", "")));
+                    SanitizeMessageInput();
+                    e.SuppressKeyPress = true;
+                    break;
+            }
+        }
+
+        private void SanitizeMessageInput()
+        {
+            textMessage.Clear();
         }
     }
 }
