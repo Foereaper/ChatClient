@@ -83,6 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chat\Definitions\ChannelNoticeType.cs" />
+    <Compile Include="Forms\LoginRealmSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginRealmSelection.Designer.cs">
+      <DependentUpon>LoginRealmSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmTicket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +230,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\CharacterSelection.resx">
       <DependentUpon>CharacterSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginRealmSelection.resx">
+      <DependentUpon>LoginRealmSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmChat.resx">
       <DependentUpon>FrmChat.cs</DependentUpon>

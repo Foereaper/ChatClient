@@ -9,6 +9,7 @@ namespace BotFarm
 {
     public partial class FrmLogin : Form
     {
+        private static int count;
         
         public FrmLogin(bool autologin)
         {
@@ -50,15 +51,40 @@ namespace BotFarm
         {
             if (AutomatedGame.IsLoggedIn())
             {
-                Hide();
                 authcheck.Enabled = false;
-                var realmselection = new RealmSelection();
-                realmselection.Show();   
+                Hide();
+                NextWindow();
             }
             if (AutomatedGame.AuthenticationError)
             {
                 autherror.Text = AutomatedGame.AuthErrorText;
             }
+        }
+
+        private void NextWindow()
+        {
+            CharacterSelection charselection = new CharacterSelection();
+            RealmSelection realm = new RealmSelection();
+            try
+            {
+                if(Settings.Default.DefaultLoginRealm == "")
+                {
+                    realm.Show();
+                }
+                /*else
+                {
+                    if (charselection.WindowState != System.Windows.Forms.FormWindowState.Normal)
+                    {
+                        charselection.Show();
+                    }
+                }*/
+            }
+            catch
+            {
+                realm.Show();
+            }
+            //var realmselection = new RealmSelection();
+            //realmselection.Show();
         }
 
         /// <summary> 

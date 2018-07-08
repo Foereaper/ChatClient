@@ -574,6 +574,12 @@ namespace Client
             SendPacket(response);
         }
 
+        public void DoOfficerChat(string message)
+        {
+            //todo
+            //what opcode? test guild to test officer mode.
+        }
+
         public void RequestGuildList()
         {
             var response = new OutPacket(WorldCommand.CMSG_GUILD_ROSTER);

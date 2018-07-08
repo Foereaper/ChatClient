@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using Client.Properties;
 using Client;
+using Client.Forms;
 
 namespace BotFarm
 {
@@ -10,6 +12,22 @@ namespace BotFarm
         public RealmSelection()
         {
             InitializeComponent();
+            try
+            {
+                if (Settings.Default.DefaultLoginRealm != "")
+                {
+                    if (AutomatedGame.presentrealmList.Contains(Settings.Default.DefaultLoginRealm.ToString()))
+                    {
+                        int index = AutomatedGame.presentrealmList.IndexOf(Settings.Default.DefaultLoginRealm.ToString());
+                        AutomatedGame.realmidGUI = index;
+                        AutomatedGame.realmchosen = true;
+                        Hide();
+                        var characterselection = new CharacterSelection();
+                        characterselection.Show();
+                    }
+                }
+            }
+            catch { }
         }
 
         private void lb1_SelectedIndexChanged(object sender, EventArgs e)
@@ -30,7 +48,7 @@ namespace BotFarm
             foreach (var realmname in AutomatedGame.presentrealmList)
             {
                 lb1.Items.Add(realmname);
-            }
+            }         
         }
 
         private void RealmSelection_FormClosing(object sender, FormClosingEventArgs e)

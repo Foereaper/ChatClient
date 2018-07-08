@@ -226,5 +226,17 @@ namespace Client.Properties {
                 this["ChatWindowBackgroundColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultLoginRealm {
+            get {
+                return ((string)(this["DefaultLoginRealm"]));
+            }
+            set {
+                this["DefaultLoginRealm"] = value;
+            }
+        }
     }
 }

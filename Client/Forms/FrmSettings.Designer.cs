@@ -34,6 +34,7 @@ namespace BotFarm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.cBAutoJoin = new System.Windows.Forms.CheckBox();
             this.gbChat = new System.Windows.Forms.GroupBox();
+            this.btnChangeLoginRealm = new System.Windows.Forms.Button();
             this.btnChatWindowBGC = new System.Windows.Forms.Button();
             this.cbDisableAllColors = new System.Windows.Forms.CheckBox();
             this.cbDisableClickableUsernames = new System.Windows.Forms.CheckBox();
@@ -79,6 +80,7 @@ namespace BotFarm
             // 
             // gbChat
             // 
+            this.gbChat.Controls.Add(this.btnChangeLoginRealm);
             this.gbChat.Controls.Add(this.btnChatWindowBGC);
             this.gbChat.Controls.Add(this.cbDisableAllColors);
             this.gbChat.Controls.Add(this.cbDisableClickableUsernames);
@@ -94,11 +96,21 @@ namespace BotFarm
             this.gbChat.TabStop = false;
             this.gbChat.Text = "Chat";
             // 
+            // btnChangeLoginRealm
+            // 
+            this.btnChangeLoginRealm.Location = new System.Drawing.Point(130, 192);
+            this.btnChangeLoginRealm.Name = "btnChangeLoginRealm";
+            this.btnChangeLoginRealm.Size = new System.Drawing.Size(75, 37);
+            this.btnChangeLoginRealm.TabIndex = 9;
+            this.btnChangeLoginRealm.Text = "Change login realm";
+            this.btnChangeLoginRealm.UseVisualStyleBackColor = true;
+            this.btnChangeLoginRealm.Click += new System.EventHandler(this.btnChangeLoginRealm_Click);
+            // 
             // btnChatWindowBGC
             // 
-            this.btnChatWindowBGC.Location = new System.Drawing.Point(20, 194);
+            this.btnChatWindowBGC.Location = new System.Drawing.Point(7, 192);
             this.btnChatWindowBGC.Name = "btnChatWindowBGC";
-            this.btnChatWindowBGC.Size = new System.Drawing.Size(171, 36);
+            this.btnChatWindowBGC.Size = new System.Drawing.Size(122, 37);
             this.btnChatWindowBGC.TabIndex = 8;
             this.btnChatWindowBGC.Text = "Change chat window background color";
             this.btnChatWindowBGC.UseVisualStyleBackColor = true;
@@ -458,5 +470,6 @@ namespace BotFarm
         private RichTextBox ChatWindowPreview;
         private Label lbExampletxt;
         private Button btnRestoreDefault;
+        private Button btnChangeLoginRealm;
     }
 }

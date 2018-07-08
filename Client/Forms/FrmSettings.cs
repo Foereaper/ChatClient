@@ -278,5 +278,11 @@ namespace BotFarm
                 MessageBox.Show("Transparent colors are not supported.", "Sorry", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void btnChangeLoginRealm_Click(object sender, EventArgs e)
+        {
+            var LoginRealm = new LoginRealmSelection();
+            LoginRealm.Show();
+        }
     }
 }
