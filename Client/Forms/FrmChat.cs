@@ -188,6 +188,12 @@ namespace BotFarm
                     //ChatWindow.ScrollToCaret();
                     continue;
                 }
+                var officerC = messageDataUTF8.Substring(0, 9); //[Officer] 
+                if (officerC == "[Officer]")
+                {
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Green);
+                    continue;
+                }
                 var systemC = messageDataUTF8.Substring(0, 8); //[System] 
                 if (systemC == "[System]")
                 {
@@ -422,6 +428,17 @@ namespace BotFarm
                 var tmp = textMessage.Text;
                 if (tmp.Length > 3)
                 {
+                    //DoOfficerChat
+                    if ((tmp.Substring(0, 3) == "/o "))
+                    {
+                        //var tmp2 = tmp.Replace("/g ", "");
+                        var tmp2 = tmp;
+                        tmp2 = tmp2.Substring(3);
+                        var message = tmp2;
+                        SessionInit.Instance.factoryGame.DoOfficerChat(message);
+                        textMessage.Text = string.Empty;
+                        return;
+                    }
                     if ((tmp.Substring(0, 3) == "/w "))
                     {
                         var tmp1 = tmp.Replace("/w ", "");

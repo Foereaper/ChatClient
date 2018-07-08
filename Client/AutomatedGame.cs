@@ -576,8 +576,14 @@ namespace Client
 
         public void DoOfficerChat(string message)
         {
-            //todo
-            //what opcode? test guild to test officer mode.
+            var response = new OutPacket(WorldCommand.CMSG_MESSAGECHAT);
+
+            response.Write((uint)ChatMessageType.Officer);
+            var race = World.SelectedCharacter.Race;
+            var language = race.IsHorde() ? Language.Orcish : Language.Common;
+            response.Write((uint)language);
+            response.Write(message.ToCString());
+            SendPacket(response);
         }
 
         public void RequestGuildList()

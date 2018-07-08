@@ -63,7 +63,7 @@ namespace BotFarm
 
         private void NextWindow()
         {
-            CharacterSelection charselection = new CharacterSelection();
+            //CharacterSelection charselection = new CharacterSelection();
             RealmSelection realm = new RealmSelection();
             try
             {
