@@ -9,7 +9,12 @@
 - Group / party listview full + player join/leave notifications
 - Friend list /w Add & Remove friend listview (Player, Guild, LvL, online/offline & system notification on friend online/offline state change)
 - Character status
-- Chat channels like Whisper, Guild, Party, General, ..
+- Simple afk system and status changer
+- Chat window color picker
+- System channel colors added
+- Achievements show the right items instead of %
+- A lot of settings
+- Chat channels like Whisper, Guild, Party, General, Officer..
 - Party/Group chat invitation and listview of players / disband group
 - Join custom channel, create custom channel /w pw, leave channels
 
