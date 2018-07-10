@@ -93,7 +93,6 @@ namespace BotFarm
             this.whisperToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lblChannelIndicator = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -682,21 +681,6 @@ namespace BotFarm
             this.removeFriendToolStripMenuItem.Text = "Remove friend";
             this.removeFriendToolStripMenuItem.Click += new System.EventHandler(this.removeFriendToolStripMenuItem_Click);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Global",
-            "Guild",
-            "Officer",
-            "Party",
-            "Raid"});
-            this.comboBox1.Location = new System.Drawing.Point(950, 27);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(88, 21);
-            this.comboBox1.TabIndex = 23;
-            this.comboBox1.Visible = false;
-            // 
             // lblChannelIndicator
             // 
             this.lblChannelIndicator.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -718,7 +702,6 @@ namespace BotFarm
             this.ClientSize = new System.Drawing.Size(1038, 544);
             this.Controls.Add(this.lblChannelIndicator);
             this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.cBStatusFlag);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.textMessage);
@@ -808,7 +791,6 @@ namespace BotFarm
         private ToolStripMenuItem whisperToolStripMenuItem2;
         private ToolStripMenuItem removeFriendToolStripMenuItem;
         private ToolStripMenuItem inviteToPartyToolStripMenuItem1;
-        private ComboBox comboBox1;
         private TabPage tabGuild;
         private TabPage tabTicket;
         private ToolStripMenuItem tbButtonToolStripMenuItem;
