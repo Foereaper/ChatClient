@@ -49,6 +49,7 @@ namespace BotFarm
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.password = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -59,9 +60,10 @@ namespace BotFarm
             this.username.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(26)))));
             this.username.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.username.ForeColor = System.Drawing.Color.White;
-            this.username.Location = new System.Drawing.Point(34, 147);
+            this.username.Location = new System.Drawing.Point(45, 181);
+            this.username.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(202, 13);
+            this.username.Size = new System.Drawing.Size(269, 15);
             this.username.TabIndex = 1;
             this.username.Text = global::Client.Properties.Settings.Default.Username;
             // 
@@ -70,9 +72,10 @@ namespace BotFarm
             this.lblAcc.AutoSize = true;
             this.lblAcc.BackColor = System.Drawing.Color.Transparent;
             this.lblAcc.ForeColor = System.Drawing.Color.White;
-            this.lblAcc.Location = new System.Drawing.Point(21, 125);
+            this.lblAcc.Location = new System.Drawing.Point(28, 154);
+            this.lblAcc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAcc.Name = "lblAcc";
-            this.lblAcc.Size = new System.Drawing.Size(81, 13);
+            this.lblAcc.Size = new System.Drawing.Size(104, 17);
             this.lblAcc.TabIndex = 4;
             this.lblAcc.Text = "Account Name:";
             // 
@@ -81,9 +84,10 @@ namespace BotFarm
             this.lblPass.AutoSize = true;
             this.lblPass.BackColor = System.Drawing.Color.Transparent;
             this.lblPass.ForeColor = System.Drawing.Color.White;
-            this.lblPass.Location = new System.Drawing.Point(21, 178);
+            this.lblPass.Location = new System.Drawing.Point(28, 219);
+            this.lblPass.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPass.Name = "lblPass";
-            this.lblPass.Size = new System.Drawing.Size(56, 13);
+            this.lblPass.Size = new System.Drawing.Size(73, 17);
             this.lblPass.TabIndex = 5;
             this.lblPass.Text = "Password:";
             // 
@@ -96,9 +100,10 @@ namespace BotFarm
             this.BtnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnLogin.ForeColor = System.Drawing.SystemColors.Control;
             this.BtnLogin.Image = ((System.Drawing.Image)(resources.GetObject("BtnLogin.Image")));
-            this.BtnLogin.Location = new System.Drawing.Point(24, 272);
+            this.BtnLogin.Location = new System.Drawing.Point(32, 335);
+            this.BtnLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BtnLogin.Name = "BtnLogin";
-            this.BtnLogin.Size = new System.Drawing.Size(214, 34);
+            this.BtnLogin.Size = new System.Drawing.Size(285, 42);
             this.BtnLogin.TabIndex = 6;
             this.BtnLogin.Text = "Sign in";
             this.BtnLogin.UseVisualStyleBackColor = false;
@@ -110,9 +115,10 @@ namespace BotFarm
             this.autherror.BackColor = System.Drawing.Color.Transparent;
             this.autherror.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autherror.ForeColor = System.Drawing.Color.Red;
-            this.autherror.Location = new System.Drawing.Point(23, 252);
+            this.autherror.Location = new System.Drawing.Point(31, 310);
+            this.autherror.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.autherror.Name = "autherror";
-            this.autherror.Size = new System.Drawing.Size(0, 13);
+            this.autherror.Size = new System.Drawing.Size(0, 17);
             this.autherror.TabIndex = 9;
             // 
             // authcheck
@@ -122,9 +128,10 @@ namespace BotFarm
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(477, 17);
+            this.button1.Location = new System.Drawing.Point(636, 21);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(230, 23);
+            this.button1.Size = new System.Drawing.Size(307, 28);
             this.button1.TabIndex = 10;
             this.button1.Text = "Copy debug log";
             this.button1.UseVisualStyleBackColor = true;
@@ -132,9 +139,10 @@ namespace BotFarm
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(342, 27);
+            this.label1.Location = new System.Drawing.Point(456, 33);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.Size = new System.Drawing.Size(105, 17);
             this.label1.TabIndex = 11;
             this.label1.Text = "Debug shizzle :";
             // 
@@ -144,9 +152,10 @@ namespace BotFarm
             this.loginSave.BackColor = System.Drawing.Color.Transparent;
             this.loginSave.Cursor = System.Windows.Forms.Cursors.Default;
             this.loginSave.ForeColor = System.Drawing.Color.White;
-            this.loginSave.Location = new System.Drawing.Point(23, 234);
+            this.loginSave.Location = new System.Drawing.Point(31, 288);
+            this.loginSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.loginSave.Name = "loginSave";
-            this.loginSave.Size = new System.Drawing.Size(147, 17);
+            this.loginSave.Size = new System.Drawing.Size(194, 21);
             this.loginSave.TabIndex = 12;
             this.loginSave.Text = "Remember my credentials";
             this.loginSave.UseVisualStyleBackColor = false;
@@ -154,27 +163,30 @@ namespace BotFarm
             // lblLogonserver
             // 
             this.lblLogonserver.AutoSize = true;
-            this.lblLogonserver.Location = new System.Drawing.Point(59, 358);
+            this.lblLogonserver.Location = new System.Drawing.Point(79, 441);
+            this.lblLogonserver.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLogonserver.Name = "lblLogonserver";
-            this.lblLogonserver.Size = new System.Drawing.Size(75, 13);
+            this.lblLogonserver.Size = new System.Drawing.Size(100, 17);
             this.lblLogonserver.TabIndex = 7;
             this.lblLogonserver.Text = "Logon server :";
             this.lblLogonserver.Visible = false;
             // 
             // logonserver
             // 
-            this.logonserver.Location = new System.Drawing.Point(62, 386);
+            this.logonserver.Location = new System.Drawing.Point(83, 475);
+            this.logonserver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.logonserver.Name = "logonserver";
-            this.logonserver.Size = new System.Drawing.Size(217, 20);
+            this.logonserver.Size = new System.Drawing.Size(288, 22);
             this.logonserver.TabIndex = 0;
             this.logonserver.Text = "logon.wowgasm-reloaded.org";
             this.logonserver.Visible = false;
             // 
             // printPreviewControl1
             // 
-            this.printPreviewControl1.Location = new System.Drawing.Point(158, 400);
+            this.printPreviewControl1.Location = new System.Drawing.Point(211, 492);
+            this.printPreviewControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.printPreviewControl1.Name = "printPreviewControl1";
-            this.printPreviewControl1.Size = new System.Drawing.Size(100, 100);
+            this.printPreviewControl1.Size = new System.Drawing.Size(133, 123);
             this.printPreviewControl1.TabIndex = 13;
             // 
             // Logo
@@ -182,9 +194,10 @@ namespace BotFarm
             this.Logo.BackColor = System.Drawing.Color.Transparent;
             this.Logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Logo.Image = global::Client.Properties.Resources.logo_new;
-            this.Logo.Location = new System.Drawing.Point(1, 6);
+            this.Logo.Location = new System.Drawing.Point(1, 7);
+            this.Logo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Logo.Name = "Logo";
-            this.Logo.Size = new System.Drawing.Size(260, 93);
+            this.Logo.Size = new System.Drawing.Size(347, 114);
             this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Logo.TabIndex = 3;
             this.Logo.TabStop = false;
@@ -194,9 +207,10 @@ namespace BotFarm
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = global::Client.Properties.Resources.loginbox1;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(21, 141);
+            this.pictureBox1.Location = new System.Drawing.Point(28, 174);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(232, 30);
+            this.pictureBox1.Size = new System.Drawing.Size(309, 37);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
             // 
@@ -205,9 +219,10 @@ namespace BotFarm
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.BackgroundImage = global::Client.Properties.Resources.loginbox1;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(21, 194);
+            this.pictureBox2.Location = new System.Drawing.Point(28, 239);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(232, 30);
+            this.pictureBox2.Size = new System.Drawing.Size(309, 37);
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             // 
@@ -216,21 +231,38 @@ namespace BotFarm
             this.password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(26)))));
             this.password.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.password.ForeColor = System.Drawing.Color.White;
-            this.password.Location = new System.Drawing.Point(36, 199);
+            this.password.Location = new System.Drawing.Point(48, 245);
+            this.password.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
-            this.password.Size = new System.Drawing.Size(202, 13);
+            this.password.Size = new System.Drawing.Size(269, 15);
             this.password.TabIndex = 2;
             this.password.Text = global::Client.Properties.Settings.Default.Password;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(27)))), ((int)(((byte)(45)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button2.Location = new System.Drawing.Point(324, -2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(23, 23);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "X";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // FrmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(262, 322);
+            this.ClientSize = new System.Drawing.Size(349, 396);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.username);
             this.Controls.Add(this.printPreviewControl1);
             this.Controls.Add(this.loginSave);
@@ -248,6 +280,7 @@ namespace BotFarm
             this.Controls.Add(this.pictureBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -279,5 +312,6 @@ namespace BotFarm
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private TextBox password;
+        private Button button2;
     }
 }
