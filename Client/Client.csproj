@@ -95,6 +95,12 @@
     <Compile Include="Forms\FrmTicket.Designer.cs">
       <DependentUpon>FrmTicket.cs</DependentUpon>
     </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -150,6 +156,8 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameSocket.cs" />
+    <Compile Include="Util\Channel.cs" />
+    <Compile Include="Util\CommandSyntaxException.cs" />
     <Compile Include="Util\IteratedList.cs" />
     <Compile Include="Forms\NewChannel.cs">
       <SubType>Form</SubType>
@@ -158,11 +166,6 @@
       <DependentUpon>NewChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Forms\RealmSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +228,13 @@
     <Content Include="Data\areatable.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\bg.jpg" />
+    <None Include="Resources\textbox_white.png" />
+    <None Include="Resources\loginbox1.png" />
+    <None Include="Resources\loginbox_fin2.png" />
+    <None Include="Resources\bg.png" />
+    <None Include="Resources\bgdesign4.jpg" />
+    <None Include="Resources\backbutton.png" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>

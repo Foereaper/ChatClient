@@ -39,9 +39,7 @@ namespace BotFarm
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.channelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.joinAllChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createNewChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.leaveAllChannelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leaveChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +85,6 @@ namespace BotFarm
             this.tbButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resurrectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cBStatusFlag = new System.Windows.Forms.ComboBox();
-            this.lblStatusflag = new System.Windows.Forms.Label();
             this.contextMenuGroupList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addFriendToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,6 +94,7 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lblChannelIndicator = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -121,7 +119,7 @@ namespace BotFarm
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1087, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1038, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu";
             // 
@@ -159,34 +157,18 @@ namespace BotFarm
             // channelToolStripMenuItem
             // 
             this.channelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.joinAllChannelsToolStripMenuItem,
             this.createNewChannelToolStripMenuItem,
-            this.leaveAllChannelsToolStripMenuItem,
             this.leaveChannelToolStripMenuItem});
             this.channelToolStripMenuItem.Name = "channelToolStripMenuItem";
             this.channelToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.channelToolStripMenuItem.Text = "Channel";
             // 
-            // joinAllChannelsToolStripMenuItem
-            // 
-            this.joinAllChannelsToolStripMenuItem.Name = "joinAllChannelsToolStripMenuItem";
-            this.joinAllChannelsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.joinAllChannelsToolStripMenuItem.Text = "Join all default channels";
-            this.joinAllChannelsToolStripMenuItem.Click += new System.EventHandler(this.joinAllChannelsToolStripMenuItem_Click);
-            // 
             // createNewChannelToolStripMenuItem
             // 
             this.createNewChannelToolStripMenuItem.Name = "createNewChannelToolStripMenuItem";
-            this.createNewChannelToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.createNewChannelToolStripMenuItem.Text = "Create new channel";
+            this.createNewChannelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.createNewChannelToolStripMenuItem.Text = "Join/Create channel";
             this.createNewChannelToolStripMenuItem.Click += new System.EventHandler(this.createNewChannelToolStripMenuItem_Click);
-            // 
-            // leaveAllChannelsToolStripMenuItem
-            // 
-            this.leaveAllChannelsToolStripMenuItem.Name = "leaveAllChannelsToolStripMenuItem";
-            this.leaveAllChannelsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.leaveAllChannelsToolStripMenuItem.Text = "Leave all channels";
-            this.leaveAllChannelsToolStripMenuItem.Click += new System.EventHandler(this.leaveAllChannelsToolStripMenuItem_Click);
             // 
             // leaveChannelToolStripMenuItem
             // 
@@ -196,7 +178,7 @@ namespace BotFarm
             this.toolStripMenuItem4,
             this.toolStripMenuItem5});
             this.leaveChannelToolStripMenuItem.Name = "leaveChannelToolStripMenuItem";
-            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.leaveChannelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.leaveChannelToolStripMenuItem.Text = "Leave channel";
             this.leaveChannelToolStripMenuItem.Click += new System.EventHandler(this.leaveChannelToolStripMenuItem_Click);
             // 
@@ -253,18 +235,18 @@ namespace BotFarm
             // 
             this.ChatWindow.BackColor = System.Drawing.SystemColors.Window;
             this.ChatWindow.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ChatWindow.Location = new System.Drawing.Point(12, 27);
+            this.ChatWindow.Location = new System.Drawing.Point(4, 24);
             this.ChatWindow.Name = "ChatWindow";
             this.ChatWindow.ReadOnly = true;
             this.ChatWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.ChatWindow.Size = new System.Drawing.Size(502, 488);
+            this.ChatWindow.Size = new System.Drawing.Size(514, 488);
             this.ChatWindow.TabIndex = 1;
             this.ChatWindow.Text = "";
             this.ChatWindow.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.ChatWindow_LinkClicked);
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(443, 518);
+            this.btnSend.Location = new System.Drawing.Point(441, 518);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 23);
             this.btnSend.TabIndex = 3;
@@ -275,7 +257,9 @@ namespace BotFarm
             // lblChar
             // 
             this.lblChar.AutoSize = true;
-            this.lblChar.Location = new System.Drawing.Point(544, 36);
+            this.lblChar.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblChar.ForeColor = System.Drawing.Color.Black;
+            this.lblChar.Location = new System.Drawing.Point(914, 5);
             this.lblChar.Name = "lblChar";
             this.lblChar.Size = new System.Drawing.Size(19, 13);
             this.lblChar.TabIndex = 7;
@@ -283,14 +267,18 @@ namespace BotFarm
             // 
             // btnDisconnect
             // 
+            this.btnDisconnect.BackColor = System.Drawing.Color.Transparent;
+            this.btnDisconnect.BackgroundImage = global::Client.Properties.Resources.backbutton;
+            this.btnDisconnect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnDisconnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.Location = new System.Drawing.Point(520, 29);
+            this.btnDisconnect.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisconnect.ForeColor = System.Drawing.Color.Transparent;
+            this.btnDisconnect.Location = new System.Drawing.Point(520, 77);
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(18, 23);
+            this.btnDisconnect.Size = new System.Drawing.Size(20, 25);
             this.btnDisconnect.TabIndex = 8;
-            this.btnDisconnect.Text = "<";
-            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.UseVisualStyleBackColor = false;
+            this.btnDisconnect.Visible = false;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
             // chattimer
@@ -301,11 +289,14 @@ namespace BotFarm
             // 
             // textMessage
             // 
-            this.textMessage.BackColor = System.Drawing.Color.DarkGray;
-            this.textMessage.Location = new System.Drawing.Point(94, 521);
+            this.textMessage.BackColor = System.Drawing.Color.Black;
+            this.textMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textMessage.ForeColor = System.Drawing.Color.Gray;
+            this.textMessage.Location = new System.Drawing.Point(149, 520);
             this.textMessage.Name = "textMessage";
-            this.textMessage.Size = new System.Drawing.Size(346, 20);
+            this.textMessage.Size = new System.Drawing.Size(285, 20);
             this.textMessage.TabIndex = 9;
+            this.textMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textMessage_KeyDown);
             // 
             // tabControl1
             // 
@@ -315,10 +306,10 @@ namespace BotFarm
             this.tabControl1.Controls.Add(this.tabGroup);
             this.tabControl1.Controls.Add(this.tabFriend);
             this.tabControl1.Controls.Add(this.tabTicket);
-            this.tabControl1.Location = new System.Drawing.Point(520, 58);
+            this.tabControl1.Location = new System.Drawing.Point(520, 108);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(514, 483);
+            this.tabControl1.Size = new System.Drawing.Size(514, 433);
             this.tabControl1.TabIndex = 20;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -330,7 +321,7 @@ namespace BotFarm
             this.tabWho.Controls.Add(this.listWho);
             this.tabWho.Location = new System.Drawing.Point(4, 22);
             this.tabWho.Name = "tabWho";
-            this.tabWho.Size = new System.Drawing.Size(506, 457);
+            this.tabWho.Size = new System.Drawing.Size(506, 407);
             this.tabWho.TabIndex = 2;
             this.tabWho.Text = "Who";
             this.tabWho.UseVisualStyleBackColor = true;
@@ -368,7 +359,7 @@ namespace BotFarm
             this.listWho.GridLines = true;
             this.listWho.Location = new System.Drawing.Point(0, 30);
             this.listWho.Name = "listWho";
-            this.listWho.Size = new System.Drawing.Size(506, 434);
+            this.listWho.Size = new System.Drawing.Size(506, 377);
             this.listWho.TabIndex = 1;
             this.listWho.UseCompatibleStateImageBehavior = false;
             this.listWho.View = System.Windows.Forms.View.Details;
@@ -380,7 +371,7 @@ namespace BotFarm
             this.tabGuild.Location = new System.Drawing.Point(4, 22);
             this.tabGuild.Name = "tabGuild";
             this.tabGuild.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGuild.Size = new System.Drawing.Size(506, 457);
+            this.tabGuild.Size = new System.Drawing.Size(506, 407);
             this.tabGuild.TabIndex = 4;
             this.tabGuild.Text = "Guild";
             this.tabGuild.UseVisualStyleBackColor = true;
@@ -404,7 +395,7 @@ namespace BotFarm
             this.tabChannel.Location = new System.Drawing.Point(4, 22);
             this.tabChannel.Name = "tabChannel";
             this.tabChannel.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChannel.Size = new System.Drawing.Size(506, 457);
+            this.tabChannel.Size = new System.Drawing.Size(506, 407);
             this.tabChannel.TabIndex = 1;
             this.tabChannel.Text = "Channel";
             this.tabChannel.UseVisualStyleBackColor = true;
@@ -449,7 +440,7 @@ namespace BotFarm
             this.tabGroup.Location = new System.Drawing.Point(4, 22);
             this.tabGroup.Name = "tabGroup";
             this.tabGroup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGroup.Size = new System.Drawing.Size(506, 457);
+            this.tabGroup.Size = new System.Drawing.Size(506, 407);
             this.tabGroup.TabIndex = 0;
             this.tabGroup.Text = "Group";
             this.tabGroup.UseVisualStyleBackColor = true;
@@ -506,7 +497,7 @@ namespace BotFarm
             this.tabFriend.Location = new System.Drawing.Point(4, 22);
             this.tabFriend.Name = "tabFriend";
             this.tabFriend.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFriend.Size = new System.Drawing.Size(506, 457);
+            this.tabFriend.Size = new System.Drawing.Size(506, 407);
             this.tabFriend.TabIndex = 3;
             this.tabFriend.Text = "Friends";
             this.tabFriend.UseVisualStyleBackColor = true;
@@ -545,7 +536,7 @@ namespace BotFarm
             this.tabTicket.Location = new System.Drawing.Point(4, 22);
             this.tabTicket.Name = "tabTicket";
             this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTicket.Size = new System.Drawing.Size(506, 457);
+            this.tabTicket.Size = new System.Drawing.Size(506, 407);
             this.tabTicket.TabIndex = 5;
             this.tabTicket.Text = "Tickets";
             this.tabTicket.UseVisualStyleBackColor = true;
@@ -624,20 +615,12 @@ namespace BotFarm
             "Available",
             "Away",
             "Busy"});
-            this.cBStatusFlag.Location = new System.Drawing.Point(1018, 36);
+            this.cBStatusFlag.Location = new System.Drawing.Point(3, 520);
             this.cBStatusFlag.Name = "cBStatusFlag";
-            this.cBStatusFlag.Size = new System.Drawing.Size(69, 21);
+            this.cBStatusFlag.Size = new System.Drawing.Size(78, 21);
             this.cBStatusFlag.TabIndex = 21;
+            this.cBStatusFlag.SelectedIndexChanged += new System.EventHandler(this.cBStatusFlag_SelectedIndexChanged);
             this.cBStatusFlag.SelectionChangeCommitted += new System.EventHandler(this.cBStatusFlag_SelectionChangeCommitted);
-            // 
-            // lblStatusflag
-            // 
-            this.lblStatusflag.AutoSize = true;
-            this.lblStatusflag.Location = new System.Drawing.Point(975, 39);
-            this.lblStatusflag.Name = "lblStatusflag";
-            this.lblStatusflag.Size = new System.Drawing.Size(37, 13);
-            this.lblStatusflag.TabIndex = 22;
-            this.lblStatusflag.Text = "Status";
             // 
             // contextMenuGroupList
             // 
@@ -708,26 +691,42 @@ namespace BotFarm
             "Officer",
             "Party",
             "Raid"});
-            this.comboBox1.Location = new System.Drawing.Point(0, 520);
+            this.comboBox1.Location = new System.Drawing.Point(950, 27);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(88, 21);
             this.comboBox1.TabIndex = 23;
+            this.comboBox1.Visible = false;
+            // 
+            // lblChannelIndicator
+            // 
+            this.lblChannelIndicator.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblChannelIndicator.BackColor = System.Drawing.Color.Black;
+            this.lblChannelIndicator.ForeColor = System.Drawing.Color.Gray;
+            this.lblChannelIndicator.Location = new System.Drawing.Point(81, 519);
+            this.lblChannelIndicator.Name = "lblChannelIndicator";
+            this.lblChannelIndicator.Size = new System.Drawing.Size(68, 20);
+            this.lblChannelIndicator.TabIndex = 24;
+            this.lblChannelIndicator.Text = "Say:";
+            this.lblChannelIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1087, 544);
+            this.BackgroundImage = global::Client.Properties.Resources.bgdesign4;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(1038, 544);
+            this.Controls.Add(this.lblChannelIndicator);
+            this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.lblStatusflag);
             this.Controls.Add(this.cBStatusFlag);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.textMessage);
-            this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.lblChar);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.ChatWindow);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -773,7 +772,6 @@ namespace BotFarm
         private TextBox textMessage;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem channelToolStripMenuItem;
-        private ToolStripMenuItem joinAllChannelsToolStripMenuItem;
         private ToolStripMenuItem createNewChannelToolStripMenuItem;
         private TabControl tabControl1;
         private TabPage tabGroup;
@@ -796,7 +794,6 @@ namespace BotFarm
         private PictureBox refreshWhoList;
         private TabPage tabFriend;
         private ComboBox cBStatusFlag;
-        private Label lblStatusflag;
         private ListView listCustom;
         private Label label2;
         private ListView listWorld;
@@ -811,12 +808,6 @@ namespace BotFarm
         private ToolStripMenuItem whisperToolStripMenuItem2;
         private ToolStripMenuItem removeFriendToolStripMenuItem;
         private ToolStripMenuItem inviteToPartyToolStripMenuItem1;
-        private ToolStripMenuItem leaveAllChannelsToolStripMenuItem;
-        private ToolStripMenuItem leaveChannelToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
-        private ToolStripMenuItem toolStripMenuItem4;
-        private ToolStripMenuItem toolStripMenuItem5;
         private ComboBox comboBox1;
         private TabPage tabGuild;
         private TabPage tabTicket;
@@ -824,6 +815,12 @@ namespace BotFarm
         private ToolStripMenuItem resurrectToolStripMenuItem;
         private ToolStripMenuItem changeToolStripMenuItem;
         private ToolStripMenuItem logoutToolStripMenuItem;
+        private ToolStripMenuItem leaveChannelToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem4;
+        private ToolStripMenuItem toolStripMenuItem5;
+        private Label lblChannelIndicator;
         public RichTextBox ChatWindow;
     }
 }
