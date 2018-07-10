@@ -167,7 +167,7 @@ namespace BotFarm
                 var whisperSendC = messageDataUTF8.Substring(0, 2); //To
                 if (whisperSendC == "To")
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.HotPink);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -188,7 +188,7 @@ namespace BotFarm
                 var guildC = messageDataUTF8.Substring(0, 7); //[Guild] 
                 if (guildC == "[Guild]")
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Green);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Lime);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -209,7 +209,7 @@ namespace BotFarm
                     }
                     else
                     {
-                        AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
+                        AppendText(ChatWindow, messageData + "\r\n", Color.Gold, true);
                     }
                     //AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
@@ -233,12 +233,12 @@ namespace BotFarm
                 {
                     if(Settings.Default.NPCChat == false)
                     {
-                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.White, true);
                     }
                 }
                 else
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.White, true);
                 }
                 
             }
@@ -1551,6 +1551,11 @@ namespace BotFarm
         private void SanitizeMessageInput()
         {
             textMessage.Clear();
+        }
+
+        private void ChatWindow_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
