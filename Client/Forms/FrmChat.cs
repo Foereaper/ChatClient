@@ -615,8 +615,8 @@ namespace BotFarm
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var settings = new FrmSettings();
-            settings.Show();
+            var lSettingsForm = new FrmSettings();
+            if (!lSettingsForm.IsDisposed) lSettingsForm.ShowDialog();
         }
 
         private void joinAllChannelsToolStripMenuItem_Click(object sender, EventArgs e)
