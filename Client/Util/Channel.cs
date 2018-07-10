@@ -8,4 +8,5 @@
     Whisper = 5,
     Party = 6,
     Guild = 7,
+    Officer = 8
 }
