@@ -282,7 +282,7 @@ namespace BotFarm
         {
             string colorhex = "";
             string message = "";
-            Color textcolor = Color.DarkBlue; // default
+            Color textcolor = Color.Gold; // default
             string[] colors = Regex.Split(channelText, @"(\|)cff"); // don't hate me for this.
             for (int i = 0; i < colors.Length; i++)
             {
@@ -540,16 +540,16 @@ namespace BotFarm
             {
                 default:
                 case Channel.Say:
-                    lColor = Color.Gray;
+                    lColor = Color.White;
                     break;
                 case Channel.Guild:
-                    lColor = Color.LimeGreen;
+                    lColor = Color.Lime;
                     break;
                 case Channel.Party:
                     lColor = Color.MediumSlateBlue;
                     break;
                 case Channel.Whisper:
-                    lColor = Color.MediumVioletRed;
+                    lColor = Color.HotPink;
                     break;
                 case Channel.Officer:
                     lColor = Color.DarkGreen;
