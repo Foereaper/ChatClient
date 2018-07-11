@@ -40,23 +40,21 @@ namespace BotFarm
             this.lb1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lb1.FormattingEnabled = true;
-            this.lb1.ItemHeight = 24;
-            this.lb1.Location = new System.Drawing.Point(16, 36);
-            this.lb1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lb1.ItemHeight = 18;
+            this.lb1.Location = new System.Drawing.Point(10, 25);
             this.lb1.Name = "lb1";
-            this.lb1.Size = new System.Drawing.Size(341, 194);
+            this.lb1.Size = new System.Drawing.Size(259, 146);
             this.lb1.TabIndex = 0;
             this.lb1.SelectedIndexChanged += new System.EventHandler(this.lb1_SelectedIndexChanged);
             // 
             // RealmSelection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 243);
+            this.ClientSize = new System.Drawing.Size(278, 180);
             this.Controls.Add(this.lb1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "RealmSelection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

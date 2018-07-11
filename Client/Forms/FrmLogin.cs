@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
@@ -11,8 +12,6 @@ namespace BotFarm
     {
         private const int WM_NCLBUTTONDBLCLK = 0x00A3;
 
-        private static int count;
-        
         public FrmLogin(bool autologin)
         {
             InitializeComponent();
@@ -23,6 +22,10 @@ namespace BotFarm
             this.SetStyle(ControlStyles.Opaque, false);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+
+            //removes white lines seen in desginer, desginer does not have these settings in the gui.
+            BtnLogin.FlatAppearance.BorderColor = Color.FromArgb(255, 14, 134, 202);
+            BtnLogin.FlatAppearance.BorderSize = 1;
 
             if (autologin == true)
             {
@@ -196,7 +199,19 @@ namespace BotFarm
         }
         #endregion
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BtnLogin_MouseEnter(object sender, EventArgs e)
+        {
+            BtnLogin.FlatAppearance.BorderColor = Color.DarkTurquoise;
+            BtnLogin.ForeColor = Color.MediumAquamarine;
+        }
+
+        private void BtnLogin_MouseLeave(object sender, EventArgs e)
+        {
+            BtnLogin.FlatAppearance.BorderColor = Color.FromArgb(255, 14, 134, 202);
+            BtnLogin.ForeColor = Color.WhiteSmoke;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
         {
             Environment.Exit(1);
         }

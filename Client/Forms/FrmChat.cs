@@ -22,6 +22,7 @@ namespace BotFarm
         public DateTime lastChatMessage;
         public DateTime timeNow;
 
+        public static readonly Color defaultChatColor = Color.Gold;
         private Channel _currentChannel = Channel.Say;
         private string _currentChannelUser = null;
 
@@ -67,6 +68,10 @@ namespace BotFarm
             InitializeComponent();
             listGroup.ColumnWidthChanging += listGroup_ColumnWidthChanging;
             cBStatusFlag.Text = "Available";
+
+            //winforms has no border option in the desginer so..
+            btnDisconnect.FlatAppearance.BorderColor = Color.FromArgb(255,240,240,240);
+            btnDisconnect.FlatAppearance.BorderSize = 1;
         }
 
         private void msgPull_Tick(object sender, EventArgs e)
@@ -267,7 +272,7 @@ namespace BotFarm
             //}
             if(Settings.Default.DisableAllChatColors == true)
             {
-                box.SelectionColor = Color.DarkBlue;
+                box.SelectionColor = defaultChatColor;
             }
             else
             {
@@ -282,7 +287,7 @@ namespace BotFarm
         {
             string colorhex = "";
             string message = "";
-            Color textcolor = Color.Gold; // default
+            Color textcolor = defaultChatColor; // default
             string[] colors = Regex.Split(channelText, @"(\|)cff"); // don't hate me for this.
             for (int i = 0; i < colors.Length; i++)
             {
@@ -313,7 +318,7 @@ namespace BotFarm
                     }
                     if(Settings.Default.DisableSystemChannelColors == true)
                     {
-                        AppendText(ChatWindow, message + "\r\n", Color.DarkBlue, true);
+                        AppendText(ChatWindow, message + "\r\n", defaultChatColor, true);
                     }
                     else
                     {
@@ -326,7 +331,7 @@ namespace BotFarm
                     {
                         if (Settings.Default.DisableSystemChannelColors == true)
                         {
-                            AppendText(ChatWindow, message, Color.DarkBlue, true);
+                            AppendText(ChatWindow, message, defaultChatColor, true);
                         }
                         else
                         {
@@ -358,6 +363,7 @@ namespace BotFarm
         private void FrmChat_Load(object sender, EventArgs e)
         {
             byte[] currentUser = Encoding.Default.GetBytes(AutomatedGame.characterNameList[AutomatedGame.characterID]);
+            lblChar.TextAlign = ContentAlignment.MiddleRight; // AutoSize MUST be false.
             lblChar.Text = $"Logged in as: {Encoding.UTF8.GetString(currentUser).ToString()}";
             //lblChar.Text = $"Logged in as: {AutomatedGame.characterNameList[AutomatedGame.characterID]}";
             //AutomatedGame.presentcharacterList[AutomatedGame.characterID].ToString();
@@ -587,8 +593,8 @@ namespace BotFarm
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Credits to jackpoz's project" + Environment.NewLine +
-                 "Developer Credits: StackerDEV, Foereaper and Terrorblade." + Environment.NewLine +
-            "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects.", "Information", MessageBoxButtons.OK, MessageBoxIcon.None);
+                 "Developer Credits: StackerDEV, Foereaper, Terrorblade and Tashla." + Environment.NewLine +
+            "Special thanks to the WCell, Mangos, PseuWoW, and TrinityCore projects!", "Information", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         private void btnPlayerRefresh_Click(object sender, EventArgs e)
@@ -608,11 +614,6 @@ namespace BotFarm
             {
                 System.Diagnostics.Process.Start(e.LinkText);
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //BotFactory.Instance.factoryGame.SayChannel("Channel test 123 123", (int)channelNum.Value);
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -777,11 +778,6 @@ namespace BotFarm
             }
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            SessionInit.Instance.factoryGame.InvitePlayerToParty("Monsterd");
-        }
-
         public void DisplayGroupList()
         {
             var columnPlayer = new ColumnHeader();
@@ -864,11 +860,6 @@ namespace BotFarm
                 e.Cancel = true;
             }
         }
-
-        //private void btnRefresh_Click(object sender, EventArgs e)
-        //{
-        //    BotFactory.Instance.factoryGame.RequestWhoList();
-        //}
 
         public void DisplayWhoList()
         {
@@ -993,12 +984,9 @@ namespace BotFarm
                     item.SubItems.Add("");
                     item.SubItems.Add("No");
                 }
-
                 listFriends.Items.Add(item);
             }
-
             lblfriendcount.Text = AutomatedGame.resolvedFriendList.Count.ToString();
-
         }
 
         public void DisplayDefaultChannels()
@@ -1481,16 +1469,6 @@ namespace BotFarm
             Environment.Exit(1);
         }
 
-        private void ChatWindow_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cBStatusFlag_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Handles the KeyDown event of the textMessage control.
         /// Is used for automated channel selection after a user pressed the spacebar.
@@ -1553,9 +1531,23 @@ namespace BotFarm
             textMessage.Clear();
         }
 
-        private void ChatWindow_TextChanged_1(object sender, EventArgs e)
+        private void btnDisconnect_Click_1(object sender, EventArgs e)
         {
+            Hide();
+            AutomatedGame.DisconClient = true;
+            Thread.Sleep(500);
+            System.Diagnostics.Process.Start(Application.ExecutablePath, "autologin");
+            Environment.Exit(1);
+        }
 
+        private void btnDisconnect_MouseEnter(object sender, EventArgs e)
+        {
+            btnDisconnect.ForeColor = Color.OrangeRed;
+        }
+
+        private void btnDisconnect_MouseLeave(object sender, EventArgs e)
+        {
+            btnDisconnect.ForeColor = Color.Black;
         }
     }
 }
