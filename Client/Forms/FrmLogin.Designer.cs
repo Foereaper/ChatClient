@@ -201,7 +201,7 @@ namespace BotFarm
             this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Logo.TabIndex = 3;
             this.Logo.TabStop = false;
-            this.Logo.Click += new System.EventHandler(this.Logo_Click);
+            
             // 
             // pictureBox1
             // 
