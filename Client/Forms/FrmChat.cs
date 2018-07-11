@@ -167,7 +167,7 @@ namespace BotFarm
                 var whisperSendC = messageDataUTF8.Substring(0, 2); //To
                 if (whisperSendC == "To")
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.MediumVioletRed);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.HotPink);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -188,7 +188,7 @@ namespace BotFarm
                 var guildC = messageDataUTF8.Substring(0, 7); //[Guild] 
                 if (guildC == "[Guild]")
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Green);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Lime);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
                     //ChatWindow.ScrollToCaret();
                     continue;
@@ -209,7 +209,7 @@ namespace BotFarm
                     }
                     else
                     {
-                        AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
+                        AppendText(ChatWindow, messageData + "\r\n", Color.Gold, true);
                     }
                     //AppendText(ChatWindow, messageData + "\r\n", Color.DarkBlue, true);
                     //ChatWindow.AppendText(AutomatedGame.messageDataData.ToString() + "\r\n");
@@ -233,12 +233,12 @@ namespace BotFarm
                 {
                     if(Settings.Default.NPCChat == false)
                     {
-                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                        AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.White, true);
                     }
                 }
                 else
                 {
-                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.Black, true);
+                    AppendText(ChatWindow, messageDataUTF8 + "\r\n", Color.White, true);
                 }
                 
             }
@@ -282,7 +282,7 @@ namespace BotFarm
         {
             string colorhex = "";
             string message = "";
-            Color textcolor = Color.DarkBlue; // default
+            Color textcolor = Color.Gold; // default
             string[] colors = Regex.Split(channelText, @"(\|)cff"); // don't hate me for this.
             for (int i = 0; i < colors.Length; i++)
             {
@@ -437,59 +437,65 @@ namespace BotFarm
                 // Define string-array for holding the actual message components.
                 var lValueParts = lMessage.Split(new[] { ' ' }, 2);
 
-                if (lMessage.StartsWith("/"))
-                {
-                    // Assume that an entered value consists out of multiple parts and assess first index of parts prior to handling actual content.
-                    var lCommand = lValueParts[0];
-                    switch (lCommand)
-                    {
-                        default:
-                        case "/s":
-                        case "/":
-                            if (lValueParts.Length < 2) throw new CommandSyntaxException("Say requires at least one parameter (/(s) [message])");
+                //if (lMessage.StartsWith("/"))
+                //{
+                //    // Assume that an entered value consists out of multiple parts and assess first index of parts prior to handling actual content.
+                //    var lCommand = lValueParts[0];
+                //    switch (lCommand)
+                //    {
+                //        default:
+                //        case "/s":
+                //        case "/":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Say requires at least one parameter (/(s) [message])");
 
-                            SwitchUserChannel(Channel.Say);
-                            SessionInit.Instance.factoryGame.DoSayChat(lValueParts[1]);
-                            break;
-                        case "/w":
-                            if (lValueParts.Length < 2 || lValueParts[1].Split(new[] { ' ' }, 2).Length < 2)
-                                throw new CommandSyntaxException("Whispering requires three parameters (/w [user] [message])");
+                //            SwitchUserChannel(Channel.Say);
+                //            SessionInit.Instance.factoryGame.DoSayChat(lValueParts[1]);
+                //            break;
+                //        case "/w":
+                //            if (lValueParts.Length < 2 || lValueParts[1].Split(new[] { ' ' }, 2).Length < 2)
+                //                throw new CommandSyntaxException("Whispering requires three parameters (/w [user] [message])");
 
-                            lValueParts = lValueParts[1].Split(new[] {' '}, 2);
-                            SwitchUserChannel(Channel.Whisper, lValueParts[0]);
-                            SessionInit.Instance.factoryGame.DoWhisperChat(lValueParts[1], _currentChannelUser);
-                            break;
-                        case "/g":
-                            if (lValueParts.Length < 2) throw new CommandSyntaxException("Guild chat requires one parameter (/g [message])");
+                //            lValueParts = lValueParts[1].Split(new[] {' '}, 2);
+                //            SwitchUserChannel(Channel.Whisper, lValueParts[0]);
+                //            SessionInit.Instance.factoryGame.DoWhisperChat(lValueParts[1], _currentChannelUser);
+                //            break;
+                //        case "/g":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Guild chat requires one parameter (/g [message])");
 
-                            SwitchUserChannel(Channel.Guild);
-                            SessionInit.Instance.factoryGame.DoGuildChat(lValueParts[1]);
-                            break;
-                        case "/in":
-                            if (lValueParts.Length < 2) throw new CommandSyntaxException("Invitation requires one parameter (/in [user])");
+                //            SwitchUserChannel(Channel.Guild);
+                //            SessionInit.Instance.factoryGame.DoGuildChat(lValueParts[1]);
+                //            break;
+                //        case "/in":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Invitation requires one parameter (/in [user])");
 
-                            SessionInit.Instance.factoryGame.InvitePlayerToParty(lValueParts[1]);
-                            break;
-                        case "/p":
-                            if (lValueParts.Length < 2) throw new CommandSyntaxException("Party chat requires one parameter (/p [message])");
+                //            SessionInit.Instance.factoryGame.InvitePlayerToParty(lValueParts[1]);
+                //            break;
+                //        case "/p":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Party chat requires one parameter (/p [message])");
 
-                            SwitchUserChannel(Channel.Party);
-                            SessionInit.Instance.factoryGame.DoPartyChat(lValueParts[1]);
-                            break;
-                        case "/1":
-                        case "/2":
-                        case "/3":
-                        case "/4":
-                            if (lValueParts.Length < 2) throw new CommandSyntaxException("Channel messages expect at least one parameter (/1-4 [message])");
+                //            SwitchUserChannel(Channel.Party);
+                //            SessionInit.Instance.factoryGame.DoPartyChat(lValueParts[1]);
+                //            break;
+                //        case "/o":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Officer chat requires one parameter (/o [message])");
 
-                            SwitchUserChannel((Channel)int.Parse(lValueParts[0].Replace("/", "")));
-                            SessionInit.Instance.factoryGame.SayChannel(lValueParts[1],
-                                int.Parse(lValueParts[0].Replace("/", "")));
-                            break;
-                    }
-                }
-                else
-                {
+                //            SwitchUserChannel(Channel.Officer);
+                //            SessionInit.Instance.factoryGame.DoOfficerChat(lValueParts[1]);
+                //            break;
+                //        case "/1":
+                //        case "/2":
+                //        case "/3":
+                //        case "/4":
+                //            if (lValueParts.Length < 2) throw new CommandSyntaxException("Channel messages expect at least one parameter (/1-4 [message])");
+
+                //            SwitchUserChannel((Channel)int.Parse(lValueParts[0].Replace("/", "")));
+                //            SessionInit.Instance.factoryGame.SayChannel(lValueParts[1],
+                //                int.Parse(lValueParts[0].Replace("/", "")));
+                //            break;
+                //    }
+                //}
+                //else
+                //{
                     switch (_currentChannel)
                     {
                         default:
@@ -505,6 +511,9 @@ namespace BotFarm
                         case Channel.Party:
                             SessionInit.Instance.factoryGame.DoPartyChat(lMessage);
                             break;
+                        case Channel.Officer:
+                            SessionInit.Instance.factoryGame.DoOfficerChat(lMessage);
+                            break;
                         case Channel.Channel1:
                         case Channel.Channel2:
                         case Channel.Channel3:
@@ -512,7 +521,7 @@ namespace BotFarm
                             SessionInit.Instance.factoryGame.SayChannel(lMessage, (int)_currentChannel);
                             break;
                     }
-                }
+                //}
             }
             catch (CommandSyntaxException lEx)
             {
@@ -531,16 +540,19 @@ namespace BotFarm
             {
                 default:
                 case Channel.Say:
-                    lColor = Color.Gray;
+                    lColor = Color.White;
                     break;
                 case Channel.Guild:
-                    lColor = Color.Green;
+                    lColor = Color.Lime;
                     break;
                 case Channel.Party:
-                    lColor = Color.Blue;
+                    lColor = Color.MediumSlateBlue;
                     break;
                 case Channel.Whisper:
-                    lColor = Color.MediumVioletRed;
+                    lColor = Color.HotPink;
+                    break;
+                case Channel.Officer:
+                    lColor = Color.DarkGreen;
                     break;
             }
 
@@ -1520,6 +1532,11 @@ namespace BotFarm
                     SanitizeMessageInput();
                     e.SuppressKeyPress = true;
                     break;
+                case "/o":
+                    SwitchUserChannel(Channel.Officer);
+                    SanitizeMessageInput();
+                    e.SuppressKeyPress = true;
+                    break;
                 case "/1":
                 case "/2":
                 case "/3":
@@ -1534,6 +1551,11 @@ namespace BotFarm
         private void SanitizeMessageInput()
         {
             textMessage.Clear();
+        }
+
+        private void ChatWindow_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

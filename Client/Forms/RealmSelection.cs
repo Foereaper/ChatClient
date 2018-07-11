@@ -58,5 +58,11 @@ namespace BotFarm
             Thread.Sleep(3000);
             Environment.Exit(1);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Application.ExecutablePath);
+            Environment.Exit(1);
+        }
     }
 }
