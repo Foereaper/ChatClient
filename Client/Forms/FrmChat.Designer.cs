@@ -51,15 +51,12 @@ namespace BotFarm
             this.ChatWindow = new System.Windows.Forms.RichTextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.lblChar = new System.Windows.Forms.Label();
-            this.btnDisconnect = new System.Windows.Forms.Button();
             this.chattimer = new System.Windows.Forms.Timer(this.components);
             this.textMessage = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabWho = new System.Windows.Forms.TabPage();
-            this.refreshWhoList = new System.Windows.Forms.PictureBox();
             this.lblplayercount = new System.Windows.Forms.Label();
             this.lblplayersonline = new System.Windows.Forms.Label();
-            this.listWho = new System.Windows.Forms.ListView();
             this.tabGuild = new System.Windows.Forms.TabPage();
             this.listRoster = new System.Windows.Forms.ListView();
             this.tabChannel = new System.Windows.Forms.TabPage();
@@ -94,10 +91,13 @@ namespace BotFarm
             this.inviteToPartyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFriendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblChannelIndicator = new System.Windows.Forms.Label();
+            this.btnDisconnect = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.refreshWhoList = new System.Windows.Forms.PictureBox();
+            this.listWho = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
             this.tabGuild.SuspendLayout();
             this.tabChannel.SuspendLayout();
             this.tabGroup.SuspendLayout();
@@ -106,6 +106,8 @@ namespace BotFarm
             this.contextMenuWhoList.SuspendLayout();
             this.contextMenuGroupList.SuspendLayout();
             this.contextMenuFriendList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -137,21 +139,21 @@ namespace BotFarm
             // changeToolStripMenuItem
             // 
             this.changeToolStripMenuItem.Name = "changeToolStripMenuItem";
-            this.changeToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.changeToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.changeToolStripMenuItem.Text = "Change character";
             this.changeToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -270,23 +272,6 @@ namespace BotFarm
             this.lblChar.TabIndex = 7;
             this.lblChar.Text = "    ";
             // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.BackColor = System.Drawing.Color.Transparent;
-            this.btnDisconnect.BackgroundImage = global::Client.Properties.Resources.backbutton;
-            this.btnDisconnect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDisconnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDisconnect.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.ForeColor = System.Drawing.Color.Transparent;
-            this.btnDisconnect.Location = new System.Drawing.Point(693, 95);
-            this.btnDisconnect.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(27, 31);
-            this.btnDisconnect.TabIndex = 8;
-            this.btnDisconnect.UseVisualStyleBackColor = false;
-            this.btnDisconnect.Visible = false;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
-            // 
             // chattimer
             // 
             this.chattimer.Enabled = true;
@@ -315,6 +300,7 @@ namespace BotFarm
             this.tabControl1.Controls.Add(this.tabTicket);
             this.tabControl1.Location = new System.Drawing.Point(693, 133);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(685, 533);
@@ -335,18 +321,6 @@ namespace BotFarm
             this.tabWho.Text = "Who";
             this.tabWho.UseVisualStyleBackColor = true;
             // 
-            // refreshWhoList
-            // 
-            this.refreshWhoList.Image = ((System.Drawing.Image)(resources.GetObject("refreshWhoList.Image")));
-            this.refreshWhoList.Location = new System.Drawing.Point(635, 5);
-            this.refreshWhoList.Margin = new System.Windows.Forms.Padding(4);
-            this.refreshWhoList.Name = "refreshWhoList";
-            this.refreshWhoList.Size = new System.Drawing.Size(36, 28);
-            this.refreshWhoList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.refreshWhoList.TabIndex = 4;
-            this.refreshWhoList.TabStop = false;
-            this.refreshWhoList.Click += new System.EventHandler(this.refreshWhoList_Click);
-            // 
             // lblplayercount
             // 
             this.lblplayercount.Location = new System.Drawing.Point(117, 16);
@@ -364,19 +338,6 @@ namespace BotFarm
             this.lblplayersonline.Size = new System.Drawing.Size(105, 17);
             this.lblplayersonline.TabIndex = 2;
             this.lblplayersonline.Text = "Players online :";
-            // 
-            // listWho
-            // 
-            this.listWho.FullRowSelect = true;
-            this.listWho.GridLines = true;
-            this.listWho.Location = new System.Drawing.Point(0, 37);
-            this.listWho.Margin = new System.Windows.Forms.Padding(4);
-            this.listWho.Name = "listWho";
-            this.listWho.Size = new System.Drawing.Size(673, 463);
-            this.listWho.TabIndex = 1;
-            this.listWho.UseCompatibleStateImageBehavior = false;
-            this.listWho.View = System.Windows.Forms.View.Details;
-            this.listWho.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listWho_MouseClick);
             // 
             // tabGuild
             // 
@@ -729,11 +690,63 @@ namespace BotFarm
             this.lblChannelIndicator.Text = "Say:";
             this.lblChannelIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.BackColor = System.Drawing.Color.Transparent;
+            this.btnDisconnect.BackgroundImage = global::Client.Properties.Resources.backbutton;
+            this.btnDisconnect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDisconnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDisconnect.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisconnect.ForeColor = System.Drawing.Color.Transparent;
+            this.btnDisconnect.Location = new System.Drawing.Point(1357, 32);
+            this.btnDisconnect.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(27, 31);
+            this.btnDisconnect.TabIndex = 8;
+            this.btnDisconnect.UseVisualStyleBackColor = false;
+            this.btnDisconnect.Visible = false;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::Client.Properties.Resources.banner;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(689, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(695, 127);
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            // 
+            // refreshWhoList
+            // 
+            this.refreshWhoList.Image = ((System.Drawing.Image)(resources.GetObject("refreshWhoList.Image")));
+            this.refreshWhoList.Location = new System.Drawing.Point(635, 5);
+            this.refreshWhoList.Margin = new System.Windows.Forms.Padding(4);
+            this.refreshWhoList.Name = "refreshWhoList";
+            this.refreshWhoList.Size = new System.Drawing.Size(36, 28);
+            this.refreshWhoList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.refreshWhoList.TabIndex = 4;
+            this.refreshWhoList.TabStop = false;
+            this.refreshWhoList.Click += new System.EventHandler(this.refreshWhoList_Click);
+            // 
+            // listWho
+            // 
+            this.listWho.FullRowSelect = true;
+            this.listWho.GridLines = true;
+            this.listWho.Location = new System.Drawing.Point(0, 37);
+            this.listWho.Margin = new System.Windows.Forms.Padding(4);
+            this.listWho.Name = "listWho";
+            this.listWho.Size = new System.Drawing.Size(673, 463);
+            this.listWho.TabIndex = 1;
+            this.listWho.UseCompatibleStateImageBehavior = false;
+            this.listWho.View = System.Windows.Forms.View.Details;
+            this.listWho.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listWho_MouseClick);
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Client.Properties.Resources.bgdesign4;
+            this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1384, 670);
             this.Controls.Add(this.lblChannelIndicator);
@@ -745,6 +758,7 @@ namespace BotFarm
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.ChatWindow);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -761,7 +775,6 @@ namespace BotFarm
             this.tabControl1.ResumeLayout(false);
             this.tabWho.ResumeLayout(false);
             this.tabWho.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
             this.tabGuild.ResumeLayout(false);
             this.tabChannel.ResumeLayout(false);
             this.tabChannel.PerformLayout();
@@ -773,6 +786,8 @@ namespace BotFarm
             this.contextMenuWhoList.ResumeLayout(false);
             this.contextMenuGroupList.ResumeLayout(false);
             this.contextMenuFriendList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.refreshWhoList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -801,7 +816,6 @@ namespace BotFarm
         private Label lblPartyGroupSize;
         private Label lblPartyPlayers;
         private Button btnGroupDisband;
-        private ListView listWho;
         private ListView listRoster;
         private ListView listTicket;
         private Label lblplayercount;
@@ -841,5 +855,7 @@ namespace BotFarm
         private ToolStripMenuItem toolStripMenuItem5;
         private Label lblChannelIndicator;
         public RichTextBox ChatWindow;
+        private PictureBox pictureBox1;
+        private ListView listWho;
     }
 }

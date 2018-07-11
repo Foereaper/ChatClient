@@ -235,6 +235,8 @@
     <None Include="Resources\backbutton.png" />
     <None Include="Resources\bg.jpg" />
     <None Include="Resources\bg.png" />
+    <None Include="Resources\banner.png" />
+    <None Include="Resources\banner_test.png" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
