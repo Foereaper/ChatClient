@@ -95,6 +95,7 @@ namespace BotFarm
             this.lblChannelIndicator = new System.Windows.Forms.Label();
             this.LogoTopRight = new System.Windows.Forms.PictureBox();
             this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnShadowTest = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -708,6 +709,16 @@ namespace BotFarm
             this.btnDisconnect.MouseEnter += new System.EventHandler(this.btnDisconnect_MouseEnter);
             this.btnDisconnect.MouseLeave += new System.EventHandler(this.btnDisconnect_MouseLeave);
             // 
+            // btnShadowTest
+            // 
+            this.btnShadowTest.Location = new System.Drawing.Point(409, 42);
+            this.btnShadowTest.Name = "btnShadowTest";
+            this.btnShadowTest.Size = new System.Drawing.Size(85, 45);
+            this.btnShadowTest.TabIndex = 27;
+            this.btnShadowTest.Text = "TEST RTB SHADOW";
+            this.btnShadowTest.UseVisualStyleBackColor = true;
+            this.btnShadowTest.Click += new System.EventHandler(this.btnShadowTest_Click);
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -715,6 +726,7 @@ namespace BotFarm
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1032, 541);
+            this.Controls.Add(this.btnShadowTest);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.cBStatusFlag);
@@ -822,5 +834,6 @@ namespace BotFarm
         private PictureBox LogoTopRight;
         private ListView listWho;
         private Button btnDisconnect;
+        private Button btnShadowTest;
     }
 }

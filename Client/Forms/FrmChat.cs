@@ -57,6 +57,14 @@ namespace BotFarm
         const int CFM_LCID = 0x2000000;
         const int CFM_REVAUTHOR = 0x8000;
         const int EM_SETCHARFORMAT = 0x444;
+
+        private const Int32 SCF_SELECTION2 = 0x0001;
+        private const UInt32 WM_USER = 0x0400;
+        private const UInt32 EM_GETCHARFORMAT = (WM_USER + 58);
+        const UInt32 CFE_BOLD = 0x0001;
+        const UInt32 CFM_BOLD = 0x00000001;
+        const UInt32 CFM_SHADOW = 0x0400;     
+
         const int SCF_SELECTION = 0x1;
         const int SCF_WORD = 0x2;
 
@@ -277,7 +285,8 @@ namespace BotFarm
             else
             {
                 box.SelectionColor = color;
-            }          
+            }
+            
             box.AppendText(text);
             box.SelectionColor = box.ForeColor;
             box.ScrollToCaret();
@@ -358,6 +367,29 @@ namespace BotFarm
             IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(myFormat));
             Marshal.StructureToPtr(myFormat, lParam, false);
             SendMessage(ChatWindow.Handle, (UInt32)EM_SETCHARFORMAT, (IntPtr)(SCF_SELECTION + SCF_WORD), lParam);
+        }
+     
+        private void SetEffectTest(UInt32 mask, UInt32 effect, bool valid)
+        {
+            CHARFORMAT2 fmt = new CHARFORMAT2();
+            fmt.cbSize = Marshal.SizeOf(fmt);
+            fmt.dwMask = (int)mask;
+            fmt.dwEffects = valid ? (int)effect : 0;
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(fmt));
+            Marshal.StructureToPtr(fmt, lParam, false);
+            SendMessage(ChatWindow.Handle, EM_SETCHARFORMAT, (IntPtr)SCF_SELECTION2, lParam);
+        }
+
+        //did not got this working, but its a solution to the chatwindow color.
+        //https://stackoverflow.com/questions/1268009/reset-rtf-in-richtextbox
+        private void btnShadowTest_Click(object sender, EventArgs e)
+        {
+            CHARFORMAT2 _charFormat = new CHARFORMAT2();
+            _charFormat.cbSize = Marshal.SizeOf(_charFormat);
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(_charFormat));
+            Marshal.StructureToPtr(_charFormat, lParam, false);
+            SendMessage(ChatWindow.Handle, EM_GETCHARFORMAT, (IntPtr)SCF_SELECTION, lParam);
+            SetEffectTest(CFM_SHADOW, CFM_SHADOW, true);
         }
 
         private void FrmChat_Load(object sender, EventArgs e)
