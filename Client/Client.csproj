@@ -228,13 +228,13 @@
     <Content Include="Data\areatable.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\bg.jpg" />
     <None Include="Resources\textbox_white.png" />
     <None Include="Resources\loginbox1.png" />
     <None Include="Resources\loginbox_fin2.png" />
     <None Include="Resources\bg.png" />
     <None Include="Resources\bgdesign4.jpg" />
     <None Include="Resources\backbutton.png" />
+    <None Include="Resources\bg.jpg" />
     <Content Include="wowgasm_icon.ico" />
   </ItemGroup>
   <ItemGroup>
