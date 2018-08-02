@@ -6,11 +6,24 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Client;
 using Client.Forms;
 using Client.Properties;
 using Client.Util;
+using Application = System.Windows.Forms.Application;
+using Color = System.Drawing.Color;
+using Control = System.Windows.Forms.Control;
+using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
+using ListViewItem = System.Windows.Forms.ListViewItem;
+using MessageBox = System.Windows.Forms.MessageBox;
+using MessageBoxOptions = System.Windows.Forms.MessageBoxOptions;
+using RichTextBox = System.Windows.Forms.RichTextBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 
 namespace BotFarm
@@ -312,7 +325,7 @@ namespace BotFarm
                         {
                             message = message.Replace("|r", "");
                         }
-                        textcolor = System.Drawing.ColorTranslator.FromHtml("#" + colorhex);
+                        textcolor = !colorhex.StartsWith("[") ? ColorTranslator.FromHtml("#" + colorhex) : defaultChatColor;
                     }
                     else
                     {
