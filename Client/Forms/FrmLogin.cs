@@ -12,7 +12,7 @@ namespace BotFarm
     {
         private const int WM_NCLBUTTONDBLCLK = 0x00A3;
 
-        public FrmLogin(bool autologin)
+        public FrmLogin(bool autologin, Exception anException = null)
         {
             InitializeComponent();
             // Optimalize window for heavy graphics display (reduce flickering).
@@ -27,10 +27,14 @@ namespace BotFarm
             BtnLogin.FlatAppearance.BorderColor = Color.FromArgb(255, 14, 134, 202);
             BtnLogin.FlatAppearance.BorderSize = 1;
 
-            if (autologin == true)
+            if (anException != null)
             {
-                DoLogin();
+                MessageBox.Show(anException.Message, anException.GetType().ToString(), MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
             }
+
+            if (autologin) DoLogin();
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)

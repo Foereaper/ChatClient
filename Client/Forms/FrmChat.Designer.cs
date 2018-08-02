@@ -96,6 +96,7 @@ namespace BotFarm
             this.LogoTopRight = new System.Windows.Forms.PictureBox();
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.btnShadowTest = new System.Windows.Forms.Button();
+            this.pingtimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWho.SuspendLayout();
@@ -719,6 +720,12 @@ namespace BotFarm
             this.btnShadowTest.UseVisualStyleBackColor = true;
             this.btnShadowTest.Click += new System.EventHandler(this.btnShadowTest_Click);
             // 
+            // pingtimer
+            // 
+            this.pingtimer.Enabled = true;
+            this.pingtimer.Interval = 5000;
+            this.pingtimer.Tick += new System.EventHandler(this.pingtimer_Tick);
+            // 
             // FrmChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -835,5 +842,6 @@ namespace BotFarm
         private ListView listWho;
         private Button btnDisconnect;
         private Button btnShadowTest;
+        private Timer pingtimer;
     }
 }

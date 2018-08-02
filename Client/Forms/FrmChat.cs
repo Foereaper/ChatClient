@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -1581,7 +1583,7 @@ namespace BotFarm
             Hide();
             AutomatedGame.DisconClient = true;
             Thread.Sleep(500);
-            System.Diagnostics.Process.Start(Application.ExecutablePath, "autologin");
+            Process.Start(Application.ExecutablePath, "autologin");
             Environment.Exit(1);
         }
 
@@ -1593,6 +1595,25 @@ namespace BotFarm
         private void btnDisconnect_MouseLeave(object sender, EventArgs e)
         {
             btnDisconnect.ForeColor = Color.Black;
+        }
+
+        private void pingtimer_Tick(object sender, EventArgs e)
+        {
+            using (var s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    s.Connect("logon.wowgasm-reloaded.org", 8085);
+                }
+                catch (Exception) // Dirty...
+                {
+                    Hide();
+                    AutomatedGame.DisconClient = true;
+                    Thread.Sleep(500);
+                    Process.Start(Application.ExecutablePath, "timed-out");
+                    Environment.Exit(1);
+                }
+            }
         }
     }
 }
