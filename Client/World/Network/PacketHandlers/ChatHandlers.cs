@@ -728,5 +728,11 @@ namespace Client.World.Network
             Game.UI.PresentChatMessage(message);
         }
 
+        [PacketHandler(WorldCommand.SMSG_PONG)]
+        protected void HandlePong(InPacket packet)
+        {
+            var ping = packet.ReadUInt32();
+        }
+
     }
 }

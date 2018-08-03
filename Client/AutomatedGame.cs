@@ -408,6 +408,11 @@ namespace Client
                     SendPacket(new OutPacket(WorldCommand.CMSG_KEEP_ALIVE));
             }, DateTime.Now.AddSeconds(15), new TimeSpan(0, 0, 30));
 
+            ScheduleAction(() =>
+            {
+                SendPing();
+            }, DateTime.Now.AddSeconds(5), new TimeSpan(0, 0, 30));
+
             presentrealmList.Clear();
             foreach (var server in realmList)
             {
@@ -1760,6 +1765,19 @@ namespace Client
             HandleTriggerInput(TriggerActionType.UpdateField, e);
         }
         #endregion
+
+        //@todo: Probably add ping to UI and actually compute it.
+        protected void SendPing()
+        {
+            var pingpong = new OutPacket(WorldCommand.CMSG_PING);
+            UInt32 ping = 1;
+            UInt32 latency = 1;
+
+            pingpong.Write(ping);
+            pingpong.Write(latency);
+            Game.SendPacket(pingpong);
+        }
+
         protected void ShouldIBeSendingThat()
         {
 #if TESTING
