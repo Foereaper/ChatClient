@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using Client.Authentication;
+//@todo: Add 60 second 'timeout' since ping/pong is implemented
 
 namespace Client.World.Network
 {

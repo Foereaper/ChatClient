@@ -329,7 +329,7 @@ namespace Client.Authentication.Network
                 // ignored
             }
         }
-        //@todo: Add 60 second 'timeout' since ping/pong is implemented
+
         protected void ReadCallback(IAsyncResult result)
         {
             try
