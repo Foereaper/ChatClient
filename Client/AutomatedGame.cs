@@ -19,34 +19,6 @@ using Client.World.Definitions;
 using Client.World.Entities;
 using Client.World.Network;
 
-public struct TicketInfo
-{
-    public TicketInfo(string name, string create, string assigned, string comment, bool online)
-    {
-        playerName = name;
-        createTime = create;
-        assignedPlayer = assigned;
-        ticketComment = comment;
-        areTheyOnline = online;
-    }
-
-    public string playerName;
-    public string createTime;
-    public string assignedPlayer;
-    public string ticketComment;
-    public bool areTheyOnline;
-}
-
-public struct CurrentTicket
-{
-    public string playerName;
-    public string assignedPlayer;
-    public string ticketMessage;
-    public string ticketComment;
-    public string ticketResponse;
-    public string ticketChatLog;
-}
-
 namespace Client
 {
     public class AutomatedGame : IGameUI, IGame
@@ -390,18 +362,11 @@ namespace Client
 
         public override void PresentRealmList(WorldServerList realmList)
         {
-            /*
-            if (RealmID >= realmList.Count)
-            {
-                LogException("Invalid RealmID '" + RealmID + "' specified in the configs");
-                Environment.Exit(1);
-            }*/
 
             LoggedInserver = true;
             AuthenticationError = false;
 
-            // Anti-kick for being afk
-            //ScheduleAction(() => DoTextEmote(TextEmote.Yawn), DateTime.Now.AddMinutes(5), new TimeSpan(0, 5, 0));
+
             ScheduleAction(() =>
             {
                 if (LoggedIn)
@@ -419,62 +384,38 @@ namespace Client
                 presentrealmList.Add(server.Name);
             }
 
-            while (realmchosen == false)
+            while (!realmchosen)
             {
                 Thread.Sleep(100);
             }
-
-            //LogLine("Connecting to realm " + realmList[RealmID].Name);
+            
             ConnectTo(realmList[realmidGUI]);
         }
 
         public override void PresentCharacterList(Character[] characterList)
         {
-            //List<string> charname = new List<string>();
-
             presentcharacterList.Clear();
             foreach (var characterz in characterList)
             {
                 presentcharacterList.Add(characterz.Name + " Level: " + characterz.Level + " Race: " + characterz.Race + " Class: " + characterz.Class);
                 characterNameList.Add(characterz.Name);
-                //characterGUIDList.Add(Convert.ToUInt32(characterz.GUID).ToString());
-            }
+             }
             Charsloaded = true;
-            //Thread.Sleep(1000);
-#if TESTING
-            HelloDad();
-#endif
-            while (characterchosen == false)
+             while (!characterchosen)
             {
-                //Thread.Sleep(500);
             }
 
 
             const int index = -1;
-            /*while (index > length || index < 0)
-            {
-                Log("Choose a character:  ");
-                if (!int.TryParse(Console.ReadLine(), out index))
-                    //LogLine("Selected character: " + charname[index].ToString());
-            }*/
+
 
             if (index >= characterList.Length) return;
             World.SelectedCharacter = characterList[characterID];
-            // TODO: enter world
             var packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
             packet.Write(World.SelectedCharacter.GUID);
             SendPacket(packet);
             LoggedIn = true;
             Player.GUID = World.SelectedCharacter.GUID;
-
-            /*
-            World.SelectedCharacter = characterList[Character];
-            OutPacket packet = new OutPacket(WorldCommand.CMSG_PLAYER_LOGIN);
-            packet.Write(World.SelectedCharacter.GUID);
-            SendPacket(packet);
-            LoggedIn = true;
-            Player.GUID = World.SelectedCharacter.GUID;
-            */
         }
 
         public override string ReadLine()
@@ -1530,11 +1471,6 @@ namespace Client
             RosterUpdate = message;
         }
 
-        public override void UpdateTicketList(string message)
-        {
-            TicketUpdate = message;
-        }
-
         public override void LogLine(string message, LogLevel level = LogLevel.Info)
         {
         }
@@ -1778,260 +1714,5 @@ namespace Client
             Game.SendPacket(pingpong);
         }
 
-        protected void ShouldIBeSendingThat()
-        {
-#if TESTING
-            if (securityLevel <= 0)
-                Application.Exit();
-#endif
-        }
-
-        public void RequestTicketList(bool onlineOnly)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_LIST);
-            response.Write(onlineOnly);
-            Game.SendPacket(response);
-#endif
-        }
-        #region StuffThatNeedsMoved
-
-
-        public void HelloDad()
-        {
-#if TESTING
-            var response = new OutPacket(WorldCommand.CMSG_HELLO_DADDY);
-            response.Write((byte)1);
-            Game.SendPacket(response);
-#endif
-        }
-
-
-
-        public void RequestTicketDetails(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_VIEW);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TicketAssign(string playerName, string assignName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_ASSIGN);
-            response.Write(playerName.ToCString());
-            response.Write(assignName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void DeleteTicket(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_DELETE);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TicketComment(string playerName, string comment)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_COMMENT);
-            response.Write(playerName.ToCString());
-            response.Write(comment.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TicketResponse(string playerName, string ticketresponse)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_RESPONSE);
-            response.Write(playerName.ToCString());
-            response.Write(ticketresponse.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TicketResponse(string playerName, byte status)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_ESCALATE);
-            response.Write(playerName.ToCString());
-            response.Write(status);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void CompleteTicket(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TICKET_COMPLETE);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void MailPlayer(string playerName, string subject, string body)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_MAIL_PLAYER);
-            response.Write(playerName.ToCString());
-            response.Write(subject.ToCString());
-            response.Write(body.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void RequestQuestStatus(string playerName, uint questId)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_GET_QUEST_STATUS);
-            response.Write(playerName.ToCString());
-            response.Write(questId);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void RequestAchievementStatus(string playerName, uint achId)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.SMSG_CLIENT_ACH_STATUS);
-            response.Write(playerName.ToCString());
-            response.Write(achId);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void CompleteQuest(string playerName, uint questId)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_COMPLETE_QUEST);
-            response.Write(playerName.ToCString());
-            response.Write(questId);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void CompleteAchievement(string playerName, uint achId)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_COMPLETE_ACH);
-            response.Write(playerName.ToCString());
-            response.Write(achId);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void AddItem(string playerName, uint itemId, uint count)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_ADD_ITEM);
-            response.Write(playerName.ToCString());
-            response.Write(itemId);
-            response.Write(count);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void RemoveItem(string playerName, uint itemId, uint count)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_REMOVE_ITEM);
-            response.Write(playerName.ToCString());
-            response.Write(itemId);
-            response.Write(count);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void HasItem(string playerName, uint itemId)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_HAS_ITEM);
-            response.Write(playerName.ToCString());
-            response.Write(itemId);
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void QueryPlayerOnlineStatus(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_PLR_IS_ONLINE);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void BanPlayer(byte banType, string playerAccountOrIp, string duration, string reason, string announceReason)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_BAN);
-            response.Write(banType);
-            response.Write(playerAccountOrIp.ToCString());
-            response.Write(duration.ToCString());
-            response.Write(reason.ToCString());
-            response.Write(announceReason.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TbButton(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_TB_BUTTON);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void RevivePlayer(string playerName)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_REVIVE);
-            response.Write(playerName.ToCString());
-            Game.SendPacket(response);
-#endif
-        }
-
-        public void TeleportPlayer(string playerName, uint mapId, float x, float y, float z, float o)
-        {
-#if TESTING
-            ShouldIBeSendingThat();
-            var response = new OutPacket(WorldCommand.CMSG_CLIENT_BAN);
-            response.Write(playerName.ToCString());
-            response.Write(mapId);
-            response.Write(x);
-            response.Write(y);
-            response.Write(z);
-            response.Write(o);
-            Game.SendPacket(response);
-#endif
-        }
-        #endregion
     }
 }

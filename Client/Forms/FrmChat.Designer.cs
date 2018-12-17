@@ -74,8 +74,6 @@ namespace BotFarm
             this.lblfriendcount = new System.Windows.Forms.Label();
             this.lblfriends = new System.Windows.Forms.Label();
             this.listFriends = new System.Windows.Forms.ListView();
-            this.tabTicket = new System.Windows.Forms.TabPage();
-            this.listTicket = new System.Windows.Forms.ListView();
             this.contextMenuWhoList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.whisperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inviteToPartyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,7 +103,6 @@ namespace BotFarm
             this.tabChannel.SuspendLayout();
             this.tabGroup.SuspendLayout();
             this.tabFriend.SuspendLayout();
-            this.tabTicket.SuspendLayout();
             this.contextMenuWhoList.SuspendLayout();
             this.contextMenuGroupList.SuspendLayout();
             this.contextMenuFriendList.SuspendLayout();
@@ -293,7 +290,6 @@ namespace BotFarm
             this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabGroup);
             this.tabControl1.Controls.Add(this.tabFriend);
-            this.tabControl1.Controls.Add(this.tabTicket);
             this.tabControl1.Location = new System.Drawing.Point(514, 108);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
@@ -518,29 +514,6 @@ namespace BotFarm
             this.listFriends.View = System.Windows.Forms.View.Details;
             this.listFriends.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listFriends_MouseClick);
             // 
-            // tabTicket
-            // 
-            this.tabTicket.Controls.Add(this.listTicket);
-            this.tabTicket.Location = new System.Drawing.Point(4, 22);
-            this.tabTicket.Name = "tabTicket";
-            this.tabTicket.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTicket.Size = new System.Drawing.Size(511, 407);
-            this.tabTicket.TabIndex = 5;
-            this.tabTicket.Text = "Tickets";
-            this.tabTicket.UseVisualStyleBackColor = true;
-            // 
-            // listTicket
-            // 
-            this.listTicket.FullRowSelect = true;
-            this.listTicket.GridLines = true;
-            this.listTicket.Location = new System.Drawing.Point(0, 30);
-            this.listTicket.Name = "listTicket";
-            this.listTicket.Size = new System.Drawing.Size(511, 380);
-            this.listTicket.TabIndex = 5;
-            this.listTicket.UseCompatibleStateImageBehavior = false;
-            this.listTicket.View = System.Windows.Forms.View.Details;
-            this.listTicket.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listTicket_MouseDoubleClick);
-            // 
             // contextMenuWhoList
             // 
             this.contextMenuWhoList.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -581,20 +554,6 @@ namespace BotFarm
             this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.ignoreToolStripMenuItem.Text = "Ignore";
             this.ignoreToolStripMenuItem.Click += new System.EventHandler(this.ignoreToolStripMenuItem_Click);
-            // 
-            // tbButtonToolStripMenuItem
-            // 
-            this.tbButtonToolStripMenuItem.Name = "tbButtonToolStripMenuItem";
-            this.tbButtonToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.tbButtonToolStripMenuItem.Text = "Tb Button";
-            this.tbButtonToolStripMenuItem.Click += new System.EventHandler(this.tbButtonToolStripMenuItemItem_Click);
-            // 
-            // resurrectToolStripMenuItem
-            // 
-            this.resurrectToolStripMenuItem.Name = "resurrectToolStripMenuItem";
-            this.resurrectToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.resurrectToolStripMenuItem.Text = "Resurrect";
-            this.resurrectToolStripMenuItem.Click += new System.EventHandler(this.resurrectToolStripMenuItem_Click);
             // 
             // cBStatusFlag
             // 
@@ -767,7 +726,6 @@ namespace BotFarm
             this.tabGroup.PerformLayout();
             this.tabFriend.ResumeLayout(false);
             this.tabFriend.PerformLayout();
-            this.tabTicket.ResumeLayout(false);
             this.contextMenuWhoList.ResumeLayout(false);
             this.contextMenuGroupList.ResumeLayout(false);
             this.contextMenuFriendList.ResumeLayout(false);
@@ -800,7 +758,6 @@ namespace BotFarm
         private Label lblPartyPlayers;
         private Button btnGroupDisband;
         private ListView listRoster;
-        private ListView listTicket;
         private Label lblplayercount;
         private Label lblplayersonline;
         private ContextMenuStrip contextMenuWhoList;
@@ -826,7 +783,6 @@ namespace BotFarm
         private ToolStripMenuItem removeFriendToolStripMenuItem;
         private ToolStripMenuItem inviteToPartyToolStripMenuItem1;
         private TabPage tabGuild;
-        private TabPage tabTicket;
         private ToolStripMenuItem tbButtonToolStripMenuItem;
         private ToolStripMenuItem resurrectToolStripMenuItem;
         private ToolStripMenuItem changeToolStripMenuItem;

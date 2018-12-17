@@ -11,120 +11,6 @@ namespace Client.World.Network
 {
     public partial class WorldSocket : GameSocket
     {
-        static HashSet<WorldCommand> IgnoredOpcodes = new HashSet<WorldCommand>
-        {
-            WorldCommand.SMSG_ADDON_INFO,
-            WorldCommand.SMSG_CLIENTCACHE_VERSION,
-            WorldCommand.SMSG_TUTORIAL_FLAGS,
-            WorldCommand.SMSG_WARDEN_DATA,
-            WorldCommand.MSG_SET_DUNGEON_DIFFICULTY,
-            WorldCommand.SMSG_ACCOUNT_DATA_TIMES,
-            WorldCommand.SMSG_FEATURE_SYSTEM_STATUS,
-            WorldCommand.SMSG_MOTD,
-            WorldCommand.SMSG_GUILD_EVENT,
-            WorldCommand.SMSG_GUILD_BANK_LIST,
-            WorldCommand.SMSG_GUILD_ROSTER,
-            WorldCommand.SMSG_LEARNED_DANCE_MOVES,
-            WorldCommand.SMSG_SET_PCT_SPELL_MODIFIER,
-            WorldCommand.SMSG_CONTACT_LIST,
-            WorldCommand.SMSG_BINDPOINTUPDATE,
-            WorldCommand.SMSG_INSTANCE_DIFFICULTY,
-            WorldCommand.SMSG_SEND_UNLEARN_SPELLS,
-            WorldCommand.SMSG_ACTION_BUTTONS,
-            WorldCommand.SMSG_EQUIPMENT_SET_LIST,
-            WorldCommand.SMSG_LOGIN_SETTIMESPEED,
-            WorldCommand.SMSG_INIT_WORLD_STATES,
-            WorldCommand.SMSG_UPDATE_WORLD_STATE,
-            WorldCommand.SMSG_WEATHER,
-            WorldCommand.SMSG_TIME_SYNC_REQ,
-            WorldCommand.SMSG_NOTIFICATION,
-            WorldCommand.SMSG_SPLINE_MOVE_STOP_SWIM,
-            WorldCommand.SMSG_SPLINE_MOVE_SET_WALK_MODE,
-            WorldCommand.SMSG_SPLINE_MOVE_SET_RUN_MODE,
-            WorldCommand.SMSG_SPLINE_MOVE_START_SWIM,
-            WorldCommand.MSG_MOVE_SET_FACING,
-            WorldCommand.SMSG_TRIGGER_CINEMATIC,
-            WorldCommand.SMSG_UPDATE_INSTANCE_OWNERSHIP,
-            WorldCommand.SMSG_EMOTE,
-            WorldCommand.SMSG_LFG_OTHER_TIMEDOUT,
-            WorldCommand.SMSG_FORCE_SWIM_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_SWIM_BACK_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_RUN_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_RUN_BACK_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_FLIGHT_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_FLIGHT_SPEED_CHANGE,
-            WorldCommand.SMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE,
-            WorldCommand.CMSG_UNKNOWN_1303,
-            WorldCommand.SMSG_ITEM_TIME_UPDATE,
-            WorldCommand.SMSG_SPLINE_MOVE_UNROOT,
-            WorldCommand.SMSG_SPELLENERGIZELOG,
-            WorldCommand.SMSG_PET_SPELLS,
-            WorldCommand.SMSG_MOVE_SET_CAN_FLY,
-            WorldCommand.SMSG_RECEIVED_MAIL,
-            WorldCommand.MSG_CHANNEL_START,
-            WorldCommand.MSG_CHANNEL_UPDATE,
-            WorldCommand.SMSG_FRIEND_STATUS,
-            WorldCommand.SMSG_UNKNOWN_1236,
-            WorldCommand.SMSG_UNKNOWN_1235,
-            WorldCommand.SMSG_SPLINE_MOVE_UNSET_FLYING,
-            WorldCommand.SMSG_SPLINE_MOVE_ROOT,
-            WorldCommand.SMSG_GAMEOBJECT_DESPAWN_ANIM,
-            WorldCommand.SMSG_DISMOUNT,
-            WorldCommand.CMSG_MOVE_FALL_RESET
-        };
-
-        static HashSet<WorldCommand> NotYetImplementedOpcodes = new HashSet<WorldCommand>
-        {
-            WorldCommand.SMSG_SET_PROFICIENCY,
-            WorldCommand.SMSG_POWER_UPDATE,
-            WorldCommand.SMSG_CANCEL_COMBAT,
-            WorldCommand.SMSG_TALENTS_INFO,
-            WorldCommand.SMSG_INITIAL_SPELLS,
-            WorldCommand.SMSG_INITIALIZE_FACTIONS,
-            WorldCommand.SMSG_SET_FORCED_REACTIONS,
-            WorldCommand.SMSG_COMPRESSED_UPDATE_OBJECT,
-            WorldCommand.SMSG_AURA_UPDATE,
-            WorldCommand.SMSG_DESTROY_OBJECT,
-            WorldCommand.SMSG_MONSTER_MOVE,
-            WorldCommand.SMSG_SPELL_GO,
-            WorldCommand.SMSG_AURA_UPDATE_ALL,
-            WorldCommand.SMSG_AI_REACTION,
-            WorldCommand.SMSG_HIGHEST_THREAT_UPDATE,
-            WorldCommand.SMSG_THREAT_UPDATE,
-            WorldCommand.MSG_MOVE_START_FORWARD,
-            WorldCommand.MSG_MOVE_JUMP,
-            WorldCommand.MSG_MOVE_START_BACKWARD,
-            WorldCommand.MSG_MOVE_START_STRAFE_RIGHT,
-            WorldCommand.MSG_MOVE_START_TURN_RIGHT,
-            WorldCommand.MSG_MOVE_START_TURN_LEFT,
-            WorldCommand.MSG_MOVE_STOP,
-            WorldCommand.MSG_MOVE_STOP_TURN,
-            WorldCommand.MSG_MOVE_HEARTBEAT,
-            WorldCommand.MSG_MOVE_FALL_LAND,
-            WorldCommand.SMSG_SPELL_START,
-            WorldCommand.SMSG_SPELLHEALLOG,
-            WorldCommand.SMSG_ATTACKSTART,
-            WorldCommand.SMSG_ATTACKERSTATEUPDATE,
-            WorldCommand.SMSG_ATTACKSTOP,
-            WorldCommand.SMSG_THREAT_REMOVE,
-            WorldCommand.SMSG_PERIODICAURALOG,
-            WorldCommand.MSG_MOVE_START_STRAFE_LEFT,
-            WorldCommand.MSG_MOVE_STOP_STRAFE,
-            WorldCommand.SMSG_SPELLNONMELEEDAMAGELOG,
-            WorldCommand.SMSG_LOOT_LIST,
-            WorldCommand.SMSG_THREAT_CLEAR,
-            WorldCommand.SMSG_GM_MESSAGECHAT,
-            WorldCommand.SMSG_SET_FLAT_SPELL_MODIFIER,
-            WorldCommand.SMSG_SPELL_FAILURE,
-            WorldCommand.SMSG_SPELL_FAILED_OTHER,
-            WorldCommand.SMSG_MONSTER_MOVE_TRANSPORT,
-            WorldCommand.SMSG_MOVE_WATER_WALK,
-            WorldCommand.SMSG_BREAK_TARGET,
-            WorldCommand.SMSG_DEATH_RELEASE_LOC,
-            WorldCommand.SMSG_SET_PHASE_SHIFT,
-            WorldCommand.SMSG_PARTY_MEMBER_STATS
-        };
-
         WorldServerInfo ServerInfo;
 
         private long transferred;
@@ -400,10 +286,8 @@ namespace Client.World.Network
                     handler(packet);
                 }
                 else
-                {
-                    if (!IgnoredOpcodes.Contains(packet.Header.Command) && !NotYetImplementedOpcodes.Contains(packet.Header.Command))
-                        Game.UI.LogDebug($"Unknown or unhandled command '{packet.Header.Command}'");
-                }
+                    return;
+
                 Game.HandleTriggerInput(TriggerActionType.Opcode, packet);
             }
             catch(Exception ex)

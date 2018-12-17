@@ -151,13 +151,7 @@ namespace BotFarm
                 AutomatedGame.RosterUpdate = "";
                 return;
             }
-            var ticketUpdate = AutomatedGame.TicketUpdate;
-            if (ticketUpdate != "")
-            {
-                DisplayTicketList();
-                AutomatedGame.TicketUpdate = "";
-                return;
-            }
+
             SessionInit.Instance.factoryGame.Game.World.mesQue = true;
             var newMessages = SessionInit.Instance.factoryGame.Game.World.newMessageQue;
             foreach (var messageData in newMessages)
@@ -272,17 +266,6 @@ namespace BotFarm
             }
             newMessages.Clear();
             SessionInit.Instance.factoryGame.Game.World.mesQue = false;
-            if (AutomatedGame.securityLevel == 0)
-            {
-                if (tabControl1.Contains(tabTicket))
-                    tabControl1.TabPages.Remove(tabTicket);
-            }
-            else
-            {
-                if (!tabControl1.Contains(tabTicket))
-                    tabControl1.TabPages.Insert(5, tabTicket);
-
-            }
         }
 
         private void AppendText(RichTextBox box, string text, Color color, bool bold = false)
@@ -1159,66 +1142,11 @@ namespace BotFarm
             }
         }
 
-        public void DisplayTicketList()
-        {
-            var columnPlayer = new ColumnHeader();
-            var columnCreate = new ColumnHeader();
-            var columnAssignedGuy = new ColumnHeader();
-            var columnComment = new ColumnHeader();
-            var columnOnline = new ColumnHeader();
-            columnPlayer.Text = "Player";
-            columnPlayer.TextAlign = HorizontalAlignment.Left;
-            columnPlayer.Width = 80;
-            columnCreate.Text = "Create";
-            columnCreate.TextAlign = HorizontalAlignment.Left;
-            columnCreate.Width = 50;
-            columnAssignedGuy.Text = "Assigned";
-            columnAssignedGuy.TextAlign = HorizontalAlignment.Left;
-            columnAssignedGuy.Width = 50;
-            columnComment.Text = "Comment";
-            columnComment.TextAlign = HorizontalAlignment.Left;
-            columnComment.Width = 100;
-            columnOnline.Text = "Online";
-            columnOnline.TextAlign = HorizontalAlignment.Left;
-            columnOnline.Width = 50;
-
-            listTicket.Columns.Clear();
-
-            listTicket.Columns.Add(columnPlayer);
-            listTicket.Columns.Add(columnCreate);
-            listTicket.Columns.Add(columnAssignedGuy);
-            listTicket.Columns.Add(columnComment);
-            listTicket.Columns.Add(columnOnline);
-
-            listTicket.View = View.Details;
-            listTicket.Items.Clear();
-
-            var tickets = SessionInit.Instance.factoryGame.Game.World.ticketList;
-
-            foreach (var ticket in tickets)
-            {
-                byte[] playerName = Encoding.Default.GetBytes(ticket.playerName);
-                var item = new ListViewItem(Encoding.UTF8.GetString(playerName).ToString());
-                item.SubItems.Add(ticket.createTime);
-                byte[] assignedPlayer = Encoding.Default.GetBytes(ticket.assignedPlayer);
-                item.SubItems.Add(Encoding.UTF8.GetString(assignedPlayer).ToString());
-                byte[] ticketComment = Encoding.Default.GetBytes(ticket.ticketComment);
-                item.SubItems.Add(Encoding.UTF8.GetString(ticketComment).ToString());
-                item.SubItems.Add(ticket.areTheyOnline.ToString());
-                listTicket.Items.Add(item);
-            }
-        }
-
         private void listWho_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 var loc = listWho.PointToScreen(e.Location);
-                if (AutomatedGame.securityLevel == 0)
-                {
-                    tbButtonToolStripMenuItem.Visible = false;
-                    resurrectToolStripMenuItem.Visible = false;
-                }
 
                 contextMenuWhoList.Show(loc);
             }
@@ -1259,20 +1187,6 @@ namespace BotFarm
             textMessage.Text = "/w " + player + " ";
             textMessage.Select();
             textMessage.SelectionStart = textMessage.Text.Length;
-        }
-
-        private void tbButtonToolStripMenuItemItem_Click(object sender, EventArgs e)
-        {
-            var player = listWho.SelectedItems[0].Text;
-            if (player == "") return;
-            SessionInit.Instance.factoryGame.TbButton(player);
-        }
-
-        private void resurrectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var player = listWho.SelectedItems[0].Text;
-            if (player == "") return;
-            SessionInit.Instance.factoryGame.RevivePlayer(player);
         }
 
         private void inviteToPartyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1319,7 +1233,6 @@ namespace BotFarm
             if (tabControl1.SelectedIndex == 0) { SessionInit.Instance.factoryGame.RequestWhoList(); }
             if (tabControl1.SelectedIndex == 1) { SessionInit.Instance.factoryGame.RequestGuildList(); }
             if (tabControl1.SelectedIndex == 4) { SessionInit.Instance.factoryGame.RequestFriendList(); }
-            if (tabControl1.SelectedIndex == 5) { SessionInit.Instance.factoryGame.RequestTicketList(false); }
         }
 
         private void listGroup_MouseClick(object sender, MouseEventArgs e)
@@ -1447,29 +1360,6 @@ namespace BotFarm
             SessionInit.Instance.factoryGame.LeaveChannel(2, "");
             SessionInit.Instance.factoryGame.LeaveChannel(22, "");
             SessionInit.Instance.factoryGame.LeaveChannel(26, "");
-        }
-
-        private void listTicket_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left) return;
-            try
-            {
-                var player = listTicket.SelectedItems[0].Text;
-                SessionInit.Instance.factoryGame.RequestTicketDetails(player);
-                if (!IsFormOpen("Ticket")) // look for form by caption.
-                {
-                    var frm = new FrmTicket();
-                    frm.Show();
-                }
-                else
-                {
-                    Application.OpenForms["FrmTicket"]?.Focus();
-                }
-            }
-            catch
-            {
-                //Ah fuck we broke it.
-            }
         }
 
         private bool IsFormOpen(string formName)

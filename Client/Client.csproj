@@ -89,12 +89,6 @@
     <Compile Include="Forms\LoginRealmSelection.Designer.cs">
       <DependentUpon>LoginRealmSelection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmTicket.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FrmTicket.Designer.cs">
-      <DependentUpon>FrmTicket.cs</DependentUpon>
-    </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -206,7 +200,6 @@
     <Compile Include="World\WorldCommand.cs" />
     <Compile Include="UI\IGameUI.cs" />
     <Compile Include="World\Definitions\Extensions.cs" />
-    <Compile Include="WoWGasmSpecific\CustomOpcodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -256,9 +249,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FrmTicket.resx">
-      <DependentUpon>FrmTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewChannel.resx">
       <DependentUpon>NewChannel.cs</DependentUpon>
