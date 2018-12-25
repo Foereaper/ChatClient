@@ -1,0 +1,204 @@
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
+using Client;
+using Client.Forms;
+using Client.Properties;
+using Client.Util;
+using Application = System.Windows.Forms.Application;
+using Color = System.Drawing.Color;
+using Control = System.Windows.Forms.Control;
+using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
+using ListViewItem = System.Windows.Forms.ListViewItem;
+using MessageBox = System.Windows.Forms.MessageBox;
+using MessageBoxOptions = System.Windows.Forms.MessageBoxOptions;
+using RichTextBox = System.Windows.Forms.RichTextBox;
+using TextBox = System.Windows.Controls.TextBox;
+
+
+namespace BotFarm
+{
+    public partial class FrmChat : Form
+    {
+        public bool LeaderNotMe;
+        private int _lockColumnIndex = 0;
+        public DateTime lastChatMessage;
+        public DateTime timeNow;
+
+        public static readonly Color defaultChatColor = Color.Gold;
+        private Channel _currentChannel = Channel.Say;
+        private string _currentChannelUser = null;
+
+        [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Auto)]
+        public struct CHARFORMAT2
+        {
+            public int cbSize;
+            public int dwMask;
+            public int dwEffects;
+            public int yHeight;
+            public int yOffset;
+            public int crTextColor;
+            public byte bCharSet;
+            public byte bPitchAndFamily;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string szFaceName;
+            public short wWeight;
+            public short sSpacing;
+            public int crBackColor;
+            public int lcid;
+            public int dwReserved;
+            public short sStyle;
+            public short wKerning;
+            public byte bUnderlineType;
+            public byte bAnimation;
+            public byte bRevAuthor;
+            public byte bReserved1;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PARAFORMAT2
+        {
+            public int cbSize;
+            public int dwMask;
+            public short wNumbering;
+            public short wReserved;
+            public int dxStartIndent;
+            public int dxRightIndent;
+            public int dxOffset;
+            public short wAlignment;
+            public short cTabCount;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            public int[] rgxTabs;
+            public int dySpaceBefore;           // Vertical spacing before para			
+            public int dySpaceAfter;            // Vertical spacing after para			
+            public int dyLineSpacing;           // Line spacing depending on Rule		
+            public short sStyle;                    // Style handle							
+            public byte bLineSpacingRule;       // Rule for line spacing (see tom.doc)	
+            public byte bOutlineLevel;          // Outline Level						
+            public short wShadingWeight;            // Shading in hundredths of a per cent	
+            public short wShadingStyle;         // Byte 0: style, nib 2: cfpat, 3: cbpat
+            public short wNumberingStart;       // Starting value for numbering				
+            public short wNumberingStyle;       // Alignment, Roman/Arabic, (), ), ., etc.
+            public short wNumberingTab;         // Space bet 1st indent and 1st-line text
+            public short wBorderSpace;          // Border-text spaces (nbl/bdr in pts)	
+            public short wBorderWidth;          // Pen widths (nbl/bdr in half twips)	
+            public short wBorders;              // Border styles (nibble/border)		
+        }
+
+        private const uint PFM_SHADING = 0x00001000; // (*)
+
+        private const UInt32 EM_SETPARAFORMAT = (WM_USER + 71);
+        private const int PFM_STYLE = 0x00000400;
+
+        const int CFE_LINK = 0x20;
+        const int CFM_LINK = 0x20;
+        const int CFM_LCID = 0x2000000;
+        const int CFM_REVAUTHOR = 0x8000;
+        const int EM_SETCHARFORMAT = 0x444;
+
+        private const Int32 SCF_SELECTION2 = 0x0001;
+        private const UInt32 WM_USER = 0x0400;
+        private const UInt32 EM_GETCHARFORMAT = (WM_USER + 58);
+        const UInt32 CFE_BOLD = 0x0001;
+        const UInt32 CFM_BOLD = 0x00000001;
+        //const UInt32 CFM_SHADOW = 0x0400;
+        private const Int32 CFM_SHADOW = 0x0400;
+        private const Int32 CFE_SHADOW = 0x00000400;
+
+        //private const UInt32 CFE_LINK = 0x0020;
+        //private const UInt32 CFM_LINK = 0x00000020;
+
+        const int SCF_SELECTION = 0x1;
+        const int SCF_WORD = 0x2;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        private void clickableUserName(string username, string fullmsg)
+        {
+            int selstart = fullmsg.Length - 14;
+            int selstartcalculated = ChatWindow.Text.Length - selstart;
+            ChatWindow.SelectionStart = selstartcalculated;
+            ChatWindow.SelectionLength = username.Length;
+
+            CHARFORMAT2 myFormat = new CHARFORMAT2();
+            myFormat.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(myFormat);
+            myFormat.dwEffects = CFE_LINK;
+            myFormat.dwMask = CFM_REVAUTHOR + CFM_LCID + CFM_LINK;
+            myFormat.bRevAuthor = 3;
+
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(myFormat));
+            Marshal.StructureToPtr(myFormat, lParam, false);
+            SendMessage(ChatWindow.Handle, (UInt32)EM_SETCHARFORMAT, (IntPtr)(SCF_SELECTION + SCF_WORD), lParam);
+        }
+     
+        private void SetEffectTest(UInt32 mask, UInt32 effect, bool valid)
+        {
+            CHARFORMAT2 fmt = new CHARFORMAT2();
+            fmt.cbSize = Marshal.SizeOf(fmt);
+            fmt.dwMask = (int)mask;
+            fmt.dwEffects = valid ? (int)effect : 0;
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(fmt));
+            Marshal.StructureToPtr(fmt, lParam, false);
+            SendMessage(ChatWindow.Handle, EM_SETCHARFORMAT, (IntPtr)SCF_SELECTION2, lParam);
+        }
+
+        //did not got this working, but its a solution to the chatwindow color.
+        //https://stackoverflow.com/questions/1268009/reset-rtf-in-richtextbox
+        private void btnShadowTest_Click(object sender, EventArgs e)
+        {
+            /*CHARFORMAT2 _charFormat = new CHARFORMAT2();
+            _charFormat.cbSize = Marshal.SizeOf(_charFormat);
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(_charFormat));
+            Marshal.StructureToPtr(_charFormat, lParam, false);
+            SendMessage(ChatWindow.Handle, EM_GETCHARFORMAT, (IntPtr)SCF_SELECTION, lParam);
+            SetEffectTest(CFM_SHADOW, CFM_SHADOW, true);*/
+
+            ChatWindow.SelectionStart = 0;
+            ChatWindow.SelectionLength = 20;
+
+            /*CHARFORMAT2 cf = new CHARFORMAT2();
+            cf.cbSize = Marshal.SizeOf(cf);
+            cf.dwMask = (Int32)CFM_SHADOW;
+            cf.dwEffects = (Int32)CFE_SHADOW;
+
+            IntPtr wpar = (IntPtr)SCF_SELECTION2;
+            IntPtr lpar = Marshal.AllocCoTaskMem(Marshal.SizeOf(cf));
+            Marshal.StructureToPtr(cf, lpar, false);
+
+            IntPtr res = SendMessage(ChatWindow.Handle, EM_SETCHARFORMAT, wpar, lpar);
+
+            Marshal.FreeCoTaskMem(lpar);*/
+
+            /*CHARFORMAT2 myFormat = new CHARFORMAT2();
+            myFormat.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(myFormat);
+            myFormat.dwEffects = CFE_SHADOW;
+            myFormat.dwMask = CFM_REVAUTHOR + CFM_LCID + CFM_SHADOW;
+            myFormat.bRevAuthor = 3;
+
+            IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(myFormat));
+            Marshal.StructureToPtr(myFormat, lParam, false);
+            SendMessage(ChatWindow.Handle, (UInt32)EM_SETCHARFORMAT, (IntPtr)(SCF_SELECTION + SCF_WORD), lParam);*/
+
+
+            PARAFORMAT2 fmt = new PARAFORMAT2();
+            fmt.cbSize = Marshal.SizeOf(fmt);
+            fmt.dwMask = (int)PFM_SHADING;
+            fmt.wShadingWeight = 100;
+            fmt.wShadingStyle = 4;
+            IntPtr lParam2 = Marshal.AllocCoTaskMem(Marshal.SizeOf(fmt));
+            SendMessage(ChatWindow.Handle, EM_SETPARAFORMAT, (IntPtr)(SCF_SELECTION), lParam2);
+
+        }
